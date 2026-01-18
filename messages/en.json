@@ -1,0 +1,158 @@
+{
+  "metadata": {
+    "title": "Portfolio | Developer & Entrepreneur",
+    "description": "Personal portfolio with a startup dashboard style"
+  },
+  "nav": {
+    "overview": "Overview",
+    "ventures": "Ventures",
+    "techStack": "Tech Stack",
+    "timeline": "Timeline",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "common": {
+    "learnMore": "Learn More",
+    "viewAll": "View All",
+    "close": "Close",
+    "language": "Language",
+    "portfolio": "Portfolio",
+    "toggleMenu": "Toggle menu"
+  },
+  "overview": {
+    "title": "Dashboard",
+    "subtitle": "Key metrics at a glance",
+    "recentActivity": "Recent Activity",
+    "topSkills": "Top Skills",
+    "cards": {
+      "experience": {
+        "title": "Experience",
+        "value": "5+",
+        "unit": "years",
+        "description": "Software development experience"
+      },
+      "projects": {
+        "title": "Projects",
+        "value": "20+",
+        "unit": "",
+        "description": "Completed projects"
+      },
+      "ventures": {
+        "title": "Ventures",
+        "value": "3",
+        "unit": "",
+        "description": "Startups & side projects"
+      },
+      "techStack": {
+        "title": "Tech Stack",
+        "value": "15+",
+        "unit": "",
+        "description": "Technologies mastered"
+      }
+    },
+    "activities": {
+      "deployed": "Deployed",
+      "pushed": "Pushed",
+      "merged": "Merged",
+      "portfolioV2": "Portfolio v2.0",
+      "featureUpdate": "Feature update",
+      "pr": "PR #42",
+      "hoursAgo": "{hours} hours ago",
+      "dayAgo": "1 day ago"
+    }
+  },
+  "ventures": {
+    "title": "Ventures & Projects",
+    "subtitle": "Products built with an entrepreneurial mindset",
+    "status": {
+      "active": "Active",
+      "building": "Building",
+      "acquired": "Acquired",
+      "archived": "Archived"
+    },
+    "viewProject": "View Project",
+    "metrics": {
+      "users": "Users",
+      "revenue": "Revenue",
+      "growth": "Growth"
+    }
+  },
+  "techStack": {
+    "title": "Tech Stack",
+    "subtitle": "Core technologies and tools",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend",
+      "database": "Database",
+      "devops": "DevOps",
+      "tools": "Tools"
+    },
+    "levels": {
+      "expert": "Expert",
+      "advanced": "Advanced",
+      "intermediate": "Intermediate"
+    },
+    "yearsExp": "{years} years"
+  },
+  "timeline": {
+    "title": "Timeline",
+    "subtitle": "Career and key milestones",
+    "present": "Present"
+  },
+  "about": {
+    "title": "About",
+    "subtitle": "Developer & Entrepreneur",
+    "greeting": "Hello, I'm a",
+    "role": "Developer & Entrepreneur",
+    "description": "I love creating value at the intersection of technology and business. I'm passionate about building user-centric products and elegantly solving complex problems.",
+    "highlights": {
+      "builder": {
+        "title": "Builder",
+        "description": "Turning ideas into products"
+      },
+      "problemSolver": {
+        "title": "Problem Solver",
+        "description": "Simplifying the complex"
+      },
+      "learner": {
+        "title": "Learner",
+        "description": "Constantly growing"
+      }
+    },
+    "interests": "Interests",
+    "funFacts": "Fun Facts",
+    "interestItems": {
+      "openSource": "Open Source",
+      "productDesign": "Product Design",
+      "startups": "Startups"
+    },
+    "funFactItems": {
+      "coffee": "Powered by coffee",
+      "nightOwl": "Night owl developer",
+      "learning": "Always learning something new",
+      "gamer": "Occasional gamer"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "subtitle": "Let's work together",
+    "description": "Whether it's a new opportunity, collaboration, or just a chat, feel free to reach out.",
+    "email": "Email",
+    "social": "Social",
+    "location": "Location",
+    "cta": "Send Message",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "John Doe",
+      "email": "Email",
+      "emailPlaceholder": "john@example.com",
+      "message": "Message",
+      "messagePlaceholder": "Your message..."
+    }
+  },
+  "footer": {
+    "tagline": "Developer & Entrepreneur",
+    "copyright": "© 2024 All rights reserved.",
+    "builtWith": "Built with Next.js & Tailwind CSS"
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "metadata": {
+    "title": "作品集 | 开发者 & 创业者",
+    "description": "初创公司仪表盘风格的个人作品集"
+  },
+  "nav": {
+    "overview": "概览",
+    "ventures": "项目",
+    "techStack": "技术栈",
+    "timeline": "时间线",
+    "about": "关于",
+    "contact": "联系"
+  },
+  "common": {
+    "learnMore": "了解更多",
+    "viewAll": "查看全部",
+    "close": "关闭",
+    "language": "语言",
+    "portfolio": "作品集",
+    "toggleMenu": "切换菜单"
+  },
+  "overview": {
+    "title": "仪表盘",
+    "subtitle": "核心指标一览",
+    "recentActivity": "最近活动",
+    "topSkills": "核心技能",
+    "cards": {
+      "experience": {
+        "title": "经验",
+        "value": "5+",
+        "unit": "年",
+        "description": "软件开发经验"
+      },
+      "projects": {
+        "title": "项目",
+        "value": "20+",
+        "unit": "个",
+        "description": "已完成项目"
+      },
+      "ventures": {
+        "title": "创业",
+        "value": "3",
+        "unit": "个",
+        "description": "创业及副业项目"
+      },
+      "techStack": {
+        "title": "技术栈",
+        "value": "15+",
+        "unit": "项",
+        "description": "精通技术"
+      }
+    },
+    "activities": {
+      "deployed": "部署了",
+      "pushed": "推送了",
+      "merged": "合并了",
+      "portfolioV2": "作品集 v2.0",
+      "featureUpdate": "功能更新",
+      "pr": "PR #42",
+      "hoursAgo": "{hours}小时前",
+      "dayAgo": "1天前"
+    }
+  },
+  "ventures": {
+    "title": "创业 & 项目",
+    "subtitle": "以创业者心态打造的产品",
+    "status": {
+      "active": "运营中",
+      "building": "开发中",
+      "acquired": "已收购",
+      "archived": "已归档"
+    },
+    "viewProject": "查看项目",
+    "metrics": {
+      "users": "用户",
+      "revenue": "收入",
+      "growth": "增长"
+    }
+  },
+  "techStack": {
+    "title": "技术栈",
+    "subtitle": "核心技术和工具",
+    "categories": {
+      "frontend": "前端",
+      "backend": "后端",
+      "database": "数据库",
+      "devops": "DevOps",
+      "tools": "工具"
+    },
+    "levels": {
+      "expert": "专家",
+      "advanced": "高级",
+      "intermediate": "中级"
+    },
+    "yearsExp": "{years}年"
+  },
+  "timeline": {
+    "title": "时间线",
+    "subtitle": "职业生涯和重要里程碑",
+    "present": "至今"
+  },
+  "about": {
+    "title": "关于",
+    "subtitle": "开发者 & 创业者",
+    "greeting": "你好，我是一名",
+    "role": "开发者 & 创业者",
+    "description": "我热衷于在技术与商业的交汇处创造价值。我专注于构建以用户为中心的产品，并优雅地解决复杂问题。",
+    "highlights": {
+      "builder": {
+        "title": "构建者",
+        "description": "将想法变为产品"
+      },
+      "problemSolver": {
+        "title": "问题解决者",
+        "description": "化繁为简"
+      },
+      "learner": {
+        "title": "学习者",
+        "description": "持续成长"
+      }
+    },
+    "interests": "兴趣",
+    "funFacts": "趣事",
+    "interestItems": {
+      "openSource": "开源",
+      "productDesign": "产品设计",
+      "startups": "创业"
+    },
+    "funFactItems": {
+      "coffee": "靠咖啡驱动",
+      "nightOwl": "夜猫子开发者",
+      "learning": "总是在学习新东西",
+      "gamer": "偶尔玩游戏"
+    }
+  },
+  "contact": {
+    "title": "联系",
+    "subtitle": "让我们一起合作",
+    "description": "无论是新机会、合作，还是闲聊，都欢迎联系我。",
+    "email": "邮箱",
+    "social": "社交媒体",
+    "location": "位置",
+    "cta": "发送消息",
+    "form": {
+      "name": "姓名",
+      "namePlaceholder": "张三",
+      "email": "邮箱",
+      "emailPlaceholder": "example@email.com",
+      "message": "消息",
+      "messagePlaceholder": "请输入消息..."
+    }
+  },
+  "footer": {
+    "tagline": "开发者 & 创业者",
+    "copyright": "© 2024 版权所有",
+    "builtWith": "使用 Next.js 和 Tailwind CSS 构建"
+  }
+}
