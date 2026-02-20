@@ -4,6 +4,8 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
 import '../globals.css'
 
 const inter = Inter({
@@ -53,7 +55,11 @@ export default async function LocaleLayout({
     <html lang={locale} className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased bg-gray-950 text-gray-100 min-h-screen`}>
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <Header />
+          <main className="max-w-5xl mx-auto px-4 py-8">
+            {children}
+          </main>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>
