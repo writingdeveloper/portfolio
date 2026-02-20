@@ -6,7 +6,7 @@ import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { SITE_URL, SITE_NAME } from '@/lib/constants'
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '@/lib/constants'
 import '../globals.css'
 
 const inter = Inter({
@@ -27,6 +27,8 @@ export async function generateMetadata({
   const messages = await getMessages({ locale })
   const meta = (messages as Record<string, Record<string, string>>).metadata
 
+  const localePath = locale === 'ko' ? '' : `/${locale}`
+
   return {
     metadataBase: new URL(SITE_URL),
     title: {
@@ -38,15 +40,19 @@ export async function generateMetadata({
       siteName: SITE_NAME,
       locale: locale === 'ko' ? 'ko_KR' : 'en_US',
       type: 'website',
+      url: `${SITE_URL}${localePath}`,
+      images: [{ url: DEFAULT_OG_IMAGE, width: 1200, height: 630, alt: SITE_NAME }],
     },
     twitter: {
       card: 'summary_large_image',
+      images: [DEFAULT_OG_IMAGE],
     },
     alternates: {
-      canonical: SITE_URL,
+      canonical: `${SITE_URL}${localePath}`,
       languages: {
         ko: SITE_URL,
         en: `${SITE_URL}/en`,
+        'x-default': SITE_URL,
       },
     },
   }

@@ -33,7 +33,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="p-2 rounded-lg hover:bg-gray-800 transition-colors"
+      className="p-2.5 rounded-lg hover:bg-gray-800 transition-colors"
       aria-label={ta('toggleTheme')}
     >
       {isDark ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}

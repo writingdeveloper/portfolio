@@ -3,6 +3,7 @@ import { setRequestLocale } from 'next-intl/server'
 import { PageTransition } from '@/components/ui/PageTransition'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
+import { SITE_URL } from '@/lib/constants'
 
 export async function generateMetadata({
   params,
@@ -11,9 +12,16 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'about' })
+  const localePath = locale === 'ko' ? '' : `/${locale}`
+  const pageUrl = `${SITE_URL}${localePath}/about`
   return {
     title: t('title'),
     description: t('description'),
+    openGraph: { url: pageUrl },
+    alternates: {
+      canonical: pageUrl,
+      languages: { ko: `${SITE_URL}/about`, en: `${SITE_URL}/en/about`, 'x-default': `${SITE_URL}/about` },
+    },
   }
 }
 
@@ -35,7 +43,7 @@ function AboutContent() {
     <PageTransition>
       <div className="max-w-3xl mx-auto">
         <header className="mb-12">
-          <h1 className="text-3xl font-bold mb-2">{t('title')}</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>
           <p className="text-gray-400">{t('description')}</p>
         </header>
 

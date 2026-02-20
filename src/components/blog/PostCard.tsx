@@ -12,7 +12,7 @@ export function PostCard({ post }: PostCardProps) {
   return (
     <Link href={`/blog/${post.slug}`}>
       <article className="group rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden hover:border-gray-700 transition-all hover:-translate-y-1">
-        <div className="p-5">
+        <div className="p-4 sm:p-5">
           {post.category && (
             <span className="text-xs text-blue-400 font-medium mb-2 block">
               {post.category}

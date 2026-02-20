@@ -12,14 +12,17 @@ function generateSlug(children: React.ReactNode): string {
 }
 
 export const mdxComponents = {
+  h1: (props: ComponentPropsWithoutRef<'h1'>) => (
+    <h2 id={generateSlug(props.children)} className="text-2xl sm:text-3xl font-bold mt-10 mb-4 scroll-mt-20" {...props} />
+  ),
   h2: (props: ComponentPropsWithoutRef<'h2'>) => (
-    <h2 id={generateSlug(props.children)} className="text-2xl font-bold mt-10 mb-4 scroll-mt-20" {...props} />
+    <h2 id={generateSlug(props.children)} className="text-xl sm:text-2xl font-bold mt-10 mb-4 scroll-mt-20" {...props} />
   ),
   h3: (props: ComponentPropsWithoutRef<'h3'>) => (
-    <h3 id={generateSlug(props.children)} className="text-xl font-semibold mt-8 mb-3 scroll-mt-20" {...props} />
+    <h3 id={generateSlug(props.children)} className="text-lg sm:text-xl font-semibold mt-8 mb-3 scroll-mt-20" {...props} />
   ),
   h4: (props: ComponentPropsWithoutRef<'h4'>) => (
-    <h4 className="text-lg font-semibold mt-6 mb-2" {...props} />
+    <h4 className="text-base sm:text-lg font-semibold mt-6 mb-2" {...props} />
   ),
   p: (props: ComponentPropsWithoutRef<'p'>) => <p className="my-4 leading-relaxed" {...props} />,
   a: (props: ComponentPropsWithoutRef<'a'>) => {

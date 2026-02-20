@@ -60,7 +60,7 @@ export function Header() {
           <LanguageToggle />
           <ThemeToggle />
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-gray-800 transition-colors"
+            className="md:hidden p-2.5 rounded-lg hover:bg-gray-800 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={ta('toggleMenu')}
             aria-expanded={mobileOpen}
@@ -85,7 +85,7 @@ export function Header() {
                 <Link
                   key={link.key}
                   href={link.href}
-                  className="text-gray-400 hover:text-white transition-colors py-1"
+                  className="text-gray-400 hover:text-white transition-colors py-2.5"
                   onClick={closeMobile}
                 >
                   {t(link.key)}

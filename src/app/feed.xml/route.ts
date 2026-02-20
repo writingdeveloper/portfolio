@@ -13,7 +13,8 @@ export async function GET() {
       <guid isPermaLink="true">${SITE_URL}/blog/${post.slug}</guid>
       <description><![CDATA[${post.excerpt || ''}]]></description>
       <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
-      <category>${post.category}</category>
+      ${post.category ? `<category>${post.category}</category>` : ''}
+      <dc:language>${post.language || 'ko'}</dc:language>
     </item>`
     )
     .join('')
@@ -24,7 +25,7 @@ export async function GET() {
     <title>WritingDeveloper</title>
     <link>${SITE_URL}</link>
     <description>Dev stories, tech tutorials, and startup journey</description>
-    <language>ko</language>
+    <language>en</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
     <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
     ${items}

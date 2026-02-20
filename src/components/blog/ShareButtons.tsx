@@ -41,7 +41,7 @@ export function ShareButtons({ url, title }: ShareButtonsProps) {
         href={`https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition-colors"
+        className="p-2.5 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition-colors"
         aria-label={ta('shareOnTwitter')}
       >
         <Twitter size={16} aria-hidden="true" />
@@ -50,14 +50,14 @@ export function ShareButtons({ url, title }: ShareButtonsProps) {
         href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="p-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition-colors"
+        className="p-2.5 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition-colors"
         aria-label={ta('shareOnLinkedin')}
       >
         <Linkedin size={16} aria-hidden="true" />
       </a>
       <button
         onClick={copyLink}
-        className="p-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition-colors"
+        className="p-2.5 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-white transition-colors"
         aria-label={ta('copyLink')}
       >
         {copied ? <Check size={16} aria-hidden="true" /> : <LinkIcon size={16} aria-hidden="true" />}

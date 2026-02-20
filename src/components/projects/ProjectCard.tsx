@@ -18,7 +18,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const locale = useLocale()
 
   return (
-    <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 hover:border-gray-700 transition-all">
+    <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-4 sm:p-6 hover:border-gray-700 transition-all">
       <div className="flex items-start gap-4 mb-4">
         <div className="flex-1">
           <div className="flex items-center gap-2">

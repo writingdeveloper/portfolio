@@ -6,7 +6,7 @@ import { mdxComponents } from '@/components/mdx/MdxComponents'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { generateArticleJsonLd } from '@/lib/seo'
 import { PageTransition } from '@/components/ui/PageTransition'
-import { SITE_URL } from '@/lib/constants'
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '@/lib/constants'
 import type { Metadata } from 'next'
 
 export function generateStaticParams() {
@@ -23,6 +23,7 @@ export async function generateMetadata({
   if (!post) return {}
 
   const url = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
+  const ogImage = post.coverImage || DEFAULT_OG_IMAGE
   return {
     title: post.title,
     description: post.excerpt,
@@ -32,10 +33,23 @@ export async function generateMetadata({
       type: 'article',
       publishedTime: post.publishedAt,
       url,
-      ...(post.coverImage ? { images: [post.coverImage] } : {}),
+      siteName: SITE_NAME,
+      locale: locale === 'ko' ? 'ko_KR' : 'en_US',
+      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [ogImage],
     },
     alternates: {
       canonical: url,
+      languages: {
+        ko: `${SITE_URL}/blog/${slug}`,
+        en: `${SITE_URL}/en/blog/${slug}`,
+        'x-default': `${SITE_URL}/blog/${slug}`,
+      },
     },
   }
 }
