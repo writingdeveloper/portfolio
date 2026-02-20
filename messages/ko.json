@@ -1,158 +1,50 @@
 {
   "metadata": {
-    "title": "포트폴리오 | 개발자 & 창업가",
-    "description": "스타트업 대시보드 스타일의 개인 포트폴리오"
+    "title": "WritingDeveloper",
+    "description": "개발 이야기, 기술 튜토리얼, 그리고 스타트업 여정"
   },
   "nav": {
-    "overview": "개요",
-    "ventures": "벤처",
-    "techStack": "기술 스택",
-    "timeline": "타임라인",
-    "about": "소개",
-    "contact": "연락처"
+    "home": "홈",
+    "blog": "블로그",
+    "projects": "프로젝트",
+    "about": "소개"
   },
-  "common": {
-    "learnMore": "더 알아보기",
-    "viewAll": "전체 보기",
-    "close": "닫기",
-    "language": "언어",
-    "portfolio": "포트폴리오",
-    "toggleMenu": "메뉴 열기/닫기"
-  },
-  "overview": {
-    "title": "대시보드",
-    "subtitle": "핵심 지표 한눈에 보기",
-    "recentActivity": "최근 활동",
-    "topSkills": "주요 스킬",
-    "cards": {
-      "experience": {
-        "title": "경력",
-        "value": "5+",
-        "unit": "년",
-        "description": "소프트웨어 개발 경험"
-      },
-      "projects": {
-        "title": "프로젝트",
-        "value": "20+",
-        "unit": "개",
-        "description": "완료된 프로젝트"
-      },
-      "ventures": {
-        "title": "벤처",
-        "value": "3",
-        "unit": "개",
-        "description": "창업 및 사이드 프로젝트"
-      },
-      "techStack": {
-        "title": "기술 스택",
-        "value": "15+",
-        "unit": "개",
-        "description": "숙련된 기술"
-      }
+  "home": {
+    "hero": {
+      "greeting": "안녕하세요",
+      "name": "이시형",
+      "role": "개발자 & 창업가",
+      "description": "코드로 문제를 해결하고, 글로 경험을 나눕니다."
     },
-    "activities": {
-      "deployed": "배포함",
-      "pushed": "푸시함",
-      "merged": "병합함",
-      "portfolioV2": "포트폴리오 v2.0",
-      "featureUpdate": "기능 업데이트",
-      "pr": "PR #42",
-      "hoursAgo": "{hours}시간 전",
-      "dayAgo": "1일 전"
-    }
+    "latestPosts": "최근 글",
+    "viewAll": "모두 보기",
+    "featuredProjects": "프로젝트"
   },
-  "ventures": {
-    "title": "벤처 & 프로젝트",
-    "subtitle": "창업가 마인드로 만든 프로덕트들",
-    "status": {
-      "active": "운영중",
-      "building": "개발중",
-      "acquired": "인수됨",
-      "archived": "종료"
-    },
+  "blog": {
+    "title": "블로그",
+    "description": "개발, 기술, 스타트업에 대한 이야기",
+    "allCategories": "전체",
+    "readMore": "더 읽기",
+    "readingTime": "분 소요",
+    "noPosts": "글이 없습니다."
+  },
+  "projects": {
+    "title": "프로젝트",
+    "description": "만들고 있는 것들",
     "viewProject": "프로젝트 보기",
-    "metrics": {
-      "users": "사용자",
-      "revenue": "매출",
-      "growth": "성장률"
-    }
-  },
-  "techStack": {
-    "title": "기술 스택",
-    "subtitle": "주력 기술과 도구들",
-    "categories": {
-      "frontend": "프론트엔드",
-      "backend": "백엔드",
-      "database": "데이터베이스",
-      "devops": "DevOps",
-      "tools": "도구"
-    },
-    "levels": {
-      "expert": "전문가",
-      "advanced": "고급",
-      "intermediate": "중급"
-    },
-    "yearsExp": "{years}년"
-  },
-  "timeline": {
-    "title": "타임라인",
-    "subtitle": "경력과 주요 이정표",
-    "present": "현재"
+    "viewCode": "코드 보기"
   },
   "about": {
     "title": "소개",
-    "subtitle": "개발자이자 창업가",
-    "greeting": "안녕하세요, 저는",
-    "role": "개발자 & 창업가",
-    "description": "기술과 비즈니스의 교차점에서 가치를 만들어내는 것을 좋아합니다. 사용자 중심의 제품을 만들고, 복잡한 문제를 우아하게 해결하는 데 열정을 가지고 있습니다.",
-    "highlights": {
-      "builder": {
-        "title": "빌더",
-        "description": "아이디어를 실제 제품으로"
-      },
-      "problemSolver": {
-        "title": "문제 해결사",
-        "description": "복잡한 문제를 단순하게"
-      },
-      "learner": {
-        "title": "학습자",
-        "description": "끊임없이 성장하는"
-      }
-    },
-    "interests": "관심사",
-    "funFacts": "재미있는 사실",
-    "interestItems": {
-      "openSource": "오픈소스",
-      "productDesign": "제품 디자인",
-      "startups": "스타트업"
-    },
-    "funFactItems": {
-      "coffee": "커피로 움직입니다",
-      "nightOwl": "밤형 개발자",
-      "learning": "항상 새로운 것을 배웁니다",
-      "gamer": "가끔 게임도 합니다"
-    }
+    "description": "개발자이자 창업가로서의 여정"
   },
-  "contact": {
-    "title": "연락처",
-    "subtitle": "함께 일해요",
-    "description": "새로운 기회, 협업, 또는 그냥 대화를 나누고 싶으시다면 언제든 연락주세요.",
-    "email": "이메일",
-    "social": "소셜",
-    "location": "위치",
-    "cta": "메시지 보내기",
-    "form": {
-      "name": "이름",
-      "namePlaceholder": "홍길동",
-      "email": "이메일",
-      "emailPlaceholder": "example@email.com",
-      "message": "메시지",
-      "messagePlaceholder": "메시지를 입력하세요..."
-    }
+  "common": {
+    "backToHome": "홈으로",
+    "sharePost": "공유하기",
+    "tableOfContents": "목차",
+    "tags": "태그"
   },
   "footer": {
-    "tagline": "개발자 & 창업가",
-    "copyright": "© 2024 All rights reserved.",
-    "builtWith": "Next.js & Tailwind CSS로 제작"
+    "copyright": "All rights reserved."
   }
 }
