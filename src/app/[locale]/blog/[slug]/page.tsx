@@ -5,6 +5,7 @@ import { urlFor } from '@/sanity/lib/image'
 import { PortableTextRenderer } from '@/components/portable-text/PortableTextRenderer'
 import { generateArticleJsonLd } from '@/lib/seo'
 import { PageTransition } from '@/components/ui/PageTransition'
+import { ShareButtons } from '@/components/blog/ShareButtons'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import type { Metadata } from 'next'
@@ -110,6 +111,11 @@ export default async function BlogPostPage({
             </div>
           </div>
         )}
+
+        <ShareButtons
+          url={`https://writingdeveloper.blog/blog/${slug}`}
+          title={post.title}
+        />
       </article>
     </PageTransition>
   )
