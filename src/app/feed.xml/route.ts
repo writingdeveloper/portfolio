@@ -1,28 +1,20 @@
-import { client } from '@/sanity/lib/client'
+import { getAllPosts } from '@/lib/mdx'
 
 const SITE_URL = 'https://writingdeveloper.blog'
 
 export async function GET() {
-  const posts = await client.fetch(
-    `*[_type == "post" && defined(slug.current)] | order(publishedAt desc)[0...50]{
-      title,
-      slug,
-      excerpt,
-      publishedAt,
-      "author": author->name
-    }`
-  )
+  const posts = getAllPosts()
 
   const items = posts
     .map(
-      (post: any) => `
+      (post) => `
     <item>
       <title><![CDATA[${post.title}]]></title>
-      <link>${SITE_URL}/blog/${post.slug.current}</link>
-      <guid isPermaLink="true">${SITE_URL}/blog/${post.slug.current}</guid>
+      <link>${SITE_URL}/blog/${post.slug}</link>
+      <guid isPermaLink="true">${SITE_URL}/blog/${post.slug}</guid>
       <description><![CDATA[${post.excerpt || ''}]]></description>
       <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
-      ${post.author ? `<author>${post.author}</author>` : ''}
+      <author>${post.author}</author>
     </item>`
     )
     .join('')

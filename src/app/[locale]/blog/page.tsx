@@ -1,7 +1,6 @@
 import { useTranslations } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
-import { client } from '@/sanity/lib/client'
-import { POSTS_QUERY, CATEGORIES_QUERY } from '@/sanity/lib/queries'
+import { getAllPosts, getCategories } from '@/lib/mdx'
 import { PostCard } from '@/components/blog/PostCard'
 import { PageTransition } from '@/components/ui/PageTransition'
 
@@ -13,15 +12,13 @@ export default async function BlogPage({
   const { locale } = await params
   setRequestLocale(locale)
 
-  const [posts, categories] = await Promise.all([
-    client.fetch(POSTS_QUERY, { limit: 50 }),
-    client.fetch(CATEGORIES_QUERY),
-  ])
+  const posts = getAllPosts()
+  const categories = getCategories()
 
   return <BlogContent posts={posts} categories={categories} />
 }
 
-function BlogContent({ posts, categories }: { posts: any[]; categories: any[] }) {
+function BlogContent({ posts, categories }: { posts: any[]; categories: string[] }) {
   const t = useTranslations('blog')
 
   return (
@@ -37,9 +34,9 @@ function BlogContent({ posts, categories }: { posts: any[]; categories: any[] })
             <span className="px-3 py-1.5 rounded-full text-sm bg-blue-500/20 text-blue-400 cursor-pointer">
               {t('allCategories')}
             </span>
-            {categories.map((cat: any) => (
-              <span key={cat._id} className="px-3 py-1.5 rounded-full text-sm bg-gray-800 text-gray-300 hover:bg-gray-700 cursor-pointer transition-colors">
-                {cat.title}
+            {categories.map((cat) => (
+              <span key={cat} className="px-3 py-1.5 rounded-full text-sm bg-gray-800 text-gray-300 hover:bg-gray-700 cursor-pointer transition-colors">
+                {cat}
               </span>
             ))}
           </div>
@@ -47,8 +44,8 @@ function BlogContent({ posts, categories }: { posts: any[]; categories: any[] })
 
         {posts.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post: any) => (
-              <PostCard key={post._id} post={post} />
+            {posts.map((post) => (
+              <PostCard key={post.slug} post={post} />
             ))}
           </div>
         ) : (

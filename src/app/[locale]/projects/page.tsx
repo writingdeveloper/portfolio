@@ -1,7 +1,6 @@
 import { useTranslations } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
-import { client } from '@/sanity/lib/client'
-import { PROJECTS_QUERY } from '@/sanity/lib/queries'
+import { projects } from '../../../../content/projects'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
 
@@ -13,12 +12,10 @@ export default async function ProjectsPage({
   const { locale } = await params
   setRequestLocale(locale)
 
-  const projects = await client.fetch(PROJECTS_QUERY)
-
-  return <ProjectsContent projects={projects} />
+  return <ProjectsContent />
 }
 
-function ProjectsContent({ projects }: { projects: any[] }) {
+function ProjectsContent() {
   const t = useTranslations('projects')
 
   return (
@@ -30,8 +27,8 @@ function ProjectsContent({ projects }: { projects: any[] }) {
         </header>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          {projects.map((project: any) => (
-            <ProjectCard key={project._id} project={project} />
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
       </div>

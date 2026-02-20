@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
-import { client } from '@/sanity/lib/client'
-import { POSTS_QUERY, PROJECTS_QUERY } from '@/sanity/lib/queries'
+import { getAllPosts } from '@/lib/mdx'
+import { projects } from '../../../content/projects'
 import { Link } from '@/i18n/navigation'
 import { ArrowRight } from 'lucide-react'
 import { PostCard } from '@/components/blog/PostCard'
@@ -16,15 +16,13 @@ export default async function HomePage({
   const { locale } = await params
   setRequestLocale(locale)
 
-  const [posts, projects] = await Promise.all([
-    client.fetch(POSTS_QUERY, { limit: 3 }),
-    client.fetch(PROJECTS_QUERY),
-  ])
+  const posts = getAllPosts().slice(0, 3)
+  const featuredProjects = projects.filter((p) => p.featured)
 
-  return <HomeContent posts={posts} projects={projects} />
+  return <HomeContent posts={posts} projects={featuredProjects} />
 }
 
-function HomeContent({ posts, projects }: { posts: any[]; projects: any[] }) {
+function HomeContent({ posts, projects: featuredProjects }: { posts: any[]; projects: any[] }) {
   const t = useTranslations('home')
 
   return (
@@ -46,8 +44,8 @@ function HomeContent({ posts, projects }: { posts: any[]; projects: any[] }) {
           </div>
           {posts.length > 0 ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post: any) => (
-                <PostCard key={post._id} post={post} />
+              {posts.map((post) => (
+                <PostCard key={post.slug} post={post} />
               ))}
             </div>
           ) : (
@@ -55,12 +53,12 @@ function HomeContent({ posts, projects }: { posts: any[]; projects: any[] }) {
           )}
         </section>
 
-        {projects.length > 0 && (
+        {featuredProjects.length > 0 && (
           <section>
             <h2 className="text-2xl font-bold mb-8">{t('featuredProjects')}</h2>
             <div className="grid gap-6 sm:grid-cols-2">
-              {projects.filter((p: any) => p.featured).map((project: any) => (
-                <ProjectCard key={project._id} project={project} />
+              {featuredProjects.map((project) => (
+                <ProjectCard key={project.slug} project={project} />
               ))}
             </div>
           </section>
