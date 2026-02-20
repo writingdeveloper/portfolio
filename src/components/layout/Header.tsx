@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { Menu, X } from 'lucide-react'
@@ -17,7 +17,25 @@ const navLinks = [
 
 export function Header() {
   const t = useTranslations('nav')
+  const ta = useTranslations('accessibility')
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  const closeMobile = useCallback(() => setMobileOpen(false), [])
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape' && mobileOpen) {
+        closeMobile()
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [mobileOpen, closeMobile])
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [mobileOpen])
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-800/50 bg-gray-950/80 backdrop-blur-md">
@@ -26,7 +44,7 @@ export function Header() {
           WritingDeveloper
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
+        <nav aria-label="Main navigation" className="hidden md:flex items-center gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.key}
@@ -44,7 +62,8 @@ export function Header() {
           <button
             className="md:hidden p-2 rounded-lg hover:bg-gray-800 transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
+            aria-label={ta('toggleMenu')}
+            aria-expanded={mobileOpen}
           >
             {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
@@ -54,6 +73,7 @@ export function Header() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.nav
+            aria-label="Mobile navigation"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -66,7 +86,7 @@ export function Header() {
                   key={link.key}
                   href={link.href}
                   className="text-gray-400 hover:text-white transition-colors py-1"
-                  onClick={() => setMobileOpen(false)}
+                  onClick={closeMobile}
                 >
                   {t(link.key)}
                 </Link>

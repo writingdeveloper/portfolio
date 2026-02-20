@@ -18,25 +18,48 @@
     },
     "latestPosts": "Latest Posts",
     "viewAll": "View All",
-    "featuredProjects": "Projects"
+    "featuredProjects": "Projects",
+    "noPosts": "No posts yet."
   },
   "blog": {
     "title": "Blog",
     "description": "Stories about development, technology, and startups",
     "allCategories": "All",
-    "readMore": "Read More",
     "readingTime": "min read",
-    "noPosts": "No posts yet."
+    "noPosts": "No posts yet.",
+    "minRead": "{minutes} min read"
   },
   "projects": {
     "title": "Projects",
     "description": "Things I'm building",
     "viewProject": "View Project",
-    "viewCode": "View Code"
+    "viewCode": "View Code",
+    "status": {
+      "active": "Active",
+      "building": "Building",
+      "launched": "Launched",
+      "archived": "Archived"
+    }
   },
   "about": {
     "title": "About",
-    "description": "My journey as a developer and entrepreneur"
+    "description": "My journey as a developer and entrepreneur",
+    "body": "As a developer and entrepreneur, I solve problems with technology. I build and run projects including Soursea, and share what I learn through this blog."
+  },
+  "accessibility": {
+    "toggleMenu": "Toggle menu",
+    "toggleTheme": "Toggle theme",
+    "switchLanguage": "Switch language",
+    "shareOnTwitter": "Share on Twitter",
+    "shareOnLinkedin": "Share on LinkedIn",
+    "copyLink": "Copy link",
+    "linkCopied": "Copied!",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "skipToContent": "Skip to content",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "twitter": "Twitter"
   },
   "common": {
     "backToHome": "Back to Home",

@@ -1,4 +1,5 @@
 import { Link } from '@/i18n/navigation'
+import { useLocale } from 'next-intl'
 import type { PostMeta } from '@/lib/mdx'
 
 interface PostCardProps {
@@ -6,6 +7,8 @@ interface PostCardProps {
 }
 
 export function PostCard({ post }: PostCardProps) {
+  const locale = useLocale()
+
   return (
     <Link href={`/blog/${post.slug}`}>
       <article className="group rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden hover:border-gray-700 transition-all hover:-translate-y-1">
@@ -22,7 +25,9 @@ export function PostCard({ post }: PostCardProps) {
             <p className="text-sm text-gray-400 line-clamp-2">{post.excerpt}</p>
           )}
           <div className="flex items-center gap-3 mt-3 text-xs text-gray-500">
-            <time>{new Date(post.publishedAt).toLocaleDateString()}</time>
+            <time dateTime={post.publishedAt}>
+              {new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}
+            </time>
             <span>{post.readingTime}</span>
           </div>
         </div>

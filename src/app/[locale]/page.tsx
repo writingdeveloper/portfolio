@@ -1,7 +1,9 @@
 import { useTranslations } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { getAllPosts } from '@/lib/mdx'
+import type { PostMeta } from '@/lib/mdx'
 import { projects } from '../../../content/projects'
+import type { Project } from '../../../content/projects'
 import { Link } from '@/i18n/navigation'
 import { ArrowRight } from 'lucide-react'
 import { PostCard } from '@/components/blog/PostCard'
@@ -22,7 +24,7 @@ export default async function HomePage({
   return <HomeContent posts={posts} projects={featuredProjects} />
 }
 
-function HomeContent({ posts, projects: featuredProjects }: { posts: any[]; projects: any[] }) {
+function HomeContent({ posts, projects: featuredProjects }: { posts: PostMeta[]; projects: Project[] }) {
   const t = useTranslations('home')
 
   return (
@@ -49,7 +51,7 @@ function HomeContent({ posts, projects: featuredProjects }: { posts: any[]; proj
               ))}
             </div>
           ) : (
-            <p className="text-gray-500">No posts yet.</p>
+            <p className="text-gray-500 text-center py-12">{t('noPosts')}</p>
           )}
         </section>
 

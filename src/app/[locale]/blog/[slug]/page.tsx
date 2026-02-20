@@ -6,6 +6,7 @@ import { mdxComponents } from '@/components/mdx/MdxComponents'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { generateArticleJsonLd } from '@/lib/seo'
 import { PageTransition } from '@/components/ui/PageTransition'
+import { SITE_URL } from '@/lib/constants'
 import type { Metadata } from 'next'
 
 export function generateStaticParams() {
@@ -15,12 +16,13 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ locale: string; slug: string }>
 }): Promise<Metadata> {
-  const { slug } = await params
+  const { locale, slug } = await params
   const post = getPost(slug)
   if (!post) return {}
 
+  const url = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
   return {
     title: post.title,
     description: post.excerpt,
@@ -29,6 +31,11 @@ export async function generateMetadata({
       description: post.excerpt,
       type: 'article',
       publishedTime: post.publishedAt,
+      url,
+      ...(post.coverImage ? { images: [post.coverImage] } : {}),
+    },
+    alternates: {
+      canonical: url,
     },
   }
 }
@@ -44,10 +51,12 @@ export default async function BlogPostPage({
   const post = getPost(slug)
   if (!post) notFound()
 
+  const postUrl = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
+
   const jsonLd = generateArticleJsonLd({
     title: post.title,
     description: post.excerpt,
-    url: `https://writingdeveloper.blog/blog/${slug}`,
+    url: postUrl,
     publishedAt: post.publishedAt,
     authorName: post.author,
   })
@@ -69,7 +78,7 @@ export default async function BlogPostPage({
           <h1 className="text-3xl sm:text-4xl font-bold mb-4">{post.title}</h1>
           <div className="flex items-center gap-4 text-sm text-gray-400">
             <span>{post.author}</span>
-            <time>{new Date(post.publishedAt).toLocaleDateString()}</time>
+            <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}</time>
             <span>{post.readingTime}</span>
           </div>
         </header>
@@ -78,7 +87,7 @@ export default async function BlogPostPage({
           <MDXRemote source={post.content} components={mdxComponents} />
         </div>
 
-        {post.tags.length > 0 && (
+        {post.tags?.length > 0 && (
           <div className="mt-12 pt-6 border-t border-gray-800">
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag) => (
@@ -91,7 +100,7 @@ export default async function BlogPostPage({
         )}
 
         <ShareButtons
-          url={`https://writingdeveloper.blog/blog/${slug}`}
+          url={postUrl}
           title={post.title}
         />
       </article>

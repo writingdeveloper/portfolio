@@ -1,3 +1,5 @@
+import { SITE_URL } from './constants'
+
 export function generateArticleJsonLd({
   title,
   description,
@@ -19,29 +21,21 @@ export function generateArticleJsonLd({
     headline: title,
     description,
     url,
-    image: imageUrl,
+    ...(imageUrl ? { image: imageUrl } : {}),
     datePublished: publishedAt,
+    dateModified: publishedAt,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
     author: {
       '@type': 'Person',
       name: authorName,
     },
     publisher: {
-      '@type': 'Person',
+      '@type': 'Organization',
       name: 'WritingDeveloper',
+      url: SITE_URL,
     },
-  }
-}
-
-export function generatePersonJsonLd() {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Si Hyeong Lee',
-    url: 'https://writingdeveloper.blog',
-    jobTitle: 'Developer & Entrepreneur',
-    sameAs: [
-      'https://github.com/writingdeveloper',
-      'https://linkedin.com/in/writingdeveloper',
-    ],
   }
 }

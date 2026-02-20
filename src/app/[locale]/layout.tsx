@@ -6,6 +6,7 @@ import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import '../globals.css'
 
 const inter = Inter({
@@ -24,14 +25,30 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const messages = await getMessages({ locale })
-  const meta = (messages as any).metadata
+  const meta = (messages as Record<string, Record<string, string>>).metadata
 
   return {
+    metadataBase: new URL(SITE_URL),
     title: {
-      default: meta?.title || 'WritingDeveloper',
-      template: `%s | ${meta?.title || 'WritingDeveloper'}`,
+      default: meta?.title || SITE_NAME,
+      template: `%s | ${meta?.title || SITE_NAME}`,
     },
     description: meta?.description,
+    openGraph: {
+      siteName: SITE_NAME,
+      locale: locale === 'ko' ? 'ko_KR' : 'en_US',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+    },
+    alternates: {
+      canonical: SITE_URL,
+      languages: {
+        ko: SITE_URL,
+        en: `${SITE_URL}/en`,
+      },
+    },
   }
 }
 
@@ -44,7 +61,7 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params
 
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as 'ko' | 'en')) {
     notFound()
   }
 
@@ -55,8 +72,11 @@ export default async function LocaleLayout({
     <html lang={locale} className="dark" suppressHydrationWarning>
       <body className={`${inter.variable} font-sans antialiased bg-gray-950 text-gray-100 min-h-screen`}>
         <NextIntlClientProvider messages={messages}>
+          <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-blue-500 focus:text-white focus:rounded-lg">
+            Skip to content
+          </a>
           <Header />
-          <main className="max-w-5xl mx-auto px-4 py-8">
+          <main id="main-content" className="max-w-5xl mx-auto px-4 py-8">
             {children}
           </main>
           <Footer />

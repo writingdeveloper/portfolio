@@ -1,6 +1,21 @@
 import { useTranslations } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { PageTransition } from '@/components/ui/PageTransition'
+import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'about' })
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
+}
 
 export default async function AboutPage({
   params,
@@ -25,11 +40,7 @@ function AboutContent() {
         </header>
 
         <div className="prose-content text-gray-300 space-y-6">
-          <p>
-            개발자이자 창업가로서 기술로 문제를 해결하고 있습니다.
-            Soursea를 비롯한 프로젝트들을 만들고 운영하고 있으며,
-            그 과정에서 배운 것들을 이 블로그를 통해 공유합니다.
-          </p>
+          <p>{t('body')}</p>
         </div>
       </div>
     </PageTransition>

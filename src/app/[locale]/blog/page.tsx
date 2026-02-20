@@ -1,8 +1,23 @@
+import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getAllPosts, getCategories } from '@/lib/mdx'
+import type { PostMeta } from '@/lib/mdx'
 import { PostCard } from '@/components/blog/PostCard'
 import { PageTransition } from '@/components/ui/PageTransition'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'blog' })
+  return {
+    title: t('title'),
+    description: t('description'),
+  }
+}
 
 export default async function BlogPage({
   params,
@@ -18,7 +33,7 @@ export default async function BlogPage({
   return <BlogContent posts={posts} categories={categories} />
 }
 
-function BlogContent({ posts, categories }: { posts: any[]; categories: string[] }) {
+function BlogContent({ posts, categories }: { posts: PostMeta[]; categories: string[] }) {
   const t = useTranslations('blog')
 
   return (
@@ -31,11 +46,8 @@ function BlogContent({ posts, categories }: { posts: any[]; categories: string[]
 
         {categories.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-8">
-            <span className="px-3 py-1.5 rounded-full text-sm bg-blue-500/20 text-blue-400 cursor-pointer">
-              {t('allCategories')}
-            </span>
             {categories.map((cat) => (
-              <span key={cat} className="px-3 py-1.5 rounded-full text-sm bg-gray-800 text-gray-300 hover:bg-gray-700 cursor-pointer transition-colors">
+              <span key={cat} className="text-xs px-2.5 py-1 rounded-full bg-gray-800 text-gray-300">
                 {cat}
               </span>
             ))}

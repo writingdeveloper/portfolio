@@ -18,25 +18,48 @@
     },
     "latestPosts": "최근 글",
     "viewAll": "모두 보기",
-    "featuredProjects": "프로젝트"
+    "featuredProjects": "프로젝트",
+    "noPosts": "글이 없습니다."
   },
   "blog": {
     "title": "블로그",
     "description": "개발, 기술, 스타트업에 대한 이야기",
     "allCategories": "전체",
-    "readMore": "더 읽기",
     "readingTime": "분 소요",
-    "noPosts": "글이 없습니다."
+    "noPosts": "글이 없습니다.",
+    "minRead": "{minutes}분 소요"
   },
   "projects": {
     "title": "프로젝트",
     "description": "만들고 있는 것들",
     "viewProject": "프로젝트 보기",
-    "viewCode": "코드 보기"
+    "viewCode": "코드 보기",
+    "status": {
+      "active": "활성",
+      "building": "개발 중",
+      "launched": "출시됨",
+      "archived": "보관됨"
+    }
   },
   "about": {
     "title": "소개",
-    "description": "개발자이자 창업가로서의 여정"
+    "description": "개발자이자 창업가로서의 여정",
+    "body": "개발자이자 창업가로서 기술로 문제를 해결하고 있습니다. Soursea를 비롯한 프로젝트들을 만들고 운영하고 있으며, 그 과정에서 배운 것들을 이 블로그를 통해 공유합니다."
+  },
+  "accessibility": {
+    "toggleMenu": "메뉴 열기/닫기",
+    "toggleTheme": "테마 변경",
+    "switchLanguage": "언어 변경",
+    "shareOnTwitter": "트위터에 공유",
+    "shareOnLinkedin": "링크드인에 공유",
+    "copyLink": "링크 복사",
+    "linkCopied": "복사됨!",
+    "copy": "복사",
+    "copied": "복사됨!",
+    "skipToContent": "본문으로 건너뛰기",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "twitter": "Twitter"
   },
   "common": {
     "backToHome": "홈으로",

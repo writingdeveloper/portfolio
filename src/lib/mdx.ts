@@ -3,7 +3,7 @@ import path from 'path'
 import matter from 'gray-matter'
 import readingTime from 'reading-time'
 
-const postsDirectory = path.join(process.cwd(), 'content/posts')
+const postsDirectory = path.join(process.cwd(), 'content', 'posts')
 
 export interface PostMeta {
   slug: string
@@ -16,6 +16,7 @@ export interface PostMeta {
   language: string
   coverImage: string
   readingTime: string
+  readingTimeMinutes: number
 }
 
 export interface Post extends PostMeta {
@@ -41,21 +42,26 @@ export function getPostMeta(slug: string): PostMeta | null {
   const filePath = path.join(postsDirectory, `${slug}.mdx`)
   if (!fs.existsSync(filePath)) return null
 
-  const fileContent = fs.readFileSync(filePath, 'utf-8')
-  const { data, content } = matter(fileContent)
-  const stats = readingTime(content)
+  try {
+    const fileContent = fs.readFileSync(filePath, 'utf-8')
+    const { data, content } = matter(fileContent)
+    const stats = readingTime(content)
 
-  return {
-    slug,
-    title: data.title || '',
-    excerpt: data.excerpt || '',
-    publishedAt: data.publishedAt || '',
-    author: data.author || '',
-    category: data.category || '',
-    tags: data.tags || [],
-    language: data.language || 'ko',
-    coverImage: data.coverImage || '',
-    readingTime: stats.text,
+    return {
+      slug,
+      title: data.title || '',
+      excerpt: data.excerpt || '',
+      publishedAt: data.publishedAt || '',
+      author: data.author || '',
+      category: data.category || '',
+      tags: Array.isArray(data.tags) ? data.tags : [],
+      language: data.language || 'ko',
+      coverImage: data.coverImage || '',
+      readingTime: stats.text,
+      readingTimeMinutes: Math.ceil(stats.minutes),
+    }
+  } catch {
+    return null
   }
 }
 
@@ -63,22 +69,18 @@ export function getPost(slug: string): Post | null {
   const filePath = path.join(postsDirectory, `${slug}.mdx`)
   if (!fs.existsSync(filePath)) return null
 
-  const fileContent = fs.readFileSync(filePath, 'utf-8')
-  const { data, content } = matter(fileContent)
-  const stats = readingTime(content)
+  try {
+    const fileContent = fs.readFileSync(filePath, 'utf-8')
+    const { content } = matter(fileContent)
+    const meta = getPostMeta(slug)
+    if (!meta) return null
 
-  return {
-    slug,
-    title: data.title || '',
-    excerpt: data.excerpt || '',
-    publishedAt: data.publishedAt || '',
-    author: data.author || '',
-    category: data.category || '',
-    tags: data.tags || [],
-    language: data.language || 'ko',
-    coverImage: data.coverImage || '',
-    readingTime: stats.text,
-    content,
+    return {
+      ...meta,
+      content,
+    }
+  } catch {
+    return null
   }
 }
 
