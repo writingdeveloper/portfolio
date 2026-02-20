@@ -3,6 +3,7 @@ import { client } from '@/sanity/lib/client'
 import { POST_BY_SLUG_QUERY, ALL_POST_SLUGS_QUERY } from '@/sanity/lib/queries'
 import { urlFor } from '@/sanity/lib/image'
 import { PortableTextRenderer } from '@/components/portable-text/PortableTextRenderer'
+import { generateArticleJsonLd } from '@/lib/seo'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import type { Metadata } from 'next'
@@ -47,8 +48,21 @@ export default async function BlogPostPage({
   const post = await client.fetch(POST_BY_SLUG_QUERY, { slug })
   if (!post) notFound()
 
+  const jsonLd = generateArticleJsonLd({
+    title: post.title,
+    description: post.excerpt || '',
+    url: `https://writingdeveloper.blog/blog/${slug}`,
+    imageUrl: post.mainImage ? urlFor(post.mainImage).width(1200).height(630).url() : undefined,
+    publishedAt: post.publishedAt || '',
+    authorName: post.author?.name || 'WritingDeveloper',
+  })
+
   return (
     <article className="max-w-3xl mx-auto">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <header className="mb-10">
         {post.categories && post.categories.length > 0 && (
           <div className="flex gap-2 mb-4">
