@@ -1,7 +1,6 @@
 import { Link } from '@/i18n/navigation'
 import { urlFor } from '@/sanity/lib/image'
 import Image from 'next/image'
-import { useTranslations } from 'next-intl'
 
 interface PostCardProps {
   post: {
@@ -17,8 +16,6 @@ interface PostCardProps {
 }
 
 export function PostCard({ post }: PostCardProps) {
-  const t = useTranslations('blog')
-
   return (
     <Link href={`/blog/${post.slug.current}`}>
       <article className="group rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden hover:border-gray-700 transition-all hover:-translate-y-1">
