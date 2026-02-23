@@ -23,7 +23,7 @@ export async function generateMetadata({
   if (!post) return {}
 
   const url = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
-  const ogImage = post.coverImage || DEFAULT_OG_IMAGE
+  const ogImage = post.coverImage || `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&description=${encodeURIComponent(post.excerpt || '')}`
   return {
     title: post.title,
     description: post.excerpt,
