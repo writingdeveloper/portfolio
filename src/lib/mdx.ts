@@ -97,3 +97,32 @@ export function getCategories(): string[] {
   const categories = new Set(posts.map((p) => p.category).filter(Boolean))
   return Array.from(categories).sort()
 }
+
+export interface TocItem {
+  id: string
+  text: string
+  level: number
+}
+
+export function extractHeadings(content: string): TocItem[] {
+  const headingRegex = /^(#{2,3})\s+(.+)$/gm
+  const headings: TocItem[] = []
+  let match
+
+  while ((match = headingRegex.exec(content)) !== null) {
+    const text = match[2].trim()
+    const id = text
+      .toLowerCase()
+      .replace(/[^a-z0-9가-힣\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim()
+    headings.push({
+      id,
+      text,
+      level: match[1].length,
+    })
+  }
+
+  return headings
+}
