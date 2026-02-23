@@ -5,6 +5,7 @@ import { getAllPosts, getCategories } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
 import type { PostMeta } from '@/lib/mdx'
 import { PostCard } from '@/components/blog/PostCard'
+import { CategoryFilter } from '@/components/blog/CategoryFilter'
 import { PageTransition } from '@/components/ui/PageTransition'
 
 export async function generateMetadata({
@@ -29,19 +30,25 @@ export async function generateMetadata({
 
 export default async function BlogPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>
+  searchParams: Promise<{ category?: string }>
 }) {
   const { locale } = await params
+  const { category } = await searchParams
   setRequestLocale(locale)
 
-  const posts = getAllPosts()
+  const allPosts = getAllPosts()
   const categories = getCategories()
+  const posts = category
+    ? allPosts.filter((p) => p.category === category)
+    : allPosts
 
-  return <BlogContent posts={posts} categories={categories} />
+  return <BlogContent posts={posts} categories={categories} activeCategory={category || null} />
 }
 
-function BlogContent({ posts, categories }: { posts: PostMeta[]; categories: string[] }) {
+function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[]; categories: string[]; activeCategory: string | null }) {
   const t = useTranslations('blog')
 
   return (
@@ -53,13 +60,7 @@ function BlogContent({ posts, categories }: { posts: PostMeta[]; categories: str
         </header>
 
         {categories.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-8">
-            {categories.map((cat) => (
-              <span key={cat} className="text-xs px-2.5 py-1 rounded-full bg-gray-800 text-gray-300">
-                {cat}
-              </span>
-            ))}
-          </div>
+          <CategoryFilter categories={categories} activeCategory={activeCategory} />
         )}
 
         {posts.length > 0 ? (
