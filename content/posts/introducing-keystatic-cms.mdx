@@ -1,0 +1,34 @@
+---
+title: "Keystatic CMS 도입기"
+excerpt: "블로그에 Keystatic CMS를 도입하여 웹 기반 에디터로 글을 작성할 수 있게 된 과정을 공유합니다."
+publishedAt: "2026-02-23"
+author: "이시형"
+category: "Development"
+tags: ["keystatic", "cms", "nextjs"]
+language: "ko"
+coverImage: ""
+---
+
+# Keystatic CMS 도입기
+
+블로그를 운영하면서 매번 MDX 파일을 수동으로 만드는 것이 불편했습니다. frontmatter 형식을 기억해야 하고, 파일명 규칙도 지켜야 하고, 오타라도 나면 빌드가 깨지기도 합니다. 그래서 파일 기반 CMS인 Keystatic을 도입하게 되었습니다.
+
+## Keystatic이란?
+
+Keystatic은 Thinkmill에서 만든 파일 기반 CMS입니다. 기존 MDX/Markdown 파일 구조를 그대로 유지하면서, 웹 기반 에디터 UI를 제공합니다. 데이터베이스가 필요 없고, Git 저장소에 콘텐츠가 직접 저장됩니다.
+
+## 도입 과정
+
+도입은 생각보다 간단했습니다:
+
+1. `@keystatic/core`와 `@keystatic/next` 패키지 설치
+2. `keystatic.config.ts`에서 기존 frontmatter 스키마에 맞는 collection 정의
+3. Next.js App Router에 `/keystatic` 경로로 Admin UI 라우트 추가
+4. i18n 미들웨어에서 `/keystatic` 경로 제외
+
+## 장점
+
+- **웹 기반 에디터**: 브라우저에서 바로 글을 작성하고 편집할 수 있습니다
+- **기존 구조 유지**: 파일 기반이라 기존 MDX 읽기 로직을 변경할 필요가 없습니다
+- **타입 안전**: TypeScript로 스키마를 정의하므로 frontmatter 오류를 방지합니다
+- **로컬 개발 친화적**: `npm run dev`만 실행하면 `/keystatic`에서 바로 사용 가능합니다

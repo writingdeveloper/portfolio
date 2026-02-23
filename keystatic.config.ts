@@ -1,7 +1,9 @@
 import { config, fields, collection } from '@keystatic/core'
 
 export default config({
-  storage: { kind: 'local' },
+  storage: process.env.VERCEL
+    ? { kind: 'github', repo: 'writingdeveloper/portfolio' }
+    : { kind: 'local' },
   collections: {
     posts: collection({
       label: 'Blog Posts',
