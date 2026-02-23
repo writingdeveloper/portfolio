@@ -69,5 +69,11 @@
   },
   "footer": {
     "copyright": "All rights reserved."
+  },
+  "error": {
+    "notFound": "페이지를 찾을 수 없습니다",
+    "notFoundDescription": "요청하신 페이지가 존재하지 않습니다.",
+    "somethingWentWrong": "문제가 발생했습니다",
+    "tryAgain": "다시 시도"
   }
 }

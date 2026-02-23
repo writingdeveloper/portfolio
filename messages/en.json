@@ -69,5 +69,11 @@
   },
   "footer": {
     "copyright": "All rights reserved."
+  },
+  "error": {
+    "notFound": "Page Not Found",
+    "notFoundDescription": "The page you're looking for doesn't exist.",
+    "somethingWentWrong": "Something went wrong",
+    "tryAgain": "Try again"
   }
 }
