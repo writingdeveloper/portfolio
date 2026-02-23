@@ -4,8 +4,8 @@ import { PageTransition } from '@/components/ui/PageTransition'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { SITE_URL } from '@/lib/constants'
-import { skills, timeline, skillCategories } from '../../../content/about'
-import type { Skill, TimelineItem } from '../../../content/about'
+import { skills, timeline, skillCategories } from '../../../../content/about'
+import type { Skill, TimelineItem } from '../../../../content/about'
 
 export async function generateMetadata({
   params,
