@@ -1,7 +1,7 @@
 import { config, fields, collection } from '@keystatic/core'
 
 export default config({
-  storage: process.env.VERCEL
+  storage: process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG
     ? { kind: 'github', repo: 'writingdeveloper/portfolio' }
     : { kind: 'local' },
   collections: {
