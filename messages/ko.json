@@ -27,7 +27,12 @@
     "allCategories": "전체",
     "readingTime": "분 소요",
     "noPosts": "글이 없습니다.",
-    "minRead": "{minutes}분 소요"
+    "minRead": "{minutes}분 소요",
+    "readInEnglish": "Read in English",
+    "readInKorean": "한국어로 읽기",
+    "translationAvailable": "번역 가능",
+    "viewKoreanPosts": "한국어 글 보기",
+    "viewEnglishPosts": "영어 글 보기"
   },
   "projects": {
     "title": "프로젝트",

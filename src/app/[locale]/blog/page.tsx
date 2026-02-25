@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getAllPosts, getCategories } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
@@ -7,6 +7,7 @@ import type { PostMeta } from '@/lib/mdx'
 import { PostCard } from '@/components/blog/PostCard'
 import { CategoryFilter } from '@/components/blog/CategoryFilter'
 import { PageTransition } from '@/components/ui/PageTransition'
+import { Globe } from 'lucide-react'
 
 export async function generateMetadata({
   params,
@@ -50,13 +51,23 @@ export default async function BlogPage({
 
 function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[]; categories: string[]; activeCategory: string | null }) {
   const t = useTranslations('blog')
+  const locale = useLocale()
 
   return (
     <PageTransition>
       <div>
         <header className="mb-12">
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>
-          <p className="text-gray-400">{t('description')}</p>
+          <div className="flex items-center justify-between">
+            <p className="text-gray-400">{t('description')}</p>
+            <a
+              href={locale === 'ko' ? '/en/blog' : '/blog'}
+              className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors whitespace-nowrap"
+            >
+              <Globe size={14} />
+              {locale === 'ko' ? t('viewEnglishPosts') : t('viewKoreanPosts')}
+            </a>
+          </div>
         </header>
 
         {categories.length > 0 && (

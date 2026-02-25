@@ -27,7 +27,12 @@
     "allCategories": "All",
     "readingTime": "min read",
     "noPosts": "No posts yet.",
-    "minRead": "{minutes} min read"
+    "minRead": "{minutes} min read",
+    "readInEnglish": "Read in English",
+    "readInKorean": "한국어로 읽기",
+    "translationAvailable": "Translated",
+    "viewKoreanPosts": "View Korean posts",
+    "viewEnglishPosts": "View English posts"
   },
   "projects": {
     "title": "Projects",

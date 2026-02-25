@@ -8,6 +8,7 @@ import { TableOfContents } from '@/components/blog/TableOfContents'
 import { generateArticleJsonLd } from '@/lib/seo'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { SITE_URL, SITE_NAME } from '@/lib/constants'
+import { Globe } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export function generateStaticParams() {
@@ -108,9 +109,10 @@ export default async function BlogPostPage({
             {post.hasTranslation && (
               <a
                 href={locale === 'ko' ? `/en/blog/${slug}` : `/blog/${slug}`}
-                className="inline-block mt-3 text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                className="inline-flex items-center gap-1.5 mt-3 text-sm px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 hover:text-blue-300 transition-colors"
               >
-                {locale === 'ko' ? 'Read in English →' : '한국어로 읽기 →'}
+                <Globe size={14} />
+                {locale === 'ko' ? 'Read in English' : '한국어로 읽기'}
               </a>
             )}
           </header>

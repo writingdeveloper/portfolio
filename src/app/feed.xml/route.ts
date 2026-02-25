@@ -1,14 +1,9 @@
 import { getAllPosts } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
+import type { NextRequest } from 'next/server'
 
-export async function GET() {
-  const koPosts = getAllPosts('ko')
-  const enPosts = getAllPosts('en')
-  const allPosts = [...koPosts, ...enPosts].sort(
-    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  )
-
-  const items = allPosts
+function generateRss(posts: ReturnType<typeof getAllPosts>, lang?: string) {
+  const items = posts
     .map((post) => {
       const link = post.language === 'ko'
         ? `${SITE_URL}/blog/${post.slug}`
@@ -26,20 +21,41 @@ export async function GET() {
     })
     .join('')
 
-  const rss = `<?xml version="1.0" encoding="UTF-8"?>
+  const feedLang = lang || 'en'
+  const feedPath = lang ? `/${lang}/feed.xml` : '/feed.xml'
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
   <channel>
     <title>WritingDeveloper</title>
     <link>${SITE_URL}</link>
     <description>Dev stories, tech tutorials, and startup journey</description>
-    <language>en</language>
+    <language>${feedLang}</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <atom:link href="${SITE_URL}/feed.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="${SITE_URL}${feedPath}" rel="self" type="application/rss+xml"/>
     ${items}
   </channel>
 </rss>`
+}
 
-  return new Response(rss, {
+export async function GET(request: NextRequest) {
+  const { searchParams } = request.nextUrl
+  const lang = searchParams.get('lang')
+
+  let posts
+  if (lang === 'ko') {
+    posts = getAllPosts('ko')
+  } else if (lang === 'en') {
+    posts = getAllPosts('en')
+  } else {
+    const koPosts = getAllPosts('ko')
+    const enPosts = getAllPosts('en')
+    posts = [...koPosts, ...enPosts].sort(
+      (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+    )
+  }
+
+  return new Response(generateRss(posts, lang || undefined), {
     headers: {
       'Content-Type': 'application/rss+xml',
       'Cache-Control': 'public, max-age=3600, s-maxage=3600',
