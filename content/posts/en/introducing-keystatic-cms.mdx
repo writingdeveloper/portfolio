@@ -1,0 +1,33 @@
+---
+title: "Adopting Keystatic CMS"
+excerpt: "How I integrated Keystatic CMS into my blog to enable web-based content editing."
+publishedAt: "2026-02-23"
+author: "이시형"
+category: "Development"
+tags: ["keystatic", "cms", "nextjs"]
+coverImage: ""
+---
+
+# Adopting Keystatic CMS
+
+While running my blog, manually creating MDX files every time was inconvenient. I had to remember the frontmatter format, follow file naming conventions, and a single typo could break the build. That's why I decided to adopt Keystatic, a file-based CMS.
+
+## What is Keystatic?
+
+Keystatic is a file-based CMS built by Thinkmill. It provides a web-based editor UI while keeping the existing MDX/Markdown file structure intact. No database is needed, and content is stored directly in the Git repository.
+
+## Adoption Process
+
+The adoption was simpler than expected:
+
+1. Install `@keystatic/core` and `@keystatic/next` packages
+2. Define a collection in `keystatic.config.ts` matching the existing frontmatter schema
+3. Add an Admin UI route at `/keystatic` in the Next.js App Router
+4. Exclude the `/keystatic` path from the i18n middleware
+
+## Benefits
+
+- **Web-based editor**: Write and edit posts directly in the browser
+- **Preserves existing structure**: File-based, so no changes needed to the existing MDX reading logic
+- **Type safety**: Schema defined in TypeScript prevents frontmatter errors
+- **Local development friendly**: Just run `npm run dev` and access `/keystatic` right away
