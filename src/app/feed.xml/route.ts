@@ -2,21 +2,28 @@ import { getAllPosts } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
 
 export async function GET() {
-  const posts = getAllPosts()
+  const koPosts = getAllPosts('ko')
+  const enPosts = getAllPosts('en')
+  const allPosts = [...koPosts, ...enPosts].sort(
+    (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  )
 
-  const items = posts
-    .map(
-      (post) => `
+  const items = allPosts
+    .map((post) => {
+      const link = post.language === 'ko'
+        ? `${SITE_URL}/blog/${post.slug}`
+        : `${SITE_URL}/en/blog/${post.slug}`
+      return `
     <item>
       <title><![CDATA[${post.title}]]></title>
-      <link>${SITE_URL}/blog/${post.slug}</link>
-      <guid isPermaLink="true">${SITE_URL}/blog/${post.slug}</guid>
+      <link>${link}</link>
+      <guid isPermaLink="true">${link}</guid>
       <description><![CDATA[${post.excerpt || ''}]]></description>
       <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
       ${post.category ? `<category>${post.category}</category>` : ''}
-      <dc:language>${post.language || 'ko'}</dc:language>
+      <dc:language>${post.language}</dc:language>
     </item>`
-    )
+    })
     .join('')
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>

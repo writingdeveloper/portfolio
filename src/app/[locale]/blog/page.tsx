@@ -39,8 +39,8 @@ export default async function BlogPage({
   const { category } = await searchParams
   setRequestLocale(locale)
 
-  const allPosts = getAllPosts()
-  const categories = getCategories()
+  const allPosts = getAllPosts(locale)
+  const categories = getCategories(locale)
   const posts = category
     ? allPosts.filter((p) => p.category === category)
     : allPosts

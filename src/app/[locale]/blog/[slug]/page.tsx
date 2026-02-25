@@ -11,7 +11,9 @@ import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import type { Metadata } from 'next'
 
 export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }))
+  const koSlugs = getAllSlugs('ko').map((slug) => ({ slug }))
+  const enSlugs = getAllSlugs('en').map((slug) => ({ slug }))
+  return [...koSlugs, ...enSlugs]
 }
 
 export async function generateMetadata({
@@ -20,11 +22,20 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>
 }): Promise<Metadata> {
   const { locale, slug } = await params
-  const post = getPost(slug)
+  const post = getPost(slug, locale)
   if (!post) return {}
 
   const url = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
   const ogImage = post.coverImage || `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&description=${encodeURIComponent(post.excerpt || '')}`
+
+  const languages: Record<string, string> = {
+    ko: `${SITE_URL}/blog/${slug}`,
+    'x-default': `${SITE_URL}/blog/${slug}`,
+  }
+  if (post.hasTranslation || locale === 'en') {
+    languages.en = `${SITE_URL}/en/blog/${slug}`
+  }
+
   return {
     title: post.title,
     description: post.excerpt,
@@ -46,11 +57,7 @@ export async function generateMetadata({
     },
     alternates: {
       canonical: url,
-      languages: {
-        ko: `${SITE_URL}/blog/${slug}`,
-        en: `${SITE_URL}/en/blog/${slug}`,
-        'x-default': `${SITE_URL}/blog/${slug}`,
-      },
+      languages,
     },
   }
 }
@@ -63,7 +70,7 @@ export default async function BlogPostPage({
   const { locale, slug } = await params
   setRequestLocale(locale)
 
-  const post = getPost(slug)
+  const post = getPost(slug, locale)
   if (!post) notFound()
 
   const headings = extractHeadings(post.content)
@@ -98,6 +105,14 @@ export default async function BlogPostPage({
               <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}</time>
               <span>{post.readingTime}</span>
             </div>
+            {post.hasTranslation && (
+              <a
+                href={locale === 'ko' ? `/en/blog/${slug}` : `/blog/${slug}`}
+                className="inline-block mt-3 text-sm text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                {locale === 'ko' ? 'Read in English →' : '한국어로 읽기 →'}
+              </a>
+            )}
           </header>
 
           {/* Mobile TOC */}

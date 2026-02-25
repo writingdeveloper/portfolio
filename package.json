@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "untranslated": "npx tsx scripts/untranslated.ts"
   },
   "dependencies": {
     "@keystatic/core": "^0.5.48",

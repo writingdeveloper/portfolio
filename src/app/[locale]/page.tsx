@@ -18,7 +18,7 @@ export default async function HomePage({
   const { locale } = await params
   setRequestLocale(locale)
 
-  const posts = getAllPosts().slice(0, 3)
+  const posts = getAllPosts(locale).slice(0, 3)
   const featuredProjects = projects.filter((p) => p.featured)
 
   return <HomeContent posts={posts} projects={featuredProjects} />
