@@ -42,7 +42,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
       <div className="lg:hidden mb-8">
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center gap-2 text-sm font-medium text-gray-400 hover:text-white transition-colors"
+          className="flex items-center gap-2 text-sm font-medium text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors"
           aria-expanded={isOpen}
           aria-label={t('tableOfContents')}
         >
@@ -50,7 +50,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
           <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
         </button>
         {isOpen && (
-          <nav className="mt-3 pl-1 border-l border-gray-800" aria-label={t('tableOfContents')}>
+          <nav className="mt-3 pl-1 border-l border-[var(--border-default)]" aria-label={t('tableOfContents')}>
             <TocList headings={headings} activeId={activeId} onClick={() => setIsOpen(false)} />
           </nav>
         )}
@@ -59,8 +59,8 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
       {/* Desktop: sticky sidebar */}
       <aside className="hidden lg:block">
         <div className="sticky top-24">
-          <p className="text-sm font-medium text-gray-400 mb-3">{t('tableOfContents')}</p>
-          <nav className="pl-1 border-l border-gray-800" aria-label={t('tableOfContents')}>
+          <p className="text-sm font-medium text-[var(--text-secondary)] mb-3">{t('tableOfContents')}</p>
+          <nav className="pl-1 border-l border-[var(--border-default)]" aria-label={t('tableOfContents')}>
             <TocList headings={headings} activeId={activeId} />
           </nav>
         </div>
@@ -79,8 +79,8 @@ function TocList({ headings, activeId, onClick }: { headings: TocItem[]; activeI
             onClick={onClick}
             className={`text-sm block py-0.5 pl-3 border-l-2 transition-colors ${
               activeId === heading.id
-                ? 'border-blue-400 text-blue-400'
-                : 'border-transparent text-gray-500 hover:text-gray-300'
+                ? 'border-[var(--accent-text)] text-[var(--accent-text)]'
+                : 'border-transparent text-[var(--text-muted)] hover:text-[var(--text-secondary)]'
             }`}
           >
             {heading.text}

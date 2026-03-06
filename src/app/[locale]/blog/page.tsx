@@ -68,10 +68,10 @@ function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[];
         <header className="mb-12">
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>
           <div className="flex items-center justify-between">
-            <p className="text-gray-400">{t('description')}</p>
+            <p className="text-[var(--text-secondary)]">{t('description')}</p>
             <a
               href={locale === 'ko' ? '/en/blog' : '/blog'}
-              className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-gray-800 text-gray-300 hover:bg-gray-700 hover:text-white transition-colors whitespace-nowrap"
+              className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:bg-[var(--bg-elevated-hover)] hover:text-[var(--text-emphasis)] transition-colors whitespace-nowrap"
             >
               <Globe size={14} />
               {locale === 'ko' ? t('viewEnglishPosts') : t('viewKoreanPosts')}
@@ -90,7 +90,7 @@ function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[];
             ))}
           </div>
         ) : (
-          <p className="text-gray-500 text-center py-12">{t('noPosts')}</p>
+          <p className="text-[var(--text-muted)] text-center py-12">{t('noPosts')}</p>
         )}
       </div>
     </PageTransition>

@@ -1,0 +1,6 @@
+{
+  "categories": [
+    { "value": "development", "label": "Development" },
+    { "value": "essay", "label": "Essay" }
+  ]
+}

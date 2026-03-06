@@ -7,10 +7,10 @@ interface ProjectCardProps {
 }
 
 const statusColors: Record<string, string> = {
-  active: 'bg-emerald-500/20 text-emerald-400',
-  building: 'bg-amber-500/20 text-amber-400',
-  launched: 'bg-blue-500/20 text-blue-400',
-  archived: 'bg-gray-500/20 text-gray-400',
+  active: 'bg-[var(--status-active-bg)] text-[var(--status-active-text)]',
+  building: 'bg-[var(--status-building-bg)] text-[var(--status-building-text)]',
+  launched: 'bg-[var(--status-launched-bg)] text-[var(--status-launched-text)]',
+  archived: 'bg-[var(--status-archived-bg)] text-[var(--status-archived-text)]',
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
@@ -18,7 +18,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const locale = useLocale()
 
   return (
-    <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-4 sm:p-6 hover:border-gray-700 transition-all">
+    <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] p-4 sm:p-6 hover:border-[var(--border-hover)] transition-all">
       <div className="flex items-start gap-4 mb-4">
         <div className="flex-1">
           <div className="flex items-center gap-2">
@@ -30,7 +30,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             )}
           </div>
           {project.description && (
-            <p className="text-sm text-gray-400 mt-1">
+            <p className="text-sm text-[var(--text-secondary)] mt-1">
               {typeof project.description === 'string' ? project.description : project.description[locale] || project.description['ko']}
             </p>
           )}
@@ -40,7 +40,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
       {project.techStack?.length > 0 && (
         <div className="flex flex-wrap gap-1.5 mb-4">
           {project.techStack.map((tech) => (
-            <span key={tech} className="text-xs px-2 py-0.5 rounded bg-gray-800 text-gray-300">
+            <span key={tech} className="text-xs px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]">
               {tech}
             </span>
           ))}
@@ -50,13 +50,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex gap-3">
         {project.links.website && (
           <a href={project.links.website} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors">
+            className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
             <ExternalLink size={14} /> {t('viewProject')}
           </a>
         )}
         {project.links.github && (
           <a href={project.links.github} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white transition-colors">
+            className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
             <Github size={14} /> {t('viewCode')}
           </a>
         )}

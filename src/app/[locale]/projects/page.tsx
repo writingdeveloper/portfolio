@@ -56,7 +56,7 @@ function ProjectsContent() {
       <div>
         <header className="mb-12">
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>
-          <p className="text-gray-400">{t('description')}</p>
+          <p className="text-[var(--text-secondary)]">{t('description')}</p>
         </header>
 
         <div className="grid gap-6 sm:grid-cols-2">

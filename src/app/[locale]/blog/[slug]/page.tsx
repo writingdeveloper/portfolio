@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getPost, getAllSlugs, extractHeadings } from '@/lib/mdx'
+import { getPost, getAllSlugs, extractHeadings, getCategoryLabel } from '@/lib/mdx'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { mdxComponents } from '@/components/mdx/MdxComponents'
@@ -27,7 +27,9 @@ export async function generateMetadata({
   if (!post) return {}
 
   const url = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
-  const ogImage = post.coverImage || `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&description=${encodeURIComponent(post.excerpt || '')}`
+  const ogImage = post.coverImage
+    ? (post.coverImage.startsWith('http') ? post.coverImage : `${SITE_URL}${post.coverImage}`)
+    : `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&description=${encodeURIComponent(post.excerpt || '')}`
 
   const languages: Record<string, string> = {
     ko: `${SITE_URL}/blog/${slug}`,
@@ -78,7 +80,9 @@ export default async function BlogPostPage({
   const headings = extractHeadings(post.content)
   const postUrl = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
 
-  const ogImage = post.coverImage || `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&description=${encodeURIComponent(post.excerpt || '')}`
+  const ogImage = post.coverImage
+    ? (post.coverImage.startsWith('http') ? post.coverImage : `${SITE_URL}${post.coverImage}`)
+    : `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&description=${encodeURIComponent(post.excerpt || '')}`
 
   const jsonLd = generateArticleJsonLd({
     title: post.title,
@@ -115,12 +119,12 @@ export default async function BlogPostPage({
           )}
           <header className="mb-10">
             {post.category && (
-              <span className="text-sm text-blue-400 font-medium mb-4 block">
-                {post.category}
+              <span className="text-sm text-[var(--accent-text)] font-medium mb-4 block">
+                {getCategoryLabel(post.category)}
               </span>
             )}
             <h1 className="text-3xl sm:text-4xl font-bold mb-4">{post.title}</h1>
-            <div className="flex items-center gap-4 text-sm text-gray-400">
+            <div className="flex items-center gap-4 text-sm text-[var(--text-secondary)]">
               <span>{post.author}</span>
               <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}</time>
               <span>{post.readingTime}</span>
@@ -128,7 +132,7 @@ export default async function BlogPostPage({
             {post.hasTranslation && (
               <a
                 href={locale === 'ko' ? `/en/blog/${slug}` : `/blog/${slug}`}
-                className="inline-flex items-center gap-1.5 mt-3 text-sm px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 hover:text-blue-300 transition-colors"
+                className="inline-flex items-center gap-1.5 mt-3 text-sm px-3 py-1.5 rounded-full bg-[var(--accent-bg)] text-[var(--accent-text)] border border-[var(--accent-border)] hover:bg-[var(--accent-bg-active)] hover:text-[var(--accent-text-hover)] transition-colors"
               >
                 <Globe size={14} />
                 {locale === 'ko' ? t('readInEnglish') : t('readInKorean')}
@@ -146,10 +150,10 @@ export default async function BlogPostPage({
           </div>
 
           {post.tags?.length > 0 && (
-            <div className="mt-12 pt-6 border-t border-gray-800">
+            <div className="mt-12 pt-6 border-t border-[var(--border-default)]">
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
-                  <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-gray-800 text-gray-300">
+                  <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] text-[var(--text-secondary)]">
                     #{tag}
                   </span>
                 ))}

@@ -1,23 +1,37 @@
-import { config, fields, collection } from '@keystatic/core'
+import { config, fields, collection, singleton } from '@keystatic/core'
+import categoriesData from './content/categories.json'
+
+const categoryOptions = categoriesData.categories
 
 const postSchema = {
-  title: fields.slug({ name: { label: 'Title' } }),
-  excerpt: fields.text({ label: 'Excerpt', multiline: true }),
-  publishedAt: fields.date({ label: 'Published Date' }),
-  author: fields.text({ label: 'Author', defaultValue: '이시형' }),
-  category: fields.text({ label: 'Category' }),
-  tags: fields.array(fields.text({ label: 'Tag' }), {
-    label: 'Tags',
+  title: fields.slug({ name: { label: '제목' } }),
+  excerpt: fields.text({ label: '요약', multiline: true }),
+  publishedAt: fields.date({ label: '발행일' }),
+  author: fields.text({ label: '작성자', defaultValue: '이시형' }),
+  category: fields.select({
+    label: '카테고리',
+    options: categoryOptions,
+    defaultValue: categoryOptions[0]?.value || 'development',
+  }),
+  tags: fields.array(fields.text({ label: '태그' }), {
+    label: '태그 목록',
     itemLabel: (props) => props.value,
   }),
-  coverImage: fields.text({ label: 'Cover Image URL' }),
-  content: fields.mdx({ label: 'Content' }),
+  coverImage: fields.image({
+    label: '커버 이미지',
+    directory: 'public/images/posts',
+    publicPath: '/images/posts/',
+  }),
+  content: fields.mdx({ label: '본문' }),
 }
 
 export default config({
   storage: process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG
     ? { kind: 'github', repo: 'writingdeveloper/portfolio' }
     : { kind: 'local' },
+  ui: {
+    brand: { name: '블로그 관리' },
+  },
   collections: {
     'posts-ko': collection({
       label: '포스트 (한국어)',
@@ -27,11 +41,30 @@ export default config({
       schema: postSchema,
     }),
     'posts-en': collection({
-      label: 'Posts (English)',
+      label: '포스트 (English)',
       slugField: 'title',
       path: 'content/posts/en/*',
       format: { contentField: 'content' },
       schema: postSchema,
+    }),
+  },
+  singletons: {
+    categories: singleton({
+      label: '카테고리 관리',
+      path: 'content/categories',
+      format: 'json',
+      schema: {
+        categories: fields.array(
+          fields.object({
+            value: fields.text({ label: '값 (영문, URL용)' }),
+            label: fields.text({ label: '표시 이름' }),
+          }),
+          {
+            label: '카테고리 목록',
+            itemLabel: (props) => props.fields.label.value,
+          }
+        ),
+      },
     }),
   },
 })

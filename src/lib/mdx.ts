@@ -2,6 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import readingTime from 'reading-time'
+import categoriesData from '../../content/categories.json'
 
 const contentDirectory = path.join(process.cwd(), 'content', 'posts')
 
@@ -109,10 +110,8 @@ export function getAllSlugs(locale: string = 'ko'): string[] {
     .map((f) => f.replace(/\.mdx$/, ''))
 }
 
-export function getCategories(locale: string = 'ko'): string[] {
-  const posts = getAllPosts(locale)
-  const categories = new Set(posts.map((p) => p.category).filter(Boolean))
-  return Array.from(categories).sort()
+export function getCategories(_locale: string = 'ko'): string[] {
+  return categoriesData.categories.map((c) => c.label)
 }
 
 export function hasTranslation(slug: string, currentLocale: string): boolean {
@@ -148,4 +147,9 @@ export function extractHeadings(content: string): TocItem[] {
   }
 
   return headings
+}
+
+export function getCategoryLabel(value: string): string {
+  const found = categoriesData.categories.find((c) => c.value === value)
+  return found?.label || value
 }

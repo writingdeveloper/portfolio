@@ -31,7 +31,7 @@ async function CodeBlock(props: ComponentPropsWithoutRef<'pre'>) {
   const html = await highlightCode(code, lang)
 
   return (
-    <div className="my-6 rounded-lg overflow-hidden border border-gray-800 relative group">
+    <div className="my-6 rounded-lg overflow-hidden border border-[var(--border-default)] relative group">
       <div className="flex items-center justify-between px-4 py-2 bg-gray-800/50 text-xs text-gray-400">
         <span>{lang !== 'text' ? lang : ''}</span>
         <CopyButton code={code} />
@@ -62,7 +62,7 @@ export const mdxComponents = {
     const isExternal = props.href?.startsWith('http')
     return (
       <a
-        className="text-blue-400 hover:text-blue-300 underline underline-offset-2"
+        className="text-[var(--accent-text)] hover:text-[var(--accent-text-hover)] underline underline-offset-2"
         {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         {...props}
       />
@@ -72,13 +72,13 @@ export const mdxComponents = {
   ol: (props: ComponentPropsWithoutRef<'ol'>) => <ol className="list-decimal pl-6 my-4 space-y-1" {...props} />,
   li: (props: ComponentPropsWithoutRef<'li'>) => <li className="leading-relaxed" {...props} />,
   blockquote: (props: ComponentPropsWithoutRef<'blockquote'>) => (
-    <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-400 my-6" {...props} />
+    <blockquote className="border-l-4 border-blue-500 pl-4 italic text-[var(--text-secondary)] my-6" {...props} />
   ),
   code: (props: ComponentPropsWithoutRef<'code'>) => {
     if (props.className) {
       return <code {...props} />
     }
-    return <code className="bg-gray-800 px-1.5 py-0.5 rounded text-sm" {...props} />
+    return <code className="bg-[var(--inline-code-bg)] px-1.5 py-0.5 rounded text-sm" {...props} />
   },
   pre: CodeBlock,
   img: (props: ComponentPropsWithoutRef<'img'>) => (
@@ -86,6 +86,6 @@ export const mdxComponents = {
       <img className="rounded-lg w-full h-auto" loading="lazy" {...props} alt={props.alt || ''} />
     </figure>
   ),
-  strong: (props: ComponentPropsWithoutRef<'strong'>) => <strong className="font-semibold text-gray-100" {...props} />,
-  hr: () => <hr className="my-8 border-gray-800" />,
+  strong: (props: ComponentPropsWithoutRef<'strong'>) => <strong className="font-semibold text-[var(--text-primary)]" {...props} />,
+  hr: () => <hr className="my-8 border-[var(--border-default)]" />,
 }

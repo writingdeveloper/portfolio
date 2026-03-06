@@ -15,7 +15,7 @@ export default function Error({
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
       <h1 className="text-4xl font-bold">500</h1>
-      <p className="text-gray-400">{t('somethingWentWrong')}</p>
+      <p className="text-[var(--text-secondary)]">{t('somethingWentWrong')}</p>
       <div className="flex gap-3">
         <button
           onClick={reset}
@@ -25,7 +25,7 @@ export default function Error({
         </button>
         <Link
           href="/"
-          className="px-4 py-2 border border-gray-700 rounded-lg hover:bg-gray-800 transition-colors"
+          className="px-4 py-2 border border-[var(--border-hover)] rounded-lg hover:bg-[var(--bg-elevated)] transition-colors"
         >
           {tc('backToHome')}
         </Link>

@@ -17,8 +17,8 @@ export function CategoryFilter({ categories, activeCategory }: CategoryFilterPro
         href="/blog"
         className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
           !activeCategory
-            ? 'bg-blue-500/20 text-blue-400'
-            : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+            ? 'bg-[var(--accent-bg-active)] text-[var(--accent-text)]'
+            : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:bg-[var(--bg-elevated-hover)]'
         }`}
       >
         {t('allCategories')}
@@ -29,8 +29,8 @@ export function CategoryFilter({ categories, activeCategory }: CategoryFilterPro
           href={`/blog?category=${encodeURIComponent(cat)}`}
           className={`px-3 py-1.5 rounded-full text-sm transition-colors ${
             activeCategory === cat
-              ? 'bg-blue-500/20 text-blue-400'
-              : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+              ? 'bg-[var(--accent-bg-active)] text-[var(--accent-text)]'
+              : 'bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:bg-[var(--bg-elevated-hover)]'
           }`}
         >
           {cat}

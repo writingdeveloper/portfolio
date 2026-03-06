@@ -67,10 +67,10 @@ function AboutContent() {
       <div className="max-w-3xl mx-auto">
         <header className="mb-12">
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>
-          <p className="text-gray-400">{t('description')}</p>
+          <p className="text-[var(--text-secondary)]">{t('description')}</p>
         </header>
 
-        <div className="prose-content text-gray-300 space-y-6 mb-16">
+        <div className="prose-content text-[var(--text-secondary)] space-y-6 mb-16">
           <p>{t('body')}</p>
         </div>
 
@@ -80,14 +80,14 @@ function AboutContent() {
           <div className="space-y-6">
             {(Object.keys(groupedSkills) as Array<keyof typeof groupedSkills>).map((category) => (
               <div key={category}>
-                <h3 className="text-sm font-medium text-gray-400 mb-3">
+                <h3 className="text-sm font-medium text-[var(--text-secondary)] mb-3">
                   {skillCategories[category][locale as 'ko' | 'en']}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {groupedSkills[category].map((skill: Skill) => (
                     <span
                       key={skill.name}
-                      className="px-3 py-1.5 rounded-lg bg-gray-800 text-sm text-gray-200 border border-gray-700"
+                      className="px-3 py-1.5 rounded-lg bg-[var(--bg-elevated)] text-sm text-[var(--text-primary)] border border-[var(--border-hover)]"
                     >
                       {skill.name}
                     </span>
@@ -101,15 +101,15 @@ function AboutContent() {
         {/* Timeline */}
         <section>
           <h2 className="text-xl font-bold mb-6">{t('timeline')}</h2>
-          <div className="relative pl-6 border-l border-gray-800 space-y-8">
+          <div className="relative pl-6 border-l border-[var(--border-default)] space-y-8">
             {timeline.map((item: TimelineItem, i: number) => (
               <div key={i} className="relative">
-                <div className="absolute -left-[25px] w-3 h-3 rounded-full bg-blue-500 border-2 border-gray-950" />
-                <span className="text-xs text-gray-500 block mb-1">{item.date}</span>
-                <h3 className="font-semibold text-gray-100">
+                <div className="absolute -left-[25px] w-3 h-3 rounded-full bg-blue-500 border-2 border-[var(--bg-primary)]" />
+                <span className="text-xs text-[var(--text-muted)] block mb-1">{item.date}</span>
+                <h3 className="font-semibold text-[var(--text-primary)]">
                   {item.title[locale] || item.title['ko']}
                 </h3>
-                <p className="text-sm text-gray-400 mt-1">
+                <p className="text-sm text-[var(--text-secondary)] mt-1">
                   {item.description[locale] || item.description['ko']}
                 </p>
               </div>

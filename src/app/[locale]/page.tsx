@@ -63,16 +63,16 @@ function HomeContent({ posts, projects: featuredProjects, locale }: { posts: Pos
       />
       <div className="space-y-20">
         <section className="pt-12 pb-8">
-          <p className="text-gray-400 text-lg mb-2">{t('hero.greeting')}</p>
+          <p className="text-[var(--text-secondary)] text-lg mb-2">{t('hero.greeting')}</p>
           <h1 className="text-4xl sm:text-5xl font-bold mb-4">{t('hero.name')}</h1>
-          <p className="text-xl text-blue-400 mb-4">{t('hero.role')}</p>
-          <p className="text-gray-400 max-w-xl text-lg">{t('hero.description')}</p>
+          <p className="text-xl text-[var(--accent-text)] mb-4">{t('hero.role')}</p>
+          <p className="text-[var(--text-secondary)] max-w-xl text-lg">{t('hero.description')}</p>
         </section>
 
         <section>
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-2xl font-bold">{t('latestPosts')}</h2>
-            <Link href="/blog" className="flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 transition-colors">
+            <Link href="/blog" className="flex items-center gap-1 text-sm text-[var(--accent-text)] hover:text-[var(--accent-text-hover)] transition-colors">
               {t('viewAll')} <ArrowRight size={14} />
             </Link>
           </div>
@@ -83,7 +83,7 @@ function HomeContent({ posts, projects: featuredProjects, locale }: { posts: Pos
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 text-center py-12">{t('noPosts')}</p>
+            <p className="text-[var(--text-muted)] text-center py-12">{t('noPosts')}</p>
           )}
         </section>
 

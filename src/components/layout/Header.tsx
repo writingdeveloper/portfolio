@@ -38,7 +38,7 @@ export function Header() {
   }, [mobileOpen])
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-800/50 bg-gray-950/80 backdrop-blur-md">
+    <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--header-bg)] backdrop-blur-md transition-colors duration-200">
       <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="text-lg font-bold tracking-tight">
           WritingDeveloper
@@ -49,7 +49,7 @@ export function Header() {
             <Link
               key={link.key}
               href={link.href}
-              className="text-sm text-gray-400 hover:text-white transition-colors"
+              className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors"
             >
               {t(link.key)}
             </Link>
@@ -60,7 +60,7 @@ export function Header() {
           <LanguageToggle />
           <ThemeToggle />
           <button
-            className="md:hidden p-2.5 rounded-lg hover:bg-gray-800 transition-colors"
+            className="md:hidden p-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={ta('toggleMenu')}
             aria-expanded={mobileOpen}
@@ -78,14 +78,14 @@ export function Header() {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden overflow-hidden border-t border-gray-800/50"
+            className="md:hidden overflow-hidden border-t border-[var(--border-subtle)]"
           >
             <div className="px-4 py-4 flex flex-col gap-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.key}
                   href={link.href}
-                  className="text-gray-400 hover:text-white transition-colors py-2.5"
+                  className="text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors py-2.5"
                   onClick={closeMobile}
                 >
                   {t(link.key)}
