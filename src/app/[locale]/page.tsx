@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getAllPosts } from '@/lib/mdx'
 import type { PostMeta } from '@/lib/mdx'
 import { projects } from '../../../content/projects'
@@ -9,6 +9,33 @@ import { ArrowRight } from 'lucide-react'
 import { PostCard } from '@/components/blog/PostCard'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
+import { generateWebsiteJsonLd } from '@/lib/seo'
+import { SITE_URL, SITE_NAME } from '@/lib/constants'
+import type { Metadata } from 'next'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const t = await getTranslations({ locale, namespace: 'home' })
+  const localePath = locale === 'ko' ? '' : `/${locale}`
+  const pageUrl = `${SITE_URL}${localePath}`
+  return {
+    title: { absolute: `${t('hero.name')} - ${t('hero.role')} | ${SITE_NAME}` },
+    description: t('hero.description'),
+    openGraph: {
+      url: pageUrl,
+      title: `${t('hero.name')} - ${t('hero.role')}`,
+      description: t('hero.description'),
+    },
+    alternates: {
+      canonical: pageUrl,
+      languages: { ko: SITE_URL, en: `${SITE_URL}/en`, 'x-default': SITE_URL },
+    },
+  }
+}
 
 export default async function HomePage({
   params,
@@ -21,14 +48,19 @@ export default async function HomePage({
   const posts = getAllPosts(locale).slice(0, 3)
   const featuredProjects = projects.filter((p) => p.featured)
 
-  return <HomeContent posts={posts} projects={featuredProjects} />
+  return <HomeContent posts={posts} projects={featuredProjects} locale={locale} />
 }
 
-function HomeContent({ posts, projects: featuredProjects }: { posts: PostMeta[]; projects: Project[] }) {
+function HomeContent({ posts, projects: featuredProjects, locale }: { posts: PostMeta[]; projects: Project[]; locale: string }) {
   const t = useTranslations('home')
+  const webSiteJsonLd = generateWebsiteJsonLd(locale)
 
   return (
     <PageTransition>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
+      />
       <div className="space-y-20">
         <section className="pt-12 pb-8">
           <p className="text-gray-400 text-lg mb-2">{t('hero.greeting')}</p>

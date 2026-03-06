@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
-import { getMessages, setRequestLocale } from 'next-intl/server'
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
@@ -74,6 +74,7 @@ export default async function LocaleLayout({
   }
 
   setRequestLocale(locale)
+  const ta = await getTranslations({ locale, namespace: 'accessibility' })
   const messages = await getMessages()
 
   return (
@@ -88,7 +89,7 @@ export default async function LocaleLayout({
       <body className={`${inter.variable} font-sans antialiased bg-gray-950 text-gray-100 min-h-screen`}>
         <NextIntlClientProvider messages={messages}>
           <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-blue-500 focus:text-white focus:rounded-lg">
-            Skip to content
+            {ta('skipToContent')}
           </a>
           <Header />
           <main id="main-content" className="max-w-5xl mx-auto px-4 py-8">

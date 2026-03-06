@@ -5,6 +5,11 @@ import readingTime from 'reading-time'
 
 const contentDirectory = path.join(process.cwd(), 'content', 'posts')
 
+export interface FaqItem {
+  question: string
+  answer: string
+}
+
 export interface PostMeta {
   slug: string
   title: string
@@ -18,6 +23,7 @@ export interface PostMeta {
   readingTime: string
   readingTimeMinutes: number
   hasTranslation: boolean
+  faqs: FaqItem[]
 }
 
 export interface Post extends PostMeta {
@@ -68,6 +74,7 @@ export function getPostMeta(slug: string, locale: string = 'ko'): PostMeta | nul
       readingTime: stats.text,
       readingTimeMinutes: Math.ceil(stats.minutes),
       hasTranslation: hasTranslation(slug, locale),
+      faqs: Array.isArray(data.faqs) ? data.faqs : [],
     }
   } catch {
     return null

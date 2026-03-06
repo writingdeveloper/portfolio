@@ -5,6 +5,8 @@ import { projects } from '../../../../content/projects'
 import { SITE_URL } from '@/lib/constants'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
+import { generateBreadcrumbJsonLd } from '@/lib/seo'
+import { useLocale } from 'next-intl'
 
 export async function generateMetadata({
   params,
@@ -39,9 +41,18 @@ export default async function ProjectsPage({
 
 function ProjectsContent() {
   const t = useTranslations('projects')
+  const locale = useLocale()
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: locale === 'ko' ? '홈' : 'Home', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}` },
+    { name: locale === 'ko' ? '프로젝트' : 'Projects', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/projects` },
+  ])
 
   return (
     <PageTransition>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div>
         <header className="mb-12">
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>

@@ -1,11 +1,11 @@
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getPost, getAllSlugs, extractHeadings } from '@/lib/mdx'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { mdxComponents } from '@/components/mdx/MdxComponents'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { TableOfContents } from '@/components/blog/TableOfContents'
-import { generateArticleJsonLd } from '@/lib/seo'
+import { generateArticleJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import { Globe } from 'lucide-react'
@@ -70,6 +70,7 @@ export default async function BlogPostPage({
 }) {
   const { locale, slug } = await params
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: 'blog' })
 
   const post = getPost(slug, locale)
   if (!post) notFound()
@@ -77,13 +78,22 @@ export default async function BlogPostPage({
   const headings = extractHeadings(post.content)
   const postUrl = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
 
+  const ogImage = post.coverImage || `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&description=${encodeURIComponent(post.excerpt || '')}`
+
   const jsonLd = generateArticleJsonLd({
     title: post.title,
     description: post.excerpt,
     url: postUrl,
+    imageUrl: ogImage,
     publishedAt: post.publishedAt,
     authorName: post.author,
   })
+
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: locale === 'ko' ? '홈' : 'Home', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}` },
+    { name: locale === 'ko' ? '블로그' : 'Blog', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/blog` },
+    { name: post.title, url: postUrl },
+  ])
 
   return (
     <PageTransition>
@@ -93,7 +103,10 @@ export default async function BlogPostPage({
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
           />
-
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+          />
           <header className="mb-10">
             {post.category && (
               <span className="text-sm text-blue-400 font-medium mb-4 block">
@@ -112,7 +125,7 @@ export default async function BlogPostPage({
                 className="inline-flex items-center gap-1.5 mt-3 text-sm px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20 hover:bg-blue-500/20 hover:text-blue-300 transition-colors"
               >
                 <Globe size={14} />
-                {locale === 'ko' ? 'Read in English' : '한국어로 읽기'}
+                {locale === 'ko' ? t('readInEnglish') : t('readInKorean')}
               </a>
             )}
           </header>

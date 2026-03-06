@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server'
 import { SITE_URL } from '@/lib/constants'
 import { skills, timeline, skillCategories } from '../../../../content/about'
 import type { Skill, TimelineItem } from '../../../../content/about'
+import { generatePersonJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo'
 
 export async function generateMetadata({
   params,
@@ -41,6 +42,11 @@ export default async function AboutPage({
 function AboutContent() {
   const t = useTranslations('about')
   const locale = useLocale()
+  const personJsonLd = generatePersonJsonLd(locale)
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: locale === 'ko' ? '홈' : 'Home', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}` },
+    { name: locale === 'ko' ? '소개' : 'About', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/about` },
+  ])
 
   const groupedSkills = {
     frontend: skills.filter((s) => s.category === 'frontend'),
@@ -50,6 +56,14 @@ function AboutContent() {
 
   return (
     <PageTransition>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div className="max-w-3xl mx-auto">
         <header className="mb-12">
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>

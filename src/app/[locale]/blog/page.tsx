@@ -7,6 +7,7 @@ import type { PostMeta } from '@/lib/mdx'
 import { PostCard } from '@/components/blog/PostCard'
 import { CategoryFilter } from '@/components/blog/CategoryFilter'
 import { PageTransition } from '@/components/ui/PageTransition'
+import { generateBreadcrumbJsonLd } from '@/lib/seo'
 import { Globe } from 'lucide-react'
 
 export async function generateMetadata({
@@ -52,9 +53,17 @@ export default async function BlogPage({
 function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[]; categories: string[]; activeCategory: string | null }) {
   const t = useTranslations('blog')
   const locale = useLocale()
+  const breadcrumbJsonLd = generateBreadcrumbJsonLd([
+    { name: locale === 'ko' ? '홈' : 'Home', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}` },
+    { name: locale === 'ko' ? '블로그' : 'Blog', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/blog` },
+  ])
 
   return (
     <PageTransition>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <div>
         <header className="mb-12">
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>
