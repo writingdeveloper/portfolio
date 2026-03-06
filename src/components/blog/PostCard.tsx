@@ -5,9 +5,10 @@ import type { PostMeta } from '@/lib/mdx'
 
 interface PostCardProps {
   post: PostMeta
+  categoryLabel?: string
 }
 
-export function PostCard({ post }: PostCardProps) {
+export function PostCard({ post, categoryLabel }: PostCardProps) {
   const locale = useLocale()
   const t = useTranslations('blog')
 
@@ -18,7 +19,7 @@ export function PostCard({ post }: PostCardProps) {
           <div className="flex items-center justify-between mb-2">
             {post.category && (
               <span className="text-xs text-[var(--accent-text)] font-medium">
-                {post.category}
+                {categoryLabel || post.category}
               </span>
             )}
             {post.hasTranslation && (

@@ -110,8 +110,13 @@ export function getAllSlugs(locale: string = 'ko'): string[] {
     .map((f) => f.replace(/\.mdx$/, ''))
 }
 
-export function getCategories(_locale: string = 'ko'): string[] {
-  return categoriesData.categories.map((c) => c.label)
+export interface CategoryItem {
+  value: string
+  label: string
+}
+
+export function getCategories(_locale: string = 'ko'): CategoryItem[] {
+  return categoriesData.categories
 }
 
 export function hasTranslation(slug: string, currentLocale: string): boolean {

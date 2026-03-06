@@ -3,7 +3,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getAllPosts, getCategories } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
-import type { PostMeta } from '@/lib/mdx'
+import type { PostMeta, CategoryItem } from '@/lib/mdx'
 import { PostCard } from '@/components/blog/PostCard'
 import { CategoryFilter } from '@/components/blog/CategoryFilter'
 import { PageTransition } from '@/components/ui/PageTransition'
@@ -50,9 +50,10 @@ export default async function BlogPage({
   return <BlogContent posts={posts} categories={categories} activeCategory={category || null} />
 }
 
-function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[]; categories: string[]; activeCategory: string | null }) {
+function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[]; categories: CategoryItem[]; activeCategory: string | null }) {
   const t = useTranslations('blog')
   const locale = useLocale()
+  const categoryMap = Object.fromEntries(categories.map((c) => [c.value, c.label]))
   const breadcrumbJsonLd = generateBreadcrumbJsonLd([
     { name: locale === 'ko' ? '홈' : 'Home', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}` },
     { name: locale === 'ko' ? '블로그' : 'Blog', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/blog` },
@@ -86,7 +87,7 @@ function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[];
         {posts.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (
-              <PostCard key={post.slug} post={post} />
+              <PostCard key={post.slug} post={post} categoryLabel={categoryMap[post.category]} />
             ))}
           </div>
         ) : (
