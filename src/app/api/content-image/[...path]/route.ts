@@ -36,7 +36,11 @@ export async function GET(
     return new NextResponse('Forbidden', { status: 403 })
   }
 
-  const filePath = path.join(CONTENT_DIR, locale, slug, 'content', filename)
+  // Check both direct (Keystatic directory mode) and content/ subdirectory
+  let filePath = path.join(CONTENT_DIR, locale, slug, filename)
+  if (!fs.existsSync(filePath)) {
+    filePath = path.join(CONTENT_DIR, locale, slug, 'content', filename)
+  }
 
   if (!fs.existsSync(filePath)) {
     return new NextResponse('Not found', { status: 404 })

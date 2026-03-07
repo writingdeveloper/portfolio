@@ -46,14 +46,14 @@ export default config({
     'posts-ko': collection({
       label: '포스트 (한국어)',
       slugField: 'title',
-      path: 'content/posts/ko/*',
+      path: 'content/posts/ko/*/',
       format: { contentField: 'content' },
       schema: postSchema,
     }),
     'posts-en': collection({
       label: '포스트 (English)',
       slugField: 'title',
-      path: 'content/posts/en/*',
+      path: 'content/posts/en/*/',
       format: { contentField: 'content' },
       schema: postSchema,
     }),
