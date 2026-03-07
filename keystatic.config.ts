@@ -22,7 +22,12 @@ const postSchema = {
     directory: 'public/images/posts',
     publicPath: '/images/posts/',
   }),
-  content: fields.mdx({ label: '본문' }),
+  content: fields.mdx({
+    label: '본문',
+    options: {
+      image: true,
+    },
+  }),
   faqs: fields.array(
     fields.object({
       question: fields.text({ label: '질문' }),
