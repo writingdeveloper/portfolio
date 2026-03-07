@@ -37,7 +37,16 @@
     "clearFilter": "필터 해제",
     "relatedPosts": "관련 글",
     "searchPlaceholder": "글 검색...",
-    "noSearchResults": "검색 결과가 없습니다."
+    "noSearchResults": "검색 결과가 없습니다.",
+    "pagination": "페이지 네비게이션",
+    "previousPage": "이전 페이지",
+    "nextPage": "다음 페이지",
+    "comments": "댓글",
+    "newsletterTitle": "뉴스레터 구독",
+    "newsletterDescription": "새로운 글이 올라올 때 알림을 받아보세요.",
+    "newsletterPlaceholder": "이메일 주소",
+    "newsletterSubscribe": "구독",
+    "newsletterThanks": "구독해주셔서 감사합니다!"
   },
   "projects": {
     "title": "프로젝트",

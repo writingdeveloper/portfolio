@@ -37,7 +37,16 @@
     "clearFilter": "Clear filter",
     "relatedPosts": "Related Posts",
     "searchPlaceholder": "Search posts...",
-    "noSearchResults": "No results found."
+    "noSearchResults": "No results found.",
+    "pagination": "Page navigation",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "comments": "Comments",
+    "newsletterTitle": "Subscribe to Newsletter",
+    "newsletterDescription": "Get notified when new posts are published.",
+    "newsletterPlaceholder": "Email address",
+    "newsletterSubscribe": "Subscribe",
+    "newsletterThanks": "Thanks for subscribing!"
   },
   "projects": {
     "title": "Projects",

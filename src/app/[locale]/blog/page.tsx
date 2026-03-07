@@ -10,6 +10,8 @@ import { PageTransition } from '@/components/ui/PageTransition'
 import { generateBreadcrumbJsonLd } from '@/lib/seo'
 import { Globe } from 'lucide-react'
 import { SearchBar } from '@/components/blog/SearchBar'
+import { Pagination } from '@/components/blog/Pagination'
+import { Newsletter } from '@/components/blog/Newsletter'
 
 export async function generateMetadata({
   params,
@@ -41,10 +43,10 @@ export default async function BlogPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ category?: string; tag?: string }>
+  searchParams: Promise<{ category?: string; tag?: string; page?: string }>
 }) {
   const { locale } = await params
-  const { category, tag } = await searchParams
+  const { category, tag, page: pageStr } = await searchParams
   setRequestLocale(locale)
 
   const allPosts = getAllPosts(locale)
@@ -58,12 +60,17 @@ export default async function BlogPage({
     ? posts.filter((p) => p.tags.includes(tag))
     : posts
 
+  const POSTS_PER_PAGE = 9
+  const currentPage = Math.max(1, parseInt(pageStr || '1', 10) || 1)
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
+  const paginatedPosts = filteredPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE)
+
   const allTags = getAllTags(locale)
 
-  return <BlogContent posts={filteredPosts} allPosts={allPosts} categories={categories} activeCategory={validCategory} activeTag={tag || null} />
+  return <BlogContent posts={paginatedPosts} allPosts={allPosts} categories={categories} activeCategory={validCategory} activeTag={tag || null} currentPage={currentPage} totalPages={totalPages} />
 }
 
-function BlogContent({ posts, allPosts, categories, activeCategory, activeTag }: { posts: PostMeta[]; allPosts: PostMeta[]; categories: CategoryItem[]; activeCategory: string | null; activeTag: string | null }) {
+function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, currentPage, totalPages }: { posts: PostMeta[]; allPosts: PostMeta[]; categories: CategoryItem[]; activeCategory: string | null; activeTag: string | null; currentPage: number; totalPages: number }) {
   const t = useTranslations('blog')
   const locale = useLocale()
   const categoryMap = Object.fromEntries(categories.map((c) => [c.value, c.label]))
@@ -120,6 +127,13 @@ function BlogContent({ posts, allPosts, categories, activeCategory, activeTag }:
         ) : (
           <p className="text-[var(--text-muted)] text-center py-12">{t('noPosts')}</p>
         )}
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          basePath="/blog"
+          queryString={activeCategory ? `?category=${activeCategory}` : activeTag ? `?tag=${activeTag}` : ''}
+        />
+        <Newsletter />
       </div>
     </PageTransition>
   )

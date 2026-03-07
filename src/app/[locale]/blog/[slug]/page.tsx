@@ -12,6 +12,7 @@ import { Globe } from 'lucide-react'
 import type { Metadata } from 'next'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
+import { Comments } from '@/components/blog/Comments'
 
 function getOgImageUrl(post: { coverImage: string; title: string; excerpt: string }) {
   if (post.coverImage) {
@@ -179,6 +180,7 @@ export default async function BlogPostPage({
           />
 
           <RelatedPosts posts={getRelatedPosts(slug, locale)} />
+          <Comments />
         </article>
 
         {/* Desktop TOC */}

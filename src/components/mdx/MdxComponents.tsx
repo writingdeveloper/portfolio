@@ -17,7 +17,7 @@ function extractText(node: React.ReactNode): string {
   if (typeof node === 'string') return node
   if (Array.isArray(node)) return node.map(extractText).join('')
   if (node && typeof node === 'object' && 'props' in node) {
-    return extractText((node as any).props.children)
+    return extractText((node as React.ReactElement<{ children?: React.ReactNode }>).props.children)
   }
   return ''
 }
@@ -32,7 +32,7 @@ function createSlugCounter() {
 }
 
 async function CodeBlock(props: ComponentPropsWithoutRef<'pre'>) {
-  const codeChild = props.children as any
+  const codeChild = props.children as React.ReactElement<{ className?: string; children?: React.ReactNode }>
   const className = codeChild?.props?.className || ''
   const lang = className.replace(/language-/, '') || 'text'
   const code = extractText(codeChild?.props?.children).replace(/\n$/, '')
