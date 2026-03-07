@@ -6,6 +6,7 @@ export function generateArticleJsonLd({
   url,
   imageUrl,
   publishedAt,
+  dateModified,
   authorName,
 }: {
   title: string
@@ -13,6 +14,7 @@ export function generateArticleJsonLd({
   url: string
   imageUrl?: string
   publishedAt: string
+  dateModified?: string
   authorName: string
 }) {
   return {
@@ -23,7 +25,7 @@ export function generateArticleJsonLd({
     url,
     ...(imageUrl ? { image: imageUrl } : {}),
     datePublished: publishedAt,
-    dateModified: publishedAt,
+    dateModified: dateModified || publishedAt,
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': url,

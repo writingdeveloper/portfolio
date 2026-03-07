@@ -50,7 +50,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
           <ChevronDown size={16} className={`transition-transform ${isOpen ? 'rotate-180' : ''}`} />
         </button>
         {isOpen && (
-          <nav className="mt-3 pl-1 border-l border-[var(--border-default)]" aria-label={t('tableOfContents')}>
+          <nav className="mt-3 pl-1 border-l border-[var(--border-default)]" aria-label={`${t('tableOfContents')} (mobile)`}>
             <TocList headings={headings} activeId={activeId} onClick={() => setIsOpen(false)} />
           </nav>
         )}
@@ -60,7 +60,7 @@ export function TableOfContents({ headings }: TableOfContentsProps) {
       <aside className="hidden lg:block">
         <div className="sticky top-24">
           <p className="text-sm font-medium text-[var(--text-secondary)] mb-3">{t('tableOfContents')}</p>
-          <nav className="pl-1 border-l border-[var(--border-default)]" aria-label={t('tableOfContents')}>
+          <nav className="pl-1 border-l border-[var(--border-default)]" aria-label={`${t('tableOfContents')} (desktop)`}>
             <TocList headings={headings} activeId={activeId} />
           </nav>
         </div>

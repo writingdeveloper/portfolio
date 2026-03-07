@@ -3,6 +3,7 @@ import { getAllPosts, hasTranslation } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const buildDate = new Date().toISOString()
   const koPosts = getAllPosts('ko')
   const enPosts = getAllPosts('en')
 
@@ -23,14 +24,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return [
       {
         url: `${SITE_URL}${page}`,
-        lastModified: new Date(),
+        lastModified: buildDate,
         changeFrequency,
         priority,
         alternates,
       },
       {
         url: `${SITE_URL}/en${page}`,
-        lastModified: new Date(),
+        lastModified: buildDate,
         changeFrequency,
         priority: Math.max(priority - 0.1, 0.5),
         alternates,

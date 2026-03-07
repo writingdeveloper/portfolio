@@ -35,17 +35,37 @@ function getLocaleDirectory(locale: string): string {
   return path.join(contentDirectory, locale)
 }
 
+function resolvePostPath(slug: string, locale: string): string | null {
+  const dir = getLocaleDirectory(locale)
+  // Directory format: slug/index.mdx (Keystatic with images)
+  const dirPath = path.join(dir, slug, 'index.mdx')
+  if (fs.existsSync(dirPath)) return dirPath
+  // Flat format: slug.mdx
+  const flatPath = path.join(dir, `${slug}.mdx`)
+  if (fs.existsSync(flatPath)) return flatPath
+  return null
+}
+
 export function getAllPosts(locale: string = 'ko'): PostMeta[] {
   const dir = getLocaleDirectory(locale)
   if (!fs.existsSync(dir)) return []
 
-  const files = fs.readdirSync(dir).filter((f) => f.endsWith('.mdx'))
+  const entries = fs.readdirSync(dir, { withFileTypes: true })
+  const slugs: string[] = []
 
-  const posts = files
-    .map((filename) => {
-      const slug = filename.replace(/\.mdx$/, '')
-      return getPostMeta(slug, locale)
-    })
+  for (const entry of entries) {
+    if (entry.isFile() && entry.name.endsWith('.mdx')) {
+      slugs.push(entry.name.replace(/\.mdx$/, ''))
+    } else if (entry.isDirectory()) {
+      const indexPath = path.join(dir, entry.name, 'index.mdx')
+      if (fs.existsSync(indexPath)) {
+        slugs.push(entry.name)
+      }
+    }
+  }
+
+  const posts = slugs
+    .map((slug) => getPostMeta(slug, locale))
     .filter((post): post is PostMeta => post !== null)
 
   return posts.sort(
@@ -54,8 +74,8 @@ export function getAllPosts(locale: string = 'ko'): PostMeta[] {
 }
 
 export function getPostMeta(slug: string, locale: string = 'ko'): PostMeta | null {
-  const filePath = path.join(getLocaleDirectory(locale), `${slug}.mdx`)
-  if (!fs.existsSync(filePath)) return null
+  const filePath = resolvePostPath(slug, locale)
+  if (!filePath) return null
 
   try {
     const fileContent = fs.readFileSync(filePath, 'utf-8')
@@ -83,8 +103,8 @@ export function getPostMeta(slug: string, locale: string = 'ko'): PostMeta | nul
 }
 
 export function getPost(slug: string, locale: string = 'ko'): Post | null {
-  const filePath = path.join(getLocaleDirectory(locale), `${slug}.mdx`)
-  if (!fs.existsSync(filePath)) return null
+  const filePath = resolvePostPath(slug, locale)
+  if (!filePath) return null
 
   try {
     const fileContent = fs.readFileSync(filePath, 'utf-8')
@@ -92,9 +112,16 @@ export function getPost(slug: string, locale: string = 'ko'): Post | null {
     const meta = getPostMeta(slug, locale)
     if (!meta) return null
 
+    // Rewrite relative image paths to API route
+    const rewrittenContent = content.replace(
+      /!\[([^\]]*)\]\((?!https?:\/\/|\/)([\w\-. ]+\.(png|jpg|jpeg|gif|webp|svg|avif))\)/gi,
+      (_, alt, filename) =>
+        `![${alt}](/api/content-image/${locale}/${slug}/${encodeURIComponent(filename)})`
+    )
+
     return {
       ...meta,
-      content,
+      content: rewrittenContent,
     }
   } catch {
     return null
@@ -104,10 +131,18 @@ export function getPost(slug: string, locale: string = 'ko'): Post | null {
 export function getAllSlugs(locale: string = 'ko'): string[] {
   const dir = getLocaleDirectory(locale)
   if (!fs.existsSync(dir)) return []
-  return fs
-    .readdirSync(dir)
-    .filter((f) => f.endsWith('.mdx'))
-    .map((f) => f.replace(/\.mdx$/, ''))
+  const entries = fs.readdirSync(dir, { withFileTypes: true })
+  const slugs: string[] = []
+  for (const entry of entries) {
+    if (entry.isFile() && entry.name.endsWith('.mdx')) {
+      slugs.push(entry.name.replace(/\.mdx$/, ''))
+    } else if (entry.isDirectory()) {
+      if (fs.existsSync(path.join(dir, entry.name, 'index.mdx'))) {
+        slugs.push(entry.name)
+      }
+    }
+  }
+  return slugs
 }
 
 export interface CategoryItem {
@@ -121,8 +156,7 @@ export function getCategories(_locale: string = 'ko'): CategoryItem[] {
 
 export function hasTranslation(slug: string, currentLocale: string): boolean {
   const targetLocale = currentLocale === 'ko' ? 'en' : 'ko'
-  const targetPath = path.join(getLocaleDirectory(targetLocale), `${slug}.mdx`)
-  return fs.existsSync(targetPath)
+  return resolvePostPath(slug, targetLocale) !== null
 }
 
 export interface TocItem {
@@ -134,16 +168,20 @@ export interface TocItem {
 export function extractHeadings(content: string): TocItem[] {
   const headingRegex = /^(#{2,3})\s+(.+)$/gm
   const headings: TocItem[] = []
+  const slugCounts = new Map<string, number>()
   let match
 
   while ((match = headingRegex.exec(content)) !== null) {
     const text = match[2].trim()
-    const id = text
+    const baseId = text
       .toLowerCase()
       .replace(/[^a-z0-9가-힣\s-]/g, '')
       .replace(/\s+/g, '-')
       .replace(/-+/g, '-')
       .trim()
+    const count = slugCounts.get(baseId) || 0
+    slugCounts.set(baseId, count + 1)
+    const id = count === 0 ? baseId : `${baseId}-${count}`
     headings.push({
       id,
       text,

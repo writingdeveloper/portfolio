@@ -23,6 +23,16 @@ const postSchema = {
     publicPath: '/images/posts/',
   }),
   content: fields.mdx({ label: '본문' }),
+  faqs: fields.array(
+    fields.object({
+      question: fields.text({ label: '질문' }),
+      answer: fields.text({ label: '답변', multiline: true }),
+    }),
+    {
+      label: 'FAQ',
+      itemLabel: (props) => props.fields.question.value,
+    }
+  ),
 }
 
 export default config({

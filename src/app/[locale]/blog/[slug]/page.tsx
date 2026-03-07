@@ -11,6 +11,15 @@ import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import { Globe } from 'lucide-react'
 import type { Metadata } from 'next'
 
+function getOgImageUrl(post: { coverImage: string; title: string; excerpt: string }) {
+  if (post.coverImage) {
+    return post.coverImage.startsWith('http') ? post.coverImage : `${SITE_URL}${post.coverImage}`
+  }
+  const title = post.title.length > 60 ? post.title.slice(0, 57) + '...' : post.title
+  const desc = (post.excerpt || '').length > 100 ? (post.excerpt || '').slice(0, 97) + '...' : (post.excerpt || '')
+  return `${SITE_URL}/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(desc)}`
+}
+
 export function generateStaticParams() {
   const koSlugs = getAllSlugs('ko').map((slug) => ({ slug }))
   const enSlugs = getAllSlugs('en').map((slug) => ({ slug }))
@@ -27,9 +36,7 @@ export async function generateMetadata({
   if (!post) return {}
 
   const url = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
-  const ogImage = post.coverImage
-    ? (post.coverImage.startsWith('http') ? post.coverImage : `${SITE_URL}${post.coverImage}`)
-    : `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&description=${encodeURIComponent(post.excerpt || '')}`
+  const ogImage = getOgImageUrl(post)
 
   const languages: Record<string, string> = {
     ko: `${SITE_URL}/blog/${slug}`,
@@ -80,9 +87,7 @@ export default async function BlogPostPage({
   const headings = extractHeadings(post.content)
   const postUrl = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
 
-  const ogImage = post.coverImage
-    ? (post.coverImage.startsWith('http') ? post.coverImage : `${SITE_URL}${post.coverImage}`)
-    : `${SITE_URL}/api/og?title=${encodeURIComponent(post.title)}&description=${encodeURIComponent(post.excerpt || '')}`
+  const ogImage = getOgImageUrl(post)
 
   const jsonLd = generateArticleJsonLd({
     title: post.title,

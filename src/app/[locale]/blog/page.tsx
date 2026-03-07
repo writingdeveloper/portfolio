@@ -43,11 +43,12 @@ export default async function BlogPage({
 
   const allPosts = getAllPosts(locale)
   const categories = getCategories(locale)
-  const posts = category
-    ? allPosts.filter((p) => p.category === category)
+  const validCategory = category && categories.some((c) => c.value === category) ? category : null
+  const posts = validCategory
+    ? allPosts.filter((p) => p.category === validCategory)
     : allPosts
 
-  return <BlogContent posts={posts} categories={categories} activeCategory={category || null} />
+  return <BlogContent posts={posts} categories={categories} activeCategory={validCategory} />
 }
 
 function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[]; categories: CategoryItem[]; activeCategory: string | null }) {

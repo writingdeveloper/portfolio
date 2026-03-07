@@ -14,7 +14,7 @@ export function PostCard({ post, categoryLabel }: PostCardProps) {
 
   return (
     <Link href={`/blog/${post.slug}`}>
-      <article className="group rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] overflow-hidden hover:border-[var(--border-hover)] transition-all hover:-translate-y-1">
+      <article className="group rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] overflow-hidden hover:border-[var(--border-hover)] focus-within:border-[var(--border-hover)] transition-all hover:-translate-y-1">
         <div className="p-4 sm:p-5">
           <div className="flex items-center justify-between mb-2">
             {post.category && (
@@ -37,7 +37,7 @@ export function PostCard({ post, categoryLabel }: PostCardProps) {
           )}
           <div className="flex items-center gap-3 mt-3 text-xs text-[var(--text-muted)]">
             <time dateTime={post.publishedAt}>
-              {new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}
+              {isNaN(new Date(post.publishedAt).getTime()) ? post.publishedAt : new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}
             </time>
             <span>{t('minRead', { minutes: post.readingTimeMinutes })}</span>
           </div>

@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getAllPosts } from '@/lib/mdx'
+import { getAllPosts, getCategories } from '@/lib/mdx'
 import type { PostMeta } from '@/lib/mdx'
 import { projects } from '../../../content/projects'
 import type { Project } from '../../../content/projects'
@@ -46,12 +46,14 @@ export default async function HomePage({
   setRequestLocale(locale)
 
   const posts = getAllPosts(locale).slice(0, 3)
+  const categories = getCategories(locale)
+  const categoryMap = Object.fromEntries(categories.map((c) => [c.value, c.label]))
   const featuredProjects = projects.filter((p) => p.featured)
 
-  return <HomeContent posts={posts} projects={featuredProjects} locale={locale} />
+  return <HomeContent posts={posts} projects={featuredProjects} locale={locale} categoryMap={categoryMap} />
 }
 
-function HomeContent({ posts, projects: featuredProjects, locale }: { posts: PostMeta[]; projects: Project[]; locale: string }) {
+function HomeContent({ posts, projects: featuredProjects, locale, categoryMap }: { posts: PostMeta[]; projects: Project[]; locale: string; categoryMap: Record<string, string> }) {
   const t = useTranslations('home')
   const webSiteJsonLd = generateWebsiteJsonLd(locale)
 
@@ -79,7 +81,7 @@ function HomeContent({ posts, projects: featuredProjects, locale }: { posts: Pos
           {posts.length > 0 ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {posts.map((post) => (
-                <PostCard key={post.slug} post={post} />
+                <PostCard key={post.slug} post={post} categoryLabel={categoryMap[post.category]} />
               ))}
             </div>
           ) : (

@@ -1,8 +1,10 @@
 'use client'
 
-import { useState, useSyncExternalStore } from 'react'
+import { useSyncExternalStore } from 'react'
 import { useTranslations } from 'next-intl'
 import { Sun, Moon } from 'lucide-react'
+
+const THEME_CHANGE_EVENT = 'theme-change'
 
 function getThemeSnapshot() {
   return localStorage.getItem('theme') !== 'light'
@@ -14,12 +16,15 @@ function getServerSnapshot() {
 
 function subscribeToTheme(callback: () => void) {
   window.addEventListener('storage', callback)
-  return () => window.removeEventListener('storage', callback)
+  window.addEventListener(THEME_CHANGE_EVENT, callback)
+  return () => {
+    window.removeEventListener('storage', callback)
+    window.removeEventListener(THEME_CHANGE_EVENT, callback)
+  }
 }
 
 export function ThemeToggle() {
   const isDark = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, getServerSnapshot)
-  const [, forceRender] = useState(0)
   const ta = useTranslations('accessibility')
 
   function toggle() {
@@ -27,7 +32,7 @@ export function ThemeToggle() {
     document.documentElement.classList.toggle('dark', next)
     document.documentElement.classList.toggle('light', !next)
     localStorage.setItem('theme', next ? 'dark' : 'light')
-    forceRender((c) => c + 1)
+    window.dispatchEvent(new Event(THEME_CHANGE_EVENT))
   }
 
   return (
