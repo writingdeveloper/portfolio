@@ -11,10 +11,10 @@ function TranslationBanner() {
   return (
     <div style={{
       padding: '10px 16px',
-      backgroundColor: '#fef3c7',
-      color: '#92400e',
+      backgroundColor: 'var(--warning-bg, #fef3c7)',
+      color: 'var(--warning-text, #92400e)',
       fontSize: '14px',
-      borderBottom: '1px solid #fcd34d',
+      borderBottom: '1px solid var(--warning-border, #fcd34d)',
       display: 'flex',
       alignItems: 'center',
       gap: '8px',

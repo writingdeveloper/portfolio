@@ -33,6 +33,13 @@
   --status-launched-text: #60a5fa;
   --status-archived-bg: rgba(107, 114, 128, 0.2);
   --status-archived-text: #9ca3af;
+  --warning-bg: #fef3c7;
+  --warning-text: #92400e;
+  --warning-border: #fcd34d;
+  --btn-primary-bg: #3b82f6;
+  --btn-primary-bg-hover: #2563eb;
+  --btn-primary-text: #ffffff;
+  --timeline-dot: #3b82f6;
   color-scheme: dark;
 }
 
@@ -68,6 +75,13 @@
   --status-launched-text: #2563eb;
   --status-archived-bg: rgba(107, 114, 128, 0.1);
   --status-archived-text: #6b7280;
+  --warning-bg: #fef3c7;
+  --warning-text: #92400e;
+  --warning-border: #fcd34d;
+  --btn-primary-bg: #3b82f6;
+  --btn-primary-bg-hover: #2563eb;
+  --btn-primary-text: #ffffff;
+  --timeline-dot: #3b82f6;
   color-scheme: light;
 }
 
@@ -156,4 +170,20 @@ html {
   padding: 0.15em 0.4em;
   border-radius: 0.25rem;
   font-size: 0.9em;
+}
+
+/* ===== Focus Indicators ===== */
+:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

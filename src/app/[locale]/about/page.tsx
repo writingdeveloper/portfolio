@@ -20,7 +20,12 @@ export async function generateMetadata({
   return {
     title: t('title'),
     description: t('description'),
-    openGraph: { url: pageUrl },
+    openGraph: {
+      url: pageUrl,
+      title: t('title'),
+      description: t('description'),
+      images: [{ url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`, width: 1200, height: 630, alt: t('title') }],
+    },
     alternates: {
       canonical: pageUrl,
       languages: { ko: `${SITE_URL}/about`, en: `${SITE_URL}/en/about`, 'x-default': `${SITE_URL}/about` },
@@ -104,7 +109,7 @@ function AboutContent() {
           <div className="relative pl-6 border-l border-[var(--border-default)] space-y-8">
             {timeline.map((item: TimelineItem, i: number) => (
               <div key={i} className="relative">
-                <div className="absolute -left-[25px] w-3 h-3 rounded-full bg-blue-500 border-2 border-[var(--bg-primary)]" />
+                <div className="absolute -left-[25px] w-3 h-3 rounded-full bg-[var(--timeline-dot)] border-2 border-[var(--bg-primary)]" />
                 <span className="text-xs text-[var(--text-muted)] block mb-1">{item.date}</span>
                 <h3 className="font-semibold text-[var(--text-primary)]">
                   {item.title[locale] || item.title['ko']}

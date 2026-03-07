@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { Menu, X } from 'lucide-react'
@@ -19,6 +19,7 @@ export function Header() {
   const t = useTranslations('nav')
   const ta = useTranslations('accessibility')
   const [mobileOpen, setMobileOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
 
   const closeMobile = useCallback(() => setMobileOpen(false), [])
 
@@ -35,6 +36,27 @@ export function Header() {
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
+  }, [mobileOpen])
+
+  useEffect(() => {
+    if (!mobileOpen || !menuRef.current) return
+    const focusable = menuRef.current.querySelectorAll<HTMLElement>('a, button')
+    if (focusable.length === 0) return
+    const first = focusable[0]
+    const last = focusable[focusable.length - 1]
+    function handleTab(e: KeyboardEvent) {
+      if (e.key !== 'Tab') return
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+    first.focus()
+    document.addEventListener('keydown', handleTab)
+    return () => document.removeEventListener('keydown', handleTab)
   }, [mobileOpen])
 
   return (
@@ -80,7 +102,7 @@ export function Header() {
             transition={{ duration: 0.2 }}
             className="md:hidden overflow-hidden border-t border-[var(--border-subtle)]"
           >
-            <div className="px-4 py-4 flex flex-col gap-3">
+            <div ref={menuRef} className="px-4 py-4 flex flex-col gap-3">
               {navLinks.map((link) => (
                 <Link
                   key={link.key}

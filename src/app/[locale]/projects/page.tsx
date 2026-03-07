@@ -20,7 +20,12 @@ export async function generateMetadata({
   return {
     title: t('title'),
     description: t('description'),
-    openGraph: { url: pageUrl },
+    openGraph: {
+      url: pageUrl,
+      title: t('title'),
+      description: t('description'),
+      images: [{ url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`, width: 1200, height: 630, alt: t('title') }],
+    },
     alternates: {
       canonical: pageUrl,
       languages: { ko: `${SITE_URL}/projects`, en: `${SITE_URL}/en/projects`, 'x-default': `${SITE_URL}/projects` },
