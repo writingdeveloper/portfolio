@@ -196,3 +196,36 @@ export function getCategoryLabel(value: string): string {
   const found = categoriesData.categories.find((c) => c.value === value)
   return found?.label || value
 }
+
+export function getAllTags(locale: string = 'ko'): string[] {
+  const posts = getAllPosts(locale)
+  const tagSet = new Set<string>()
+  for (const post of posts) {
+    for (const tag of post.tags) {
+      tagSet.add(tag)
+    }
+  }
+  return Array.from(tagSet).sort()
+}
+
+export function getRelatedPosts(slug: string, locale: string, limit: number = 3): PostMeta[] {
+  const current = getPostMeta(slug, locale)
+  if (!current) return []
+
+  const allPosts = getAllPosts(locale).filter((p) => p.slug !== slug)
+
+  const scored = allPosts.map((post) => {
+    let score = 0
+    if (post.category === current.category) score += 2
+    for (const tag of post.tags) {
+      if (current.tags.includes(tag)) score += 1
+    }
+    return { post, score }
+  })
+
+  return scored
+    .filter((s) => s.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map((s) => s.post)
+}

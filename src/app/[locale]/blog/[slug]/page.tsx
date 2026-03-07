@@ -1,5 +1,5 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getPost, getAllSlugs, extractHeadings, getCategoryLabel } from '@/lib/mdx'
+import { getPost, getAllSlugs, extractHeadings, getCategoryLabel, getRelatedPosts } from '@/lib/mdx'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { createMdxComponents } from '@/components/mdx/MdxComponents'
@@ -10,6 +10,8 @@ import { PageTransition } from '@/components/ui/PageTransition'
 import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import { Globe } from 'lucide-react'
 import type { Metadata } from 'next'
+import { RelatedPosts } from '@/components/blog/RelatedPosts'
+import { ReadingProgress } from '@/components/blog/ReadingProgress'
 
 function getOgImageUrl(post: { coverImage: string; title: string; excerpt: string }) {
   if (post.coverImage) {
@@ -106,6 +108,7 @@ export default async function BlogPostPage({
 
   return (
     <PageTransition>
+      <ReadingProgress />
       <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-[1fr_200px] lg:gap-8">
         <article>
           <script
@@ -158,9 +161,13 @@ export default async function BlogPostPage({
             <div className="mt-12 pt-6 border-t border-[var(--border-default)]">
               <div className="flex flex-wrap gap-2">
                 {post.tags.map((tag) => (
-                  <span key={tag} className="text-xs px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] text-[var(--text-secondary)]">
+                  <a
+                    key={tag}
+                    href={`/blog?tag=${encodeURIComponent(tag)}`}
+                    className="text-xs px-2.5 py-1 rounded-full bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:bg-[var(--bg-elevated-hover)] transition-colors"
+                  >
                     #{tag}
-                  </span>
+                  </a>
                 ))}
               </div>
             </div>
@@ -170,6 +177,8 @@ export default async function BlogPostPage({
             url={postUrl}
             title={post.title}
           />
+
+          <RelatedPosts posts={getRelatedPosts(slug, locale)} />
         </article>
 
         {/* Desktop TOC */}

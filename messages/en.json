@@ -32,7 +32,12 @@
     "readInKorean": "한국어로 읽기",
     "translationAvailable": "Translated",
     "viewKoreanPosts": "View Korean posts",
-    "viewEnglishPosts": "View English posts"
+    "viewEnglishPosts": "View English posts",
+    "filterByTag": "Filtered by tag",
+    "clearFilter": "Clear filter",
+    "relatedPosts": "Related Posts",
+    "searchPlaceholder": "Search posts...",
+    "noSearchResults": "No results found."
   },
   "projects": {
     "title": "Projects",

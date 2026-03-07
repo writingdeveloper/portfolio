@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { useTranslations, useLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getAllPosts, getCategories } from '@/lib/mdx'
+import { getAllPosts, getCategories, getAllTags } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
 import type { PostMeta, CategoryItem } from '@/lib/mdx'
 import { PostCard } from '@/components/blog/PostCard'
@@ -9,6 +9,7 @@ import { CategoryFilter } from '@/components/blog/CategoryFilter'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { generateBreadcrumbJsonLd } from '@/lib/seo'
 import { Globe } from 'lucide-react'
+import { SearchBar } from '@/components/blog/SearchBar'
 
 export async function generateMetadata({
   params,
@@ -40,10 +41,10 @@ export default async function BlogPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>
-  searchParams: Promise<{ category?: string }>
+  searchParams: Promise<{ category?: string; tag?: string }>
 }) {
   const { locale } = await params
-  const { category } = await searchParams
+  const { category, tag } = await searchParams
   setRequestLocale(locale)
 
   const allPosts = getAllPosts(locale)
@@ -53,10 +54,16 @@ export default async function BlogPage({
     ? allPosts.filter((p) => p.category === validCategory)
     : allPosts
 
-  return <BlogContent posts={posts} categories={categories} activeCategory={validCategory} />
+  const filteredPosts = tag
+    ? posts.filter((p) => p.tags.includes(tag))
+    : posts
+
+  const allTags = getAllTags(locale)
+
+  return <BlogContent posts={filteredPosts} allPosts={allPosts} categories={categories} activeCategory={validCategory} activeTag={tag || null} />
 }
 
-function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[]; categories: CategoryItem[]; activeCategory: string | null }) {
+function BlogContent({ posts, allPosts, categories, activeCategory, activeTag }: { posts: PostMeta[]; allPosts: PostMeta[]; categories: CategoryItem[]; activeCategory: string | null; activeTag: string | null }) {
   const t = useTranslations('blog')
   const locale = useLocale()
   const categoryMap = Object.fromEntries(categories.map((c) => [c.value, c.label]))
@@ -86,8 +93,22 @@ function BlogContent({ posts, categories, activeCategory }: { posts: PostMeta[];
           </div>
         </header>
 
+        <SearchBar posts={allPosts} />
+
         {categories.length > 0 && (
           <CategoryFilter categories={categories} activeCategory={activeCategory} />
+        )}
+
+        {activeTag && (
+          <div className="flex items-center gap-2 mb-6">
+            <span className="text-sm text-[var(--text-secondary)]">{t('filterByTag')}:</span>
+            <span className="text-sm px-2.5 py-1 rounded-full bg-[var(--accent-bg-active)] text-[var(--accent-text)]">
+              #{activeTag}
+            </span>
+            <a href={activeCategory ? `/blog?category=${activeCategory}` : '/blog'} className="text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors">
+              ✕ {t('clearFilter')}
+            </a>
+          </div>
         )}
 
         {posts.length > 0 ? (

@@ -32,7 +32,12 @@
     "readInKorean": "한국어로 읽기",
     "translationAvailable": "번역 가능",
     "viewKoreanPosts": "한국어 글 보기",
-    "viewEnglishPosts": "영어 글 보기"
+    "viewEnglishPosts": "영어 글 보기",
+    "filterByTag": "태그 필터",
+    "clearFilter": "필터 해제",
+    "relatedPosts": "관련 글",
+    "searchPlaceholder": "글 검색...",
+    "noSearchResults": "검색 결과가 없습니다."
   },
   "projects": {
     "title": "프로젝트",
