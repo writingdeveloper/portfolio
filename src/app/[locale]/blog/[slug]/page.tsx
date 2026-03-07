@@ -2,7 +2,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getPost, getAllSlugs, extractHeadings, getCategoryLabel } from '@/lib/mdx'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { mdxComponents } from '@/components/mdx/MdxComponents'
+import { createMdxComponents } from '@/components/mdx/MdxComponents'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { TableOfContents } from '@/components/blog/TableOfContents'
 import { generateArticleJsonLd, generateBreadcrumbJsonLd, generateFaqJsonLd } from '@/lib/seo'
@@ -151,7 +151,7 @@ export default async function BlogPostPage({
           </div>
 
           <div className="prose-content">
-            <MDXRemote source={post.content} components={mdxComponents} />
+            <MDXRemote source={post.content} components={createMdxComponents()} />
           </div>
 
           {post.tags?.length > 0 && (

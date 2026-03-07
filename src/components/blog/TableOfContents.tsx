@@ -11,7 +11,7 @@ interface TableOfContentsProps {
 
 export function TableOfContents({ headings }: TableOfContentsProps) {
   const t = useTranslations('common')
-  const [activeId, setActiveId] = useState<string>('')
+  const [activeId, setActiveId] = useState<string>(headings[0]?.id ?? '')
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {

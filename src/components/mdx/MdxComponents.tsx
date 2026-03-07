@@ -22,12 +22,13 @@ function extractText(node: React.ReactNode): string {
   return ''
 }
 
-const slugCounts = new Map<string, number>()
-
-function uniqueSlug(base: string): string {
-  const count = slugCounts.get(base) || 0
-  slugCounts.set(base, count + 1)
-  return count === 0 ? base : `${base}-${count}`
+function createSlugCounter() {
+  const counts = new Map<string, number>()
+  return (base: string): string => {
+    const count = counts.get(base) || 0
+    counts.set(base, count + 1)
+    return count === 0 ? base : `${base}-${count}`
+  }
 }
 
 async function CodeBlock(props: ComponentPropsWithoutRef<'pre'>) {
@@ -52,7 +53,9 @@ async function CodeBlock(props: ComponentPropsWithoutRef<'pre'>) {
   )
 }
 
-export const mdxComponents = {
+export function createMdxComponents() {
+  const uniqueSlug = createSlugCounter()
+  return {
   h1: (props: ComponentPropsWithoutRef<'h1'>) => (
     <h2 id={uniqueSlug(generateSlug(props.children))} className="text-2xl sm:text-3xl font-bold mt-10 mb-4 scroll-mt-20" {...props} />
   ),
@@ -96,4 +99,5 @@ export const mdxComponents = {
   ),
   strong: (props: ComponentPropsWithoutRef<'strong'>) => <strong className="font-semibold text-[var(--text-primary)]" {...props} />,
   hr: () => <hr className="my-8 border-[var(--border-default)]" />,
+  }
 }
