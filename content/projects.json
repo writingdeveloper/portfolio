@@ -22,6 +22,24 @@
       "status": "active",
       "website": "https://soursea.io",
       "featured": true
+    },
+    {
+      "name": "Don't Touch",
+      "slug": "dont-touch",
+      "descriptionKo": "발모벽(트리코틸로매니아)을 겪으며 직접 만든 습관 교정 앱. 웹캠으로 손이 얼굴에 닿는 순간을 실시간 감지하여 알림을 줍니다. 두피, 눈썹, 볼 등 감지 영역을 세밀하게 설정할 수 있고, 일일 통계와 연속 기록으로 개선 과정을 추적합니다. 모든 영상 처리는 기기 내에서만 이루어져 개인정보가 외부로 전송되지 않습니다.",
+      "descriptionEn": "A habit-breaking app I built from my own experience with trichotillomania. Detects hand-to-face contact in real time through your webcam and alerts you instantly. Customize detection zones for scalp, eyebrows, cheeks, and more, then track your progress with daily stats and streaks. All video processing stays on your device — nothing is ever sent externally.",
+      "techStack": [
+        "Electron",
+        "React",
+        "TypeScript",
+        "MediaPipe Vision",
+        "Tailwind CSS",
+        "Vite"
+      ],
+      "status": "active",
+      "website": "https://github.com/writingdeveloper/dont-touch-electron",
+      "github": "https://github.com/writingdeveloper/dont-touch-electron",
+      "featured": true
     }
   ]
 }

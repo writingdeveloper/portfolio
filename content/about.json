@@ -58,8 +58,16 @@
       "date": "2025 - Present",
       "titleKo": "Soursea 개발",
       "titleEn": "Building Soursea",
-      "descriptionKo": "AI 기반 이커머스 소싱 어시스턴트 개발 및 운영",
-      "descriptionEn": "Developing and operating an AI-powered e-commerce sourcing assistant",
+      "descriptionKo": "직접 소싱 사업을 준비하며 AI 소싱 어시스턴트 SaaS를 1인 풀스택 개발. 웹, 데스크톱, Chrome 확장 프로그램과 Stripe 결제, Shopify 연동까지 구현",
+      "descriptionEn": "Solo full-stack development of an AI sourcing assistant SaaS while preparing my own sourcing business. Built web, desktop, and Chrome extension with Stripe billing and Shopify integration",
+      "type": "project"
+    },
+    {
+      "date": "2025 - Present",
+      "titleKo": "Don't Touch 개발",
+      "titleEn": "Building Don't Touch",
+      "descriptionKo": "발모벽 극복을 위해 직접 만든 웹캠 기반 습관 교정 데스크톱 앱. MediaPipe Vision으로 실시간 손-얼굴 접촉 감지",
+      "descriptionEn": "Built a webcam-based habit-breaking desktop app from personal experience with trichotillomania. Real-time hand-to-face detection using MediaPipe Vision",
       "type": "project"
     }
   ]
