@@ -3,7 +3,7 @@
     {
       "name": "Soursea",
       "slug": "soursea",
-      "descriptionKo": "직접 소싱 사업을 준비하며 만든 AI 소싱 어시스턴트 SaaS. Alibaba/1688 제품을 AI로 스크린샷 분석하여 수익률 계산, 리스크 평가, 공급업체 메시지 자동 생성까지 한 번에 처리합니다. 웹, 데스크톱, Chrome 확장 프로그램을 1인 풀스택 개발하고 Stripe 결제, Shopify 연동, 5개 언어를 지원합니다.",
+      "descriptionKo": "직접 소싱 사업을 준비하며 만든 AI 소싱 어시스턴트 SaaS. Alibaba/1688 제품 스크린샷을 AI로 분석하여 수익률 계산, 리스크 평가, 공급업체 메시지 자동 생성까지 한 번에 처리합니다. 웹, 데스크톱, Chrome 확장 프로그램을 1인 풀스택 개발하고 Stripe 결제, Shopify 연동, 5개 언어를 지원합니다.",
       "descriptionEn": "AI sourcing assistant SaaS I built while preparing my own sourcing business. Analyzes Alibaba/1688 product screenshots with AI to calculate margins, assess risks, and auto-generate supplier messages. Solo full-stack development across web, desktop, and Chrome extension with Stripe billing, Shopify integration, and 5-language support.",
       "techStack": [
         "TypeScript",
