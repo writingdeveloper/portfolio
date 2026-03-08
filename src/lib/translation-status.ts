@@ -11,16 +11,28 @@ export function getTranslationStatus(): TranslationStatus {
   const koDir = path.join(postsDir, 'ko')
   const enDir = path.join(postsDir, 'en')
 
-  const getMdxFiles = (dir: string): string[] => {
+  const getSlugs = (dir: string): string[] => {
     if (!fs.existsSync(dir)) return []
-    return fs.readdirSync(dir).filter((f) => f.endsWith('.mdx'))
+    const entries = fs.readdirSync(dir, { withFileTypes: true })
+    const slugs: string[] = []
+    for (const entry of entries) {
+      if (entry.isFile() && entry.name.endsWith('.mdx')) {
+        slugs.push(entry.name.replace(/\.mdx$/, ''))
+      } else if (entry.isDirectory()) {
+        const indexPath = path.join(dir, entry.name, 'index.mdx')
+        if (fs.existsSync(indexPath)) {
+          slugs.push(entry.name)
+        }
+      }
+    }
+    return slugs
   }
 
-  const koFiles = getMdxFiles(koDir)
-  const enFiles = new Set(getMdxFiles(enDir))
+  const koSlugs = getSlugs(koDir)
+  const enSlugs = new Set(getSlugs(enDir))
 
   return {
-    translated: koFiles.filter((f) => enFiles.has(f)).map((f) => f.replace('.mdx', '')),
-    untranslated: koFiles.filter((f) => !enFiles.has(f)).map((f) => f.replace('.mdx', '')),
+    translated: koSlugs.filter((s) => enSlugs.has(s)),
+    untranslated: koSlugs.filter((s) => !enSlugs.has(s)),
   }
 }
