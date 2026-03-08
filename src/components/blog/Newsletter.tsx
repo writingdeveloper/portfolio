@@ -7,19 +7,12 @@ import { useTranslations } from 'next-intl'
 export function Newsletter() {
   const t = useTranslations('blog')
   const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [message, setMessage] = useState('')
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setSubmitted(true)
-  }
-
-  if (submitted) {
-    return (
-      <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] p-6 text-center">
-        <p className="text-[var(--accent-text)] font-medium">{t('newsletterThanks')}</p>
-      </div>
-    )
+    setMessage('준비 중입니다 (Coming soon)')
+    setTimeout(() => setMessage(''), 3000)
   }
 
   return (
@@ -45,6 +38,9 @@ export function Newsletter() {
           {t('newsletterSubscribe')}
         </button>
       </form>
+      {message && (
+        <p className="mt-3 text-sm text-[var(--accent-text)] font-medium text-center">{message}</p>
+      )}
     </div>
   )
 }

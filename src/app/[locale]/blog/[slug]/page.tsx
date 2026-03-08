@@ -126,7 +126,7 @@ export default async function BlogPostPage({
               dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFaqJsonLd(post.faqs)) }}
             />
           )}
-          <header className="mb-10">
+          <header className="mb-6">
             {post.category && (
               <span className="text-sm text-[var(--accent-text)] font-medium mb-4 block">
                 {getCategoryLabel(post.category)}
