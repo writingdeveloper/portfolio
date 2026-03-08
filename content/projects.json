@@ -3,15 +3,21 @@
     {
       "name": "Soursea",
       "slug": "soursea",
-      "descriptionKo": "AI 기반 이커머스 소싱 어시스턴트. Alibaba/1688에서 제품을 분석하고 수익성을 계산합니다.",
-      "descriptionEn": "AI-powered e-commerce sourcing assistant. Analyzes products from Alibaba/1688 and calculates profitability.",
+      "descriptionKo": "글로벌 셀러를 위한 AI 소싱 어시스턴트 SaaS 플랫폼. Alibaba/1688/Taobao 제품을 Google Gemini Vision으로 스크린샷 분석하여 수익률 계산, 리스크 평가, 공급업체 자동 메시지 생성을 제공합니다. Turborepo 모노레포 구조로 웹(Next.js), 데스크톱(Electron), Chrome 확장 프로그램, NestJS API를 통합 관리하며, Stripe 구독 결제, Shopify OAuth 연동, Supabase RLS 기반 멀티테넌시, 5개 언어(한/영/일/중/스) i18n을 지원합니다.",
+      "descriptionEn": "AI-powered sourcing assistant SaaS platform for global sellers. Analyzes Alibaba/1688/Taobao products via Google Gemini Vision screenshots to calculate profit margins, assess risks, and auto-generate supplier messages. Built as a Turborepo monorepo integrating a web app (Next.js), desktop app (Electron), Chrome extension, and NestJS API, with Stripe subscription billing, Shopify OAuth integration, Supabase RLS-based multi-tenancy, and i18n support for 5 languages (Ko/En/Ja/Zh/Es).",
       "techStack": [
+        "TypeScript",
         "Next.js",
         "NestJS",
         "Electron",
-        "TypeScript",
+        "React",
         "Supabase",
-        "Stripe"
+        "Stripe",
+        "Google Gemini AI",
+        "Turborepo",
+        "Tailwind CSS",
+        "Zustand",
+        "Playwright"
       ],
       "status": "active",
       "website": "https://soursea.io",
