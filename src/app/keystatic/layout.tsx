@@ -29,7 +29,7 @@ function TranslationBanner() {
 
 export default function KeystaticLayout() {
   return (
-    <html>
+    <html lang="ko">
       <body>
         <TranslationBanner />
         <KeystaticApp />
