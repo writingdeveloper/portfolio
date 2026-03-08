@@ -4,8 +4,9 @@ import { PageTransition } from '@/components/ui/PageTransition'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { SITE_URL } from '@/lib/constants'
-import { skills, timeline, skillCategories } from '../../../../content/about'
-import type { Skill, TimelineItem } from '../../../../content/about'
+import aboutData from '../../../../content/about.json'
+import type { Skill, TimelineItem } from '@/types/content'
+import { skillCategories } from '@/types/content'
 import { generatePersonJsonLd, generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 
 export async function generateMetadata({
@@ -53,6 +54,8 @@ function AboutContent() {
     { name: locale === 'ko' ? '소개' : 'About', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/about` },
   ])
 
+  const skills = aboutData.skills as Skill[]
+  const timelineItems = aboutData.timeline as TimelineItem[]
   const groupedSkills = {
     frontend: skills.filter((s) => s.category === 'frontend'),
     backend: skills.filter((s) => s.category === 'backend'),
@@ -107,15 +110,15 @@ function AboutContent() {
         <section>
           <h2 className="text-xl font-bold mb-6">{t('timeline')}</h2>
           <div className="relative pl-6 border-l border-[var(--border-default)] space-y-8">
-            {timeline.map((item: TimelineItem, i: number) => (
+            {timelineItems.map((item: TimelineItem, i: number) => (
               <div key={i} className="relative">
                 <div className="absolute -left-[25px] w-3 h-3 rounded-full bg-[var(--timeline-dot)] border-2 border-[var(--bg-primary)]" />
                 <span className="text-xs text-[var(--text-muted)] block mb-1">{item.date}</span>
                 <h3 className="font-semibold text-[var(--text-primary)]">
-                  {item.title[locale] || item.title['ko']}
+                  {locale === 'en' ? (item.titleEn || item.titleKo) : item.titleKo}
                 </h3>
                 <p className="text-sm text-[var(--text-secondary)] mt-1">
-                  {item.description[locale] || item.description['ko']}
+                  {locale === 'en' ? (item.descriptionEn || item.descriptionKo) : item.descriptionKo}
                 </p>
               </div>
             ))}

@@ -2,8 +2,8 @@ import { useTranslations } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getAllPosts, getCategories } from '@/lib/mdx'
 import type { PostMeta } from '@/lib/mdx'
-import { projects } from '../../../content/projects'
-import type { Project } from '../../../content/projects'
+import projectsData from '../../../content/projects.json'
+import type { Project } from '@/types/content'
 import { Link } from '@/i18n/navigation'
 import { ArrowRight } from 'lucide-react'
 import { PostCard } from '@/components/blog/PostCard'
@@ -49,7 +49,7 @@ export default async function HomePage({
   const posts = getAllPosts(locale).slice(0, 3)
   const categories = getCategories(locale)
   const categoryMap = Object.fromEntries(categories.map((c) => [c.value, c.label]))
-  const featuredProjects = projects.filter((p) => p.featured)
+  const featuredProjects = (projectsData.projects as Project[]).filter((p) => p.featured)
 
   return <HomeContent posts={posts} projects={featuredProjects} locale={locale} categoryMap={categoryMap} />
 }

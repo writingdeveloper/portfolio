@@ -1,0 +1,27 @@
+{
+  "skills": [
+    { "name": "React", "category": "frontend" },
+    { "name": "Next.js", "category": "frontend" },
+    { "name": "TypeScript", "category": "frontend" },
+    { "name": "Tailwind CSS", "category": "frontend" },
+    { "name": "Electron", "category": "frontend" },
+    { "name": "NestJS", "category": "backend" },
+    { "name": "Node.js", "category": "backend" },
+    { "name": "Supabase", "category": "backend" },
+    { "name": "PostgreSQL", "category": "backend" },
+    { "name": "Git", "category": "tools" },
+    { "name": "Docker", "category": "tools" },
+    { "name": "Vercel", "category": "tools" },
+    { "name": "Stripe", "category": "tools" }
+  ],
+  "timeline": [
+    {
+      "date": "2024 - Present",
+      "titleKo": "Soursea 개발",
+      "titleEn": "Building Soursea",
+      "descriptionKo": "AI 기반 이커머스 소싱 어시스턴트 개발 및 운영",
+      "descriptionEn": "Developing and operating an AI-powered e-commerce sourcing assistant",
+      "type": "project"
+    }
+  ]
+}

@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { useTranslations } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { projects } from '../../../../content/projects'
+import projectsData from '../../../../content/projects.json'
+import type { Project } from '@/types/content'
 import { SITE_URL } from '@/lib/constants'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
@@ -65,7 +66,7 @@ function ProjectsContent() {
         </header>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          {projects.map((project) => (
+          {(projectsData.projects as Project[]).map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>

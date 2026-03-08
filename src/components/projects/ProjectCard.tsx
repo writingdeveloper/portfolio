@@ -1,6 +1,6 @@
 import { ExternalLink, Github } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
-import type { Project } from '../../../content/projects'
+import type { Project } from '@/types/content'
 
 interface ProjectCardProps {
   project: Project
@@ -29,9 +29,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
               </span>
             )}
           </div>
-          {project.description && (
+          {project.descriptionKo && (
             <p className="text-sm text-[var(--text-secondary)] mt-1">
-              {typeof project.description === 'string' ? project.description : project.description[locale] || project.description['ko']}
+              {locale === 'en' ? (project.descriptionEn || project.descriptionKo) : project.descriptionKo}
             </p>
           )}
         </div>
@@ -48,14 +48,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
       )}
 
       <div className="flex gap-3">
-        {project.links.website && (
-          <a href={project.links.website} target="_blank" rel="noopener noreferrer"
+        {project.website && (
+          <a href={project.website} target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
             <ExternalLink size={14} /> {t('viewProject')}
           </a>
         )}
-        {project.links.github && (
-          <a href={project.links.github} target="_blank" rel="noopener noreferrer"
+        {project.github && (
+          <a href={project.github} target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
             <Github size={14} /> {t('viewCode')}
           </a>
