@@ -9,7 +9,7 @@ import { ArrowRight } from 'lucide-react'
 import { PostCard } from '@/components/blog/PostCard'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
-import { generateWebsiteJsonLd } from '@/lib/seo'
+import { generateWebsiteJsonLd, safeJsonLd } from '@/lib/seo'
 import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import type { Metadata } from 'next'
 
@@ -62,7 +62,7 @@ function HomeContent({ posts, projects: featuredProjects, locale, categoryMap }:
     <PageTransition>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(webSiteJsonLd) }}
       />
       <div className="space-y-20">
         <section className="pt-12 pb-8">

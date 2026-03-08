@@ -5,7 +5,7 @@ import { projects } from '../../../../content/projects'
 import { SITE_URL } from '@/lib/constants'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
-import { generateBreadcrumbJsonLd } from '@/lib/seo'
+import { generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 import { useLocale } from 'next-intl'
 
 export async function generateMetadata({
@@ -56,7 +56,7 @@ function ProjectsContent() {
     <PageTransition>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
       />
       <div>
         <header className="mb-12">

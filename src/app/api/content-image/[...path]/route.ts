@@ -10,7 +10,6 @@ const MIME_TYPES: Record<string, string> = {
   '.jpeg': 'image/jpeg',
   '.gif': 'image/gif',
   '.webp': 'image/webp',
-  '.svg': 'image/svg+xml',
   '.avif': 'image/avif',
 }
 
@@ -27,7 +26,7 @@ export async function GET(
 
   const [locale, slug, filename] = segments
 
-  // Prevent path traversal
+  // Prevent path traversal - blocklist check
   if (
     locale.includes('..') ||
     slug.includes('..') ||
@@ -40,6 +39,12 @@ export async function GET(
   let filePath = path.join(CONTENT_DIR, locale, slug, filename)
   if (!fs.existsSync(filePath)) {
     filePath = path.join(CONTENT_DIR, locale, slug, 'content', filename)
+  }
+
+  // Resolved-path containment check to prevent traversal bypasses
+  const resolvedPath = path.resolve(filePath)
+  if (!resolvedPath.startsWith(path.resolve(CONTENT_DIR))) {
+    return new NextResponse('Forbidden', { status: 403 })
   }
 
   if (!fs.existsSync(filePath)) {

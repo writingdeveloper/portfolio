@@ -5,7 +5,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { createMdxComponents } from '@/components/mdx/MdxComponents'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { TableOfContents } from '@/components/blog/TableOfContents'
-import { generateArticleJsonLd, generateBreadcrumbJsonLd, generateFaqJsonLd } from '@/lib/seo'
+import { generateArticleJsonLd, generateBreadcrumbJsonLd, generateFaqJsonLd, safeJsonLd } from '@/lib/seo'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import { Globe } from 'lucide-react'
@@ -114,16 +114,16 @@ export default async function BlogPostPage({
         <article>
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
           />
           <script
             type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+            dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
           />
           {post.faqs.length > 0 && (
             <script
               type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFaqJsonLd(post.faqs)) }}
+              dangerouslySetInnerHTML={{ __html: safeJsonLd(generateFaqJsonLd(post.faqs)) }}
             />
           )}
           <header className="mb-6">

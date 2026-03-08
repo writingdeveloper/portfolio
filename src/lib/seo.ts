@@ -1,5 +1,11 @@
 import { SITE_URL, SITE_NAME } from './constants'
 
+/** Safely serialize JSON-LD for embedding in <script> tags.
+ *  Escapes `<` to prevent `</script>` injection (OWASP recommendation). */
+export function safeJsonLd(data: unknown): string {
+  return JSON.stringify(data).replace(/</g, '\\u003c')
+}
+
 export function generateArticleJsonLd({
   title,
   description,

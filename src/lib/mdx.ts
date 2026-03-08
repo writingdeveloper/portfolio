@@ -36,6 +36,9 @@ function getLocaleDirectory(locale: string): string {
 }
 
 function resolvePostPath(slug: string, locale: string): string | null {
+  // Validate slug to prevent path traversal
+  if (!/^[a-zA-Z0-9가-힣_-]+$/.test(slug)) return null
+
   const dir = getLocaleDirectory(locale)
   // Directory format: slug/index.mdx (Keystatic with images)
   const dirPath = path.join(dir, slug, 'index.mdx')

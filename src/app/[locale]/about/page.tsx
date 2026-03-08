@@ -6,7 +6,7 @@ import { getTranslations } from 'next-intl/server'
 import { SITE_URL } from '@/lib/constants'
 import { skills, timeline, skillCategories } from '../../../../content/about'
 import type { Skill, TimelineItem } from '../../../../content/about'
-import { generatePersonJsonLd, generateBreadcrumbJsonLd } from '@/lib/seo'
+import { generatePersonJsonLd, generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 
 export async function generateMetadata({
   params,
@@ -63,11 +63,11 @@ function AboutContent() {
     <PageTransition>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(personJsonLd) }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
       />
       <div className="max-w-3xl mx-auto">
         <header className="mb-12">

@@ -2,6 +2,12 @@ import { getAllPosts } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
 import type { NextRequest } from 'next/server'
 
+function escapeXml(s: string): string {
+  return s.replace(/[&<>"']/g, (c) =>
+    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[c] ?? c
+  )
+}
+
 function generateRss(posts: ReturnType<typeof getAllPosts>, lang?: string) {
   const items = posts
     .map((post) => {
@@ -15,7 +21,7 @@ function generateRss(posts: ReturnType<typeof getAllPosts>, lang?: string) {
       <guid isPermaLink="true">${link}</guid>
       <description><![CDATA[${post.excerpt || ''}]]></description>
       <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
-      ${post.category ? `<category>${post.category}</category>` : ''}
+      ${post.category ? `<category>${escapeXml(post.category)}</category>` : ''}
       <dc:language>${post.language}</dc:language>
     </item>`
     })

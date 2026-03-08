@@ -7,7 +7,7 @@ import type { PostMeta, CategoryItem } from '@/lib/mdx'
 import { PostCard } from '@/components/blog/PostCard'
 import { CategoryFilter } from '@/components/blog/CategoryFilter'
 import { PageTransition } from '@/components/ui/PageTransition'
-import { generateBreadcrumbJsonLd } from '@/lib/seo'
+import { generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 import { Globe } from 'lucide-react'
 import { SearchBar } from '@/components/blog/SearchBar'
 import { Pagination } from '@/components/blog/Pagination'
@@ -83,7 +83,7 @@ function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, c
     <PageTransition>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
       />
       <div>
         <header className="mb-12">
