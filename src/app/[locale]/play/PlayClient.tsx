@@ -78,6 +78,12 @@ export function PlayClient({
           <DetailPanel />
           <LoadingScreen />
           <Minimap />
+          {/* Transition overlay */}
+          <div
+            className={`absolute inset-0 bg-black pointer-events-none z-30 transition-opacity duration-300 ${
+              state.ui.isTransitioning ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
         </div>
 
         {/* Controls hint */}
