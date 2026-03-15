@@ -7,6 +7,8 @@ import { X, Volume2, VolumeX } from 'lucide-react'
 import type { Project, Skill, TimelineItem } from '@/types/content'
 import { GameContext, gameReducer, initialGameState } from './game/state'
 import { GameCanvas } from './game/GameCanvas'
+import { DialogueBox } from './ui/DialogueBox'
+import { DetailPanel } from './ui/DetailPanel'
 
 interface PostSummary {
   slug: string
@@ -60,8 +62,8 @@ export function PlayClient({
           </Link>
         </div>
 
-        {/* Game canvas */}
-        <div className="w-full max-w-[800px] border-x border-[var(--border-default)]">
+        {/* Game canvas with overlays */}
+        <div className="relative w-full max-w-[800px] border-x border-[var(--border-default)]">
           <GameCanvas
             projects={projects}
             skills={skills}
@@ -69,6 +71,8 @@ export function PlayClient({
             posts={posts}
             locale={locale}
           />
+          <DialogueBox />
+          <DetailPanel />
         </div>
 
         {/* Controls hint */}

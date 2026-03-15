@@ -10,7 +10,7 @@ import { TILE_SIZE, isColliding } from './tilemap'
 import { ROOM_CONFIGS, checkDoorCollision, getDoorPositions } from './rooms'
 import { generateRoomObjects, findNearbyObject } from './objects'
 import type { RoomConfig } from './rooms'
-import type { RoomId, InteractableObject } from './types'
+import type { RoomId, InteractableObject, DialogueLine } from './types'
 
 extend({ Container, Graphics, Text })
 
@@ -200,6 +200,52 @@ function buildRoom(
   return { player, objectGraphics, promptText }
 }
 
+function getDialogueForObject(obj: InteractableObject): DialogueLine[] {
+  switch (obj.type) {
+    case 'npc':
+      return [
+        {
+          speaker: (obj.data.name as string) ?? 'Guide',
+          text: (obj.data.greeting as string) ?? 'Hello there!',
+        },
+        {
+          speaker: (obj.data.name as string) ?? 'Guide',
+          text: 'Each room has something different. Projects to the right, skills above, timeline to the left, and the library below.',
+        },
+      ]
+    case 'project':
+      return [
+        {
+          speaker: 'Workstation',
+          text: `This is "${obj.data.name as string}" - a ${obj.data.status as string} project.`,
+        },
+      ]
+    case 'skill':
+      return [
+        {
+          speaker: 'Skill Crystal',
+          text: `${obj.data.name as string} - a ${obj.data.category as string} skill.`,
+        },
+      ]
+    case 'timeline':
+      return [
+        {
+          speaker: 'Memory Frame',
+          text: `${obj.data.date as string}: ${obj.data.title as string}`,
+        },
+      ]
+    case 'post':
+      return [
+        {
+          speaker: 'Book',
+          text: `"${obj.data.title as string}" - ${(obj.data.excerpt as string)?.slice(0, 80) ?? ''}...`,
+        },
+      ]
+    default:
+      return [{ speaker: '???', text: 'Nothing here.' }]
+  }
+}
+
 function GameWorld() {
   const { app, isInitialised } = useApplication()
   const { state, dispatch } = useGame()
@@ -214,6 +260,7 @@ function GameWorld() {
   const isTransitioningRef = useRef(false)
   const roomObjectsRef = useRef<InteractableObject[]>([])
   const tickCount = useRef(0)
+  const pendingDetailRef = useRef<InteractableObject | null>(null)
 
   const playerPosRef = useRef({ x: 0, y: 0 })
   const stateRef = useRef(state)
@@ -308,12 +355,41 @@ function GameWorld() {
 
     tickCount.current++
 
+    // If detail panel is open, block everything
+    if (currentState.interaction.showDetail) {
+      consumeInteract()
+      return
+    }
+
     // Handle dialogue advancement
     if (currentState.interaction.activeDialogue) {
-      if (consumeInteract()) {
-        dispatch({ type: 'ADVANCE_DIALOGUE' })
+      // Dialogue is handled by DialogueBox component via keyboard events
+      // Check if dialogue just ended (was active, now null) to show detail
+      return
+    }
+
+    // Dialogue just ended -- if we have a pending detail, show it
+    if (pendingDetailRef.current) {
+      const obj = pendingDetailRef.current
+      pendingDetailRef.current = null
+      if (obj.type !== 'npc') {
+        dispatch({ type: 'SHOW_DETAIL', payload: obj })
       }
       return
+    }
+
+    // Handle Space interaction with nearby object
+    if (consumeInteract()) {
+      const nearbyObj = currentState.interaction.nearbyObject
+      if (nearbyObj) {
+        const lines = getDialogueForObject(nearbyObj)
+        // For non-NPC objects, queue showing detail after dialogue
+        if (nearbyObj.type !== 'npc') {
+          pendingDetailRef.current = nearbyObj
+        }
+        dispatch({ type: 'START_DIALOGUE', payload: lines })
+        return
+      }
     }
 
     // Calculate movement
@@ -387,10 +463,11 @@ function GameWorld() {
 
     // Update [Space] prompt visibility and position
     if (promptTextRef.current) {
-      if (nearbyObj) {
+      const dialogueActive = currentState.interaction.activeDialogue !== null
+      const detailOpen = currentState.interaction.showDetail
+      if (nearbyObj && !dialogueActive && !detailOpen) {
         promptTextRef.current.visible = true
         promptTextRef.current.x = nearbyObj.position.x
-        // Bounce animation
         const bounce = Math.sin(tickCount.current * 0.08) * 3
         promptTextRef.current.y = nearbyObj.position.y - nearbyObj.size.height / 2 - 8 + bounce
       } else {
