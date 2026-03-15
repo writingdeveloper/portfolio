@@ -9,6 +9,7 @@ import { GameContext, gameReducer, initialGameState } from './game/state'
 import { GameCanvas } from './game/GameCanvas'
 import { DialogueBox } from './ui/DialogueBox'
 import { DetailPanel } from './ui/DetailPanel'
+import { LoadingScreen } from './ui/LoadingScreen'
 
 interface PostSummary {
   slug: string
@@ -73,6 +74,7 @@ export function PlayClient({
           />
           <DialogueBox />
           <DetailPanel />
+          <LoadingScreen />
         </div>
 
         {/* Controls hint */}
