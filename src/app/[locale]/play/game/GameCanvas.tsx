@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useEffect, useCallback, useState, createContext, useContext } from 'react'
-import { Application, extend, useApplication, useTick } from '@pixi/react'
+import { Application, extend, useApplication } from '@pixi/react'
 import { Container, Graphics, Text, TextStyle } from 'pixi.js'
 import { Viewport } from 'pixi-viewport'
 import { useGame } from './state'
@@ -255,25 +255,36 @@ function GameWorld() {
   const { state, dispatch } = useGame()
   const portfolioData = usePortfolioData()
   const { keys, consumeInteract } = useKeyboard()
+
+  // --- Refs for all mutable state ---
   const viewportRef = useRef<Viewport | null>(null)
   const playerGraphicsRef = useRef<Graphics | null>(null)
   const promptTextRef = useRef<Text | null>(null)
-  const collisionSet = useRef<Set<number>>(new Set())
-  const initialized = useRef(false)
+  const collisionSetRef = useRef<Set<number>>(new Set())
+  const guardRef = useRef(false)
   const currentRoomRef = useRef<RoomId>('lobby')
   const isTransitioningRef = useRef(false)
   const roomObjectsRef = useRef<InteractableObject[]>([])
   const tickCount = useRef(0)
   const pendingDetailRef = useRef<InteractableObject | null>(null)
   const dustParticlesRef = useRef<ReturnType<typeof createDustParticles> | null>(null)
-
   const playerPosRef = useRef({ x: 0, y: 0 })
+
+  // Keep reactive values in refs so tick logic can read them without deps
   const stateRef = useRef(state)
   stateRef.current = state
+  const dispatchRef = useRef(dispatch)
+  dispatchRef.current = dispatch
+  const portfolioDataRef = useRef(portfolioData)
+  portfolioDataRef.current = portfolioData
+  const appRef = useRef(app)
+  appRef.current = app
 
+  // rebuildRoom reads everything from refs -- no reactive deps
   const rebuildRoom = useCallback(
     (roomId: RoomId, spawnPos: { x: number; y: number }) => {
-      if (!app?.renderer || !viewportRef.current) return
+      const currentApp = appRef.current
+      if (!currentApp?.renderer || !viewportRef.current) return
 
       // Destroy old dust particles before clearing the viewport
       if (dustParticlesRef.current) {
@@ -286,10 +297,10 @@ function GameWorld() {
 
       const room = ROOM_CONFIGS[roomId]
       const newCollisionSet = buildCollisionSet(room)
-      collisionSet.current = newCollisionSet
+      collisionSetRef.current = newCollisionSet
       currentRoomRef.current = roomId
 
-      const objects = generateRoomObjects(roomId, portfolioData)
+      const objects = generateRoomObjects(roomId, portfolioDataRef.current)
       roomObjectsRef.current = objects
 
       const { player, promptText, dustParticles } = buildRoom(viewport, room, newCollisionSet, objects)
@@ -303,61 +314,14 @@ function GameWorld() {
 
       viewport.moveCenter(spawnPos.x, spawnPos.y)
     },
-    [app, portfolioData],
+    [], // EMPTY DEPS - reads from refs
   )
 
-  useEffect(() => {
-    if (!isInitialised || !app?.renderer || initialized.current) return
-    initialized.current = true
+  const rebuildRoomRef = useRef(rebuildRoom)
+  rebuildRoomRef.current = rebuildRoom
 
-    const room = ROOM_CONFIGS['lobby']
-
-    const viewport = new Viewport({
-      screenWidth: app.renderer.width,
-      screenHeight: app.renderer.height,
-      worldWidth: room.width * TILE_SIZE,
-      worldHeight: room.height * TILE_SIZE,
-      events: app.renderer.events,
-    })
-    viewport.clamp({
-      left: 0,
-      top: 0,
-      right: room.width * TILE_SIZE,
-      bottom: room.height * TILE_SIZE,
-      underflow: 'center',
-    })
-    app.stage.addChild(viewport)
-    viewportRef.current = viewport
-
-    const initialCollision = buildCollisionSet(room)
-    collisionSet.current = initialCollision
-
-    const objects = generateRoomObjects('lobby', portfolioData)
-    roomObjectsRef.current = objects
-
-    const { player, promptText, dustParticles } = buildRoom(viewport, room, initialCollision, objects)
-    playerGraphicsRef.current = player
-    promptTextRef.current = promptText
-    dustParticlesRef.current = dustParticles
-
-    const spawnX = room.spawnPoint.x
-    const spawnY = room.spawnPoint.y
-    player.x = spawnX
-    player.y = spawnY
-    playerPosRef.current = { x: spawnX, y: spawnY }
-    dispatch({ type: 'MOVE_PLAYER', payload: { x: spawnX, y: spawnY } })
-    dispatch({ type: 'SET_LOADING', payload: false })
-
-    viewport.moveCenter(spawnX, spawnY)
-
-    return () => {
-      app.stage.removeChild(viewport)
-      viewport.destroy({ children: true })
-      initialized.current = false
-    }
-  }, [app, isInitialised, dispatch, rebuildRoom, portfolioData])
-
-  const tickCallback = useCallback(() => {
+  // Tick logic reads ONLY from refs/singletons -- no reactive deps
+  const tickLogic = useCallback(() => {
     const currentState = stateRef.current
     if (
       currentState.ui.isLoading ||
@@ -381,8 +345,6 @@ function GameWorld() {
 
     // Handle dialogue advancement
     if (currentState.interaction.activeDialogue) {
-      // Dialogue is handled by DialogueBox component via keyboard events
-      // Check if dialogue just ended (was active, now null) to show detail
       return
     }
 
@@ -391,7 +353,7 @@ function GameWorld() {
       const obj = pendingDetailRef.current
       pendingDetailRef.current = null
       if (obj.type !== 'npc') {
-        dispatch({ type: 'SHOW_DETAIL', payload: obj })
+        dispatchRef.current({ type: 'SHOW_DETAIL', payload: obj })
       }
       return
     }
@@ -405,7 +367,7 @@ function GameWorld() {
         if (nearbyObj.type !== 'npc') {
           pendingDetailRef.current = nearbyObj
         }
-        dispatch({ type: 'START_DIALOGUE', payload: lines })
+        dispatchRef.current({ type: 'START_DIALOGUE', payload: lines })
         return
       }
     }
@@ -426,9 +388,9 @@ function GameWorld() {
 
     if (dx !== 0 || dy !== 0) {
       if (Math.abs(dx) > Math.abs(dy)) {
-        dispatch({ type: 'SET_DIRECTION', payload: dx > 0 ? 'right' : 'left' })
+        dispatchRef.current({ type: 'SET_DIRECTION', payload: dx > 0 ? 'right' : 'left' })
       } else {
-        dispatch({ type: 'SET_DIRECTION', payload: dy > 0 ? 'down' : 'up' })
+        dispatchRef.current({ type: 'SET_DIRECTION', payload: dy > 0 ? 'down' : 'up' })
       }
 
       const pos = playerPosRef.current
@@ -437,16 +399,16 @@ function GameWorld() {
       let finalX = pos.x
       let finalY = pos.y
 
-      if (!isColliding(newX, pos.y, MAP_WIDTH, collisionSet.current, PLAYER_SIZE)) {
+      if (!isColliding(newX, pos.y, MAP_WIDTH, collisionSetRef.current, PLAYER_SIZE)) {
         finalX = newX
       }
-      if (!isColliding(finalX, newY, MAP_WIDTH, collisionSet.current, PLAYER_SIZE)) {
+      if (!isColliding(finalX, newY, MAP_WIDTH, collisionSetRef.current, PLAYER_SIZE)) {
         finalY = newY
       }
 
       if (finalX !== pos.x || finalY !== pos.y) {
         playerPosRef.current = { x: finalX, y: finalY }
-        dispatch({ type: 'MOVE_PLAYER', payload: { x: finalX, y: finalY } })
+        dispatchRef.current({ type: 'MOVE_PLAYER', payload: { x: finalX, y: finalY } })
       }
     }
 
@@ -456,17 +418,17 @@ function GameWorld() {
 
     if (door && !isTransitioningRef.current) {
       isTransitioningRef.current = true
-      dispatch({ type: 'SET_TRANSITIONING', payload: true })
+      dispatchRef.current({ type: 'SET_TRANSITIONING', payload: true })
 
       setTimeout(() => {
-        dispatch({
+        dispatchRef.current({
           type: 'CHANGE_ROOM',
           payload: { room: door.targetRoom, spawnPoint: door.spawnPosition },
         })
-        rebuildRoom(door.targetRoom, door.spawnPosition)
+        rebuildRoomRef.current(door.targetRoom, door.spawnPosition)
 
         setTimeout(() => {
-          dispatch({ type: 'SET_TRANSITIONING', payload: false })
+          dispatchRef.current({ type: 'SET_TRANSITIONING', payload: false })
           isTransitioningRef.current = false
         }, 100)
       }, 300)
@@ -476,7 +438,7 @@ function GameWorld() {
     const nearbyObj = findNearbyObject(playerPosRef.current, roomObjectsRef.current)
     const prevNearby = currentState.interaction.nearbyObject
     if (nearbyObj?.id !== prevNearby?.id) {
-      dispatch({ type: 'SET_NEARBY_OBJECT', payload: nearbyObj })
+      dispatchRef.current({ type: 'SET_NEARBY_OBJECT', payload: nearbyObj })
     }
 
     // Update [Space] prompt visibility and position
@@ -501,9 +463,68 @@ function GameWorld() {
     if (viewportRef.current) {
       viewportRef.current.moveCenter(playerPosRef.current.x, playerPosRef.current.y)
     }
-  }, [keys, consumeInteract, dispatch, rebuildRoom])
+  }, []) // EMPTY DEPS - reads everything from refs/singletons
 
-  useTick(tickCallback)
+  // Keep tickRef always pointing to latest tickLogic
+  const tickRef = useRef(tickLogic)
+  tickRef.current = tickLogic
+
+  // Single init effect with minimal deps
+  useEffect(() => {
+    if (!isInitialised || !app?.renderer || guardRef.current) return
+    guardRef.current = true
+
+    const room = ROOM_CONFIGS['lobby']
+
+    const viewport = new Viewport({
+      screenWidth: app.renderer.width,
+      screenHeight: app.renderer.height,
+      worldWidth: room.width * TILE_SIZE,
+      worldHeight: room.height * TILE_SIZE,
+      events: app.renderer.events,
+    })
+    viewport.clamp({
+      left: 0,
+      top: 0,
+      right: room.width * TILE_SIZE,
+      bottom: room.height * TILE_SIZE,
+      underflow: 'center',
+    })
+    app.stage.addChild(viewport)
+    viewportRef.current = viewport
+
+    const initialCollision = buildCollisionSet(room)
+    collisionSetRef.current = initialCollision
+
+    const objects = generateRoomObjects('lobby', portfolioDataRef.current)
+    roomObjectsRef.current = objects
+
+    const { player, promptText, dustParticles } = buildRoom(viewport, room, initialCollision, objects)
+    playerGraphicsRef.current = player
+    promptTextRef.current = promptText
+    dustParticlesRef.current = dustParticles
+
+    const spawnX = room.spawnPoint.x
+    const spawnY = room.spawnPoint.y
+    player.x = spawnX
+    player.y = spawnY
+    playerPosRef.current = { x: spawnX, y: spawnY }
+    dispatchRef.current({ type: 'MOVE_PLAYER', payload: { x: spawnX, y: spawnY } })
+    dispatchRef.current({ type: 'SET_LOADING', payload: false })
+
+    viewport.moveCenter(spawnX, spawnY)
+
+    // Register tick callback directly on the ticker
+    const onTick = () => tickRef.current()
+    app.ticker.add(onTick)
+
+    return () => {
+      app.ticker.remove(onTick)
+      app.stage.removeChild(viewport)
+      viewport.destroy({ children: true })
+      guardRef.current = false
+    }
+  }, [isInitialised]) // MINIMAL DEPS - app accessed via ref inside guard
 
   return null
 }
