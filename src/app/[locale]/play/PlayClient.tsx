@@ -10,6 +10,7 @@ import { GameCanvas } from './game/GameCanvas'
 import { DialogueBox } from './ui/DialogueBox'
 import { DetailPanel } from './ui/DetailPanel'
 import { LoadingScreen } from './ui/LoadingScreen'
+import { Minimap } from './ui/Minimap'
 
 interface PostSummary {
   slug: string
@@ -75,6 +76,7 @@ export function PlayClient({
           <DialogueBox />
           <DetailPanel />
           <LoadingScreen />
+          <Minimap />
         </div>
 
         {/* Controls hint */}
