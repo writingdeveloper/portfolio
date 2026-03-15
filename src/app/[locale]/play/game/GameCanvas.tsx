@@ -848,6 +848,33 @@ function buildRoom(
   // Draw room decorations (furniture, props)
   drawRoomDecorations(viewport, roomId, room)
 
+  // Room name label (top center)
+  const roomNames: Record<RoomId, string> = {
+    lobby: 'Lobby',
+    projects: 'Projects',
+    skills: 'Skills',
+    history: 'History',
+    library: 'Library',
+  }
+  const roomNameStyle = new TextStyle({
+    fontFamily: 'monospace',
+    fontSize: 14,
+    fontWeight: 'bold',
+    fill: 0xffffff,
+    align: 'center',
+    dropShadow: {
+      color: 0x000000,
+      alpha: 0.6,
+      blur: 4,
+      distance: 0,
+    },
+  })
+  const roomLabel = new Text({ text: roomNames[roomId], style: roomNameStyle })
+  roomLabel.anchor.set(0.5, 0)
+  roomLabel.x = (room.width * TILE_SIZE) / 2
+  roomLabel.y = TILE_SIZE + 6
+  viewport.addChild(roomLabel)
+
   // Draw interactable objects
   const objectGraphics = new Graphics()
   for (let i = 0; i < objects.length; i++) {
