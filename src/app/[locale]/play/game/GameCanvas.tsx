@@ -46,12 +46,237 @@ function usePortfolioData() {
   return ctx
 }
 
-const OBJECT_COLORS: Record<string, number> = {
-  npc: 0xffb74d,
-  project: 0x4fc3f7,
-  skill: 0x81c784,
-  timeline: 0xce93d8,
-  post: 0xa1887f,
+const SKILL_COLORS: Record<string, number> = {
+  frontend: 0x3498db,
+  backend: 0x27ae60,
+  tools: 0xe67e22,
+}
+
+function drawPlayer(g: Graphics, direction: string) {
+  g.clear()
+
+  // Shadow
+  g.ellipse(0, 12, 8, 3)
+  g.fill({ color: 0x000000, alpha: 0.3 })
+
+  // Body/shirt
+  g.rect(-7, -2, 14, 12)
+  g.fill(0x4a90d9)
+
+  // Pants
+  g.rect(-7, 10, 6, 5)
+  g.fill(0x2c3e50)
+  g.rect(1, 10, 6, 5)
+  g.fill(0x2c3e50)
+
+  // Head (skin)
+  g.roundRect(-6, -14, 12, 13, 2)
+  g.fill(0xfce4b5)
+
+  // Hair
+  g.roundRect(-7, -16, 14, 7, 2)
+  g.fill(0x3d2314)
+
+  // Eyes based on direction
+  if (direction === 'down') {
+    g.rect(-3, -8, 2, 2)
+    g.fill(0x222222)
+    g.rect(1, -8, 2, 2)
+    g.fill(0x222222)
+  } else if (direction === 'up') {
+    // back of head, no eyes
+    g.roundRect(-6, -14, 12, 10, 2)
+    g.fill(0x3d2314)
+  } else if (direction === 'left') {
+    g.rect(-4, -8, 2, 2)
+    g.fill(0x222222)
+  } else {
+    g.rect(2, -8, 2, 2)
+    g.fill(0x222222)
+  }
+
+  // Shoes
+  g.rect(-8, 15, 7, 3)
+  g.fill(0x8b4513)
+  g.rect(1, 15, 7, 3)
+  g.fill(0x8b4513)
+}
+
+function drawNPC(g: Graphics, x: number, y: number) {
+  // Shadow
+  g.ellipse(x, y + 12, 8, 3)
+  g.fill({ color: 0x000000, alpha: 0.3 })
+
+  // Body - green robe
+  g.rect(x - 8, y - 2, 16, 14)
+  g.fill(0x27ae60)
+
+  // Head
+  g.roundRect(x - 6, y - 14, 12, 13, 2)
+  g.fill(0xfce4b5)
+
+  // Hat
+  g.roundRect(x - 8, y - 18, 16, 6, 2)
+  g.fill(0x8e44ad)
+  g.rect(x - 2, y - 22, 4, 4)
+  g.fill(0x8e44ad)
+
+  // Eyes
+  g.rect(x - 3, y - 8, 2, 2)
+  g.fill(0x222222)
+  g.rect(x + 1, y - 8, 2, 2)
+  g.fill(0x222222)
+
+  // Smile
+  g.rect(x - 2, y - 5, 4, 1)
+  g.fill(0xc0392b)
+
+  // Exclamation mark above head
+  g.rect(x - 1, y - 28, 3, 6)
+  g.fill(0xf1c40f)
+  g.rect(x - 1, y - 20, 3, 2)
+  g.fill(0xf1c40f)
+}
+
+function drawProjectObject(g: Graphics, x: number, y: number) {
+  // Desk
+  g.rect(x - 16, y + 4, 32, 6)
+  g.fill(0x8b6914)
+  g.rect(x - 14, y + 10, 4, 8)
+  g.fill(0x6d4c0e)
+  g.rect(x + 10, y + 10, 4, 8)
+  g.fill(0x6d4c0e)
+
+  // Monitor body
+  g.roundRect(x - 12, y - 14, 24, 18, 2)
+  g.fill(0x2c3e50)
+  // Screen (glowing)
+  g.rect(x - 10, y - 12, 20, 14)
+  g.fill(0x0984e3)
+  // Screen lines (code)
+  g.rect(x - 8, y - 10, 12, 1)
+  g.fill(0x74b9ff)
+  g.rect(x - 8, y - 7, 16, 1)
+  g.fill(0x74b9ff)
+  g.rect(x - 8, y - 4, 8, 1)
+  g.fill(0x55efc4)
+  g.rect(x - 8, y - 1, 14, 1)
+  g.fill(0x74b9ff)
+  // Monitor stand
+  g.rect(x - 2, y + 2, 4, 3)
+  g.fill(0x2c3e50)
+}
+
+function drawSkillObject(g: Graphics, x: number, y: number, color: number) {
+  // Pedestal
+  g.rect(x - 6, y + 4, 12, 4)
+  g.fill(0x636e72)
+  g.rect(x - 8, y + 8, 16, 3)
+  g.fill(0x636e72)
+
+  // Crystal glow
+  g.circle(x, y - 2, 10)
+  g.fill({ color, alpha: 0.15 })
+
+  // Crystal shape
+  g.moveTo(x, y - 10)
+  g.lineTo(x + 6, y - 2)
+  g.lineTo(x + 4, y + 4)
+  g.lineTo(x - 4, y + 4)
+  g.lineTo(x - 6, y - 2)
+  g.closePath()
+  g.fill(color)
+
+  // Crystal highlight
+  g.moveTo(x - 2, y - 8)
+  g.lineTo(x + 2, y - 4)
+  g.lineTo(x, y - 2)
+  g.lineTo(x - 4, y - 4)
+  g.closePath()
+  g.fill({ color: 0xffffff, alpha: 0.4 })
+}
+
+function drawTimelineObject(g: Graphics, x: number, y: number) {
+  // Ornate outer frame
+  g.roundRect(x - 14, y - 14, 28, 28, 3)
+  g.fill(0xc0812e)
+  // Inner frame border
+  g.rect(x - 12, y - 12, 24, 24)
+  g.fill(0xd4a049)
+  // Canvas/picture
+  g.rect(x - 10, y - 10, 20, 20)
+  g.fill(0xf5e6ca)
+  // Simple landscape drawing
+  g.rect(x - 10, y + 2, 20, 8)
+  g.fill(0x27ae60) // grass
+  g.circle(x + 4, y - 4, 4)
+  g.fill(0xf39c12) // sun
+  // Nail
+  g.circle(x, y - 16, 2)
+  g.fill(0x7f8c8d)
+}
+
+function drawBookObject(g: Graphics, x: number, y: number, index: number) {
+  const colors = [0xe74c3c, 0x3498db, 0x2ecc71, 0xf39c12, 0x9b59b6, 0x1abc9c]
+  const color = colors[index % colors.length]
+
+  // Bookshelf
+  g.rect(x - 10, y + 12, 20, 3)
+  g.fill(0x8b6914)
+
+  // Book spine (standing up)
+  g.roundRect(x - 5, y - 10, 10, 22, 1)
+  g.fill(color)
+  // Book spine detail lines
+  g.rect(x - 4, y - 6, 8, 1)
+  g.fill({ color: 0xffffff, alpha: 0.3 })
+  g.rect(x - 3, y + 2, 6, 1)
+  g.fill({ color: 0xffffff, alpha: 0.3 })
+  // Book pages
+  g.rect(x + 4, y - 8, 2, 18)
+  g.fill(0xfaf3e0)
+}
+
+function drawWallTile(g: Graphics, wx: number, wy: number, color: number) {
+  const px = wx * TILE_SIZE
+  const py = wy * TILE_SIZE
+  g.rect(px, py, TILE_SIZE, TILE_SIZE)
+  g.fill(color)
+  // Brick lines
+  const darker = (color & 0xfefefe) >> 1
+  g.rect(px, py + 8, TILE_SIZE, 1)
+  g.fill(darker)
+  g.rect(px, py + 16, TILE_SIZE, 1)
+  g.fill(darker)
+  g.rect(px, py + 24, TILE_SIZE, 1)
+  g.fill(darker)
+  const offset = wy % 2 === 0 ? 0 : 16
+  g.rect(px + offset, py, 1, 8)
+  g.fill(darker)
+  g.rect(px + offset + 16, py + 8, 1, 8)
+  g.fill(darker)
+  g.rect(px + offset, py + 16, 1, 8)
+  g.fill(darker)
+  g.rect(px + offset + 16, py + 24, 1, 8)
+  g.fill(darker)
+}
+
+function drawDoor(
+  g: Graphics,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+) {
+  // Stone frame
+  g.rect(x, y, width, height)
+  g.fill(0x7f8c8d)
+  // Dark opening
+  g.rect(x + 3, y + 3, width - 6, height - 3)
+  g.fill(0x1a1a2e)
+  // Arch top
+  g.roundRect(x + 2, y, width - 4, 8, 3)
+  g.fill(0x95a5a6)
 }
 
 function buildCollisionSet(room: RoomConfig): Set<number> {
@@ -79,47 +304,22 @@ function buildCollisionSet(room: RoomConfig): Set<number> {
   return set
 }
 
-function drawObject(g: Graphics, obj: InteractableObject) {
-  const color = OBJECT_COLORS[obj.type] ?? 0xffffff
+function drawObject(g: Graphics, obj: InteractableObject, index: number) {
   const x = obj.position.x
   const y = obj.position.y
-  const hw = obj.size.width / 2
-  const hh = obj.size.height / 2
 
   if (obj.type === 'npc') {
-    // Draw NPC as a circle with a body
-    g.circle(x, y - 4, 8)
-    g.fill(color)
-    g.roundRect(x - 8, y + 4, 16, 12, 3)
-    g.fill(color)
+    drawNPC(g, x, y)
   } else if (obj.type === 'project') {
-    // Draw as a monitor/workstation
-    g.roundRect(x - hw, y - hh, obj.size.width, obj.size.height - 6, 3)
-    g.fill(color)
-    g.rect(x - 3, y + hh - 6, 6, 4)
-    g.fill(color)
-    g.rect(x - 8, y + hh - 2, 16, 2)
-    g.fill(color)
+    drawProjectObject(g, x, y)
   } else if (obj.type === 'skill') {
-    // Draw as a gem/diamond
-    g.moveTo(x, y - hh)
-    g.lineTo(x + hw, y)
-    g.lineTo(x, y + hh)
-    g.lineTo(x - hw, y)
-    g.closePath()
-    g.fill(color)
+    const category = (obj.data.category as string) ?? 'frontend'
+    const color = SKILL_COLORS[category] ?? 0x81c784
+    drawSkillObject(g, x, y, color)
   } else if (obj.type === 'timeline') {
-    // Draw as a framed picture
-    g.rect(x - hw, y - hh, obj.size.width, obj.size.height)
-    g.fill(0x8d6e63)
-    g.rect(x - hw + 3, y - hh + 3, obj.size.width - 6, obj.size.height - 6)
-    g.fill(color)
+    drawTimelineObject(g, x, y)
   } else if (obj.type === 'post') {
-    // Draw as a book
-    g.roundRect(x - hw, y - hh, obj.size.width, obj.size.height, 2)
-    g.fill(color)
-    g.rect(x - hw, y - hh, 4, obj.size.height)
-    g.fill(0x6d4c41)
+    drawBookObject(g, x, y, index)
   }
 }
 
@@ -129,52 +329,53 @@ function buildRoom(
   collisionSet: Set<number>,
   objects: InteractableObject[],
 ): { player: Graphics; objectGraphics: Graphics; promptText: Text; dustParticles: ReturnType<typeof createDustParticles> } {
-  // Draw floor tiles
+  // Draw floor tiles with subtle borders
   const floor = new Graphics()
   for (let y = 0; y < room.height; y++) {
     for (let x = 0; x < room.width; x++) {
-      const color =
+      const tileColor =
         (x + y) % 2 === 0 ? room.floorColor1 : room.floorColor2
+      const borderColor = (tileColor & 0xfefefe) >> 1
       floor.rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-      floor.fill(color)
+      floor.fill(tileColor)
+      // Subtle inner border
+      floor.rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 1)
+      floor.fill(borderColor)
+      floor.rect(x * TILE_SIZE, y * TILE_SIZE, 1, TILE_SIZE)
+      floor.fill(borderColor)
     }
   }
   viewport.addChild(floor)
 
-  // Draw wall tiles
+  // Draw wall tiles with brick pattern
   const walls = new Graphics()
   collisionSet.forEach((index) => {
     const wx = index % room.width
     const wy = Math.floor(index / room.width)
-    walls.rect(wx * TILE_SIZE, wy * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+    drawWallTile(walls, wx, wy, room.wallColor)
   })
-  walls.fill(room.wallColor)
   viewport.addChild(walls)
 
-  // Draw door indicators
+  // Draw door indicators as archway entrances
   const doors = new Graphics()
   const doorPositions = getDoorPositions(room)
   for (const dp of doorPositions) {
     if (dp.direction === 'up') {
-      doors.rect(dp.tiles[0] * TILE_SIZE, 0, dp.tiles.length * TILE_SIZE, TILE_SIZE)
-      doors.fill(0x6a8a6a)
+      drawDoor(doors, dp.tiles[0] * TILE_SIZE, 0, dp.tiles.length * TILE_SIZE, TILE_SIZE)
     } else if (dp.direction === 'down') {
-      doors.rect(dp.tiles[0] * TILE_SIZE, (room.height - 1) * TILE_SIZE, dp.tiles.length * TILE_SIZE, TILE_SIZE)
-      doors.fill(0x6a8a6a)
+      drawDoor(doors, dp.tiles[0] * TILE_SIZE, (room.height - 1) * TILE_SIZE, dp.tiles.length * TILE_SIZE, TILE_SIZE)
     } else if (dp.direction === 'left') {
-      doors.rect(0, dp.tiles[0] * TILE_SIZE, TILE_SIZE, dp.tiles.length * TILE_SIZE)
-      doors.fill(0x6a8a6a)
+      drawDoor(doors, 0, dp.tiles[0] * TILE_SIZE, TILE_SIZE, dp.tiles.length * TILE_SIZE)
     } else if (dp.direction === 'right') {
-      doors.rect((room.width - 1) * TILE_SIZE, dp.tiles[0] * TILE_SIZE, TILE_SIZE, dp.tiles.length * TILE_SIZE)
-      doors.fill(0x6a8a6a)
+      drawDoor(doors, (room.width - 1) * TILE_SIZE, dp.tiles[0] * TILE_SIZE, TILE_SIZE, dp.tiles.length * TILE_SIZE)
     }
   }
   viewport.addChild(doors)
 
   // Draw interactable objects
   const objectGraphics = new Graphics()
-  for (const obj of objects) {
-    drawObject(objectGraphics, obj)
+  for (let i = 0; i < objects.length; i++) {
+    drawObject(objectGraphics, objects[i], i)
   }
   viewport.addChild(objectGraphics)
 
@@ -195,10 +396,8 @@ function buildRoom(
 
   // Create player character (always on top)
   const player = new Graphics()
-  player.roundRect(-12, -12, 24, 24, 4)
-  player.fill(0x4fc3f7)
-  player.circle(0, 6, 3)
-  player.fill(0xffffff)
+  drawPlayer(player, 'down')
+  ;(player as unknown as Record<string, string>).__lastDir = 'down'
   viewport.addChild(player)
 
   return { player, objectGraphics, promptText, dustParticles }
@@ -459,6 +658,14 @@ function GameWorld() {
     if (playerGraphicsRef.current) {
       playerGraphicsRef.current.x = playerPosRef.current.x
       playerGraphicsRef.current.y = playerPosRef.current.y
+
+      // Redraw player when direction changes
+      const currentDir = stateRef.current.player.direction
+      const playerAny = playerGraphicsRef.current as unknown as Record<string, string>
+      if (playerAny.__lastDir !== currentDir) {
+        playerAny.__lastDir = currentDir
+        drawPlayer(playerGraphicsRef.current, currentDir)
+      }
     }
     if (viewportRef.current) {
       viewportRef.current.moveCenter(playerPosRef.current.x, playerPosRef.current.y)
