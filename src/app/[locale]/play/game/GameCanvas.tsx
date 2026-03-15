@@ -875,6 +875,45 @@ function buildRoom(
   roomLabel.y = TILE_SIZE + 6
   viewport.addChild(roomLabel)
 
+  // Door direction signs (only in lobby — shows where each door leads)
+  if (roomId === 'lobby') {
+    const signStyle = new TextStyle({
+      fontFamily: 'monospace',
+      fontSize: 9,
+      fill: 0xf1c40f,
+      align: 'center',
+      dropShadow: { color: 0x000000, alpha: 0.8, blur: 2, distance: 0 },
+    })
+
+    // Up → Skills
+    const signUp = new Text({ text: '▲ Skills', style: signStyle })
+    signUp.anchor.set(0.5, 1)
+    signUp.x = 10 * TILE_SIZE
+    signUp.y = 2 * TILE_SIZE - 4
+    viewport.addChild(signUp)
+
+    // Down → Library
+    const signDown = new Text({ text: '▼ Library', style: signStyle })
+    signDown.anchor.set(0.5, 0)
+    signDown.x = 10 * TILE_SIZE
+    signDown.y = 13 * TILE_SIZE + 4
+    viewport.addChild(signDown)
+
+    // Left → History
+    const signLeft = new Text({ text: '◀ History', style: signStyle })
+    signLeft.anchor.set(1, 0.5)
+    signLeft.x = 2 * TILE_SIZE - 4
+    signLeft.y = 8 * TILE_SIZE
+    viewport.addChild(signLeft)
+
+    // Right → Projects
+    const signRight = new Text({ text: 'Projects ▶', style: signStyle })
+    signRight.anchor.set(0, 0.5)
+    signRight.x = 18 * TILE_SIZE + 4
+    signRight.y = 8 * TILE_SIZE
+    viewport.addChild(signRight)
+  }
+
   // Draw interactable objects
   const objectGraphics = new Graphics()
   for (let i = 0; i < objects.length; i++) {
