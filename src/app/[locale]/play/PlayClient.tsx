@@ -1,17 +1,22 @@
 'use client'
 
 import { useReducer } from 'react'
+import dynamic from 'next/dynamic'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { X, Volume2, VolumeX } from 'lucide-react'
 import type { Project, Skill, TimelineItem } from '@/types/content'
 import { GameContext, gameReducer, initialGameState } from './game/state'
-import { GameCanvas } from './game/GameCanvas'
 import { DialogueBox } from './ui/DialogueBox'
 import { DetailPanel } from './ui/DetailPanel'
 import { LoadingScreen } from './ui/LoadingScreen'
 import { Minimap } from './ui/Minimap'
 import { MobileControls } from './ui/MobileControls'
+
+const GameCanvas = dynamic(
+  () => import('./game/GameCanvas').then((mod) => ({ default: mod.GameCanvas })),
+  { ssr: false }
+)
 
 interface PostSummary {
   slug: string
