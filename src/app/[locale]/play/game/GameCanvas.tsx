@@ -1,17 +1,18 @@
 'use client'
 
-import { useRef, useEffect, useCallback, useState } from 'react'
+import { useRef, useEffect, useCallback, useState, createContext, useContext } from 'react'
 import { Application, extend, useApplication, useTick } from '@pixi/react'
-import { Container, Graphics } from 'pixi.js'
+import { Container, Graphics, Text, TextStyle } from 'pixi.js'
 import { Viewport } from 'pixi-viewport'
 import { useGame } from './state'
 import { useKeyboard } from './useKeyboard'
 import { TILE_SIZE, isColliding } from './tilemap'
 import { ROOM_CONFIGS, checkDoorCollision, getDoorPositions } from './rooms'
+import { generateRoomObjects, findNearbyObject } from './objects'
 import type { RoomConfig } from './rooms'
-import type { RoomId } from './types'
+import type { RoomId, InteractableObject } from './types'
 
-extend({ Container, Graphics })
+extend({ Container, Graphics, Text })
 
 const CANVAS_WIDTH = 800
 const CANVAS_HEIGHT = 600
@@ -19,6 +20,38 @@ const PLAYER_SPEED = 3
 const PLAYER_SIZE = 16
 const MAP_WIDTH = 20
 const MAP_HEIGHT = 15
+
+export interface GameCanvasProps {
+  projects: { name: string; slug: string; descriptionKo: string; descriptionEn: string; techStack: string[]; status: string; website: string; github: string; featured: boolean }[]
+  skills: { name: string; category: 'frontend' | 'backend' | 'tools' }[]
+  timeline: { date: string; titleKo: string; titleEn: string; descriptionKo: string; descriptionEn: string; type: string }[]
+  posts: { slug: string; title: string; excerpt: string; category: string }[]
+  locale: string
+}
+
+interface PortfolioContextValue {
+  projects: GameCanvasProps['projects']
+  skills: GameCanvasProps['skills']
+  timeline: GameCanvasProps['timeline']
+  posts: GameCanvasProps['posts']
+  locale: string
+}
+
+const PortfolioDataContext = createContext<PortfolioContextValue | null>(null)
+
+function usePortfolioData() {
+  const ctx = useContext(PortfolioDataContext)
+  if (!ctx) throw new Error('usePortfolioData must be within PortfolioDataContext')
+  return ctx
+}
+
+const OBJECT_COLORS: Record<string, number> = {
+  npc: 0xffb74d,
+  project: 0x4fc3f7,
+  skill: 0x81c784,
+  timeline: 0xce93d8,
+  post: 0xa1887f,
+}
 
 function buildCollisionSet(room: RoomConfig): Set<number> {
   const doorPositions = getDoorPositions(room)
@@ -45,11 +78,56 @@ function buildCollisionSet(room: RoomConfig): Set<number> {
   return set
 }
 
+function drawObject(g: Graphics, obj: InteractableObject) {
+  const color = OBJECT_COLORS[obj.type] ?? 0xffffff
+  const x = obj.position.x
+  const y = obj.position.y
+  const hw = obj.size.width / 2
+  const hh = obj.size.height / 2
+
+  if (obj.type === 'npc') {
+    // Draw NPC as a circle with a body
+    g.circle(x, y - 4, 8)
+    g.fill(color)
+    g.roundRect(x - 8, y + 4, 16, 12, 3)
+    g.fill(color)
+  } else if (obj.type === 'project') {
+    // Draw as a monitor/workstation
+    g.roundRect(x - hw, y - hh, obj.size.width, obj.size.height - 6, 3)
+    g.fill(color)
+    g.rect(x - 3, y + hh - 6, 6, 4)
+    g.fill(color)
+    g.rect(x - 8, y + hh - 2, 16, 2)
+    g.fill(color)
+  } else if (obj.type === 'skill') {
+    // Draw as a gem/diamond
+    g.moveTo(x, y - hh)
+    g.lineTo(x + hw, y)
+    g.lineTo(x, y + hh)
+    g.lineTo(x - hw, y)
+    g.closePath()
+    g.fill(color)
+  } else if (obj.type === 'timeline') {
+    // Draw as a framed picture
+    g.rect(x - hw, y - hh, obj.size.width, obj.size.height)
+    g.fill(0x8d6e63)
+    g.rect(x - hw + 3, y - hh + 3, obj.size.width - 6, obj.size.height - 6)
+    g.fill(color)
+  } else if (obj.type === 'post') {
+    // Draw as a book
+    g.roundRect(x - hw, y - hh, obj.size.width, obj.size.height, 2)
+    g.fill(color)
+    g.rect(x - hw, y - hh, 4, obj.size.height)
+    g.fill(0x6d4c41)
+  }
+}
+
 function buildRoom(
   viewport: Viewport,
   room: RoomConfig,
   collisionSet: Set<number>,
-): Graphics {
+  objects: InteractableObject[],
+): { player: Graphics; objectGraphics: Graphics; promptText: Text } {
   // Draw floor tiles
   const floor = new Graphics()
   for (let y = 0; y < room.height; y++) {
@@ -77,42 +155,41 @@ function buildRoom(
   const doorPositions = getDoorPositions(room)
   for (const dp of doorPositions) {
     if (dp.direction === 'up') {
-      doors.rect(
-        dp.tiles[0] * TILE_SIZE,
-        0,
-        dp.tiles.length * TILE_SIZE,
-        TILE_SIZE,
-      )
+      doors.rect(dp.tiles[0] * TILE_SIZE, 0, dp.tiles.length * TILE_SIZE, TILE_SIZE)
       doors.fill(0x6a8a6a)
     } else if (dp.direction === 'down') {
-      doors.rect(
-        dp.tiles[0] * TILE_SIZE,
-        (room.height - 1) * TILE_SIZE,
-        dp.tiles.length * TILE_SIZE,
-        TILE_SIZE,
-      )
+      doors.rect(dp.tiles[0] * TILE_SIZE, (room.height - 1) * TILE_SIZE, dp.tiles.length * TILE_SIZE, TILE_SIZE)
       doors.fill(0x6a8a6a)
     } else if (dp.direction === 'left') {
-      doors.rect(
-        0,
-        dp.tiles[0] * TILE_SIZE,
-        TILE_SIZE,
-        dp.tiles.length * TILE_SIZE,
-      )
+      doors.rect(0, dp.tiles[0] * TILE_SIZE, TILE_SIZE, dp.tiles.length * TILE_SIZE)
       doors.fill(0x6a8a6a)
     } else if (dp.direction === 'right') {
-      doors.rect(
-        (room.width - 1) * TILE_SIZE,
-        dp.tiles[0] * TILE_SIZE,
-        TILE_SIZE,
-        dp.tiles.length * TILE_SIZE,
-      )
+      doors.rect((room.width - 1) * TILE_SIZE, dp.tiles[0] * TILE_SIZE, TILE_SIZE, dp.tiles.length * TILE_SIZE)
       doors.fill(0x6a8a6a)
     }
   }
   viewport.addChild(doors)
 
-  // Create player character
+  // Draw interactable objects
+  const objectGraphics = new Graphics()
+  for (const obj of objects) {
+    drawObject(objectGraphics, obj)
+  }
+  viewport.addChild(objectGraphics)
+
+  // Create bouncing [Space] prompt text (hidden by default)
+  const promptStyle = new TextStyle({
+    fontFamily: 'monospace',
+    fontSize: 10,
+    fill: 0xffffff,
+    align: 'center',
+  })
+  const promptText = new Text({ text: '[Space]', style: promptStyle })
+  promptText.anchor.set(0.5, 1)
+  promptText.visible = false
+  viewport.addChild(promptText)
+
+  // Create player character (always on top)
   const player = new Graphics()
   player.roundRect(-12, -12, 24, 24, 4)
   player.fill(0x4fc3f7)
@@ -120,19 +197,23 @@ function buildRoom(
   player.fill(0xffffff)
   viewport.addChild(player)
 
-  return player
+  return { player, objectGraphics, promptText }
 }
 
 function GameWorld() {
   const { app, isInitialised } = useApplication()
   const { state, dispatch } = useGame()
+  const portfolioData = usePortfolioData()
   const { keys, consumeInteract } = useKeyboard()
   const viewportRef = useRef<Viewport | null>(null)
   const playerGraphicsRef = useRef<Graphics | null>(null)
+  const promptTextRef = useRef<Text | null>(null)
   const collisionSet = useRef<Set<number>>(new Set())
   const initialized = useRef(false)
   const currentRoomRef = useRef<RoomId>('lobby')
   const isTransitioningRef = useRef(false)
+  const roomObjectsRef = useRef<InteractableObject[]>([])
+  const tickCount = useRef(0)
 
   const playerPosRef = useRef({ x: 0, y: 0 })
   const stateRef = useRef(state)
@@ -143,7 +224,6 @@ function GameWorld() {
       if (!app?.renderer || !viewportRef.current) return
 
       const viewport = viewportRef.current
-      // Remove all children to clear the room
       viewport.removeChildren()
 
       const room = ROOM_CONFIGS[roomId]
@@ -151,8 +231,12 @@ function GameWorld() {
       collisionSet.current = newCollisionSet
       currentRoomRef.current = roomId
 
-      const player = buildRoom(viewport, room, newCollisionSet)
+      const objects = generateRoomObjects(roomId, portfolioData)
+      roomObjectsRef.current = objects
+
+      const { player, promptText } = buildRoom(viewport, room, newCollisionSet, objects)
       playerGraphicsRef.current = player
+      promptTextRef.current = promptText
 
       player.x = spawnPos.x
       player.y = spawnPos.y
@@ -160,7 +244,7 @@ function GameWorld() {
 
       viewport.moveCenter(spawnPos.x, spawnPos.y)
     },
-    [app],
+    [app, portfolioData],
   )
 
   useEffect(() => {
@@ -169,7 +253,6 @@ function GameWorld() {
 
     const room = ROOM_CONFIGS['lobby']
 
-    // Create viewport
     const viewport = new Viewport({
       screenWidth: app.renderer.width,
       screenHeight: app.renderer.height,
@@ -190,8 +273,12 @@ function GameWorld() {
     const initialCollision = buildCollisionSet(room)
     collisionSet.current = initialCollision
 
-    const player = buildRoom(viewport, room, initialCollision)
+    const objects = generateRoomObjects('lobby', portfolioData)
+    roomObjectsRef.current = objects
+
+    const { player, promptText } = buildRoom(viewport, room, initialCollision, objects)
     playerGraphicsRef.current = player
+    promptTextRef.current = promptText
 
     const spawnX = room.spawnPoint.x
     const spawnY = room.spawnPoint.y
@@ -208,7 +295,7 @@ function GameWorld() {
       viewport.destroy({ children: true })
       initialized.current = false
     }
-  }, [app, isInitialised, dispatch, rebuildRoom])
+  }, [app, isInitialised, dispatch, rebuildRoom, portfolioData])
 
   const tickCallback = useCallback(() => {
     const currentState = stateRef.current
@@ -219,6 +306,8 @@ function GameWorld() {
     )
       return
 
+    tickCount.current++
+
     // Handle dialogue advancement
     if (currentState.interaction.activeDialogue) {
       if (consumeInteract()) {
@@ -227,7 +316,7 @@ function GameWorld() {
       return
     }
 
-    // Calculate movement from keyboard input
+    // Calculate movement
     let dx = 0
     let dy = 0
     if (keys.up) dy -= PLAYER_SPEED
@@ -235,7 +324,6 @@ function GameWorld() {
     if (keys.left) dx -= PLAYER_SPEED
     if (keys.right) dx += PLAYER_SPEED
 
-    // Normalize diagonal movement
     if (dx !== 0 && dy !== 0) {
       const f = 1 / Math.sqrt(2)
       dx *= f
@@ -244,15 +332,9 @@ function GameWorld() {
 
     if (dx !== 0 || dy !== 0) {
       if (Math.abs(dx) > Math.abs(dy)) {
-        dispatch({
-          type: 'SET_DIRECTION',
-          payload: dx > 0 ? 'right' : 'left',
-        })
+        dispatch({ type: 'SET_DIRECTION', payload: dx > 0 ? 'right' : 'left' })
       } else {
-        dispatch({
-          type: 'SET_DIRECTION',
-          payload: dy > 0 ? 'down' : 'up',
-        })
+        dispatch({ type: 'SET_DIRECTION', payload: dy > 0 ? 'down' : 'up' })
       }
 
       const pos = playerPosRef.current
@@ -261,45 +343,22 @@ function GameWorld() {
       let finalX = pos.x
       let finalY = pos.y
 
-      if (
-        !isColliding(
-          newX,
-          pos.y,
-          MAP_WIDTH,
-          collisionSet.current,
-          PLAYER_SIZE,
-        )
-      ) {
+      if (!isColliding(newX, pos.y, MAP_WIDTH, collisionSet.current, PLAYER_SIZE)) {
         finalX = newX
       }
-      if (
-        !isColliding(
-          finalX,
-          newY,
-          MAP_WIDTH,
-          collisionSet.current,
-          PLAYER_SIZE,
-        )
-      ) {
+      if (!isColliding(finalX, newY, MAP_WIDTH, collisionSet.current, PLAYER_SIZE)) {
         finalY = newY
       }
 
       if (finalX !== pos.x || finalY !== pos.y) {
         playerPosRef.current = { x: finalX, y: finalY }
-        dispatch({
-          type: 'MOVE_PLAYER',
-          payload: { x: finalX, y: finalY },
-        })
+        dispatch({ type: 'MOVE_PLAYER', payload: { x: finalX, y: finalY } })
       }
     }
 
-    // Check door collision after movement
+    // Check door collision
     const room = ROOM_CONFIGS[currentRoomRef.current]
-    const door = checkDoorCollision(
-      playerPosRef.current.x,
-      playerPosRef.current.y,
-      room,
-    )
+    const door = checkDoorCollision(playerPosRef.current.x, playerPosRef.current.y, room)
 
     if (door && !isTransitioningRef.current) {
       isTransitioningRef.current = true
@@ -308,10 +367,7 @@ function GameWorld() {
       setTimeout(() => {
         dispatch({
           type: 'CHANGE_ROOM',
-          payload: {
-            room: door.targetRoom,
-            spawnPoint: door.spawnPosition,
-          },
+          payload: { room: door.targetRoom, spawnPoint: door.spawnPosition },
         })
         rebuildRoom(door.targetRoom, door.spawnPosition)
 
@@ -322,16 +378,33 @@ function GameWorld() {
       }, 300)
     }
 
+    // Proximity detection for interactable objects
+    const nearbyObj = findNearbyObject(playerPosRef.current, roomObjectsRef.current)
+    const prevNearby = currentState.interaction.nearbyObject
+    if (nearbyObj?.id !== prevNearby?.id) {
+      dispatch({ type: 'SET_NEARBY_OBJECT', payload: nearbyObj })
+    }
+
+    // Update [Space] prompt visibility and position
+    if (promptTextRef.current) {
+      if (nearbyObj) {
+        promptTextRef.current.visible = true
+        promptTextRef.current.x = nearbyObj.position.x
+        // Bounce animation
+        const bounce = Math.sin(tickCount.current * 0.08) * 3
+        promptTextRef.current.y = nearbyObj.position.y - nearbyObj.size.height / 2 - 8 + bounce
+      } else {
+        promptTextRef.current.visible = false
+      }
+    }
+
     // Update visual positions imperatively
     if (playerGraphicsRef.current) {
       playerGraphicsRef.current.x = playerPosRef.current.x
       playerGraphicsRef.current.y = playerPosRef.current.y
     }
     if (viewportRef.current) {
-      viewportRef.current.moveCenter(
-        playerPosRef.current.x,
-        playerPosRef.current.y,
-      )
+      viewportRef.current.moveCenter(playerPosRef.current.x, playerPosRef.current.y)
     }
   }, [keys, consumeInteract, dispatch, rebuildRoom])
 
@@ -340,15 +413,7 @@ function GameWorld() {
   return null
 }
 
-export interface GameCanvasProps {
-  projects?: { name: string; slug: string; descriptionKo: string; descriptionEn: string; techStack: string[]; status: string; website: string; github: string; featured: boolean }[]
-  skills?: { name: string; category: 'frontend' | 'backend' | 'tools' }[]
-  timeline?: { date: string; titleKo: string; titleEn: string; descriptionKo: string; descriptionEn: string; type: string }[]
-  posts?: { slug: string; title: string; excerpt: string; category: string }[]
-  locale?: string
-}
-
-export function GameCanvas(_props: GameCanvasProps) {
+export function GameCanvas({ projects, skills, timeline, posts, locale }: GameCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [canvasSize, setCanvasSize] = useState({
     width: CANVAS_WIDTH,
@@ -370,17 +435,21 @@ export function GameCanvas(_props: GameCanvasProps) {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  const portfolioData = { projects, skills, timeline, posts, locale }
+
   return (
-    <div ref={containerRef} className="w-full">
-      <Application
-        width={canvasSize.width}
-        height={canvasSize.height}
-        background={0x1a1a2e}
-        antialias={false}
-        resolution={1}
-      >
-        <GameWorld />
-      </Application>
-    </div>
+    <PortfolioDataContext.Provider value={portfolioData}>
+      <div ref={containerRef} className="w-full">
+        <Application
+          width={canvasSize.width}
+          height={canvasSize.height}
+          background={0x1a1a2e}
+          antialias={false}
+          resolution={1}
+        >
+          <GameWorld />
+        </Application>
+      </div>
+    </PortfolioDataContext.Provider>
   )
 }

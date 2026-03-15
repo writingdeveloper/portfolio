@@ -62,7 +62,13 @@ export function PlayClient({
 
         {/* Game canvas */}
         <div className="w-full max-w-[800px] border-x border-[var(--border-default)]">
-          <GameCanvas />
+          <GameCanvas
+            projects={projects}
+            skills={skills}
+            timeline={timeline}
+            posts={posts}
+            locale={locale}
+          />
         </div>
 
         {/* Controls hint */}
