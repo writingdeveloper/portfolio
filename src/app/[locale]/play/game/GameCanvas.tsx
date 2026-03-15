@@ -407,6 +407,327 @@ function drawDoor(g: Graphics, x: number, y: number, width: number, height: numb
   g.circle(x + 2, y + height / 2 - 9, 1); g.fill({ color: 0xf1c40f, alpha: 0.6 })
 }
 
+/* ── Decorative furniture helpers (static, non-interactable) ── */
+
+function drawPottedPlant(g: Graphics, x: number, y: number) {
+  // Pot
+  g.moveTo(x - 6, y); g.lineTo(x - 8, y + 10); g.lineTo(x + 8, y + 10); g.lineTo(x + 6, y); g.closePath()
+  g.fill(0xb5651d)
+  g.rect(x - 7, y - 1, 14, 3); g.fill(0xc0762e)
+  // Soil
+  g.ellipse(x, y + 1, 5, 2); g.fill(0x3d1f00)
+  // Plant leaves
+  g.circle(x, y - 6, 7); g.fill(0x2ecc71)
+  g.circle(x - 5, y - 3, 5); g.fill(0x27ae60)
+  g.circle(x + 5, y - 3, 5); g.fill(0x27ae60)
+  g.circle(x, y - 10, 4); g.fill(0x2ecc71)
+  // Highlight
+  g.circle(x + 2, y - 8, 2); g.fill({ color: 0xffffff, alpha: 0.15 })
+}
+
+function drawWallTorch(g: Graphics, x: number, y: number) {
+  // Bracket
+  g.rect(x - 1, y, 6, 3); g.fill(0x636e72)
+  // Torch handle
+  g.rect(x + 1, y - 10, 3, 12); g.fill(0x8b6914)
+  // Flame
+  g.circle(x + 2, y - 12, 4); g.fill(0xf39c12)
+  g.circle(x + 2, y - 14, 3); g.fill(0xe74c3c)
+  g.circle(x + 2, y - 16, 2); g.fill(0xf1c40f)
+  // Glow
+  g.circle(x + 2, y - 12, 10); g.fill({ color: 0xf39c12, alpha: 0.06 })
+}
+
+function drawChair(g: Graphics, x: number, y: number) {
+  // Seat
+  g.roundRect(x - 8, y, 16, 10, 2); g.fill(0x2c3e50)
+  // Back
+  g.roundRect(x - 8, y - 10, 16, 12, 2); g.fill(0x34495e)
+  // Wheels
+  g.circle(x - 6, y + 12, 2); g.fill(0x636e72)
+  g.circle(x + 6, y + 12, 2); g.fill(0x636e72)
+  // Leg
+  g.rect(x - 1, y + 10, 2, 3); g.fill(0x636e72)
+}
+
+function drawTrashBin(g: Graphics, x: number, y: number) {
+  g.moveTo(x - 6, y); g.lineTo(x - 5, y + 12); g.lineTo(x + 5, y + 12); g.lineTo(x + 6, y); g.closePath()
+  g.fill(0x636e72)
+  g.rect(x - 7, y - 1, 14, 3); g.fill(0x7f8c8d)
+}
+
+function drawCandelabra(g: Graphics, x: number, y: number) {
+  // Base
+  g.roundRect(x - 8, y + 8, 16, 4, 1); g.fill(0xb8860b)
+  // Stem
+  g.rect(x - 1, y - 4, 3, 14); g.fill(0xdaa520)
+  // Arms
+  g.rect(x - 10, y - 4, 20, 2); g.fill(0xdaa520)
+  // Candles
+  for (const cx of [x - 8, x, x + 8]) {
+    g.rect(cx - 1, y - 10, 3, 7); g.fill(0xfdf6e3)
+    g.circle(cx, y - 12, 3); g.fill(0xf39c12)
+    g.circle(cx, y - 13, 2); g.fill(0xe74c3c)
+    g.circle(cx, y - 12, 8); g.fill({ color: 0xf39c12, alpha: 0.04 })
+  }
+}
+
+function drawBookshelf(g: Graphics, x: number, y: number, width: number) {
+  // Shelf frame
+  g.rect(x, y, width, 3 * TILE_SIZE); g.fill(0x6d4c0e)
+  // Shelves
+  for (let s = 0; s < 3; s++) {
+    const sy = y + 4 + s * TILE_SIZE
+    g.rect(x + 3, sy, width - 6, TILE_SIZE - 6); g.fill(0x8b6914)
+    // Books on shelf
+    const bookColors = [0xc0392b, 0x2980b9, 0x27ae60, 0xf39c12, 0x8e44ad, 0x16a085, 0xd35400]
+    for (let b = 0; b < 5; b++) {
+      const bw = 4 + Math.floor(b * 1.5) % 3
+      const bx = x + 6 + b * (bw + 3)
+      if (bx + bw > x + width - 6) break
+      g.rect(bx, sy + 2, bw, TILE_SIZE - 10); g.fill(bookColors[b % bookColors.length])
+    }
+  }
+}
+
+function drawRopePost(g: Graphics, x: number, y: number) {
+  g.rect(x - 2, y - 6, 4, 14); g.fill(0xdaa520)
+  g.circle(x, y - 7, 3); g.fill(0xf1c40f)
+  g.roundRect(x - 4, y + 8, 8, 3, 1); g.fill(0xb8860b)
+}
+
+function drawPedestal(g: Graphics, x: number, y: number) {
+  g.roundRect(x - 10, y + 6, 20, 4, 1); g.fill(0x7f8c8d)
+  g.rect(x - 8, y - 4, 16, 11); g.fill(0x95a5a6)
+  g.roundRect(x - 10, y - 6, 20, 4, 1); g.fill(0xbdc3c7)
+}
+
+function drawArmchair(g: Graphics, x: number, y: number) {
+  // Seat
+  g.roundRect(x - 12, y, 24, 14, 3); g.fill(0x6c3483)
+  // Back
+  g.roundRect(x - 14, y - 12, 28, 16, 4); g.fill(0x7d3c98)
+  // Arms
+  g.roundRect(x - 16, y - 4, 6, 16, 2); g.fill(0x7d3c98)
+  g.roundRect(x + 10, y - 4, 6, 16, 2); g.fill(0x7d3c98)
+  // Cushion
+  g.roundRect(x - 8, y + 2, 16, 8, 2); g.fill(0x8e44ad)
+  // Legs
+  g.rect(x - 12, y + 14, 3, 4); g.fill(0x5b370a)
+  g.rect(x + 9, y + 14, 3, 4); g.fill(0x5b370a)
+}
+
+function drawFloorLamp(g: Graphics, x: number, y: number) {
+  // Base
+  g.roundRect(x - 6, y + 16, 12, 3, 1); g.fill(0x636e72)
+  // Pole
+  g.rect(x - 1, y - 8, 3, 25); g.fill(0x7f8c8d)
+  // Shade
+  g.moveTo(x - 10, y - 4); g.lineTo(x - 6, y - 14); g.lineTo(x + 6, y - 14); g.lineTo(x + 10, y - 4); g.closePath()
+  g.fill(0xf5e6ca)
+  // Bulb glow
+  g.circle(x, y - 8, 12); g.fill({ color: 0xfff3cd, alpha: 0.06 })
+  g.circle(x, y - 10, 3); g.fill({ color: 0xf1c40f, alpha: 0.5 })
+}
+
+/* ── Per-room decoration drawing ── */
+
+function drawLobbyDecorations(g: Graphics, T: number, _room: RoomConfig) {
+  // Center carpet (tiles 7-12, 5-10)
+  g.roundRect(7 * T, 5 * T, 6 * T, 5 * T, 4)
+  g.fill(0x8b1a1a)
+  // Carpet border
+  g.roundRect(7 * T + 4, 5 * T + 4, 6 * T - 8, 5 * T - 8, 3)
+  g.fill(0xa52a2a)
+  // Carpet inner pattern
+  g.roundRect(7 * T + 12, 5 * T + 12, 6 * T - 24, 5 * T - 24, 2)
+  g.fill(0x8b1a1a)
+  // Carpet center diamond
+  const cx = 10 * T, cy = 7.5 * T
+  g.moveTo(cx, cy - 20); g.lineTo(cx + 30, cy); g.lineTo(cx, cy + 20); g.lineTo(cx - 30, cy); g.closePath()
+  g.fill(0xdaa520)
+
+  // Potted plants near left and right doors
+  drawPottedPlant(g, 1.5 * T, 5.5 * T)
+  drawPottedPlant(g, 18.5 * T, 5.5 * T)
+  // Near top door
+  drawPottedPlant(g, 8 * T, 1.5 * T)
+  drawPottedPlant(g, 12 * T, 1.5 * T)
+
+  // Wall torches (on left wall)
+  drawWallTorch(g, 1 * T - 4, 4 * T)
+  drawWallTorch(g, 1 * T - 4, 10 * T)
+  // On right wall
+  drawWallTorch(g, 19 * T + 4, 4 * T)
+  drawWallTorch(g, 19 * T + 4, 10 * T)
+
+  // Notice board on upper wall
+  g.roundRect(4 * T, 0.5 * T - 8, 3 * T, T - 4, 2); g.fill(0x8b6914)
+  g.rect(4 * T + 4, 0.5 * T - 4, 3 * T - 8, T - 12); g.fill(0xa0724a)
+  // Pinned papers
+  g.rect(4.2 * T, 0.5 * T - 2, 12, 10); g.fill(0xffeaa7)
+  g.rect(5 * T, 0.5 * T, 10, 8); g.fill(0x74b9ff)
+  g.rect(5.8 * T, 0.5 * T - 4, 14, 10); g.fill(0xff7675)
+
+  // Welcome mat at bottom door
+  g.roundRect(9 * T + 4, 13.5 * T, 2 * T - 8, T * 0.6, 2)
+  g.fill(0x6d4c0e)
+  g.rect(9 * T + 8, 13.5 * T + 3, 2 * T - 16, T * 0.6 - 6)
+  g.fill(0x8b6914)
+}
+
+function drawProjectsDecorations(g: Graphics, T: number, _room: RoomConfig) {
+  // Server rack on top wall (tiles 3-5)
+  g.roundRect(3 * T, T + 4, 2.5 * T, 4 * T, 2); g.fill(0x2c3e50)
+  g.rect(3 * T + 4, T + 8, 2.5 * T - 8, 4 * T - 8); g.fill(0x1a252f)
+  // Server LEDs
+  for (let i = 0; i < 6; i++) {
+    const ledColor = i % 3 === 0 ? 0x2ecc71 : 0x3498db
+    g.circle(3.3 * T, T + 16 + i * 14, 2); g.fill(ledColor)
+    g.rect(3.6 * T, T + 14 + i * 14, T, 3); g.fill(0x34495e)
+  }
+
+  // Whiteboard on top wall (tiles 14-17)
+  g.roundRect(14 * T, T * 0.5, 3.5 * T, 2.5 * T, 3); g.fill(0xecf0f1)
+  g.rect(14 * T + 6, T * 0.5 + 6, 3.5 * T - 12, 2.5 * T - 12); g.fill(0xffffff)
+  // Whiteboard scribbles
+  g.rect(14.5 * T, T + 4, T, 2); g.fill(0xe74c3c)
+  g.rect(14.5 * T, T + 12, 1.5 * T, 2); g.fill(0x3498db)
+  g.rect(15 * T, T + 20, T, 2); g.fill(0x2ecc71)
+  // Markers tray
+  g.rect(14.5 * T, T * 0.5 + 2.5 * T - 4, 2.5 * T, 4); g.fill(0xbdc3c7)
+
+  // Chairs in front of workstations
+  drawChair(g, 4 * T, 7 * T)
+  drawChair(g, 8 * T, 7 * T)
+  drawChair(g, 12 * T, 7 * T)
+
+  // Trash bin
+  drawTrashBin(g, 17 * T, 12 * T)
+
+  // Cable on floor
+  g.rect(3 * T, 5 * T, 1, 4 * T); g.fill({ color: 0x222222, alpha: 0.3 })
+  g.rect(3 * T, 9 * T, 6 * T, 1); g.fill({ color: 0x222222, alpha: 0.3 })
+}
+
+function drawSkillsDecorations(g: Graphics, T: number, _room: RoomConfig) {
+  // Magic circle on floor center
+  const cx = 10 * T, cy = 7.5 * T
+  g.circle(cx, cy, 4 * T); g.fill({ color: 0x9b59b6, alpha: 0.05 })
+  g.circle(cx, cy, 3.5 * T); g.stroke({ color: 0x9b59b6, alpha: 0.15, width: 2 })
+  g.circle(cx, cy, 2.5 * T); g.stroke({ color: 0x8e44ad, alpha: 0.12, width: 1 })
+  // Inner star pattern
+  for (let i = 0; i < 6; i++) {
+    const angle = (i * Math.PI * 2) / 6
+    const sx = cx + Math.cos(angle) * 2.5 * T
+    const sy = cy + Math.sin(angle) * 2.5 * T
+    g.moveTo(cx, cy); g.lineTo(sx, sy)
+    g.stroke({ color: 0x9b59b6, alpha: 0.1, width: 1 })
+  }
+
+  // Candelabras in corners
+  drawCandelabra(g, 2.5 * T, 2.5 * T)
+  drawCandelabra(g, 17.5 * T, 2.5 * T)
+  drawCandelabra(g, 2.5 * T, 12.5 * T)
+  drawCandelabra(g, 17.5 * T, 12.5 * T)
+
+  // Bookshelves along top wall
+  drawBookshelf(g, 3 * T, T, 4 * T)
+  drawBookshelf(g, 13 * T, T, 4 * T)
+
+  // Glowing orbs
+  g.circle(4 * T, 5 * T, 6); g.fill({ color: 0xe8daef, alpha: 0.3 })
+  g.circle(4 * T, 5 * T, 3); g.fill({ color: 0xffffff, alpha: 0.5 })
+  g.circle(16 * T, 10 * T, 6); g.fill({ color: 0xd5f5e3, alpha: 0.3 })
+  g.circle(16 * T, 10 * T, 3); g.fill({ color: 0xffffff, alpha: 0.5 })
+}
+
+function drawHistoryDecorations(g: Graphics, T: number, _room: RoomConfig) {
+  // Red carpet runner (horizontal, through middle)
+  g.roundRect(2 * T, 6.5 * T, 16 * T, 2 * T, 3); g.fill(0x922b21)
+  g.roundRect(2 * T + 4, 6.5 * T + 4, 16 * T - 8, 2 * T - 8, 2); g.fill(0xa93226)
+  // Carpet fringe
+  for (let i = 0; i < 16; i++) {
+    g.rect(2 * T + 4 + i * T, 6.5 * T, 2, 4); g.fill(0xdaa520)
+    g.rect(2 * T + 4 + i * T, 8.3 * T, 2, 4); g.fill(0xdaa520)
+  }
+
+  // Velvet rope posts
+  drawRopePost(g, 3 * T, 5 * T)
+  drawRopePost(g, 6 * T, 5 * T)
+  drawRopePost(g, 3 * T, 10 * T)
+  drawRopePost(g, 6 * T, 10 * T)
+  // Rope between posts
+  g.rect(3 * T, 5 * T - 2, 3 * T, 2); g.fill(0xdaa520)
+  g.rect(3 * T, 10 * T - 2, 3 * T, 2); g.fill(0xdaa520)
+
+  // Display pedestals near walls
+  drawPedestal(g, 14 * T, 3 * T)
+  drawPedestal(g, 14 * T, 11 * T)
+
+  // Spotlights on floor (circles of light)
+  g.circle(4 * T, 5.5 * T, T); g.fill({ color: 0xfff3cd, alpha: 0.06 })
+  g.circle(8 * T, 5.5 * T, T); g.fill({ color: 0xfff3cd, alpha: 0.06 })
+}
+
+function drawLibraryDecorations(g: Graphics, T: number, _room: RoomConfig) {
+  // Large bookshelves on left wall
+  drawBookshelf(g, T + 4, T + 4, 3 * T)
+  drawBookshelf(g, T + 4, 4 * T + 8, 3 * T)
+  drawBookshelf(g, T + 4, 8 * T + 4, 3 * T)
+
+  // Large bookshelves on right wall
+  drawBookshelf(g, 16 * T, T + 4, 3 * T)
+  drawBookshelf(g, 16 * T, 4 * T + 8, 3 * T)
+  drawBookshelf(g, 16 * T, 8 * T + 4, 3 * T)
+
+  // Reading desk (center)
+  g.roundRect(8 * T, 9 * T, 4 * T, 2 * T, 2); g.fill(0xa0724a)
+  g.rect(8 * T + 6, 9 * T + 6, 4 * T - 12, 2 * T - 12); g.fill(0xb8854d)
+  // Open book on desk
+  g.rect(9 * T, 9.3 * T, T, 0.7 * T); g.fill(0xfdf6e3)
+  g.rect(9 * T + T + 2, 9.3 * T, T, 0.7 * T); g.fill(0xfdf6e3)
+  g.rect(9 * T + T, 9.3 * T, 2, 0.7 * T); g.fill(0x8b6914)
+  // Text lines on book
+  g.rect(9 * T + 4, 9.5 * T, T - 8, 1); g.fill(0xbdc3c7)
+  g.rect(9 * T + 4, 9.5 * T + 4, T - 12, 1); g.fill(0xbdc3c7)
+
+  // Armchair
+  drawArmchair(g, 13 * T, 10 * T)
+
+  // Floor lamp
+  drawFloorLamp(g, 14.5 * T, 9 * T)
+
+  // Small rug near reading area
+  g.roundRect(8.5 * T, 11 * T, 3 * T, 1.5 * T, 3); g.fill(0x1a5276)
+  g.roundRect(8.5 * T + 4, 11 * T + 4, 3 * T - 8, 1.5 * T - 8, 2); g.fill(0x1f618d)
+}
+
+function drawRoomDecorations(container: Container, roomId: RoomId, room: RoomConfig) {
+  const g = new Graphics()
+  const T = TILE_SIZE
+
+  switch (roomId) {
+    case 'lobby':
+      drawLobbyDecorations(g, T, room)
+      break
+    case 'projects':
+      drawProjectsDecorations(g, T, room)
+      break
+    case 'skills':
+      drawSkillsDecorations(g, T, room)
+      break
+    case 'history':
+      drawHistoryDecorations(g, T, room)
+      break
+    case 'library':
+      drawLibraryDecorations(g, T, room)
+      break
+  }
+
+  container.addChild(g)
+}
+
 function buildCollisionSet(room: RoomConfig): Set<number> {
   const doorPositions = getDoorPositions(room)
   const set = new Set<number>()
@@ -456,6 +777,7 @@ function buildRoom(
   room: RoomConfig,
   collisionSet: Set<number>,
   objects: InteractableObject[],
+  roomId: RoomId,
 ): { player: Graphics; objectGraphics: Graphics; promptText: Text; dustParticles: ReturnType<typeof createDustParticles> } {
   // Draw floor tiles with subtle grain/texture
   const floor = new Graphics()
@@ -506,6 +828,9 @@ function buildRoom(
     }
   }
   viewport.addChild(doors)
+
+  // Draw room decorations (furniture, props)
+  drawRoomDecorations(viewport, roomId, room)
 
   // Draw interactable objects
   const objectGraphics = new Graphics()
@@ -637,7 +962,7 @@ function GameWorld() {
       const objects = generateRoomObjects(roomId, portfolioDataRef.current)
       roomObjectsRef.current = objects
 
-      const { player, promptText, dustParticles } = buildRoom(viewport, room, newCollisionSet, objects)
+      const { player, promptText, dustParticles } = buildRoom(viewport, room, newCollisionSet, objects, roomId)
       playerGraphicsRef.current = player
       promptTextRef.current = promptText
       dustParticlesRef.current = dustParticles
@@ -841,7 +1166,7 @@ function GameWorld() {
     const objects = generateRoomObjects('lobby', portfolioDataRef.current)
     roomObjectsRef.current = objects
 
-    const { player, promptText, dustParticles } = buildRoom(viewport, room, initialCollision, objects)
+    const { player, promptText, dustParticles } = buildRoom(viewport, room, initialCollision, objects, 'lobby')
     playerGraphicsRef.current = player
     promptTextRef.current = promptText
     dustParticlesRef.current = dustParticles
