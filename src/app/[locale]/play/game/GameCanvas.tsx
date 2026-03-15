@@ -9,6 +9,7 @@ import { useKeyboard } from './useKeyboard'
 import { TILE_SIZE, isColliding } from './tilemap'
 import { ROOM_CONFIGS, checkDoorCollision, getDoorPositions } from './rooms'
 import { generateRoomObjects, findNearbyObject } from './objects'
+import { createDustParticles } from './effects'
 import type { RoomConfig } from './rooms'
 import type { RoomId, InteractableObject, DialogueLine } from './types'
 
@@ -127,7 +128,7 @@ function buildRoom(
   room: RoomConfig,
   collisionSet: Set<number>,
   objects: InteractableObject[],
-): { player: Graphics; objectGraphics: Graphics; promptText: Text } {
+): { player: Graphics; objectGraphics: Graphics; promptText: Text; dustParticles: ReturnType<typeof createDustParticles> } {
   // Draw floor tiles
   const floor = new Graphics()
   for (let y = 0; y < room.height; y++) {
@@ -177,6 +178,9 @@ function buildRoom(
   }
   viewport.addChild(objectGraphics)
 
+  // Create dust particle effects
+  const dustParticles = createDustParticles(viewport, room.width * TILE_SIZE, room.height * TILE_SIZE)
+
   // Create bouncing [Space] prompt text (hidden by default)
   const promptStyle = new TextStyle({
     fontFamily: 'monospace',
@@ -197,7 +201,7 @@ function buildRoom(
   player.fill(0xffffff)
   viewport.addChild(player)
 
-  return { player, objectGraphics, promptText }
+  return { player, objectGraphics, promptText, dustParticles }
 }
 
 function getDialogueForObject(obj: InteractableObject): DialogueLine[] {
@@ -261,6 +265,7 @@ function GameWorld() {
   const roomObjectsRef = useRef<InteractableObject[]>([])
   const tickCount = useRef(0)
   const pendingDetailRef = useRef<InteractableObject | null>(null)
+  const dustParticlesRef = useRef<ReturnType<typeof createDustParticles> | null>(null)
 
   const playerPosRef = useRef({ x: 0, y: 0 })
   const stateRef = useRef(state)
@@ -269,6 +274,12 @@ function GameWorld() {
   const rebuildRoom = useCallback(
     (roomId: RoomId, spawnPos: { x: number; y: number }) => {
       if (!app?.renderer || !viewportRef.current) return
+
+      // Destroy old dust particles before clearing the viewport
+      if (dustParticlesRef.current) {
+        dustParticlesRef.current.destroy()
+        dustParticlesRef.current = null
+      }
 
       const viewport = viewportRef.current
       viewport.removeChildren()
@@ -281,9 +292,10 @@ function GameWorld() {
       const objects = generateRoomObjects(roomId, portfolioData)
       roomObjectsRef.current = objects
 
-      const { player, promptText } = buildRoom(viewport, room, newCollisionSet, objects)
+      const { player, promptText, dustParticles } = buildRoom(viewport, room, newCollisionSet, objects)
       playerGraphicsRef.current = player
       promptTextRef.current = promptText
+      dustParticlesRef.current = dustParticles
 
       player.x = spawnPos.x
       player.y = spawnPos.y
@@ -323,9 +335,10 @@ function GameWorld() {
     const objects = generateRoomObjects('lobby', portfolioData)
     roomObjectsRef.current = objects
 
-    const { player, promptText } = buildRoom(viewport, room, initialCollision, objects)
+    const { player, promptText, dustParticles } = buildRoom(viewport, room, initialCollision, objects)
     playerGraphicsRef.current = player
     promptTextRef.current = promptText
+    dustParticlesRef.current = dustParticles
 
     const spawnX = room.spawnPoint.x
     const spawnY = room.spawnPoint.y
@@ -354,6 +367,11 @@ function GameWorld() {
       return
 
     tickCount.current++
+
+    // Update dust particles
+    if (dustParticlesRef.current) {
+      dustParticlesRef.current.update()
+    }
 
     // If detail panel is open, block everything
     if (currentState.interaction.showDetail) {
