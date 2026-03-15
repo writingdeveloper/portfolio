@@ -11,6 +11,7 @@ import { DialogueBox } from './ui/DialogueBox'
 import { DetailPanel } from './ui/DetailPanel'
 import { LoadingScreen } from './ui/LoadingScreen'
 import { Minimap } from './ui/Minimap'
+import { MobileControls } from './ui/MobileControls'
 
 interface PostSummary {
   slug: string
@@ -85,6 +86,9 @@ export function PlayClient({
             {t('controls')}
           </p>
         </div>
+
+        {/* Mobile touch controls */}
+        <MobileControls />
       </div>
     </GameContext.Provider>
   )
