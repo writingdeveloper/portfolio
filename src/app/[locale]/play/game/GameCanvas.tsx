@@ -17,7 +17,7 @@ extend({ Container, Graphics, Text })
 
 const CANVAS_WIDTH = 800
 const CANVAS_HEIGHT = 600
-const PLAYER_SPEED = 3
+const PLAYER_SPEED = 1.5
 const PLAYER_SIZE = 16
 const MAP_WIDTH = 20
 const MAP_HEIGHT = 15
@@ -56,227 +56,355 @@ function drawPlayer(g: Graphics, direction: string) {
   g.clear()
 
   // Shadow
-  g.ellipse(0, 12, 8, 3)
-  g.fill({ color: 0x000000, alpha: 0.3 })
+  g.ellipse(0, 14, 10, 4)
+  g.fill({ color: 0x000000, alpha: 0.25 })
 
-  // Body/shirt
-  g.rect(-7, -2, 14, 12)
-  g.fill(0x4a90d9)
-
-  // Pants
-  g.rect(-7, 10, 6, 5)
+  // === BODY ===
+  // Shirt (navy blue hoodie)
+  g.roundRect(-8, -4, 16, 14, 2)
+  g.fill(0x34495e)
+  // Hoodie pocket
+  g.rect(-4, 4, 8, 4)
   g.fill(0x2c3e50)
-  g.rect(1, 10, 6, 5)
-  g.fill(0x2c3e50)
-
-  // Head (skin)
-  g.roundRect(-6, -14, 12, 13, 2)
-  g.fill(0xfce4b5)
-
-  // Hair
-  g.roundRect(-7, -16, 14, 7, 2)
-  g.fill(0x3d2314)
-
-  // Eyes based on direction
-  if (direction === 'down') {
-    g.rect(-3, -8, 2, 2)
-    g.fill(0x222222)
-    g.rect(1, -8, 2, 2)
-    g.fill(0x222222)
-  } else if (direction === 'up') {
-    // back of head, no eyes
-    g.roundRect(-6, -14, 12, 10, 2)
-    g.fill(0x3d2314)
-  } else if (direction === 'left') {
-    g.rect(-4, -8, 2, 2)
-    g.fill(0x222222)
+  // Arms
+  if (direction === 'left') {
+    g.rect(-10, -2, 4, 10); g.fill(0x34495e)
+    g.rect(6, -2, 2, 10); g.fill(0x34495e)
+  } else if (direction === 'right') {
+    g.rect(-8, -2, 2, 10); g.fill(0x34495e)
+    g.rect(6, -2, 4, 10); g.fill(0x34495e)
   } else {
-    g.rect(2, -8, 2, 2)
-    g.fill(0x222222)
+    g.rect(-10, -2, 4, 10); g.fill(0x34495e)
+    g.rect(6, -2, 4, 10); g.fill(0x34495e)
   }
 
-  // Shoes
-  g.rect(-8, 15, 7, 3)
-  g.fill(0x8b4513)
-  g.rect(1, 15, 7, 3)
-  g.fill(0x8b4513)
+  // Pants (dark jeans)
+  g.rect(-7, 10, 6, 6); g.fill(0x2c3e50)
+  g.rect(1, 10, 6, 6); g.fill(0x2c3e50)
+  // Pant seam
+  g.rect(-1, 10, 2, 6); g.fill(0x273c4f)
+
+  // Shoes (sneakers)
+  g.roundRect(-9, 15, 8, 4, 1); g.fill(0xe74c3c)
+  g.roundRect(1, 15, 8, 4, 1); g.fill(0xe74c3c)
+  // Shoe soles
+  g.rect(-9, 18, 8, 1); g.fill(0xc0392b)
+  g.rect(1, 18, 8, 1); g.fill(0xc0392b)
+  // Shoe lace dots
+  g.rect(-6, 16, 2, 1); g.fill(0xffffff)
+  g.rect(4, 16, 2, 1); g.fill(0xffffff)
+
+  // === HEAD ===
+  // Neck
+  g.rect(-2, -6, 4, 3); g.fill(0xf5cfa0)
+
+  // Head shape
+  g.roundRect(-7, -18, 14, 14, 3); g.fill(0xf5cfa0)
+
+  // Hair
+  g.roundRect(-8, -20, 16, 8, 3); g.fill(0x2c1810)
+  // Side hair
+  if (direction !== 'up') {
+    g.rect(-8, -16, 2, 6); g.fill(0x2c1810)
+    g.rect(6, -16, 2, 6); g.fill(0x2c1810)
+  }
+
+  // Face details based on direction
+  if (direction === 'down') {
+    // Eyes (with pupils)
+    g.rect(-4, -12, 3, 3); g.fill(0xffffff)
+    g.rect(1, -12, 3, 3); g.fill(0xffffff)
+    g.rect(-3, -11, 2, 2); g.fill(0x1a1a1a)
+    g.rect(2, -11, 2, 2); g.fill(0x1a1a1a)
+    // Eyebrows
+    g.rect(-4, -13, 3, 1); g.fill(0x2c1810)
+    g.rect(1, -13, 3, 1); g.fill(0x2c1810)
+    // Mouth
+    g.rect(-2, -7, 4, 1); g.fill(0xd4956a)
+  } else if (direction === 'up') {
+    // Back of head - just hair
+    g.roundRect(-7, -18, 14, 12, 3); g.fill(0x2c1810)
+  } else if (direction === 'left') {
+    // Side face
+    g.rect(-5, -12, 3, 3); g.fill(0xffffff)
+    g.rect(-4, -11, 2, 2); g.fill(0x1a1a1a)
+    g.rect(-5, -13, 3, 1); g.fill(0x2c1810)
+    g.rect(-3, -7, 3, 1); g.fill(0xd4956a)
+    // Nose
+    g.rect(-7, -10, 1, 2); g.fill(0xe8b88a)
+  } else {
+    // Side face (right)
+    g.rect(2, -12, 3, 3); g.fill(0xffffff)
+    g.rect(2, -11, 2, 2); g.fill(0x1a1a1a)
+    g.rect(2, -13, 3, 1); g.fill(0x2c1810)
+    g.rect(0, -7, 3, 1); g.fill(0xd4956a)
+    g.rect(6, -10, 1, 2); g.fill(0xe8b88a)
+  }
 }
 
 function drawNPC(g: Graphics, x: number, y: number) {
   // Shadow
-  g.ellipse(x, y + 12, 8, 3)
-  g.fill({ color: 0x000000, alpha: 0.3 })
+  g.ellipse(x, y + 16, 10, 4)
+  g.fill({ color: 0x000000, alpha: 0.25 })
 
-  // Body - green robe
-  g.rect(x - 8, y - 2, 16, 14)
-  g.fill(0x27ae60)
+  // Robe (flowing)
+  g.moveTo(x - 10, y + 15)
+  g.lineTo(x - 6, y - 2)
+  g.lineTo(x + 6, y - 2)
+  g.lineTo(x + 10, y + 15)
+  g.closePath()
+  g.fill(0x6c3483)
+  // Robe trim
+  g.rect(x - 10, y + 13, 20, 2); g.fill(0xf1c40f)
+  // Belt
+  g.rect(x - 6, y + 2, 12, 3); g.fill(0xf1c40f)
+  // Belt buckle
+  g.rect(x - 2, y + 2, 4, 3); g.fill(0xf39c12)
+
+  // Hands (skin)
+  g.circle(x - 8, y + 6, 3); g.fill(0xf5cfa0)
+  g.circle(x + 8, y + 6, 3); g.fill(0xf5cfa0)
 
   // Head
-  g.roundRect(x - 6, y - 14, 12, 13, 2)
-  g.fill(0xfce4b5)
-
-  // Hat
-  g.roundRect(x - 8, y - 18, 16, 6, 2)
-  g.fill(0x8e44ad)
-  g.rect(x - 2, y - 22, 4, 4)
-  g.fill(0x8e44ad)
+  g.roundRect(x - 6, y - 16, 12, 14, 3); g.fill(0xf5cfa0)
+  // Beard
+  g.roundRect(x - 4, y - 6, 8, 6, 2); g.fill(0xbdc3c7)
+  g.moveTo(x, y + 2)
+  g.lineTo(x - 3, y - 2)
+  g.lineTo(x + 3, y - 2)
+  g.closePath()
+  g.fill(0xbdc3c7)
 
   // Eyes
-  g.rect(x - 3, y - 8, 2, 2)
-  g.fill(0x222222)
-  g.rect(x + 1, y - 8, 2, 2)
-  g.fill(0x222222)
+  g.rect(x - 4, y - 12, 2, 2); g.fill(0x1a1a1a)
+  g.rect(x + 2, y - 12, 2, 2); g.fill(0x1a1a1a)
+  // Eyebrows (bushy)
+  g.rect(x - 5, y - 14, 4, 1); g.fill(0xbdc3c7)
+  g.rect(x + 1, y - 14, 4, 1); g.fill(0xbdc3c7)
 
-  // Smile
-  g.rect(x - 2, y - 5, 4, 1)
-  g.fill(0xc0392b)
+  // Wizard hat
+  g.moveTo(x, y - 30)
+  g.lineTo(x - 10, y - 16)
+  g.lineTo(x + 10, y - 16)
+  g.closePath()
+  g.fill(0x6c3483)
+  // Hat brim
+  g.roundRect(x - 12, y - 18, 24, 4, 2); g.fill(0x6c3483)
+  // Hat band
+  g.rect(x - 8, y - 18, 16, 2); g.fill(0xf1c40f)
+  // Hat star
+  g.rect(x - 1, y - 26, 3, 3); g.fill(0xf1c40f)
 
-  // Exclamation mark above head
-  g.rect(x - 1, y - 28, 3, 6)
-  g.fill(0xf1c40f)
-  g.rect(x - 1, y - 20, 3, 2)
-  g.fill(0xf1c40f)
+  // Floating exclamation
+  const bounce = Math.sin(Date.now() / 300) * 2
+  g.roundRect(x - 2, y - 38 + bounce, 5, 8, 1); g.fill(0xf1c40f)
+  g.roundRect(x - 1, y - 28 + bounce, 3, 3, 1); g.fill(0xf1c40f)
 }
 
 function drawProjectObject(g: Graphics, x: number, y: number) {
   // Desk
-  g.rect(x - 16, y + 4, 32, 6)
-  g.fill(0x8b6914)
-  g.rect(x - 14, y + 10, 4, 8)
-  g.fill(0x6d4c0e)
-  g.rect(x + 10, y + 10, 4, 8)
-  g.fill(0x6d4c0e)
+  g.roundRect(x - 18, y + 4, 36, 4, 1); g.fill(0xa0724a)
+  // Desk surface highlight
+  g.rect(x - 17, y + 4, 34, 1); g.fill(0xb8854d)
+  // Desk legs
+  g.rect(x - 16, y + 8, 3, 10); g.fill(0x8b6238)
+  g.rect(x + 13, y + 8, 3, 10); g.fill(0x8b6238)
 
-  // Monitor body
-  g.roundRect(x - 12, y - 14, 24, 18, 2)
-  g.fill(0x2c3e50)
-  // Screen (glowing)
-  g.rect(x - 10, y - 12, 20, 14)
-  g.fill(0x0984e3)
-  // Screen lines (code)
-  g.rect(x - 8, y - 10, 12, 1)
-  g.fill(0x74b9ff)
-  g.rect(x - 8, y - 7, 16, 1)
-  g.fill(0x74b9ff)
-  g.rect(x - 8, y - 4, 8, 1)
-  g.fill(0x55efc4)
-  g.rect(x - 8, y - 1, 14, 1)
-  g.fill(0x74b9ff)
+  // Monitor
+  g.roundRect(x - 14, y - 18, 28, 22, 2); g.fill(0x2c3e50)
+  // Screen bezel
+  g.rect(x - 12, y - 16, 24, 18); g.fill(0x1a1a2e)
+  // Screen content (IDE look)
+  g.rect(x - 11, y - 15, 22, 16); g.fill(0x1e1e3e)
+  // Sidebar
+  g.rect(x - 11, y - 15, 5, 16); g.fill(0x252545)
+  // Code lines
+  g.rect(x - 4, y - 13, 10, 1); g.fill(0x81ecec)
+  g.rect(x - 4, y - 11, 14, 1); g.fill(0xdfe6e9)
+  g.rect(x - 2, y - 9, 8, 1); g.fill(0x55efc4)
+  g.rect(x - 2, y - 7, 12, 1); g.fill(0x74b9ff)
+  g.rect(x - 4, y - 5, 6, 1); g.fill(0xffeaa7)
+  g.rect(x - 2, y - 3, 10, 1); g.fill(0xdfe6e9)
   // Monitor stand
-  g.rect(x - 2, y + 2, 4, 3)
-  g.fill(0x2c3e50)
+  g.rect(x - 3, y + 2, 6, 3); g.fill(0x636e72)
+  g.roundRect(x - 6, y + 4, 12, 2, 1); g.fill(0x636e72)
+
+  // Keyboard
+  g.roundRect(x - 10, y + 6, 20, 4, 1); g.fill(0x636e72)
+  // Key rows
+  g.rect(x - 9, y + 7, 18, 1); g.fill(0x7f8c8d)
+
+  // Coffee mug
+  g.roundRect(x + 14, y + 2, 4, 5, 1); g.fill(0xecf0f1)
+  g.rect(x + 17, y + 3, 2, 3); g.fill(0xecf0f1)
+  // Steam
+  g.rect(x + 15, y - 1, 1, 2); g.fill({ color: 0xffffff, alpha: 0.3 })
 }
 
 function drawSkillObject(g: Graphics, x: number, y: number, color: number) {
-  // Pedestal
-  g.rect(x - 6, y + 4, 12, 4)
-  g.fill(0x636e72)
-  g.rect(x - 8, y + 8, 16, 3)
-  g.fill(0x636e72)
+  // Pedestal base
+  g.roundRect(x - 10, y + 10, 20, 4, 1); g.fill(0x636e72)
+  g.rect(x - 8, y + 6, 16, 5); g.fill(0x7f8c8d)
+  g.rect(x - 6, y + 4, 12, 3); g.fill(0x95a5a6)
 
-  // Crystal glow
-  g.circle(x, y - 2, 10)
-  g.fill({ color, alpha: 0.15 })
+  // Glow effect
+  g.circle(x, y - 4, 14); g.fill({ color, alpha: 0.08 })
+  g.circle(x, y - 4, 10); g.fill({ color, alpha: 0.1 })
 
-  // Crystal shape
-  g.moveTo(x, y - 10)
-  g.lineTo(x + 6, y - 2)
-  g.lineTo(x + 4, y + 4)
-  g.lineTo(x - 4, y + 4)
-  g.lineTo(x - 6, y - 2)
+  // Crystal body
+  g.moveTo(x, y - 16)
+  g.lineTo(x + 4, y - 10)
+  g.lineTo(x + 8, y - 2)
+  g.lineTo(x + 5, y + 4)
+  g.lineTo(x - 5, y + 4)
+  g.lineTo(x - 8, y - 2)
+  g.lineTo(x - 4, y - 10)
   g.closePath()
   g.fill(color)
 
-  // Crystal highlight
-  g.moveTo(x - 2, y - 8)
-  g.lineTo(x + 2, y - 4)
-  g.lineTo(x, y - 2)
-  g.lineTo(x - 4, y - 4)
+  // Crystal lighter facet (left)
+  g.moveTo(x, y - 16)
+  g.lineTo(x - 4, y - 10)
+  g.lineTo(x - 2, y - 2)
+  g.lineTo(x, y - 4)
   g.closePath()
-  g.fill({ color: 0xffffff, alpha: 0.4 })
+  g.fill({ color: 0xffffff, alpha: 0.25 })
+
+  // Crystal dark facet (right)
+  g.moveTo(x + 4, y - 10)
+  g.lineTo(x + 8, y - 2)
+  g.lineTo(x + 5, y + 4)
+  g.lineTo(x + 2, y - 2)
+  g.closePath()
+  g.fill({ color: 0x000000, alpha: 0.15 })
+
+  // Sparkle
+  g.rect(x - 2, y - 14, 2, 2); g.fill({ color: 0xffffff, alpha: 0.6 })
 }
 
 function drawTimelineObject(g: Graphics, x: number, y: number) {
-  // Ornate outer frame
-  g.roundRect(x - 14, y - 14, 28, 28, 3)
-  g.fill(0xc0812e)
-  // Inner frame border
-  g.rect(x - 12, y - 12, 24, 24)
-  g.fill(0xd4a049)
-  // Canvas/picture
-  g.rect(x - 10, y - 10, 20, 20)
-  g.fill(0xf5e6ca)
-  // Simple landscape drawing
-  g.rect(x - 10, y + 2, 20, 8)
-  g.fill(0x27ae60) // grass
-  g.circle(x + 4, y - 4, 4)
-  g.fill(0xf39c12) // sun
-  // Nail
-  g.circle(x, y - 16, 2)
-  g.fill(0x7f8c8d)
+  // Shadow behind frame
+  g.roundRect(x - 15, y - 13, 30, 30, 2); g.fill({ color: 0x000000, alpha: 0.2 })
+
+  // Outer ornate frame
+  g.roundRect(x - 16, y - 16, 32, 32, 3); g.fill(0xb8860b)
+  // Frame inner border
+  g.roundRect(x - 14, y - 14, 28, 28, 2); g.fill(0xdaa520)
+  // Frame detail corners
+  g.rect(x - 16, y - 16, 4, 4); g.fill(0xcd9b1d)
+  g.rect(x + 12, y - 16, 4, 4); g.fill(0xcd9b1d)
+  g.rect(x - 16, y + 12, 4, 4); g.fill(0xcd9b1d)
+  g.rect(x + 12, y + 12, 4, 4); g.fill(0xcd9b1d)
+
+  // Inner mat
+  g.rect(x - 12, y - 12, 24, 24); g.fill(0xf5f0e1)
+
+  // Photo/painting content
+  g.rect(x - 10, y - 10, 20, 20); g.fill(0xe8e0d0)
+  // Sky
+  g.rect(x - 10, y - 10, 20, 8); g.fill(0x87ceeb)
+  // Mountains
+  g.moveTo(x - 10, y - 2)
+  g.lineTo(x - 4, y - 8)
+  g.lineTo(x + 2, y - 2)
+  g.lineTo(x + 8, y - 6)
+  g.lineTo(x + 10, y - 2)
+  g.lineTo(x + 10, y + 10)
+  g.lineTo(x - 10, y + 10)
+  g.closePath()
+  g.fill(0x2ecc71)
+  // Sun
+  g.circle(x + 6, y - 6, 3); g.fill(0xf39c12)
+
+  // Hanging wire
+  g.rect(x - 1, y - 20, 2, 5); g.fill(0x636e72)
+  g.circle(x, y - 20, 2); g.fill(0x7f8c8d)
 }
 
 function drawBookObject(g: Graphics, x: number, y: number, index: number) {
-  const colors = [0xe74c3c, 0x3498db, 0x2ecc71, 0xf39c12, 0x9b59b6, 0x1abc9c]
+  const colors = [0xc0392b, 0x2980b9, 0x27ae60, 0xd35400, 0x8e44ad, 0x16a085]
+  const darkColors = [0x922b21, 0x1f6dad, 0x1e8449, 0xa04000, 0x6c3483, 0x117a65]
   const color = colors[index % colors.length]
+  const darkColor = darkColors[index % darkColors.length]
 
-  // Bookshelf
-  g.rect(x - 10, y + 12, 20, 3)
-  g.fill(0x8b6914)
+  // Bookshelf plank
+  g.roundRect(x - 12, y + 14, 24, 4, 1); g.fill(0xa0724a)
+  g.rect(x - 11, y + 14, 22, 1); g.fill(0xb8854d)
 
-  // Book spine (standing up)
-  g.roundRect(x - 5, y - 10, 10, 22, 1)
-  g.fill(color)
-  // Book spine detail lines
-  g.rect(x - 4, y - 6, 8, 1)
-  g.fill({ color: 0xffffff, alpha: 0.3 })
-  g.rect(x - 3, y + 2, 6, 1)
-  g.fill({ color: 0xffffff, alpha: 0.3 })
-  // Book pages
-  g.rect(x + 4, y - 8, 2, 18)
-  g.fill(0xfaf3e0)
+  // Book standing up
+  g.roundRect(x - 7, y - 12, 14, 26, 2); g.fill(color)
+  // Spine
+  g.rect(x - 7, y - 10, 3, 22); g.fill(darkColor)
+  // Pages
+  g.rect(x + 5, y - 10, 3, 22); g.fill(0xfdf6e3)
+  g.rect(x + 5, y - 10, 1, 22); g.fill(0xf0e8d0)
+
+  // Title lines on cover
+  g.rect(x - 3, y - 8, 6, 1); g.fill({ color: 0xffffff, alpha: 0.4 })
+  g.rect(x - 2, y - 5, 4, 1); g.fill({ color: 0xffffff, alpha: 0.3 })
+
+  // Decorative band
+  g.rect(x - 6, y + 4, 10, 2); g.fill({ color: 0xffffff, alpha: 0.2 })
 }
 
 function drawWallTile(g: Graphics, wx: number, wy: number, color: number) {
   const px = wx * TILE_SIZE
   const py = wy * TILE_SIZE
+
+  // Base wall color
   g.rect(px, py, TILE_SIZE, TILE_SIZE)
   g.fill(color)
-  // Brick lines
-  const darker = (color & 0xfefefe) >> 1
-  g.rect(px, py + 8, TILE_SIZE, 1)
-  g.fill(darker)
-  g.rect(px, py + 16, TILE_SIZE, 1)
-  g.fill(darker)
-  g.rect(px, py + 24, TILE_SIZE, 1)
-  g.fill(darker)
+
+  // Mortar (lighter lines between bricks)
+  const mortar = (color & 0xfefefe) + 0x151515
+  // Horizontal mortar lines
+  for (let row = 0; row < 4; row++) {
+    g.rect(px, py + row * 8, TILE_SIZE, 1)
+    g.fill(mortar)
+  }
+  // Vertical mortar lines (staggered)
   const offset = wy % 2 === 0 ? 0 : 16
-  g.rect(px + offset, py, 1, 8)
-  g.fill(darker)
-  g.rect(px + offset + 16, py + 8, 1, 8)
-  g.fill(darker)
-  g.rect(px + offset, py + 16, 1, 8)
-  g.fill(darker)
-  g.rect(px + offset + 16, py + 24, 1, 8)
-  g.fill(darker)
+  for (let row = 0; row < 4; row++) {
+    const vOffset = row % 2 === 0 ? offset : offset + 8
+    g.rect(px + vOffset, py + row * 8, 1, 8)
+    g.fill(mortar)
+    if (vOffset + 16 < TILE_SIZE) {
+      g.rect(px + vOffset + 16, py + row * 8, 1, 8)
+      g.fill(mortar)
+    }
+  }
+
+  // Subtle top highlight
+  g.rect(px, py, TILE_SIZE, 1)
+  g.fill({ color: 0xffffff, alpha: 0.05 })
 }
 
-function drawDoor(
-  g: Graphics,
-  x: number,
-  y: number,
-  width: number,
-  height: number,
-) {
-  // Stone frame
+function drawDoor(g: Graphics, x: number, y: number, width: number, height: number) {
+  // Stone frame outer
+  g.roundRect(x - 2, y - 2, width + 4, height + 2, 3)
+  g.fill(0x95a5a6)
+
+  // Stone frame inner
   g.rect(x, y, width, height)
   g.fill(0x7f8c8d)
+
   // Dark opening
-  g.rect(x + 3, y + 3, width - 6, height - 3)
-  g.fill(0x1a1a2e)
-  // Arch top
-  g.roundRect(x + 2, y, width - 4, 8, 3)
-  g.fill(0x95a5a6)
+  g.roundRect(x + 4, y + 2, width - 8, height - 2, 3)
+  g.fill(0x0a0a1a)
+
+  // Arch top stones
+  g.roundRect(x + 2, y - 1, width - 4, 6, 4)
+  g.fill(0xa0a5a8)
+
+  // Keystone
+  g.roundRect(x + width / 2 - 3, y - 2, 6, 5, 1)
+  g.fill(0xb0b5b8)
+
+  // Torch on left side
+  g.rect(x + 1, y + height / 2 - 6, 2, 8); g.fill(0x8b6914)
+  g.circle(x + 2, y + height / 2 - 7, 3); g.fill(0xf39c12)
+  g.circle(x + 2, y + height / 2 - 8, 2); g.fill(0xe74c3c)
+  g.circle(x + 2, y + height / 2 - 9, 1); g.fill({ color: 0xf1c40f, alpha: 0.6 })
 }
 
 function buildCollisionSet(room: RoomConfig): Set<number> {
@@ -329,20 +457,27 @@ function buildRoom(
   collisionSet: Set<number>,
   objects: InteractableObject[],
 ): { player: Graphics; objectGraphics: Graphics; promptText: Text; dustParticles: ReturnType<typeof createDustParticles> } {
-  // Draw floor tiles with subtle borders
+  // Draw floor tiles with subtle grain/texture
   const floor = new Graphics()
   for (let y = 0; y < room.height; y++) {
     for (let x = 0; x < room.width; x++) {
-      const tileColor =
-        (x + y) % 2 === 0 ? room.floorColor1 : room.floorColor2
-      const borderColor = (tileColor & 0xfefefe) >> 1
+      const tileColor = (x + y) % 2 === 0 ? room.floorColor1 : room.floorColor2
+
+      // Main tile
       floor.rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
       floor.fill(tileColor)
-      // Subtle inner border
+
+      // Top and left edges (lighter = raised effect)
       floor.rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, 1)
-      floor.fill(borderColor)
+      floor.fill({ color: 0xffffff, alpha: 0.06 })
       floor.rect(x * TILE_SIZE, y * TILE_SIZE, 1, TILE_SIZE)
-      floor.fill(borderColor)
+      floor.fill({ color: 0xffffff, alpha: 0.06 })
+
+      // Bottom and right edges (darker = depth effect)
+      floor.rect(x * TILE_SIZE, (y + 1) * TILE_SIZE - 1, TILE_SIZE, 1)
+      floor.fill({ color: 0x000000, alpha: 0.08 })
+      floor.rect((x + 1) * TILE_SIZE - 1, y * TILE_SIZE, 1, TILE_SIZE)
+      floor.fill({ color: 0x000000, alpha: 0.08 })
     }
   }
   viewport.addChild(floor)
