@@ -5,7 +5,7 @@ import type { PostMeta } from '@/lib/mdx'
 import projectsData from '../../../content/projects.json'
 import type { Project } from '@/types/content'
 import { Link } from '@/i18n/navigation'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Gamepad2 } from 'lucide-react'
 import { PostCard } from '@/components/blog/PostCard'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
@@ -70,6 +70,13 @@ function HomeContent({ posts, projects: featuredProjects, locale, categoryMap }:
           <h1 className="text-4xl sm:text-5xl font-bold mb-4">{t('hero.name')}</h1>
           <p className="text-xl text-[var(--accent-text)] mb-4">{t('hero.role')}</p>
           <p className="text-[var(--text-secondary)] max-w-xl text-lg">{t('hero.description')}</p>
+          <Link
+            href="/play"
+            className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-[var(--accent-text)] text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
+          >
+            <Gamepad2 size={20} />
+            {t('explore')}
+          </Link>
         </section>
 
         <section>
