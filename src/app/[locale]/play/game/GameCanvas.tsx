@@ -7,6 +7,9 @@ import { Viewport } from 'pixi-viewport'
 import { useGame } from './state'
 import { useKeyboard } from './useKeyboard'
 import { TILE_SIZE, isColliding } from './tilemap'
+import { ROOM_CONFIGS, checkDoorCollision, getDoorPositions } from './rooms'
+import type { RoomConfig } from './rooms'
+import type { RoomId } from './types'
 
 extend({ Container, Graphics })
 
@@ -17,6 +20,109 @@ const PLAYER_SIZE = 16
 const MAP_WIDTH = 20
 const MAP_HEIGHT = 15
 
+function buildCollisionSet(room: RoomConfig): Set<number> {
+  const doorPositions = getDoorPositions(room)
+  const set = new Set<number>()
+
+  for (let x = 0; x < room.width; x++) {
+    for (let y = 0; y < room.height; y++) {
+      const hasDoor = (dir: string, tile: number) =>
+        doorPositions.some(
+          (d) => d.direction === dir && d.tiles.includes(tile),
+        )
+
+      const isTopWall = y === 0 && !hasDoor('up', x)
+      const isBottomWall = y === room.height - 1 && !hasDoor('down', x)
+      const isLeftWall = x === 0 && !hasDoor('left', y)
+      const isRightWall = x === room.width - 1 && !hasDoor('right', y)
+
+      if (isTopWall || isBottomWall || isLeftWall || isRightWall) {
+        set.add(y * room.width + x)
+      }
+    }
+  }
+
+  return set
+}
+
+function buildRoom(
+  viewport: Viewport,
+  room: RoomConfig,
+  collisionSet: Set<number>,
+): Graphics {
+  // Draw floor tiles
+  const floor = new Graphics()
+  for (let y = 0; y < room.height; y++) {
+    for (let x = 0; x < room.width; x++) {
+      const color =
+        (x + y) % 2 === 0 ? room.floorColor1 : room.floorColor2
+      floor.rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+      floor.fill(color)
+    }
+  }
+  viewport.addChild(floor)
+
+  // Draw wall tiles
+  const walls = new Graphics()
+  collisionSet.forEach((index) => {
+    const wx = index % room.width
+    const wy = Math.floor(index / room.width)
+    walls.rect(wx * TILE_SIZE, wy * TILE_SIZE, TILE_SIZE, TILE_SIZE)
+  })
+  walls.fill(room.wallColor)
+  viewport.addChild(walls)
+
+  // Draw door indicators
+  const doors = new Graphics()
+  const doorPositions = getDoorPositions(room)
+  for (const dp of doorPositions) {
+    if (dp.direction === 'up') {
+      doors.rect(
+        dp.tiles[0] * TILE_SIZE,
+        0,
+        dp.tiles.length * TILE_SIZE,
+        TILE_SIZE,
+      )
+      doors.fill(0x6a8a6a)
+    } else if (dp.direction === 'down') {
+      doors.rect(
+        dp.tiles[0] * TILE_SIZE,
+        (room.height - 1) * TILE_SIZE,
+        dp.tiles.length * TILE_SIZE,
+        TILE_SIZE,
+      )
+      doors.fill(0x6a8a6a)
+    } else if (dp.direction === 'left') {
+      doors.rect(
+        0,
+        dp.tiles[0] * TILE_SIZE,
+        TILE_SIZE,
+        dp.tiles.length * TILE_SIZE,
+      )
+      doors.fill(0x6a8a6a)
+    } else if (dp.direction === 'right') {
+      doors.rect(
+        (room.width - 1) * TILE_SIZE,
+        dp.tiles[0] * TILE_SIZE,
+        TILE_SIZE,
+        dp.tiles.length * TILE_SIZE,
+      )
+      doors.fill(0x6a8a6a)
+    }
+  }
+  viewport.addChild(doors)
+
+  // Create player character
+  const player = new Graphics()
+  player.roundRect(-12, -12, 24, 24, 4)
+  player.fill(0x4fc3f7)
+  player.circle(0, 6, 3)
+  player.fill(0xffffff)
+  viewport.addChild(player)
+
+  return player
+}
+
 function GameWorld() {
   const { app, isInitialised } = useApplication()
   const { state, dispatch } = useGame()
@@ -25,101 +131,70 @@ function GameWorld() {
   const playerGraphicsRef = useRef<Graphics | null>(null)
   const collisionSet = useRef<Set<number>>(new Set())
   const initialized = useRef(false)
+  const currentRoomRef = useRef<RoomId>('lobby')
+  const isTransitioningRef = useRef(false)
 
-  // Use refs for values accessed in the tick callback to avoid
-  // re-registering the ticker on every state change
   const playerPosRef = useRef({ x: 0, y: 0 })
   const stateRef = useRef(state)
   stateRef.current = state
+
+  const rebuildRoom = useCallback(
+    (roomId: RoomId, spawnPos: { x: number; y: number }) => {
+      if (!app?.renderer || !viewportRef.current) return
+
+      const viewport = viewportRef.current
+      // Remove all children to clear the room
+      viewport.removeChildren()
+
+      const room = ROOM_CONFIGS[roomId]
+      const newCollisionSet = buildCollisionSet(room)
+      collisionSet.current = newCollisionSet
+      currentRoomRef.current = roomId
+
+      const player = buildRoom(viewport, room, newCollisionSet)
+      playerGraphicsRef.current = player
+
+      player.x = spawnPos.x
+      player.y = spawnPos.y
+      playerPosRef.current = { x: spawnPos.x, y: spawnPos.y }
+
+      viewport.moveCenter(spawnPos.x, spawnPos.y)
+    },
+    [app],
+  )
 
   useEffect(() => {
     if (!isInitialised || !app?.renderer || initialized.current) return
     initialized.current = true
 
-    // Build collision set: border tiles except door openings
-    const set = new Set<number>()
-    for (let x = 0; x < MAP_WIDTH; x++) {
-      for (let y = 0; y < MAP_HEIGHT; y++) {
-        const isTopWall = y === 0 && !(x >= 9 && x <= 10)
-        const isBottomWall = y === MAP_HEIGHT - 1 && !(x >= 9 && x <= 10)
-        const isLeftWall = x === 0 && !(y >= 7 && y <= 8)
-        const isRightWall = x === MAP_WIDTH - 1 && !(y >= 7 && y <= 8)
-        if (isTopWall || isBottomWall || isLeftWall || isRightWall) {
-          set.add(y * MAP_WIDTH + x)
-        }
-      }
-    }
-    collisionSet.current = set
+    const room = ROOM_CONFIGS['lobby']
 
     // Create viewport
     const viewport = new Viewport({
       screenWidth: app.renderer.width,
       screenHeight: app.renderer.height,
-      worldWidth: MAP_WIDTH * TILE_SIZE,
-      worldHeight: MAP_HEIGHT * TILE_SIZE,
+      worldWidth: room.width * TILE_SIZE,
+      worldHeight: room.height * TILE_SIZE,
       events: app.renderer.events,
     })
     viewport.clamp({
       left: 0,
       top: 0,
-      right: MAP_WIDTH * TILE_SIZE,
-      bottom: MAP_HEIGHT * TILE_SIZE,
+      right: room.width * TILE_SIZE,
+      bottom: room.height * TILE_SIZE,
       underflow: 'center',
     })
     app.stage.addChild(viewport)
     viewportRef.current = viewport
 
-    // Draw floor tiles (checkered pattern)
-    const floor = new Graphics()
-    for (let y = 0; y < MAP_HEIGHT; y++) {
-      for (let x = 0; x < MAP_WIDTH; x++) {
-        const color = (x + y) % 2 === 0 ? 0x2a2a4a : 0x252545
-        floor.rect(x * TILE_SIZE, y * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-        floor.fill(color)
-      }
-    }
-    viewport.addChild(floor)
+    const initialCollision = buildCollisionSet(room)
+    collisionSet.current = initialCollision
 
-    // Draw wall tiles
-    const walls = new Graphics()
-    collisionSet.current.forEach((index) => {
-      const wx = index % MAP_WIDTH
-      const wy = Math.floor(index / MAP_WIDTH)
-      walls.rect(wx * TILE_SIZE, wy * TILE_SIZE, TILE_SIZE, TILE_SIZE)
-    })
-    walls.fill(0x4a4a6a)
-    viewport.addChild(walls)
-
-    // Draw door indicators
-    const doors = new Graphics()
-    // Top door
-    doors.rect(9 * TILE_SIZE, 0, 2 * TILE_SIZE, TILE_SIZE)
-    doors.fill(0x6a8a6a)
-    // Bottom door
-    doors.rect(9 * TILE_SIZE, (MAP_HEIGHT - 1) * TILE_SIZE, 2 * TILE_SIZE, TILE_SIZE)
-    doors.fill(0x6a8a6a)
-    // Left door
-    doors.rect(0, 7 * TILE_SIZE, TILE_SIZE, 2 * TILE_SIZE)
-    doors.fill(0x6a8a6a)
-    // Right door
-    doors.rect((MAP_WIDTH - 1) * TILE_SIZE, 7 * TILE_SIZE, TILE_SIZE, 2 * TILE_SIZE)
-    doors.fill(0x6a8a6a)
-    viewport.addChild(doors)
-
-    // Create player character
-    const player = new Graphics()
-    // Body
-    player.roundRect(-12, -12, 24, 24, 4)
-    player.fill(0x4fc3f7)
-    // Direction indicator (dot facing down by default)
-    player.circle(0, 6, 3)
-    player.fill(0xffffff)
-    viewport.addChild(player)
+    const player = buildRoom(viewport, room, initialCollision)
     playerGraphicsRef.current = player
 
-    // Set initial position (center of tile 10,7)
-    const spawnX = 10 * TILE_SIZE + TILE_SIZE / 2
-    const spawnY = 7 * TILE_SIZE + TILE_SIZE / 2
+    const spawnX = room.spawnPoint.x
+    const spawnY = room.spawnPoint.y
     player.x = spawnX
     player.y = spawnY
     playerPosRef.current = { x: spawnX, y: spawnY }
@@ -133,11 +208,16 @@ function GameWorld() {
       viewport.destroy({ children: true })
       initialized.current = false
     }
-  }, [app, isInitialised, dispatch])
+  }, [app, isInitialised, dispatch, rebuildRoom])
 
   const tickCallback = useCallback(() => {
     const currentState = stateRef.current
-    if (currentState.ui.isLoading || currentState.ui.isTransitioning) return
+    if (
+      currentState.ui.isLoading ||
+      currentState.ui.isTransitioning ||
+      isTransitioningRef.current
+    )
+      return
 
     // Handle dialogue advancement
     if (currentState.interaction.activeDialogue) {
@@ -163,11 +243,16 @@ function GameWorld() {
     }
 
     if (dx !== 0 || dy !== 0) {
-      // Set facing direction based on dominant axis
       if (Math.abs(dx) > Math.abs(dy)) {
-        dispatch({ type: 'SET_DIRECTION', payload: dx > 0 ? 'right' : 'left' })
+        dispatch({
+          type: 'SET_DIRECTION',
+          payload: dx > 0 ? 'right' : 'left',
+        })
       } else {
-        dispatch({ type: 'SET_DIRECTION', payload: dy > 0 ? 'down' : 'up' })
+        dispatch({
+          type: 'SET_DIRECTION',
+          payload: dy > 0 ? 'down' : 'up',
+        })
       }
 
       const pos = playerPosRef.current
@@ -176,36 +261,94 @@ function GameWorld() {
       let finalX = pos.x
       let finalY = pos.y
 
-      // Wall sliding: try each axis independently
-      if (!isColliding(newX, pos.y, MAP_WIDTH, collisionSet.current, PLAYER_SIZE)) {
+      if (
+        !isColliding(
+          newX,
+          pos.y,
+          MAP_WIDTH,
+          collisionSet.current,
+          PLAYER_SIZE,
+        )
+      ) {
         finalX = newX
       }
-      if (!isColliding(finalX, newY, MAP_WIDTH, collisionSet.current, PLAYER_SIZE)) {
+      if (
+        !isColliding(
+          finalX,
+          newY,
+          MAP_WIDTH,
+          collisionSet.current,
+          PLAYER_SIZE,
+        )
+      ) {
         finalY = newY
       }
 
       if (finalX !== pos.x || finalY !== pos.y) {
         playerPosRef.current = { x: finalX, y: finalY }
-        dispatch({ type: 'MOVE_PLAYER', payload: { x: finalX, y: finalY } })
+        dispatch({
+          type: 'MOVE_PLAYER',
+          payload: { x: finalX, y: finalY },
+        })
       }
     }
 
-    // Update visual positions imperatively (no re-render needed)
+    // Check door collision after movement
+    const room = ROOM_CONFIGS[currentRoomRef.current]
+    const door = checkDoorCollision(
+      playerPosRef.current.x,
+      playerPosRef.current.y,
+      room,
+    )
+
+    if (door && !isTransitioningRef.current) {
+      isTransitioningRef.current = true
+      dispatch({ type: 'SET_TRANSITIONING', payload: true })
+
+      setTimeout(() => {
+        dispatch({
+          type: 'CHANGE_ROOM',
+          payload: {
+            room: door.targetRoom,
+            spawnPoint: door.spawnPosition,
+          },
+        })
+        rebuildRoom(door.targetRoom, door.spawnPosition)
+
+        setTimeout(() => {
+          dispatch({ type: 'SET_TRANSITIONING', payload: false })
+          isTransitioningRef.current = false
+        }, 100)
+      }, 300)
+    }
+
+    // Update visual positions imperatively
     if (playerGraphicsRef.current) {
       playerGraphicsRef.current.x = playerPosRef.current.x
       playerGraphicsRef.current.y = playerPosRef.current.y
     }
     if (viewportRef.current) {
-      viewportRef.current.moveCenter(playerPosRef.current.x, playerPosRef.current.y)
+      viewportRef.current.moveCenter(
+        playerPosRef.current.x,
+        playerPosRef.current.y,
+      )
     }
-  }, [keys, consumeInteract, dispatch])
+  }, [keys, consumeInteract, dispatch, rebuildRoom])
 
   useTick(tickCallback)
 
   return null
 }
 
-export function GameCanvas() {
+export interface GameCanvasProps {
+  projects?: { name: string; slug: string; descriptionKo: string; descriptionEn: string; techStack: string[]; status: string; website: string; github: string; featured: boolean }[]
+  skills?: { name: string; category: 'frontend' | 'backend' | 'tools' }[]
+  timeline?: { date: string; titleKo: string; titleEn: string; descriptionKo: string; descriptionEn: string; type: string }[]
+  posts?: { slug: string; title: string; excerpt: string; category: string }[]
+  locale?: string
+}
+
+export function GameCanvas(_props: GameCanvasProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [canvasSize, setCanvasSize] = useState({
     width: CANVAS_WIDTH,
