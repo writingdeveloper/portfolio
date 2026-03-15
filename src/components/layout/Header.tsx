@@ -13,6 +13,7 @@ const navLinks = [
   { href: '/blog', key: 'blog' },
   { href: '/projects', key: 'projects' },
   { href: '/about', key: 'about' },
+  { href: '/play', key: 'play' },
 ] as const
 
 export function Header() {
