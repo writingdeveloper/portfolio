@@ -7,7 +7,8 @@
     "home": "Home",
     "blog": "Blog",
     "projects": "Projects",
-    "about": "About"
+    "about": "About",
+    "play": "Explore"
   },
   "home": {
     "hero": {
@@ -19,7 +20,8 @@
     "latestPosts": "Latest Posts",
     "viewAll": "View All",
     "featuredProjects": "Projects",
-    "noPosts": "No posts yet."
+    "noPosts": "No posts yet.",
+    "explore": "Explore my world"
   },
   "blog": {
     "title": "Blog",
@@ -90,6 +92,34 @@
   },
   "footer": {
     "copyright": "All rights reserved."
+  },
+  "play": {
+    "title": "Explore",
+    "description": "Explore my portfolio like a game",
+    "loading": "Loading...",
+    "controls": "Arrow keys to move, Space to interact",
+    "exit": "Exit",
+    "soundOn": "Sound on",
+    "soundOff": "Sound off",
+    "explore": "Explore my world",
+    "npc": {
+      "welcome": "Hey! This is my workshop. Feel free to look around!",
+      "lobby": "This is the lobby. There are different rooms in each direction.",
+      "projects": "This is the project room. Check out the workstations!",
+      "skills": "This is the skill room. Take a look at the tools on the shelves.",
+      "history": "This is the history room. Check out the frames on the wall.",
+      "library": "Welcome to the library! Click on books to read blog posts."
+    },
+    "interact": "Press Space to interact",
+    "viewMore": "View more",
+    "readOnBlog": "Read on blog",
+    "roomLabels": {
+      "lobby": "Lobby",
+      "projects": "Projects",
+      "skills": "Skills",
+      "history": "History",
+      "library": "Library"
+    }
   },
   "error": {
     "notFound": "Page Not Found",
