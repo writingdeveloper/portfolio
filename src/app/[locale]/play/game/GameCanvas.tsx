@@ -533,38 +533,34 @@ function drawFloorLamp(g: Graphics, x: number, y: number) {
 /* ── Per-room decoration drawing ── */
 
 function drawLobbyDecorations(g: Graphics, T: number, _room: RoomConfig) {
-  // Center carpet (tiles 7-12, 5-10)
-  g.roundRect(7 * T, 5 * T, 6 * T, 5 * T, 4)
+  // Interactable: NPC at tile (10, 5)
+  // Center carpet shifted down to avoid NPC (tiles 7-12, 7-12)
+  g.roundRect(7 * T, 7 * T, 6 * T, 5 * T, 4)
   g.fill(0x8b1a1a)
-  // Carpet border
-  g.roundRect(7 * T + 4, 5 * T + 4, 6 * T - 8, 5 * T - 8, 3)
+  g.roundRect(7 * T + 4, 7 * T + 4, 6 * T - 8, 5 * T - 8, 3)
   g.fill(0xa52a2a)
-  // Carpet inner pattern
-  g.roundRect(7 * T + 12, 5 * T + 12, 6 * T - 24, 5 * T - 24, 2)
+  g.roundRect(7 * T + 12, 7 * T + 12, 6 * T - 24, 5 * T - 24, 2)
   g.fill(0x8b1a1a)
-  // Carpet center diamond
-  const cx = 10 * T, cy = 7.5 * T
+  const cx = 10 * T, cy = 9.5 * T
   g.moveTo(cx, cy - 20); g.lineTo(cx + 30, cy); g.lineTo(cx, cy + 20); g.lineTo(cx - 30, cy); g.closePath()
   g.fill(0xdaa520)
 
-  // Potted plants near left and right doors
-  drawPottedPlant(g, 1.5 * T, 5.5 * T)
-  drawPottedPlant(g, 18.5 * T, 5.5 * T)
-  // Near top door
-  drawPottedPlant(g, 8 * T, 1.5 * T)
-  drawPottedPlant(g, 12 * T, 1.5 * T)
+  // Potted plants in corners away from NPC and doors
+  drawPottedPlant(g, 1.5 * T, 1.5 * T)
+  drawPottedPlant(g, 18.5 * T, 1.5 * T)
+  drawPottedPlant(g, 1.5 * T, 12.5 * T)
+  drawPottedPlant(g, 18.5 * T, 12.5 * T)
 
-  // Wall torches (on left wall)
-  drawWallTorch(g, 1 * T - 4, 4 * T)
-  drawWallTorch(g, 1 * T - 4, 10 * T)
-  // On right wall
-  drawWallTorch(g, 19 * T + 4, 4 * T)
-  drawWallTorch(g, 19 * T + 4, 10 * T)
+  // Wall torches (on left wall, away from left door at y=7-8)
+  drawWallTorch(g, 1 * T - 4, 3 * T)
+  drawWallTorch(g, 1 * T - 4, 11 * T)
+  // On right wall, away from right door at y=7-8
+  drawWallTorch(g, 19 * T + 4, 3 * T)
+  drawWallTorch(g, 19 * T + 4, 11 * T)
 
-  // Notice board on upper wall
+  // Notice board on upper wall (away from top door at x=9-10)
   g.roundRect(4 * T, 0.5 * T - 8, 3 * T, T - 4, 2); g.fill(0x8b6914)
   g.rect(4 * T + 4, 0.5 * T - 4, 3 * T - 8, T - 12); g.fill(0xa0724a)
-  // Pinned papers
   g.rect(4.2 * T, 0.5 * T - 2, 12, 10); g.fill(0xffeaa7)
   g.rect(5 * T, 0.5 * T, 10, 8); g.fill(0x74b9ff)
   g.rect(5.8 * T, 0.5 * T - 4, 14, 10); g.fill(0xff7675)
@@ -577,130 +573,134 @@ function drawLobbyDecorations(g: Graphics, T: number, _room: RoomConfig) {
 }
 
 function drawProjectsDecorations(g: Graphics, T: number, _room: RoomConfig) {
-  // Server rack on top wall (tiles 3-5)
-  g.roundRect(3 * T, T + 4, 2.5 * T, 4 * T, 2); g.fill(0x2c3e50)
-  g.rect(3 * T + 4, T + 8, 2.5 * T - 8, 4 * T - 8); g.fill(0x1a252f)
-  // Server LEDs
-  for (let i = 0; i < 6; i++) {
-    const ledColor = i % 3 === 0 ? 0x2ecc71 : 0x3498db
-    g.circle(3.3 * T, T + 16 + i * 14, 2); g.fill(ledColor)
-    g.rect(3.6 * T, T + 14 + i * 14, T, 3); g.fill(0x34495e)
-  }
+  // Interactable: projects at tiles (3,4), (7,4), (11,4), (15,4)
 
-  // Whiteboard on top wall (tiles 14-17)
-  g.roundRect(14 * T, T * 0.5, 3.5 * T, 2.5 * T, 3); g.fill(0xecf0f1)
-  g.rect(14 * T + 6, T * 0.5 + 6, 3.5 * T - 12, 2.5 * T - 12); g.fill(0xffffff)
-  // Whiteboard scribbles
-  g.rect(14.5 * T, T + 4, T, 2); g.fill(0xe74c3c)
-  g.rect(14.5 * T, T + 12, 1.5 * T, 2); g.fill(0x3498db)
-  g.rect(15 * T, T + 20, T, 2); g.fill(0x2ecc71)
-  // Markers tray
-  g.rect(14.5 * T, T * 0.5 + 2.5 * T - 4, 2.5 * T, 4); g.fill(0xbdc3c7)
+  // Whiteboard on top wall (tiles 8-11, between projects, on wall row)
+  g.roundRect(8 * T, T * 0.5, 3.5 * T, 2.5 * T, 3); g.fill(0xecf0f1)
+  g.rect(8 * T + 6, T * 0.5 + 6, 3.5 * T - 12, 2.5 * T - 12); g.fill(0xffffff)
+  g.rect(8.5 * T, T + 4, T, 2); g.fill(0xe74c3c)
+  g.rect(8.5 * T, T + 12, 1.5 * T, 2); g.fill(0x3498db)
+  g.rect(9 * T, T + 20, T, 2); g.fill(0x2ecc71)
+  g.rect(8.5 * T, T * 0.5 + 2.5 * T - 4, 2.5 * T, 4); g.fill(0xbdc3c7)
 
-  // Chairs in front of workstations
-  drawChair(g, 4 * T, 7 * T)
-  drawChair(g, 8 * T, 7 * T)
-  drawChair(g, 12 * T, 7 * T)
+  // Chairs below each workstation (tile y=6, offset from project y=4)
+  drawChair(g, 3 * T + 16, 7 * T)
+  drawChair(g, 7 * T + 16, 7 * T)
+  drawChair(g, 11 * T + 16, 7 * T)
+  drawChair(g, 15 * T + 16, 7 * T)
 
-  // Trash bin
+  // Potted plants in bottom corners (away from objects and doors)
+  drawPottedPlant(g, 1.5 * T, 12.5 * T)
+  drawPottedPlant(g, 18.5 * T, 12.5 * T)
+
+  // Trash bin in bottom-right area
   drawTrashBin(g, 17 * T, 12 * T)
 
-  // Cable on floor
-  g.rect(3 * T, 5 * T, 1, 4 * T); g.fill({ color: 0x222222, alpha: 0.3 })
-  g.rect(3 * T, 9 * T, 6 * T, 1); g.fill({ color: 0x222222, alpha: 0.3 })
+  // Cable on floor (left side, below projects)
+  g.rect(2 * T, 8 * T, 1, 4 * T); g.fill({ color: 0x222222, alpha: 0.3 })
+  g.rect(2 * T, 12 * T, 6 * T, 1); g.fill({ color: 0x222222, alpha: 0.3 })
 }
 
 function drawSkillsDecorations(g: Graphics, T: number, _room: RoomConfig) {
-  // Magic circle on floor center
+  // Interactable: skill crystals at tiles:
+  //   frontend (y=3): x = 3, 6, 9, 12, 15
+  //   backend  (y=7): x = 3, 6, 9, 12, 15
+  //   tools    (y=11): x = 3, 6, 9, 12, 15
+
+  // Subtle floor rune pattern (very faint, behind everything)
   const cx = 10 * T, cy = 7.5 * T
-  g.circle(cx, cy, 4 * T); g.fill({ color: 0x9b59b6, alpha: 0.05 })
-  g.circle(cx, cy, 3.5 * T); g.stroke({ color: 0x9b59b6, alpha: 0.15, width: 2 })
-  g.circle(cx, cy, 2.5 * T); g.stroke({ color: 0x8e44ad, alpha: 0.12, width: 1 })
-  // Inner star pattern
-  for (let i = 0; i < 6; i++) {
-    const angle = (i * Math.PI * 2) / 6
-    const sx = cx + Math.cos(angle) * 2.5 * T
-    const sy = cy + Math.sin(angle) * 2.5 * T
-    g.moveTo(cx, cy); g.lineTo(sx, sy)
-    g.stroke({ color: 0x9b59b6, alpha: 0.1, width: 1 })
-  }
+  g.circle(cx, cy, 4 * T); g.fill({ color: 0x9b59b6, alpha: 0.03 })
+  g.circle(cx, cy, 3.5 * T); g.stroke({ color: 0x9b59b6, alpha: 0.08, width: 1 })
 
-  // Candelabras in corners
-  drawCandelabra(g, 2.5 * T, 2.5 * T)
-  drawCandelabra(g, 17.5 * T, 2.5 * T)
-  drawCandelabra(g, 2.5 * T, 12.5 * T)
-  drawCandelabra(g, 17.5 * T, 12.5 * T)
+  // Candelabras in corners (tiles ~1.5, safe from skill positions)
+  drawCandelabra(g, 1.5 * T, 1.5 * T)
+  drawCandelabra(g, 18.5 * T, 1.5 * T)
+  drawCandelabra(g, 1.5 * T, 13 * T)
+  drawCandelabra(g, 18.5 * T, 13 * T)
 
-  // Bookshelves along top wall
-  drawBookshelf(g, 3 * T, T, 4 * T)
-  drawBookshelf(g, 13 * T, T, 4 * T)
+  // Wall torches on left and right walls
+  drawWallTorch(g, 1 * T - 4, 5 * T)
+  drawWallTorch(g, 1 * T - 4, 9 * T)
+  drawWallTorch(g, 19 * T + 4, 5 * T)
+  drawWallTorch(g, 19 * T + 4, 9 * T)
 
-  // Glowing orbs
-  g.circle(4 * T, 5 * T, 6); g.fill({ color: 0xe8daef, alpha: 0.3 })
-  g.circle(4 * T, 5 * T, 3); g.fill({ color: 0xffffff, alpha: 0.5 })
-  g.circle(16 * T, 10 * T, 6); g.fill({ color: 0xd5f5e3, alpha: 0.3 })
-  g.circle(16 * T, 10 * T, 3); g.fill({ color: 0xffffff, alpha: 0.5 })
+  // Glowing orbs in gaps between skill columns (safe x positions: 1.5, 4.5, 7.5, 10.5, 13.5, 18)
+  g.circle(1.5 * T, 5 * T, 6); g.fill({ color: 0xe8daef, alpha: 0.3 })
+  g.circle(1.5 * T, 5 * T, 3); g.fill({ color: 0xffffff, alpha: 0.5 })
+  g.circle(18.5 * T, 9 * T, 6); g.fill({ color: 0xd5f5e3, alpha: 0.3 })
+  g.circle(18.5 * T, 9 * T, 3); g.fill({ color: 0xffffff, alpha: 0.5 })
 }
 
 function drawHistoryDecorations(g: Graphics, T: number, _room: RoomConfig) {
-  // Red carpet runner (horizontal, through middle)
-  g.roundRect(2 * T, 6.5 * T, 16 * T, 2 * T, 3); g.fill(0x922b21)
-  g.roundRect(2 * T + 4, 6.5 * T + 4, 16 * T - 8, 2 * T - 8, 2); g.fill(0xa93226)
-  // Carpet fringe
+  // Interactable: timeline frames at tiles (3,3), (7,3), (11,3), (15,3)
+
+  // Red carpet runner (horizontal, lower half, tiles y=8-10)
+  g.roundRect(2 * T, 8 * T, 16 * T, 2 * T, 3); g.fill(0x922b21)
+  g.roundRect(2 * T + 4, 8 * T + 4, 16 * T - 8, 2 * T - 8, 2); g.fill(0xa93226)
   for (let i = 0; i < 16; i++) {
-    g.rect(2 * T + 4 + i * T, 6.5 * T, 2, 4); g.fill(0xdaa520)
-    g.rect(2 * T + 4 + i * T, 8.3 * T, 2, 4); g.fill(0xdaa520)
+    g.rect(2 * T + 4 + i * T, 8 * T, 2, 4); g.fill(0xdaa520)
+    g.rect(2 * T + 4 + i * T, 9.8 * T, 2, 4); g.fill(0xdaa520)
   }
 
-  // Velvet rope posts
-  drawRopePost(g, 3 * T, 5 * T)
-  drawRopePost(g, 6 * T, 5 * T)
-  drawRopePost(g, 3 * T, 10 * T)
-  drawRopePost(g, 6 * T, 10 * T)
+  // Velvet rope posts below frames (y=5, between frame objects at y=3)
+  drawRopePost(g, 5 * T, 5.5 * T)
+  drawRopePost(g, 9 * T, 5.5 * T)
+  drawRopePost(g, 13 * T, 5.5 * T)
   // Rope between posts
-  g.rect(3 * T, 5 * T - 2, 3 * T, 2); g.fill(0xdaa520)
-  g.rect(3 * T, 10 * T - 2, 3 * T, 2); g.fill(0xdaa520)
+  g.rect(5 * T, 5.5 * T - 2, 4 * T, 2); g.fill(0xdaa520)
+  g.rect(9 * T, 5.5 * T - 2, 4 * T, 2); g.fill(0xdaa520)
 
-  // Display pedestals near walls
-  drawPedestal(g, 14 * T, 3 * T)
-  drawPedestal(g, 14 * T, 11 * T)
+  // Display pedestals in lower area (away from frames)
+  drawPedestal(g, 2 * T, 11 * T)
+  drawPedestal(g, 17 * T, 11 * T)
 
-  // Spotlights on floor (circles of light)
-  g.circle(4 * T, 5.5 * T, T); g.fill({ color: 0xfff3cd, alpha: 0.06 })
-  g.circle(8 * T, 5.5 * T, T); g.fill({ color: 0xfff3cd, alpha: 0.06 })
+  // Spotlights below each frame
+  g.circle(3 * T + 16, 5 * T, T); g.fill({ color: 0xfff3cd, alpha: 0.06 })
+  g.circle(7 * T + 16, 5 * T, T); g.fill({ color: 0xfff3cd, alpha: 0.06 })
+  g.circle(11 * T + 16, 5 * T, T); g.fill({ color: 0xfff3cd, alpha: 0.06 })
+  g.circle(15 * T + 16, 5 * T, T); g.fill({ color: 0xfff3cd, alpha: 0.06 })
+
+  // Wall torches
+  drawWallTorch(g, 1 * T - 4, 4 * T)
+  drawWallTorch(g, 1 * T - 4, 11 * T)
+  drawWallTorch(g, 19 * T + 4, 4 * T)
+  drawWallTorch(g, 19 * T + 4, 11 * T)
 }
 
 function drawLibraryDecorations(g: Graphics, T: number, _room: RoomConfig) {
-  // Large bookshelves on left wall
-  drawBookshelf(g, T + 4, T + 4, 3 * T)
-  drawBookshelf(g, T + 4, 4 * T + 8, 3 * T)
-  drawBookshelf(g, T + 4, 8 * T + 4, 3 * T)
+  // Interactable: post books in grid
+  //   Row 0 (y=3): x = 2, 5, 8, 11, 14, 17
+  //   Row 1 (y=7): x = 2, 5, 8, 11, 14, 17
 
-  // Large bookshelves on right wall
-  drawBookshelf(g, 16 * T, T + 4, 3 * T)
-  drawBookshelf(g, 16 * T, 4 * T + 8, 3 * T)
-  drawBookshelf(g, 16 * T, 8 * T + 4, 3 * T)
-
-  // Reading desk (center)
-  g.roundRect(8 * T, 9 * T, 4 * T, 2 * T, 2); g.fill(0xa0724a)
-  g.rect(8 * T + 6, 9 * T + 6, 4 * T - 12, 2 * T - 12); g.fill(0xb8854d)
+  // Reading desk in lower-center (y=10-11, x=6-9, avoids book rows)
+  g.roundRect(6 * T, 10 * T, 4 * T, 2 * T, 2); g.fill(0xa0724a)
+  g.rect(6 * T + 6, 10 * T + 6, 4 * T - 12, 2 * T - 12); g.fill(0xb8854d)
   // Open book on desk
-  g.rect(9 * T, 9.3 * T, T, 0.7 * T); g.fill(0xfdf6e3)
-  g.rect(9 * T + T + 2, 9.3 * T, T, 0.7 * T); g.fill(0xfdf6e3)
-  g.rect(9 * T + T, 9.3 * T, 2, 0.7 * T); g.fill(0x8b6914)
-  // Text lines on book
-  g.rect(9 * T + 4, 9.5 * T, T - 8, 1); g.fill(0xbdc3c7)
-  g.rect(9 * T + 4, 9.5 * T + 4, T - 12, 1); g.fill(0xbdc3c7)
+  g.rect(7 * T, 10.3 * T, T, 0.7 * T); g.fill(0xfdf6e3)
+  g.rect(7 * T + T + 2, 10.3 * T, T, 0.7 * T); g.fill(0xfdf6e3)
+  g.rect(7 * T + T, 10.3 * T, 2, 0.7 * T); g.fill(0x8b6914)
+  g.rect(7 * T + 4, 10.5 * T, T - 8, 1); g.fill(0xbdc3c7)
+  g.rect(7 * T + 4, 10.5 * T + 4, T - 12, 1); g.fill(0xbdc3c7)
 
-  // Armchair
-  drawArmchair(g, 13 * T, 10 * T)
+  // Armchair in lower-right area (y=10, x=13, between book columns)
+  drawArmchair(g, 13 * T, 10.5 * T)
 
-  // Floor lamp
-  drawFloorLamp(g, 14.5 * T, 9 * T)
+  // Floor lamp next to armchair
+  drawFloorLamp(g, 15 * T, 10 * T)
 
-  // Small rug near reading area
-  g.roundRect(8.5 * T, 11 * T, 3 * T, 1.5 * T, 3); g.fill(0x1a5276)
-  g.roundRect(8.5 * T + 4, 11 * T + 4, 3 * T - 8, 1.5 * T - 8, 2); g.fill(0x1f618d)
+  // Small rug under reading area
+  g.roundRect(6 * T, 12 * T, 3 * T, 1.2 * T, 3); g.fill(0x1a5276)
+  g.roundRect(6 * T + 4, 12 * T + 4, 3 * T - 8, 1.2 * T - 8, 2); g.fill(0x1f618d)
+
+  // Wall torches
+  drawWallTorch(g, 1 * T - 4, 4 * T)
+  drawWallTorch(g, 1 * T - 4, 10 * T)
+  drawWallTorch(g, 19 * T + 4, 4 * T)
+  drawWallTorch(g, 19 * T + 4, 10 * T)
+
+  // Potted plants in bottom corners (away from doors and books)
+  drawPottedPlant(g, 1.5 * T, 12.5 * T)
+  drawPottedPlant(g, 18.5 * T, 12.5 * T)
 }
 
 function drawRoomDecorations(container: Container, roomId: RoomId, room: RoomConfig) {
@@ -756,6 +756,22 @@ function buildCollisionSet(room: RoomConfig): Set<number> {
 function drawObject(g: Graphics, obj: InteractableObject, index: number) {
   const x = obj.position.x
   const y = obj.position.y
+
+  // Interactable indicator: subtle glow ring at base
+  g.circle(x, y + 8, 14)
+  g.fill({ color: 0x4fc3f7, alpha: 0.08 })
+  g.circle(x, y + 8, 10)
+  g.stroke({ color: 0x4fc3f7, alpha: 0.25, width: 1 })
+
+  // Small diamond marker above object (skip for NPC which has its own exclamation mark)
+  if (obj.type !== 'npc') {
+    g.moveTo(x, y - 24)
+    g.lineTo(x + 4, y - 20)
+    g.lineTo(x, y - 16)
+    g.lineTo(x - 4, y - 20)
+    g.closePath()
+    g.fill({ color: 0x4fc3f7, alpha: 0.5 })
+  }
 
   if (obj.type === 'npc') {
     drawNPC(g, x, y)
