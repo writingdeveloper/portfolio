@@ -153,8 +153,11 @@ export interface CategoryItem {
   label: string
 }
 
-export function getCategories(_locale: string = 'ko'): CategoryItem[] {
-  return categoriesData.categories
+export function getCategories(locale: string = 'ko'): CategoryItem[] {
+  return categoriesData.categories.map((c) => ({
+    value: c.value,
+    label: locale === 'ko' ? (c as Record<string, string>).labelKo || c.label : c.label,
+  }))
 }
 
 export function hasTranslation(slug: string, currentLocale: string): boolean {
@@ -195,9 +198,10 @@ export function extractHeadings(content: string): TocItem[] {
   return headings
 }
 
-export function getCategoryLabel(value: string): string {
+export function getCategoryLabel(value: string, locale: string = 'en'): string {
   const found = categoriesData.categories.find((c) => c.value === value)
-  return found?.label || value
+  if (!found) return value
+  return locale === 'ko' ? (found as Record<string, string>).labelKo || found.label : found.label
 }
 
 export function getAllTags(locale: string = 'ko'): string[] {

@@ -48,7 +48,8 @@
     "newsletterDescription": "Get notified when new posts are published.",
     "newsletterPlaceholder": "Email address",
     "newsletterSubscribe": "Subscribe",
-    "newsletterThanks": "Thanks for subscribing!"
+    "newsletterThanks": "Thanks for subscribing!",
+    "newsletterComingSoon": "Newsletter feature is coming soon. Stay tuned!"
   },
   "projects": {
     "title": "Projects",

@@ -1,6 +1,6 @@
 {
   "categories": [
-    { "value": "development", "label": "Development" },
-    { "value": "essay", "label": "Essay" }
+    { "value": "development", "label": "Development", "labelKo": "개발" },
+    { "value": "essay", "label": "Essay", "labelKo": "에세이" }
   ]
 }

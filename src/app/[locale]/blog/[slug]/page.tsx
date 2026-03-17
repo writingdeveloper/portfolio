@@ -129,7 +129,7 @@ export default async function BlogPostPage({
           <header className="mb-6">
             {post.category && (
               <span className="text-sm text-[var(--accent-text)] font-medium mb-4 block">
-                {getCategoryLabel(post.category)}
+                {getCategoryLabel(post.category, locale)}
               </span>
             )}
             <h1 className="text-3xl sm:text-4xl font-bold mb-4">{post.title}</h1>

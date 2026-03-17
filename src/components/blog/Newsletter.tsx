@@ -1,18 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import { Mail } from 'lucide-react'
+import { Mail, Info } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 export function Newsletter() {
   const t = useTranslations('blog')
   const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
+  const [submitted, setSubmitted] = useState(false)
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
-    setMessage('준비 중입니다 (Coming soon)')
-    setTimeout(() => setMessage(''), 3000)
+    setSubmitted(true)
   }
 
   return (
@@ -22,24 +21,28 @@ export function Newsletter() {
         <h3 className="font-semibold">{t('newsletterTitle')}</h3>
       </div>
       <p className="text-sm text-[var(--text-secondary)] mb-4">{t('newsletterDescription')}</p>
-      <form onSubmit={handleSubmit} className="flex gap-2">
-        <input
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder={t('newsletterPlaceholder')}
-          className="flex-1 px-3 py-2 rounded-lg border border-[var(--border-default)] bg-[var(--bg-primary)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--accent-text)] focus:outline-none"
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 rounded-lg bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] text-sm font-medium hover:bg-[var(--btn-primary-bg-hover)] transition-colors"
-        >
-          {t('newsletterSubscribe')}
-        </button>
-      </form>
-      {message && (
-        <p className="mt-3 text-sm text-[var(--accent-text)] font-medium text-center">{message}</p>
+      {submitted ? (
+        <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-[var(--accent-bg)] border border-[var(--accent-border)]">
+          <Info size={16} className="text-[var(--accent-text)] shrink-0" />
+          <p className="text-sm text-[var(--accent-text)] font-medium">{t('newsletterComingSoon')}</p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex gap-2">
+          <input
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={t('newsletterPlaceholder')}
+            className="flex-1 px-3 py-2 rounded-lg border border-[var(--border-default)] bg-[var(--bg-primary)] text-sm text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:border-[var(--accent-text)] focus:outline-none"
+          />
+          <button
+            type="submit"
+            className="px-4 py-2 rounded-lg bg-[var(--btn-primary-bg)] text-[var(--btn-primary-text)] text-sm font-medium hover:bg-[var(--btn-primary-bg-hover)] transition-colors"
+          >
+            {t('newsletterSubscribe')}
+          </button>
+        </form>
       )}
     </div>
   )
