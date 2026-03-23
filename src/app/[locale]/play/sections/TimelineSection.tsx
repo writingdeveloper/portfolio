@@ -3,6 +3,7 @@
 import type { TimelineItem } from '@/types/content'
 import { FloatingCard } from '../components/FloatingCard'
 import { SectionLabel } from '../components/SectionLabel'
+import { SectionDivider } from '../components/SectionDivider'
 import { SECTION_SPACING } from '../scene/CameraRig'
 
 const TYPE_COLORS: Record<string, string> = {
@@ -23,6 +24,7 @@ export function TimelineSection({ timeline, locale, sectionLabel, onSelect }: Ti
 
   return (
     <group>
+      <SectionDivider position={[0, sectionY + 5, 0]} number="03" />
       <SectionLabel position={[0, sectionY + 4, 0]} label={sectionLabel} />
 
       {/* Vertical line */}

@@ -54,6 +54,7 @@ export function FloatingCard({
   floatIntensity = 0.3,
 }: FloatingCardProps) {
   const borderRef = useRef<THREE.ShaderMaterial>(null)
+  const innerGlowRef = useRef<THREE.ShaderMaterial>(null)
   const [hovered, setHovered] = useState(false)
 
   const borderUniforms = useMemo(
@@ -72,6 +73,13 @@ export function FloatingCard({
         borderRef.current.uniforms.uHovered.value,
         hovered ? 1 : 0,
         0.08
+      )
+    }
+    if (innerGlowRef.current) {
+      innerGlowRef.current.uniforms.uHovered.value = THREE.MathUtils.lerp(
+        innerGlowRef.current.uniforms.uHovered.value,
+        hovered ? 1 : 0,
+        0.06
       )
     }
   })
@@ -143,6 +151,52 @@ export function FloatingCard({
             {subtitle}
           </Text>
         )}
+
+        {/* Corner decorations — thin L-shaped lines at each corner */}
+        {([[-1, 1], [1, 1], [1, -1], [-1, -1]] as [number, number][]).map(([cx, cy], i) => (
+          <group key={i} position={[cx * (width / 2 - 0.05), cy * (height / 2 - 0.05), 0.03]}>
+            <mesh position={[cx * 0.12, 0, 0]}>
+              <planeGeometry args={[0.25, 0.003]} />
+              <meshBasicMaterial color={accentColor} transparent opacity={0.3} />
+            </mesh>
+            <mesh position={[0, cy * 0.12, 0]}>
+              <planeGeometry args={[0.003, 0.25]} />
+              <meshBasicMaterial color={accentColor} transparent opacity={0.3} />
+            </mesh>
+          </group>
+        ))}
+
+        {/* Inner gradient overlay — subtle top-to-bottom light */}
+        <mesh position={[0, 0, 0.02]}>
+          <planeGeometry args={[width - 0.2, height - 0.2]} />
+          <shaderMaterial
+            ref={innerGlowRef}
+            transparent
+            depthWrite={false}
+            uniforms={{
+              uHovered: { value: 0 },
+              uColor: { value: new THREE.Color(accentColor) },
+            }}
+            vertexShader={`
+              varying vec2 vUv;
+              void main() {
+                vUv = uv;
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+              }
+            `}
+            fragmentShader={`
+              uniform float uHovered;
+              uniform vec3 uColor;
+              varying vec2 vUv;
+              void main() {
+                float gradient = smoothstep(1.0, 0.0, vUv.y) * 0.06;
+                float radial = (1.0 - length(vUv - 0.5) * 1.5) * uHovered * 0.1;
+                float alpha = gradient + max(radial, 0.0);
+                gl_FragColor = vec4(uColor, alpha);
+              }
+            `}
+          />
+        </mesh>
       </group>
     </Float>
   )

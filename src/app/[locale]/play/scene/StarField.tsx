@@ -3,7 +3,44 @@
 import { useRef, useMemo, useEffect } from 'react'
 import * as THREE from 'three'
 
-export function StarField({ count = 2000 }: { count?: number }) {
+function AccentStars({ count }: { count: number }) {
+  const geometryRef = useRef<THREE.BufferGeometry>(null)
+
+  const positions = useMemo(() => {
+    const pos = new Float32Array(count * 3)
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * 70
+      pos[i * 3 + 1] = Math.random() * -90 + 15
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 50 - 8
+    }
+    return pos
+  }, [count])
+
+  useEffect(() => {
+    if (geometryRef.current) {
+      geometryRef.current.setAttribute(
+        'position',
+        new THREE.BufferAttribute(positions, 3)
+      )
+    }
+  }, [positions])
+
+  return (
+    <points>
+      <bufferGeometry ref={geometryRef} />
+      <pointsMaterial
+        size={0.12}
+        color="#b8b0cc"
+        transparent
+        opacity={0.5}
+        sizeAttenuation
+        depthWrite={false}
+      />
+    </points>
+  )
+}
+
+export function StarField({ count = 3000 }: { count?: number }) {
   const pointsRef = useRef<THREE.Points>(null)
   const geometryRef = useRef<THREE.BufferGeometry>(null)
 
@@ -33,16 +70,19 @@ export function StarField({ count = 2000 }: { count?: number }) {
   }, [positions, sizes])
 
   return (
-    <points ref={pointsRef}>
-      <bufferGeometry ref={geometryRef} />
-      <pointsMaterial
-        size={0.04}
-        color="#8b8bab"
-        transparent
-        opacity={0.35}
-        sizeAttenuation
-        depthWrite={false}
-      />
-    </points>
+    <>
+      <points ref={pointsRef}>
+        <bufferGeometry ref={geometryRef} />
+        <pointsMaterial
+          size={0.04}
+          color="#8b8bab"
+          transparent
+          opacity={0.35}
+          sizeAttenuation
+          depthWrite={false}
+        />
+      </points>
+      <AccentStars count={Math.floor(count * 0.05)} />
+    </>
   )
 }

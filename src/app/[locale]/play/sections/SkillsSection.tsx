@@ -4,6 +4,7 @@ import type { Skill } from '@/types/content'
 import { skillCategories } from '@/types/content'
 import { GlowOrb } from '../components/GlowOrb'
 import { SectionLabel } from '../components/SectionLabel'
+import { SectionDivider } from '../components/SectionDivider'
 import { SECTION_SPACING } from '../scene/CameraRig'
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -32,6 +33,7 @@ export function SkillsSection({ skills, locale, sectionLabel }: SkillsSectionPro
 
   return (
     <group>
+      <SectionDivider position={[0, sectionY + 5, 0]} number="02" />
       <SectionLabel position={[0, sectionY + 4, 0]} label={sectionLabel} />
       {Object.entries(grouped).map(([category, items], catIdx) => {
         const catX = (catIdx - 1) * 5

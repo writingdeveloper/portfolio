@@ -3,6 +3,7 @@
 import type { Project } from '@/types/content'
 import { FloatingCard } from '../components/FloatingCard'
 import { SectionLabel } from '../components/SectionLabel'
+import { SectionDivider } from '../components/SectionDivider'
 import { SECTION_SPACING } from '../scene/CameraRig'
 
 interface ProjectsSectionProps {
@@ -17,6 +18,7 @@ export function ProjectsSection({ projects, locale, sectionLabel, onSelect }: Pr
 
   return (
     <group>
+      <SectionDivider position={[0, sectionY + 5, 0]} number="01" />
       <SectionLabel position={[0, sectionY + 4, 0]} label={sectionLabel} />
       {projects.map((project, i) => {
         const count = projects.length

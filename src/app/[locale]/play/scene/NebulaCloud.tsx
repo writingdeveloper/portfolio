@@ -103,6 +103,8 @@ export function NebulaCloud() {
       <NebulaPatch position={[-12, -10, -25]} color="#2d2b55" scale={35} speed={0.04} />
       <NebulaPatch position={[10, -35, -28]} color="#1e1b4b" scale={30} speed={0.05} />
       <NebulaPatch position={[-8, -55, -25]} color="#312e81" scale={32} speed={0.03} />
+      <NebulaPatch position={[14, -20, -22]} color="#252347" scale={25} speed={0.06} />
+      <NebulaPatch position={[-15, -45, -26]} color="#1a1840" scale={28} speed={0.04} />
     </group>
   )
 }

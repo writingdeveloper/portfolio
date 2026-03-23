@@ -11,6 +11,7 @@ import { AuroraParticles } from './scene/AuroraParticles'
 import { StarField } from './scene/StarField'
 import { NebulaCloud } from './scene/NebulaCloud'
 import { LightTrails } from './scene/LightTrails'
+import { FloatingGeometry } from './scene/FloatingGeometry'
 import { CameraRig } from './scene/CameraRig'
 import { PostEffects } from './scene/PostEffects'
 import { IntroSection } from './sections/IntroSection'
@@ -116,10 +117,11 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
         <pointLight position={[10, 10, 10]} intensity={0.3} color="#8b82a8" />
         <ScrollControls pages={5} damping={0.3}>
           <CameraRig onSectionChange={setActiveSection} scrollRef={scrollRef} />
-          <StarField count={isMobile ? 1000 : 2000} />
+          <StarField count={isMobile ? 1500 : 3000} />
           <NebulaCloud />
           <LightTrails />
-          <AuroraParticles dustCount={isMobile ? 100 : 200} />
+          <FloatingGeometry />
+          <AuroraParticles dustCount={isMobile ? 150 : 350} />
           <IntroSection {...introText} scrollHint={`↓ ${t('scrollHint')}`} />
           <ProjectsSection
             projects={projects}

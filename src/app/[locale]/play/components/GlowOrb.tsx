@@ -15,6 +15,7 @@ interface GlowOrbProps {
 export function GlowOrb({ position, label, color, size = 0.3 }: GlowOrbProps) {
   const meshRef = useRef<THREE.Mesh>(null)
   const glowRef = useRef<THREE.Mesh>(null)
+  const ringRef = useRef<THREE.Mesh>(null)
   const [hovered, setHovered] = useState(false)
 
   useFrame(() => {
@@ -33,6 +34,11 @@ export function GlowOrb({ position, label, color, size = 0.3 }: GlowOrbProps) {
         hovered ? 0.15 : 0.05,
         0.06
       )
+    }
+    if (ringRef.current) {
+      ringRef.current.rotation.z += 0.01
+      const mat = ringRef.current.material as THREE.MeshBasicMaterial
+      mat.opacity = THREE.MathUtils.lerp(mat.opacity, hovered ? 0.25 : 0, 0.06)
     }
   })
 
@@ -68,6 +74,18 @@ export function GlowOrb({ position, label, color, size = 0.3 }: GlowOrbProps) {
             clearcoatRoughness={0.3}
           />
         </mesh>
+        {/* Inner core light — bright point at center */}
+        <mesh>
+          <sphereGeometry args={[size * 0.15, 16, 16]} />
+          <meshBasicMaterial color="#e8e4f0" transparent opacity={0.6} />
+        </mesh>
+
+        {/* Hover ring — appears on hover */}
+        <mesh ref={ringRef} rotation={[Math.PI / 2, 0, 0]}>
+          <torusGeometry args={[size * 1.3, 0.008, 8, 64]} />
+          <meshBasicMaterial color={color} transparent opacity={0} />
+        </mesh>
+
         {/* Label */}
         <Text
           position={[0, -size - 0.22, 0]}
