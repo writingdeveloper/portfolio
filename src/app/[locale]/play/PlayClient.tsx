@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber'
 import { ScrollControls } from '@react-three/drei'
 import type { Project, Skill, TimelineItem } from '@/types/content'
 import { AuroraParticles } from './scene/AuroraParticles'
+import { CameraRig } from './scene/CameraRig'
 import { PostEffects } from './scene/PostEffects'
 
 interface PostSummary {
@@ -29,6 +30,7 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} intensity={0.5} color="#a78bfa" />
         <ScrollControls pages={5} damping={0.3}>
+          <CameraRig />
           <AuroraParticles />
         </ScrollControls>
         <PostEffects />
