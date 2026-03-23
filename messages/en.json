@@ -96,31 +96,19 @@
   },
   "play": {
     "title": "Explore",
-    "description": "Explore my portfolio like a game",
+    "description": "Explore the portfolio in 3D space",
     "loading": "Loading...",
-    "controls": "Arrow keys to move, Space to interact",
     "exit": "Exit",
-    "soundOn": "Sound on",
-    "soundOff": "Sound off",
-    "explore": "Explore my world",
-    "npc": {
-      "welcome": "Hey! This is my workshop. Feel free to look around!",
-      "lobby": "This is the lobby. There are different rooms in each direction.",
-      "projects": "This is the project room. Check out the workstations!",
-      "skills": "This is the skill room. Take a look at the tools on the shelves.",
-      "history": "This is the history room. Check out the frames on the wall.",
-      "library": "Welcome to the library! Click on books to read blog posts."
-    },
-    "interact": "Press Space to interact",
-    "viewMore": "View more",
-    "readOnBlog": "Read on blog",
-    "roomLabels": {
-      "lobby": "Lobby",
+    "sections": {
+      "intro": "Intro",
       "projects": "Projects",
       "skills": "Skills",
-      "history": "History",
-      "library": "Library"
-    }
+      "timeline": "Timeline",
+      "blog": "Blog"
+    },
+    "scrollHint": "Scroll to explore",
+    "clickToView": "Click to view details",
+    "close": "Close"
   },
   "error": {
     "notFound": "Page Not Found",

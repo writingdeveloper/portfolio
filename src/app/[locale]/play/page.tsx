@@ -5,7 +5,7 @@ import { getAllPosts } from '@/lib/mdx'
 import projectsData from '../../../../content/projects.json'
 import aboutData from '../../../../content/about.json'
 import type { Project, Skill, TimelineItem } from '@/types/content'
-import { PlayClient } from './PlayClient'
+import { PlayLoader } from './PlayLoader'
 
 export async function generateMetadata({
   params,
@@ -46,15 +46,17 @@ export default async function PlayPage({
   const projects = projectsData.projects as Project[]
   const skills = aboutData.skills as Skill[]
   const timeline = aboutData.timeline as TimelineItem[]
-  const posts = getAllPosts(locale).map((p) => ({
-    slug: p.slug,
-    title: p.title,
-    excerpt: p.excerpt,
-    category: p.category,
-  }))
+  const posts = getAllPosts(locale)
+    .slice(0, 3)
+    .map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      excerpt: p.excerpt,
+      category: p.category,
+    }))
 
   return (
-    <PlayClient
+    <PlayLoader
       projects={projects}
       skills={skills}
       timeline={timeline}

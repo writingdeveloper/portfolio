@@ -96,31 +96,19 @@
   },
   "play": {
     "title": "탐험",
-    "description": "게임처럼 포트폴리오를 탐험해보세요",
+    "description": "3D 공간에서 포트폴리오를 탐험해보세요",
     "loading": "로딩 중...",
-    "controls": "방향키로 이동, Space로 상호작용",
     "exit": "나가기",
-    "soundOn": "소리 켜기",
-    "soundOff": "소리 끄기",
-    "explore": "내 세계를 탐험하기",
-    "npc": {
-      "welcome": "안녕! 여기는 내 작업 창고야. 돌아다니면서 구경해봐!",
-      "lobby": "이 곳은 로비야. 동서남북으로 각각 다른 방이 있어.",
-      "projects": "여기는 프로젝트 방이야. 작업대에 다가가서 살펴봐!",
-      "skills": "이 곳은 스킬 방이야. 선반에 있는 도구들을 확인해봐.",
-      "history": "이건 히스토리 방이야. 벽에 걸린 액자들을 살펴봐.",
-      "library": "서재에 오신 걸 환영해! 책을 클릭하면 블로그 글을 읽을 수 있어."
-    },
-    "interact": "Space를 눌러 상호작용",
-    "viewMore": "자세히 보기",
-    "readOnBlog": "블로그에서 읽기",
-    "roomLabels": {
-      "lobby": "로비",
+    "sections": {
+      "intro": "소개",
       "projects": "프로젝트",
       "skills": "스킬",
-      "history": "히스토리",
-      "library": "서재"
-    }
+      "timeline": "타임라인",
+      "blog": "블로그"
+    },
+    "scrollHint": "스크롤하여 탐험하기",
+    "clickToView": "클릭하여 자세히 보기",
+    "close": "닫기"
   },
   "error": {
     "notFound": "페이지를 찾을 수 없습니다",

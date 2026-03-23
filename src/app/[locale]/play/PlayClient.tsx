@@ -1,22 +1,8 @@
 'use client'
 
-import { useReducer } from 'react'
-import dynamic from 'next/dynamic'
-import { useTranslations } from 'next-intl'
-import { Link } from '@/i18n/navigation'
-import { X, Volume2, VolumeX } from 'lucide-react'
+import { Canvas } from '@react-three/fiber'
+import { ScrollControls } from '@react-three/drei'
 import type { Project, Skill, TimelineItem } from '@/types/content'
-import { GameContext, gameReducer, initialGameState } from './game/state'
-import { DialogueBox } from './ui/DialogueBox'
-import { DetailPanel } from './ui/DetailPanel'
-import { LoadingScreen } from './ui/LoadingScreen'
-import { Minimap } from './ui/Minimap'
-import { MobileControls } from './ui/MobileControls'
-
-const GameCanvas = dynamic(
-  () => import('./game/GameCanvas').then((mod) => ({ default: mod.GameCanvas })),
-  { ssr: false }
-)
 
 interface PostSummary {
   slug: string
@@ -33,74 +19,19 @@ interface PlayClientProps {
   locale: string
 }
 
-export function PlayClient({
-  projects,
-  skills,
-  timeline,
-  posts,
-  locale,
-}: PlayClientProps) {
-  const t = useTranslations('play')
-  const [state, dispatch] = useReducer(gameReducer, initialGameState)
-
+export function PlayClient({ projects, skills, timeline, posts, locale }: PlayClientProps) {
   return (
-    <GameContext.Provider value={{ state, dispatch }}>
-      <div className="flex flex-col items-center gap-0 -mt-8 -mx-4">
-        {/* Top bar */}
-        <div className="w-full max-w-[800px] flex items-center justify-between px-4 py-2 bg-[var(--bg-elevated)] rounded-t-lg border border-[var(--border-default)] border-b-0">
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => dispatch({ type: 'TOGGLE_SOUND' })}
-              className="p-1.5 rounded hover:bg-[var(--bg-elevated-hover)] text-[var(--text-secondary)]"
-              title={state.ui.isSoundOn ? t('soundOff') : t('soundOn')}
-            >
-              {state.ui.isSoundOn ? (
-                <Volume2 size={16} />
-              ) : (
-                <VolumeX size={16} />
-              )}
-            </button>
-          </div>
-          <Link
-            href="/"
-            className="flex items-center gap-1 p-1.5 rounded hover:bg-[var(--bg-elevated-hover)] text-[var(--text-secondary)] text-sm"
-          >
-            <X size={16} />
-            {t('exit')}
-          </Link>
-        </div>
-
-        {/* Game canvas with overlays */}
-        <div className="relative w-full max-w-[800px] border-x border-[var(--border-default)]">
-          <GameCanvas
-            projects={projects}
-            skills={skills}
-            timeline={timeline}
-            posts={posts}
-            locale={locale}
-          />
-          <DialogueBox />
-          <DetailPanel />
-          <LoadingScreen />
-          <Minimap />
-          {/* Transition overlay */}
-          <div
-            className={`absolute inset-0 bg-black pointer-events-none z-30 transition-opacity duration-300 ${
-              state.ui.isTransitioning ? 'opacity-100' : 'opacity-0'
-            }`}
-          />
-        </div>
-
-        {/* Controls hint */}
-        <div className="w-full max-w-[800px] px-4 py-2 bg-[var(--bg-elevated)] rounded-b-lg border border-[var(--border-default)] border-t-0">
-          <p className="text-xs text-center text-[var(--text-muted)]">
-            {t('controls')}
-          </p>
-        </div>
-
-        {/* Mobile touch controls */}
-        <MobileControls />
-      </div>
-    </GameContext.Provider>
+    <div className="fixed inset-0 bg-[#050510]">
+      <Canvas camera={{ position: [0, 0, 10], fov: 50 }}>
+        <color attach="background" args={['#050510']} />
+        <ScrollControls pages={5} damping={0.3}>
+          <mesh>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshStandardMaterial color="#7c6cf0" />
+          </mesh>
+        </ScrollControls>
+        <ambientLight intensity={0.5} />
+      </Canvas>
+    </div>
   )
 }
