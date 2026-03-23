@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useCallback } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { ScrollControls } from '@react-three/drei'
 import { ArrowLeft } from 'lucide-react'
@@ -42,6 +42,29 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const scrollRef = useRef<any>(null)
 
+  // Hide header/footer when play page is mounted
+  useEffect(() => {
+    const header = document.querySelector('header')
+    const footer = document.querySelector('footer')
+    const main = document.getElementById('main-content')
+    if (header) header.style.display = 'none'
+    if (footer) footer.style.display = 'none'
+    if (main) {
+      main.style.maxWidth = 'none'
+      main.style.padding = '0'
+      main.style.margin = '0'
+    }
+    return () => {
+      if (header) header.style.display = ''
+      if (footer) footer.style.display = ''
+      if (main) {
+        main.style.maxWidth = ''
+        main.style.padding = ''
+        main.style.margin = ''
+      }
+    }
+  }, [])
+
   const sectionLabels: Record<string, string> =
     locale === 'ko'
       ? { intro: '소개', projects: '프로젝트', skills: '스킬', timeline: '타임라인', blog: '블로그' }
@@ -60,11 +83,11 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
   }, [])
 
   return (
-    <div className="fixed inset-0 bg-[#050510]">
+    <div className="fixed inset-0 z-[60]" style={{ background: '#050510' }}>
       {/* Exit button */}
       <Link
         href="/"
-        className="fixed top-6 left-6 z-40 flex items-center gap-2 text-sm text-[#a78bfa] hover:text-[#e8d5a3] transition-colors tracking-widest uppercase"
+        className="fixed top-6 left-6 z-[70] flex items-center gap-2 text-sm text-[#a78bfa] hover:text-[#e8d5a3] transition-colors tracking-widest uppercase"
       >
         <ArrowLeft size={16} />
         {locale === 'ko' ? '나가기' : 'Exit'}
@@ -74,7 +97,12 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
       <SectionNav labels={sectionLabels} activeIndex={activeSection} onNavigate={handleNavigate} />
 
       {/* 3D Canvas */}
-      <Canvas camera={{ position: [0, 0, 10], fov: 50 }} dpr={[1, 2]}>
+      <Canvas
+        camera={{ position: [0, 0, 10], fov: 50 }}
+        dpr={[1, 2]}
+        gl={{ alpha: false, antialias: true }}
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+      >
         <color attach="background" args={['#050510']} />
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} intensity={0.5} color="#a78bfa" />

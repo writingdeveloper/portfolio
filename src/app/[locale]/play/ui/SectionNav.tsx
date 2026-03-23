@@ -10,7 +10,7 @@ interface SectionNavProps {
 
 export function SectionNav({ labels, activeIndex, onNavigate }: SectionNavProps) {
   return (
-    <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col items-end gap-4">
+    <nav className="fixed right-6 top-1/2 -translate-y-1/2 z-[70] flex flex-col items-end gap-4">
       {SECTIONS.map((section, i) => (
         <button
           key={section}
