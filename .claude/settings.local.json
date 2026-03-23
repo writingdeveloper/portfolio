@@ -4,7 +4,11 @@
       "Bash(npm install:*)",
       "Bash(npm run build:*)",
       "Bash(node -e:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: Add multilingual portfolio with startup dashboard design\n\n- Next.js 16 App Router with next-intl for i18n \\(ko, en, zh, es, ja\\)\n- 6 sections: Overview, Ventures, Tech Stack, Timeline, About, Contact\n- Responsive design with mobile drawer navigation\n- Dark mode default with Tailwind CSS\n- Framer Motion animations\n- Full i18n support with 102 translation keys per language\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs"
     ]
   }
 }

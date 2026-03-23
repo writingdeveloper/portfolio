@@ -7,9 +7,9 @@ import { SectionLabel } from '../components/SectionLabel'
 import { SECTION_SPACING } from '../scene/CameraRig'
 
 const CATEGORY_COLORS: Record<string, string> = {
-  frontend: '#a78bfa',
-  backend: '#c4a35a',
-  tools: '#818cf8',
+  frontend: '#7b6f99',
+  backend: '#8b7355',
+  tools: '#6b6891',
 }
 
 interface SkillsSectionProps {

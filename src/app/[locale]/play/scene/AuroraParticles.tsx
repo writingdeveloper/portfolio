@@ -83,7 +83,7 @@ function AuroraFog() {
       float n2 = snoise(vUv * 1.5 - uTime * 0.3);
       n2 = n2 * 0.5 + 0.5;
       vec3 color = mix(uColor1, uColor2, n);
-      float alpha = smoothstep(0.2, 0.8, n * n2) * 0.12;
+      float alpha = smoothstep(0.2, 0.8, n * n2) * 0.06;
       gl_FragColor = vec4(color, alpha);
     }
   `
@@ -115,7 +115,7 @@ function generateParticles(count: number) {
     z: (Math.random() - 0.5) * 20 - 5,
     speed: 0.02 + Math.random() * 0.03,
     offset: Math.random() * Math.PI * 2,
-    scale: 0.02 + Math.random() * 0.04,
+    scale: 0.01 + Math.random() * 0.025,
   }))
 }
 
@@ -144,7 +144,7 @@ function LightDust({ count }: { count: number }) {
   return (
     <instancedMesh ref={meshRef} args={[undefined, undefined, count]}>
       <sphereGeometry args={[1, 8, 8]} />
-      <meshBasicMaterial color="#a78bfa" transparent opacity={0.6} />
+      <meshBasicMaterial color="#9b8ec4" transparent opacity={0.3} />
     </instancedMesh>
   )
 }

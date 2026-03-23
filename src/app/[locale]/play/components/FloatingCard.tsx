@@ -32,10 +32,10 @@ const borderFragmentShader = `
   varying vec2 vUv;
   void main() {
     vec2 uv = vUv;
-    float border = smoothstep(0.0, 0.05, uv.x) * smoothstep(0.0, 0.05, uv.y)
-                 * smoothstep(0.0, 0.05, 1.0 - uv.x) * smoothstep(0.0, 0.05, 1.0 - uv.y);
+    float border = smoothstep(0.0, 0.02, uv.x) * smoothstep(0.0, 0.02, uv.y)
+                 * smoothstep(0.0, 0.02, 1.0 - uv.x) * smoothstep(0.0, 0.02, 1.0 - uv.y);
     float edge = 1.0 - border;
-    float pulse = 0.3 + sin(uTime * 2.0) * 0.1 + uHovered * 0.4;
+    float pulse = 0.15 + sin(uTime * 1.0) * 0.05 + uHovered * 0.25;
     float alpha = edge * pulse;
     vec3 col = uColor * (1.0 + uHovered * 0.5);
     gl_FragColor = vec4(col, alpha);
@@ -77,7 +77,7 @@ export function FloatingCard({
   })
 
   return (
-    <Float speed={floatSpeed} rotationIntensity={0.1} floatIntensity={floatIntensity}>
+    <Float speed={floatSpeed} rotationIntensity={0.03} floatIntensity={floatIntensity * 0.5}>
       <group
         position={position}
         onPointerOver={() => {
@@ -93,11 +93,13 @@ export function FloatingCard({
         {/* Glass card body */}
         <RoundedBox args={[width, height, 0.05]} radius={0.08} smoothness={4}>
           <meshPhysicalMaterial
-            color="#1a1a2e"
+            color="#12121e"
             transparent
-            opacity={0.4}
-            roughness={0.1}
-            metalness={0.1}
+            opacity={0.5}
+            roughness={0.3}
+            metalness={0.05}
+            clearcoat={0.3}
+            clearcoatRoughness={0.5}
           />
         </RoundedBox>
 
@@ -120,7 +122,7 @@ export function FloatingCard({
           fontSize={0.22}
           maxWidth={width - 0.6}
           textAlign="center"
-          color="#e8d5a3"
+          color="#c8c0d8"
           anchorX="center"
           anchorY="middle"
         >
@@ -134,7 +136,7 @@ export function FloatingCard({
             fontSize={0.14}
             maxWidth={width - 0.6}
             textAlign="center"
-            color="#a78bfa"
+            color="#8b82a8"
             anchorX="center"
             anchorY="middle"
           >

@@ -18,7 +18,7 @@ function NebulaPatch({ position, color, scale = 10, speed = 0.1 }: NebulaProps) 
     () => ({
       uTime: { value: 0 },
       uColor: { value: new THREE.Color(color) },
-      uOpacity: { value: 0.06 },
+      uOpacity: { value: 0.025 },
     }),
     [color]
   )
@@ -100,11 +100,9 @@ function NebulaPatch({ position, color, scale = 10, speed = 0.1 }: NebulaProps) 
 export function NebulaCloud() {
   return (
     <group>
-      <NebulaPatch position={[-15, -5, -20]} color="#4f46e5" scale={25} speed={0.08} />
-      <NebulaPatch position={[12, -20, -18]} color="#7c3aed" scale={20} speed={0.12} />
-      <NebulaPatch position={[-8, -35, -22]} color="#6366f1" scale={22} speed={0.06} />
-      <NebulaPatch position={[15, -50, -15]} color="#8b5cf6" scale={18} speed={0.1} />
-      <NebulaPatch position={[-12, -65, -20]} color="#4f46e5" scale={24} speed={0.07} />
+      <NebulaPatch position={[-12, -10, -25]} color="#2d2b55" scale={35} speed={0.04} />
+      <NebulaPatch position={[10, -35, -28]} color="#1e1b4b" scale={30} speed={0.05} />
+      <NebulaPatch position={[-8, -55, -25]} color="#312e81" scale={32} speed={0.03} />
     </group>
   )
 }

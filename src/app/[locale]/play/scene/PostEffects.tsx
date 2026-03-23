@@ -6,12 +6,12 @@ export function PostEffects() {
   return (
     <EffectComposer>
       <Bloom
-        intensity={0.6}
-        luminanceThreshold={0.4}
-        luminanceSmoothing={0.9}
+        intensity={0.25}
+        luminanceThreshold={0.7}
+        luminanceSmoothing={0.95}
         mipmapBlur
       />
-      <Vignette offset={0.3} darkness={0.7} />
+      <Vignette offset={0.4} darkness={0.5} />
     </EffectComposer>
   )
 }

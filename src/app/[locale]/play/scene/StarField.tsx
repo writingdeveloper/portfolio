@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef, useMemo, useEffect } from 'react'
-import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
 export function StarField({ count = 2000 }: { count?: number }) {
@@ -33,23 +32,16 @@ export function StarField({ count = 2000 }: { count?: number }) {
     }
   }, [positions, sizes])
 
-  useFrame(({ clock }) => {
-    if (!pointsRef.current) return
-    const t = clock.getElapsedTime() * 0.05
-    pointsRef.current.rotation.y = t * 0.02
-  })
-
   return (
     <points ref={pointsRef}>
       <bufferGeometry ref={geometryRef} />
       <pointsMaterial
-        size={0.08}
-        color="#c4b5fd"
+        size={0.04}
+        color="#8b8bab"
         transparent
-        opacity={0.6}
+        opacity={0.35}
         sizeAttenuation
         depthWrite={false}
-        blending={THREE.AdditiveBlending}
       />
     </points>
   )

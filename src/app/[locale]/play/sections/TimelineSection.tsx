@@ -6,9 +6,9 @@ import { SectionLabel } from '../components/SectionLabel'
 import { SECTION_SPACING } from '../scene/CameraRig'
 
 const TYPE_COLORS: Record<string, string> = {
-  work: '#c4a35a',
-  education: '#818cf8',
-  project: '#a78bfa',
+  work: '#8b7355',
+  education: '#6b6891',
+  project: '#7b6f99',
 }
 
 interface TimelineSectionProps {

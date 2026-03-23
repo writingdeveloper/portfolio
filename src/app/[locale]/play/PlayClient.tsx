@@ -86,7 +86,7 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
   }, [])
 
   return (
-    <div className="fixed inset-0 z-[60]" style={{ background: '#050510' }}>
+    <div className="fixed inset-0 z-[60]" style={{ background: '#06060f' }}>
       {/* Exit button */}
       <Link
         href="/"
@@ -106,9 +106,9 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
         gl={{ alpha: false, antialias: true }}
         style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
       >
-        <color attach="background" args={['#050510']} />
-        <ambientLight intensity={0.3} />
-        <pointLight position={[10, 10, 10]} intensity={0.5} color="#a78bfa" />
+        <color attach="background" args={['#06060f']} />
+        <ambientLight intensity={0.2} />
+        <pointLight position={[10, 10, 10]} intensity={0.3} color="#8b82a8" />
         <ScrollControls pages={5} damping={0.3}>
           <CameraRig onSectionChange={setActiveSection} scrollRef={scrollRef} />
           <StarField count={isMobile ? 1000 : 2000} />

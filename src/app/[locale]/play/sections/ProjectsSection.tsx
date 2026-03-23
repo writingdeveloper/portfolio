@@ -30,7 +30,7 @@ export function ProjectsSection({ projects, locale, onSelect }: ProjectsSectionP
             title={project.name}
             subtitle={desc.length > 40 ? desc.slice(0, 40) + '...' : desc}
             onClick={() => onSelect(project)}
-            accentColor={i === 0 ? '#c4a35a' : '#7c6cf0'}
+            accentColor={i === 0 ? '#8b7355' : '#5b5291'}
             floatSpeed={1.5 + i * 0.3}
           />
         )

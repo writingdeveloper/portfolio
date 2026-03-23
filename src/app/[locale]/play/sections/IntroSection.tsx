@@ -36,29 +36,29 @@ function OrbitalRings() {
     <group position={[0, 0.3, 0]}>
       <group ref={ring1Ref} rotation={[0.5, 0, 0]}>
         <mesh>
-          <torusGeometry args={[3, 0.008, 16, 100]} />
-          <meshBasicMaterial color="#c4a35a" transparent opacity={0.4} />
+          <torusGeometry args={[3, 0.005, 16, 100]} />
+          <meshBasicMaterial color="#c4a35a" transparent opacity={0.15} />
         </mesh>
         {/* Small orbiting light on ring 1 */}
         <mesh position={[3, 0, 0]}>
-          <sphereGeometry args={[0.04, 8, 8]} />
+          <sphereGeometry args={[0.02, 8, 8]} />
           <meshBasicMaterial color="#e8d5a3" />
         </mesh>
       </group>
       <group ref={ring2Ref} rotation={[1.2, 0.5, 0]}>
         <mesh>
-          <torusGeometry args={[3.5, 0.006, 16, 100]} />
-          <meshBasicMaterial color="#a78bfa" transparent opacity={0.3} />
+          <torusGeometry args={[3.5, 0.003, 16, 100]} />
+          <meshBasicMaterial color="#a78bfa" transparent opacity={0.1} />
         </mesh>
         <mesh position={[3.5, 0, 0]}>
-          <sphereGeometry args={[0.03, 8, 8]} />
+          <sphereGeometry args={[0.015, 8, 8]} />
           <meshBasicMaterial color="#c4b5fd" />
         </mesh>
       </group>
       <group ref={ring3Ref} rotation={[0.8, 1.0, 0.3]}>
         <mesh>
-          <torusGeometry args={[4, 0.004, 16, 100]} />
-          <meshBasicMaterial color="#7c6cf0" transparent opacity={0.2} />
+          <torusGeometry args={[4, 0.002, 16, 100]} />
+          <meshBasicMaterial color="#7c6cf0" transparent opacity={0.06} />
         </mesh>
       </group>
     </group>
@@ -82,7 +82,7 @@ export function IntroSection({ name, role, scrollHint }: IntroSectionProps) {
         <Text
           position={[0, 0.8, 0]}
           fontSize={0.8}
-          color="#e8d5a3"
+          color="#d4cce0"
           anchorX="center"
           anchorY="middle"
         >
@@ -92,7 +92,7 @@ export function IntroSection({ name, role, scrollHint }: IntroSectionProps) {
         <Text
           position={[0, -0.2, 0]}
           fontSize={0.28}
-          color="#a78bfa"
+          color="#7a7590"
           anchorX="center"
           anchorY="middle"
           letterSpacing={0.1}
@@ -107,7 +107,7 @@ export function IntroSection({ name, role, scrollHint }: IntroSectionProps) {
           ref={hintRef}
           position={[0, -3, 0]}
           fontSize={0.14}
-          color="#a78bfa"
+          color="#5a556b"
           anchorX="center"
           anchorY="middle"
         >
@@ -118,7 +118,7 @@ export function IntroSection({ name, role, scrollHint }: IntroSectionProps) {
       {/* Decorative gold line */}
       <mesh position={[0, -0.8, 0]}>
         <planeGeometry args={[2, 0.003]} />
-        <meshBasicMaterial color="#c4a35a" transparent opacity={0.5} />
+        <meshBasicMaterial color="#8b7355" transparent opacity={0.2} />
       </mesh>
     </group>
   )
