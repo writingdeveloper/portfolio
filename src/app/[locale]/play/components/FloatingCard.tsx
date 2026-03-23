@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Float, Text, RoundedBox } from '@react-three/drei'
 import * as THREE from 'three'
@@ -17,6 +17,31 @@ interface FloatingCardProps {
   floatIntensity?: number
 }
 
+const borderVertexShader = `
+  varying vec2 vUv;
+  void main() {
+    vUv = uv;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }
+`
+
+const borderFragmentShader = `
+  uniform vec3 uColor;
+  uniform float uTime;
+  uniform float uHovered;
+  varying vec2 vUv;
+  void main() {
+    vec2 uv = vUv;
+    float border = smoothstep(0.0, 0.05, uv.x) * smoothstep(0.0, 0.05, uv.y)
+                 * smoothstep(0.0, 0.05, 1.0 - uv.x) * smoothstep(0.0, 0.05, 1.0 - uv.y);
+    float edge = 1.0 - border;
+    float pulse = 0.3 + sin(uTime * 2.0) * 0.1 + uHovered * 0.4;
+    float alpha = edge * pulse;
+    vec3 col = uColor * (1.0 + uHovered * 0.5);
+    gl_FragColor = vec4(col, alpha);
+  }
+`
+
 export function FloatingCard({
   position,
   title,
@@ -28,14 +53,26 @@ export function FloatingCard({
   floatSpeed = 2,
   floatIntensity = 0.3,
 }: FloatingCardProps) {
-  const glowRef = useRef<THREE.Mesh>(null)
+  const borderRef = useRef<THREE.ShaderMaterial>(null)
   const [hovered, setHovered] = useState(false)
 
-  useFrame(() => {
-    if (glowRef.current) {
-      const mat = glowRef.current.material as THREE.MeshStandardMaterial
-      const target = hovered ? 0.3 : 0.05
-      mat.emissiveIntensity = THREE.MathUtils.lerp(mat.emissiveIntensity, target, 0.08)
+  const borderUniforms = useMemo(
+    () => ({
+      uColor: { value: new THREE.Color(accentColor) },
+      uTime: { value: 0 },
+      uHovered: { value: 0 },
+    }),
+    [accentColor]
+  )
+
+  useFrame(({ clock }) => {
+    if (borderRef.current) {
+      borderRef.current.uniforms.uTime.value = clock.getElapsedTime()
+      borderRef.current.uniforms.uHovered.value = THREE.MathUtils.lerp(
+        borderRef.current.uniforms.uHovered.value,
+        hovered ? 1 : 0,
+        0.08
+      )
     }
   })
 
@@ -64,15 +101,16 @@ export function FloatingCard({
           />
         </RoundedBox>
 
-        {/* Glow border */}
-        <mesh ref={glowRef} position={[0, 0, -0.01]}>
-          <planeGeometry args={[width + 0.08, height + 0.08]} />
-          <meshStandardMaterial
-            color={accentColor}
-            emissive={accentColor}
-            emissiveIntensity={0.05}
+        {/* Animated glow border */}
+        <mesh position={[0, 0, -0.01]}>
+          <planeGeometry args={[width + 0.1, height + 0.1]} />
+          <shaderMaterial
+            ref={borderRef}
+            vertexShader={borderVertexShader}
+            fragmentShader={borderFragmentShader}
+            uniforms={borderUniforms}
             transparent
-            opacity={0.3}
+            depthWrite={false}
           />
         </mesh>
 

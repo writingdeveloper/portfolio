@@ -7,6 +7,9 @@ import { ArrowLeft } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 import type { Project, Skill, TimelineItem } from '@/types/content'
 import { AuroraParticles } from './scene/AuroraParticles'
+import { StarField } from './scene/StarField'
+import { NebulaCloud } from './scene/NebulaCloud'
+import { LightTrails } from './scene/LightTrails'
 import { CameraRig } from './scene/CameraRig'
 import { PostEffects } from './scene/PostEffects'
 import { IntroSection } from './sections/IntroSection'
@@ -108,6 +111,9 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
         <pointLight position={[10, 10, 10]} intensity={0.5} color="#a78bfa" />
         <ScrollControls pages={5} damping={0.3}>
           <CameraRig onSectionChange={setActiveSection} scrollRef={scrollRef} />
+          <StarField count={isMobile ? 1000 : 2000} />
+          <NebulaCloud />
+          <LightTrails />
           <AuroraParticles dustCount={isMobile ? 100 : 200} />
           <IntroSection {...introText} />
           <ProjectsSection
