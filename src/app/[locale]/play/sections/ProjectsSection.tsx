@@ -8,15 +8,16 @@ import { SECTION_SPACING } from '../scene/CameraRig'
 interface ProjectsSectionProps {
   projects: Project[]
   locale: string
+  sectionLabel: string
   onSelect: (project: Project) => void
 }
 
-export function ProjectsSection({ projects, locale, onSelect }: ProjectsSectionProps) {
+export function ProjectsSection({ projects, locale, sectionLabel, onSelect }: ProjectsSectionProps) {
   const sectionY = -SECTION_SPACING * 1
 
   return (
     <group>
-      <SectionLabel position={[0, sectionY + 4, 0]} label="Projects" />
+      <SectionLabel position={[0, sectionY + 4, 0]} label={sectionLabel} />
       {projects.map((project, i) => {
         const count = projects.length
         const x = (i - (count - 1) / 2) * 4

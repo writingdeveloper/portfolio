@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useCallback, useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { Canvas } from '@react-three/fiber'
 import { ScrollControls } from '@react-three/drei'
 import { ArrowLeft } from 'lucide-react'
@@ -37,6 +38,7 @@ interface PlayClientProps {
 }
 
 export function PlayClient({ projects, skills, timeline, posts, locale }: PlayClientProps) {
+  const t = useTranslations('play')
   const [selectedItem, setSelectedItem] = useState<DetailItem | null>(null)
   const [activeSection, setActiveSection] = useState(0)
   const [isMobile] = useState(
@@ -68,15 +70,18 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
     }
   }, [])
 
-  const sectionLabels: Record<string, string> =
-    locale === 'ko'
-      ? { intro: '소개', projects: '프로젝트', skills: '스킬', timeline: '타임라인', blog: '블로그' }
-      : { intro: 'Intro', projects: 'Projects', skills: 'Skills', timeline: 'Timeline', blog: 'Blog' }
+  const sectionLabels: Record<string, string> = {
+    intro: t('sections.intro'),
+    projects: t('sections.projects'),
+    skills: t('sections.skills'),
+    timeline: t('sections.timeline'),
+    blog: t('sections.blog'),
+  }
 
   const introText =
     locale === 'ko'
-      ? { name: '이시형', role: '개발자 & 창업가', scrollHint: '↓ 스크롤하여 탐험하기' }
-      : { name: 'Sihyung Lee', role: 'Developer & Entrepreneur', scrollHint: '↓ Scroll to explore' }
+      ? { name: '이시형', role: '개발자 & 창업가' }
+      : { name: 'Sihyung Lee', role: 'Developer & Entrepreneur' }
 
   const handleNavigate = useCallback((index: number) => {
     if (scrollRef.current?.el) {
@@ -93,7 +98,7 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
         className="fixed top-6 left-6 z-[70] flex items-center gap-2 text-sm text-[#a78bfa] hover:text-[#e8d5a3] transition-colors tracking-widest uppercase"
       >
         <ArrowLeft size={16} />
-        {locale === 'ko' ? '나가기' : 'Exit'}
+        {t('exit')}
       </Link>
 
       {/* Section nav */}
@@ -115,20 +120,23 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
           <NebulaCloud />
           <LightTrails />
           <AuroraParticles dustCount={isMobile ? 100 : 200} />
-          <IntroSection {...introText} />
+          <IntroSection {...introText} scrollHint={`↓ ${t('scrollHint')}`} />
           <ProjectsSection
             projects={projects}
             locale={locale}
+            sectionLabel={sectionLabels.projects}
             onSelect={(p) => setSelectedItem({ type: 'project', data: p })}
           />
-          <SkillsSection skills={skills} locale={locale} />
+          <SkillsSection skills={skills} locale={locale} sectionLabel={sectionLabels.skills} />
           <TimelineSection
             timeline={timeline}
             locale={locale}
-            onSelect={(t) => setSelectedItem({ type: 'timeline', data: t })}
+            sectionLabel={sectionLabels.timeline}
+            onSelect={(ti) => setSelectedItem({ type: 'timeline', data: ti })}
           />
           <BlogSection
             posts={posts}
+            sectionLabel={sectionLabels.blog}
             onSelect={(p) => setSelectedItem({ type: 'post', data: p })}
           />
         </ScrollControls>

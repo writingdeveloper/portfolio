@@ -14,15 +14,16 @@ const TYPE_COLORS: Record<string, string> = {
 interface TimelineSectionProps {
   timeline: TimelineItem[]
   locale: string
+  sectionLabel: string
   onSelect: (item: TimelineItem) => void
 }
 
-export function TimelineSection({ timeline, locale, onSelect }: TimelineSectionProps) {
+export function TimelineSection({ timeline, locale, sectionLabel, onSelect }: TimelineSectionProps) {
   const sectionY = -SECTION_SPACING * 3
 
   return (
     <group>
-      <SectionLabel position={[0, sectionY + 4, 0]} label="Timeline" />
+      <SectionLabel position={[0, sectionY + 4, 0]} label={sectionLabel} />
 
       {/* Vertical line */}
       <mesh position={[0, sectionY, -1]}>

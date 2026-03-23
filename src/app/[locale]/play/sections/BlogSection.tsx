@@ -13,15 +13,16 @@ interface PostSummary {
 
 interface BlogSectionProps {
   posts: PostSummary[]
+  sectionLabel: string
   onSelect: (post: PostSummary) => void
 }
 
-export function BlogSection({ posts, onSelect }: BlogSectionProps) {
+export function BlogSection({ posts, sectionLabel, onSelect }: BlogSectionProps) {
   const sectionY = -SECTION_SPACING * 4
 
   return (
     <group>
-      <SectionLabel position={[0, sectionY + 4, 0]} label="Blog" />
+      <SectionLabel position={[0, sectionY + 4, 0]} label={sectionLabel} />
       {posts.map((post, i) => {
         const x = (i - (posts.length - 1) / 2) * 4
         const z = -Math.abs(i - (posts.length - 1) / 2) * 1.5

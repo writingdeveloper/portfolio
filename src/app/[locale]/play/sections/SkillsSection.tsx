@@ -15,9 +15,10 @@ const CATEGORY_COLORS: Record<string, string> = {
 interface SkillsSectionProps {
   skills: Skill[]
   locale: string
+  sectionLabel: string
 }
 
-export function SkillsSection({ skills, locale }: SkillsSectionProps) {
+export function SkillsSection({ skills, locale, sectionLabel }: SkillsSectionProps) {
   const sectionY = -SECTION_SPACING * 2
 
   const grouped = {
@@ -31,7 +32,7 @@ export function SkillsSection({ skills, locale }: SkillsSectionProps) {
 
   return (
     <group>
-      <SectionLabel position={[0, sectionY + 4, 0]} label="Skills" />
+      <SectionLabel position={[0, sectionY + 4, 0]} label={sectionLabel} />
       {Object.entries(grouped).map(([category, items], catIdx) => {
         const catX = (catIdx - 1) * 5
         return (

@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { useTranslations } from 'next-intl'
 import { X, ExternalLink, Github } from 'lucide-react'
 import type { Project, TimelineItem } from '@/types/content'
 
@@ -18,6 +19,8 @@ interface DetailOverlayProps {
 export type { DetailItem }
 
 export function DetailOverlay({ item, locale, onClose }: DetailOverlayProps) {
+  const t = useTranslations('play')
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -44,7 +47,7 @@ export function DetailOverlay({ item, locale, onClose }: DetailOverlayProps) {
 
         {item.type === 'project' && <ProjectDetail project={item.data} locale={locale} />}
         {item.type === 'timeline' && <TimelineDetail item={item.data} locale={locale} />}
-        {item.type === 'post' && <PostDetail post={item.data} locale={locale} />}
+        {item.type === 'post' && <PostDetail post={item.data} locale={locale} readMoreLabel={t('readMore')} />}
       </div>
     </div>
   )
@@ -107,9 +110,11 @@ function TimelineDetail({ item, locale }: { item: TimelineItem; locale: string }
 function PostDetail({
   post,
   locale,
+  readMoreLabel,
 }: {
   post: { slug: string; title: string; excerpt: string }
   locale: string
+  readMoreLabel: string
 }) {
   return (
     <div className="space-y-3">
@@ -119,7 +124,7 @@ function PostDetail({
         href={`/${locale}/blog/${post.slug}`}
         className="inline-flex items-center gap-1 text-sm text-[#c4a35a] hover:text-[#e8d5a3] transition-colors"
       >
-        <ExternalLink size={14} /> {locale === 'ko' ? '자세히 보기' : 'Read more'}
+        <ExternalLink size={14} /> {readMoreLabel}
       </a>
     </div>
   )
