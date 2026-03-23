@@ -108,20 +108,22 @@ function AuroraFog() {
   )
 }
 
+function generateParticles(count: number) {
+  return Array.from({ length: count }, () => ({
+    x: (Math.random() - 0.5) * 40,
+    y: Math.random() * -80 + 10,
+    z: (Math.random() - 0.5) * 20 - 5,
+    speed: 0.02 + Math.random() * 0.03,
+    offset: Math.random() * Math.PI * 2,
+    scale: 0.02 + Math.random() * 0.04,
+  }))
+}
+
 function LightDust({ count }: { count: number }) {
   const meshRef = useRef<THREE.InstancedMesh>(null)
   const dummy = useMemo(() => new THREE.Object3D(), [])
-
-  const particles = useMemo(() => {
-    return Array.from({ length: count }, () => ({
-      x: (Math.random() - 0.5) * 40,
-      y: Math.random() * -80 + 10,
-      z: (Math.random() - 0.5) * 20 - 5,
-      speed: 0.02 + Math.random() * 0.03,
-      offset: Math.random() * Math.PI * 2,
-      scale: 0.02 + Math.random() * 0.04,
-    }))
-  }, [count])
+  const particlesRef = useRef(generateParticles(count))
+  const particles = particlesRef.current
 
   useFrame(({ clock }) => {
     if (!meshRef.current) return
