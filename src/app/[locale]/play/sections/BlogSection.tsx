@@ -4,13 +4,7 @@ import { FloatingCard } from '../components/FloatingCard'
 import { SectionLabel } from '../components/SectionLabel'
 import { SectionDivider } from '../components/SectionDivider'
 import { SECTION_SPACING } from '../scene/CameraRig'
-
-interface PostSummary {
-  slug: string
-  title: string
-  excerpt: string
-  category: string
-}
+import type { PostSummary } from '@/types/content'
 
 interface BlogSectionProps {
   posts: PostSummary[]

@@ -3,7 +3,7 @@
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Text, Float } from '@react-three/drei'
-import * as THREE from 'three'
+import type { Group, Mesh } from 'three'
 
 interface IntroSectionProps {
   name: string
@@ -12,9 +12,9 @@ interface IntroSectionProps {
 }
 
 function OrbitalRings() {
-  const ring1Ref = useRef<THREE.Group>(null)
-  const ring2Ref = useRef<THREE.Group>(null)
-  const ring3Ref = useRef<THREE.Group>(null)
+  const ring1Ref = useRef<Group>(null)
+  const ring2Ref = useRef<Group>(null)
+  const ring3Ref = useRef<Group>(null)
 
   useFrame(({ clock }) => {
     const t = clock.getElapsedTime()
@@ -66,7 +66,7 @@ function OrbitalRings() {
 }
 
 export function IntroSection({ name, role, scrollHint }: IntroSectionProps) {
-  const hintRef = useRef<THREE.Mesh>(null)
+  const hintRef = useRef<Mesh>(null)
 
   useFrame(({ clock }) => {
     if (hintRef.current) {

@@ -14,7 +14,7 @@ export default function RootError({
   }, [error])
 
   return (
-    <html lang="ko">
+    <html lang="en">
       <body style={{ fontFamily: 'system-ui, sans-serif', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', margin: 0, backgroundColor: '#030712', color: '#f3f4f6' }}>
         <div style={{ textAlign: 'center' }}>
           <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>500</h1>

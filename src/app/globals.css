@@ -172,6 +172,39 @@ html {
   font-size: 0.9em;
 }
 
+/* ===== Page Transition Animation ===== */
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0.6;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide-in {
+  animation: fadeSlideIn 0.2s ease-out;
+}
+
+/* ===== Mobile Menu Transition ===== */
+.mobile-menu {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.2s ease-out, opacity 0.2s ease-out;
+}
+
+.mobile-menu[data-open="true"] {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.mobile-menu-inner {
+  overflow: hidden;
+}
+
 /* ===== Focus Indicators ===== */
 :focus-visible {
   outline: 2px solid var(--accent-text);

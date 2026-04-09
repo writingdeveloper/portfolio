@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import fs from 'fs'
+import fs from 'fs/promises'
 import path from 'path'
+
+const VALID_LOCALES = new Set(['ko', 'en'])
 
 const CONTENT_DIR = path.join(process.cwd(), 'content', 'posts')
 
@@ -26,6 +28,11 @@ export async function GET(
 
   const [locale, slug, filename] = segments
 
+  // Validate locale against allowlist
+  if (!VALID_LOCALES.has(locale)) {
+    return new NextResponse('Forbidden', { status: 403 })
+  }
+
   // Prevent path traversal - blocklist check
   if (
     locale.includes('..') ||
@@ -37,7 +44,9 @@ export async function GET(
 
   // Check both direct (Keystatic directory mode) and content/ subdirectory
   let filePath = path.join(CONTENT_DIR, locale, slug, filename)
-  if (!fs.existsSync(filePath)) {
+  try {
+    await fs.access(filePath)
+  } catch {
     filePath = path.join(CONTENT_DIR, locale, slug, 'content', filename)
   }
 
@@ -47,7 +56,9 @@ export async function GET(
     return new NextResponse('Forbidden', { status: 403 })
   }
 
-  if (!fs.existsSync(filePath)) {
+  try {
+    await fs.access(filePath)
+  } catch {
     return new NextResponse('Not found', { status: 404 })
   }
 
@@ -57,7 +68,7 @@ export async function GET(
     return new NextResponse('Unsupported file type', { status: 415 })
   }
 
-  const fileBuffer = fs.readFileSync(filePath)
+  const fileBuffer = await fs.readFile(filePath)
 
   return new NextResponse(fileBuffer, {
     headers: {

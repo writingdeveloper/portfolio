@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import { X, ExternalLink, Github } from 'lucide-react'
 import type { Project, TimelineItem } from '@/types/content'
@@ -20,6 +20,8 @@ export type { DetailItem }
 
 export function DetailOverlay({ item, locale, onClose }: DetailOverlayProps) {
   const t = useTranslations('play')
+  const ta = useTranslations('accessibility')
+  const dialogRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -29,20 +31,43 @@ export function DetailOverlay({ item, locale, onClose }: DetailOverlayProps) {
     return () => window.removeEventListener('keydown', handleEsc)
   }, [onClose])
 
+  // Auto-focus the dialog container on mount for keyboard accessibility
+  useEffect(() => {
+    if (item && dialogRef.current) {
+      dialogRef.current.focus()
+    }
+  }, [item])
+
   if (!item) return null
+
+  // Derive an accessible label from the item content
+  const dialogLabel =
+    item.type === 'project'
+      ? item.data.name
+      : item.type === 'timeline'
+        ? (locale === 'ko' ? item.data.titleKo : item.data.titleEn)
+        : item.type === 'post'
+          ? item.data.title
+          : t('clickToView')
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center" onClick={onClose}>
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
       <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label={dialogLabel}
+        tabIndex={-1}
         className="relative max-w-lg w-full mx-4 p-8 rounded-2xl border border-[#7c6cf0]/30 bg-[#0a0a1a]/90 backdrop-blur-md shadow-2xl shadow-purple-900/20"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
+          aria-label={ta('closeDialog')}
           className="absolute top-4 right-4 text-[#a78bfa] hover:text-[#e8d5a3] transition-colors"
         >
-          <X size={20} />
+          <X size={20} aria-hidden="true" />
         </button>
 
         {item.type === 'project' && <ProjectDetail project={item.data} locale={locale} />}

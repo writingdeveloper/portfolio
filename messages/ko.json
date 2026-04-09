@@ -81,6 +81,12 @@
     "copy": "복사",
     "copied": "복사됨!",
     "skipToContent": "본문으로 건너뛰기",
+    "clearSearch": "검색 지우기",
+    "searchResultsCount": "{count, plural, =0 {검색 결과가 없습니다} other {#개의 결과를 찾았습니다}}",
+    "readingProgress": "읽기 진행률",
+    "sectionNavigation": "섹션 탐색",
+    "closeDialog": "닫기",
+    "linkCopiedFeedback": "링크가 클립보드에 복사되었습니다",
     "github": "GitHub",
     "linkedin": "LinkedIn",
     "twitter": "Twitter"

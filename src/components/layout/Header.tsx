@@ -6,7 +6,6 @@ import { Link } from '@/i18n/navigation'
 import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import { LanguageToggle } from './LanguageToggle'
-import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
   { href: '/', key: 'home' },
@@ -93,31 +92,28 @@ export function Header() {
         </div>
       </div>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.nav
-            aria-label="Mobile navigation"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="md:hidden overflow-hidden border-t border-[var(--border-subtle)]"
-          >
-            <div ref={menuRef} className="px-4 py-4 flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.key}
-                  href={link.href}
-                  className="text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors py-2.5"
-                  onClick={closeMobile}
-                >
-                  {t(link.key)}
-                </Link>
-              ))}
-            </div>
-          </motion.nav>
-        )}
-      </AnimatePresence>
+      <nav
+        aria-label="Mobile navigation"
+        data-open={mobileOpen}
+        className="md:hidden border-t border-[var(--border-subtle)] mobile-menu"
+        aria-hidden={!mobileOpen}
+      >
+        <div className="mobile-menu-inner">
+          <div ref={menuRef} className="px-4 py-4 flex flex-col gap-3">
+            {navLinks.map((link) => (
+              <Link
+                key={link.key}
+                href={link.href}
+                className="text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors py-2.5"
+                onClick={closeMobile}
+                tabIndex={mobileOpen ? 0 : -1}
+              >
+                {t(link.key)}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </nav>
     </header>
   )
 }

@@ -117,7 +117,7 @@ export function getPost(slug: string, locale: string = 'ko'): Post | null {
 
     // Rewrite relative image paths to API route
     const rewrittenContent = content.replace(
-      /!\[([^\]]*)\]\((?!https?:\/\/|\/)([\w\-. ]+\.(png|jpg|jpeg|gif|webp|svg|avif))\)/gi,
+      /!\[([^\]]*)\]\((?!https?:\/\/|\/)([\w\-. ]+\.(png|jpg|jpeg|gif|webp|avif))\)/gi,
       (_, alt, filename) =>
         `![${alt}](/api/content-image/${locale}/${slug}/${encodeURIComponent(filename)})`
     )

@@ -3,7 +3,8 @@
 import { useRef, useState } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Float, Text } from '@react-three/drei'
-import * as THREE from 'three'
+import { MathUtils } from 'three'
+import type { Mesh, MeshPhysicalMaterial, MeshBasicMaterial } from 'three'
 
 interface GlowOrbProps {
   position: [number, number, number]
@@ -13,23 +14,23 @@ interface GlowOrbProps {
 }
 
 export function GlowOrb({ position, label, color, size = 0.3 }: GlowOrbProps) {
-  const meshRef = useRef<THREE.Mesh>(null)
-  const glowRef = useRef<THREE.Mesh>(null)
-  const ringRef = useRef<THREE.Mesh>(null)
+  const meshRef = useRef<Mesh>(null)
+  const glowRef = useRef<Mesh>(null)
+  const ringRef = useRef<Mesh>(null)
   const [hovered, setHovered] = useState(false)
 
   useFrame(() => {
     if (meshRef.current) {
-      const mat = meshRef.current.material as THREE.MeshPhysicalMaterial
-      mat.emissiveIntensity = THREE.MathUtils.lerp(
+      const mat = meshRef.current.material as MeshPhysicalMaterial
+      mat.emissiveIntensity = MathUtils.lerp(
         mat.emissiveIntensity,
         hovered ? 0.4 : 0.1,
         0.06
       )
     }
     if (glowRef.current) {
-      const mat = glowRef.current.material as THREE.MeshBasicMaterial
-      mat.opacity = THREE.MathUtils.lerp(
+      const mat = glowRef.current.material as MeshBasicMaterial
+      mat.opacity = MathUtils.lerp(
         mat.opacity,
         hovered ? 0.15 : 0.05,
         0.06
@@ -37,8 +38,8 @@ export function GlowOrb({ position, label, color, size = 0.3 }: GlowOrbProps) {
     }
     if (ringRef.current) {
       ringRef.current.rotation.z += 0.01
-      const mat = ringRef.current.material as THREE.MeshBasicMaterial
-      mat.opacity = THREE.MathUtils.lerp(mat.opacity, hovered ? 0.25 : 0, 0.06)
+      const mat = ringRef.current.material as MeshBasicMaterial
+      mat.opacity = MathUtils.lerp(mat.opacity, hovered ? 0.25 : 0, 0.06)
     }
   })
 

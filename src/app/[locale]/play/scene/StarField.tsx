@@ -1,29 +1,31 @@
 'use client'
 
-import { useRef, useMemo, useEffect } from 'react'
-import * as THREE from 'three'
+import { useRef, useEffect } from 'react'
+import { BufferAttribute } from 'three'
+import type { BufferGeometry, Points } from 'three'
+
+function generateAccentPositions(count: number) {
+  const pos = new Float32Array(count * 3)
+  for (let i = 0; i < count; i++) {
+    pos[i * 3] = (Math.random() - 0.5) * 70
+    pos[i * 3 + 1] = Math.random() * -90 + 15
+    pos[i * 3 + 2] = (Math.random() - 0.5) * 50 - 8
+  }
+  return pos
+}
 
 function AccentStars({ count }: { count: number }) {
-  const geometryRef = useRef<THREE.BufferGeometry>(null)
-
-  const positions = useMemo(() => {
-    const pos = new Float32Array(count * 3)
-    for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 70
-      pos[i * 3 + 1] = Math.random() * -90 + 15
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 50 - 8
-    }
-    return pos
-  }, [count])
+  const geometryRef = useRef<BufferGeometry>(null)
+  const positionsRef = useRef(generateAccentPositions(count))
 
   useEffect(() => {
     if (geometryRef.current) {
       geometryRef.current.setAttribute(
         'position',
-        new THREE.BufferAttribute(positions, 3)
+        new BufferAttribute(positionsRef.current, 3)
       )
     }
-  }, [positions])
+  }, [])
 
   return (
     <points>
@@ -40,34 +42,36 @@ function AccentStars({ count }: { count: number }) {
   )
 }
 
-export function StarField({ count = 3000 }: { count?: number }) {
-  const pointsRef = useRef<THREE.Points>(null)
-  const geometryRef = useRef<THREE.BufferGeometry>(null)
+function generateStarData(count: number) {
+  const pos = new Float32Array(count * 3)
+  const siz = new Float32Array(count)
+  for (let i = 0; i < count; i++) {
+    pos[i * 3] = (Math.random() - 0.5) * 80
+    pos[i * 3 + 1] = Math.random() * -100 + 20
+    pos[i * 3 + 2] = (Math.random() - 0.5) * 60 - 10
+    siz[i] = Math.random() * 2 + 0.5
+  }
+  return [pos, siz] as const
+}
 
-  const [positions, sizes] = useMemo(() => {
-    const pos = new Float32Array(count * 3)
-    const siz = new Float32Array(count)
-    for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 80
-      pos[i * 3 + 1] = Math.random() * -100 + 20
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 60 - 10
-      siz[i] = Math.random() * 2 + 0.5
-    }
-    return [pos, siz]
-  }, [count])
+export function StarField({ count = 3000 }: { count?: number }) {
+  const pointsRef = useRef<Points>(null)
+  const geometryRef = useRef<BufferGeometry>(null)
+  const dataRef = useRef(generateStarData(count))
 
   useEffect(() => {
     if (geometryRef.current) {
+      const [positions, sizes] = dataRef.current
       geometryRef.current.setAttribute(
         'position',
-        new THREE.BufferAttribute(positions, 3)
+        new BufferAttribute(positions, 3)
       )
       geometryRef.current.setAttribute(
         'size',
-        new THREE.BufferAttribute(sizes, 1)
+        new BufferAttribute(sizes, 1)
       )
     }
-  }, [positions, sizes])
+  }, [])
 
   return (
     <>

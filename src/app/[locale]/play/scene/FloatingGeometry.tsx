@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import type { Mesh } from 'three'
 
 interface FloatingShapeProps {
   position: [number, number, number]
@@ -12,7 +12,7 @@ interface FloatingShapeProps {
 }
 
 function FloatingShape({ position, size = 0.4, speed = 0.2, color = '#2a2745' }: FloatingShapeProps) {
-  const ref = useRef<THREE.Mesh>(null)
+  const ref = useRef<Mesh>(null)
 
   useFrame(({ clock }) => {
     if (!ref.current) return

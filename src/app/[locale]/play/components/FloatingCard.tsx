@@ -3,7 +3,8 @@
 import { useRef, useState, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { Float, Text, RoundedBox } from '@react-three/drei'
-import * as THREE from 'three'
+import { Color, MathUtils } from 'three'
+import type { ShaderMaterial } from 'three'
 
 interface FloatingCardProps {
   position: [number, number, number]
@@ -53,13 +54,13 @@ export function FloatingCard({
   floatSpeed = 2,
   floatIntensity = 0.3,
 }: FloatingCardProps) {
-  const borderRef = useRef<THREE.ShaderMaterial>(null)
-  const innerGlowRef = useRef<THREE.ShaderMaterial>(null)
+  const borderRef = useRef<ShaderMaterial>(null)
+  const innerGlowRef = useRef<ShaderMaterial>(null)
   const [hovered, setHovered] = useState(false)
 
   const borderUniforms = useMemo(
     () => ({
-      uColor: { value: new THREE.Color(accentColor) },
+      uColor: { value: new Color(accentColor) },
       uTime: { value: 0 },
       uHovered: { value: 0 },
     }),
@@ -69,14 +70,14 @@ export function FloatingCard({
   useFrame(({ clock }) => {
     if (borderRef.current) {
       borderRef.current.uniforms.uTime.value = clock.getElapsedTime()
-      borderRef.current.uniforms.uHovered.value = THREE.MathUtils.lerp(
+      borderRef.current.uniforms.uHovered.value = MathUtils.lerp(
         borderRef.current.uniforms.uHovered.value,
         hovered ? 1 : 0,
         0.08
       )
     }
     if (innerGlowRef.current) {
-      innerGlowRef.current.uniforms.uHovered.value = THREE.MathUtils.lerp(
+      innerGlowRef.current.uniforms.uHovered.value = MathUtils.lerp(
         innerGlowRef.current.uniforms.uHovered.value,
         hovered ? 1 : 0,
         0.06
@@ -175,7 +176,7 @@ export function FloatingCard({
             depthWrite={false}
             uniforms={{
               uHovered: { value: 0 },
-              uColor: { value: new THREE.Color(accentColor) },
+              uColor: { value: new Color(accentColor) },
             }}
             vertexShader={`
               varying vec2 vUv;

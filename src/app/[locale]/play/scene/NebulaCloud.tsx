@@ -2,7 +2,8 @@
 
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import { Color, DoubleSide, AdditiveBlending } from 'three'
+import type { Mesh, ShaderMaterial } from 'three'
 
 interface NebulaProps {
   position: [number, number, number]
@@ -12,12 +13,14 @@ interface NebulaProps {
 }
 
 function NebulaPatch({ position, color, scale = 10, speed = 0.1 }: NebulaProps) {
-  const meshRef = useRef<THREE.Mesh>(null)
+  const meshRef = useRef<Mesh>(null)
+  const materialRef = useRef<ShaderMaterial>(null)
+  const timeRef = useRef(0)
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uColor: { value: new THREE.Color(color) },
+      uColor: { value: new Color(color) },
       uOpacity: { value: 0.025 },
     }),
     [color]
@@ -25,7 +28,10 @@ function NebulaPatch({ position, color, scale = 10, speed = 0.1 }: NebulaProps) 
 
   useFrame((_, delta) => {
     if (meshRef.current) {
-      uniforms.uTime.value += delta * speed
+      timeRef.current += delta * speed
+      if (materialRef.current) {
+        materialRef.current.uniforms.uTime.value = timeRef.current
+      }
       meshRef.current.rotation.z += delta * 0.01
     }
   })
@@ -85,13 +91,14 @@ function NebulaPatch({ position, color, scale = 10, speed = 0.1 }: NebulaProps) 
     <mesh ref={meshRef} position={position}>
       <planeGeometry args={[scale, scale]} />
       <shaderMaterial
+        ref={materialRef}
         vertexShader={vertexShader}
         fragmentShader={fragmentShader}
         uniforms={uniforms}
         transparent
         depthWrite={false}
-        side={THREE.DoubleSide}
-        blending={THREE.AdditiveBlending}
+        side={DoubleSide}
+        blending={AdditiveBlending}
       />
     </mesh>
   )

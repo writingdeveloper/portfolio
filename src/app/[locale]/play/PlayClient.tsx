@@ -6,7 +6,7 @@ import { Canvas } from '@react-three/fiber'
 import { ScrollControls } from '@react-three/drei'
 import { ArrowLeft } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
-import type { Project, Skill, TimelineItem } from '@/types/content'
+import type { Project, Skill, TimelineItem, PostSummary } from '@/types/content'
 import { AuroraParticles } from './scene/AuroraParticles'
 import { StarField } from './scene/StarField'
 import { NebulaCloud } from './scene/NebulaCloud'
@@ -22,13 +22,6 @@ import { BlogSection } from './sections/BlogSection'
 import { DetailOverlay } from './ui/DetailOverlay'
 import type { DetailItem } from './ui/DetailOverlay'
 import { SectionNav } from './ui/SectionNav'
-
-interface PostSummary {
-  slug: string
-  title: string
-  excerpt: string
-  category: string
-}
 
 interface PlayClientProps {
   projects: Project[]

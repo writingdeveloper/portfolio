@@ -52,6 +52,7 @@ export default async function PlayPage({
       slug: p.slug,
       title: p.title,
       excerpt: p.excerpt,
+      publishedAt: p.publishedAt,
       category: p.category,
     }))
 

@@ -2,11 +2,7 @@
 
 import { Link } from '@/i18n/navigation'
 import { useTranslations } from 'next-intl'
-
-interface CategoryItem {
-  value: string
-  label: string
-}
+import { type CategoryItem } from '@/lib/mdx'
 
 interface CategoryFilterProps {
   categories: CategoryItem[]

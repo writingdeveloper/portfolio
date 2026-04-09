@@ -5,8 +5,8 @@ export interface Project {
   descriptionEn: string
   techStack: string[]
   status: 'active' | 'building' | 'launched' | 'archived'
-  website: string
-  github: string
+  website?: string
+  github?: string
   featured: boolean
 }
 
@@ -22,6 +22,14 @@ export interface TimelineItem {
   descriptionKo: string
   descriptionEn: string
   type: 'work' | 'education' | 'project'
+}
+
+export interface PostSummary {
+  slug: string
+  title: string
+  excerpt: string
+  publishedAt: string
+  category: string
 }
 
 export const skillCategories = {

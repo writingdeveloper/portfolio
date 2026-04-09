@@ -2,7 +2,8 @@
 
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import { Color, AdditiveBlending } from 'three'
+import type { Mesh, ShaderMaterial } from 'three'
 import { SECTION_SPACING } from './CameraRig'
 
 const vertexShader = `
@@ -39,20 +40,20 @@ const fragmentShader = `
 `
 
 export function LightTrails() {
-  const trailRef = useRef<THREE.Mesh>(null)
+  const trailRef = useRef<Mesh>(null)
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uColor1: { value: new THREE.Color('#8b7355') },
-      uColor2: { value: new THREE.Color('#5b5291') },
+      uColor1: { value: new Color('#8b7355') },
+      uColor2: { value: new Color('#5b5291') },
     }),
     []
   )
 
   useFrame((_, delta) => {
     if (trailRef.current) {
-      const mat = trailRef.current.material as THREE.ShaderMaterial
+      const mat = trailRef.current.material as ShaderMaterial
       mat.uniforms.uTime.value += delta
     }
   })
@@ -70,7 +71,7 @@ export function LightTrails() {
           uniforms={uniforms}
           transparent
           depthWrite={false}
-          blending={THREE.AdditiveBlending}
+          blending={AdditiveBlending}
         />
       </mesh>
       {/* Side trails */}
@@ -82,7 +83,7 @@ export function LightTrails() {
           uniforms={uniforms}
           transparent
           depthWrite={false}
-          blending={THREE.AdditiveBlending}
+          blending={AdditiveBlending}
         />
       </mesh>
       <mesh position={[6, -totalHeight / 2 + 5, -4]} rotation={[0, 0, -0.08]}>
@@ -93,7 +94,7 @@ export function LightTrails() {
           uniforms={uniforms}
           transparent
           depthWrite={false}
-          blending={THREE.AdditiveBlending}
+          blending={AdditiveBlending}
         />
       </mesh>
     </group>

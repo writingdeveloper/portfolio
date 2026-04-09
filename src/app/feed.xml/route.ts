@@ -8,6 +8,10 @@ function escapeXml(s: string): string {
   )
 }
 
+function escapeCdata(s: string): string {
+  return s.replace(/\]\]>/g, ']]]]><![CDATA[>')
+}
+
 function generateRss(posts: ReturnType<typeof getAllPosts>, lang?: string) {
   const items = posts
     .map((post) => {
@@ -16,12 +20,13 @@ function generateRss(posts: ReturnType<typeof getAllPosts>, lang?: string) {
         : `${SITE_URL}/en/blog/${post.slug}`
       return `
     <item>
-      <title><![CDATA[${post.title}]]></title>
+      <title><![CDATA[${escapeCdata(post.title)}]]></title>
       <link>${link}</link>
       <guid isPermaLink="true">${link}</guid>
-      <description><![CDATA[${post.excerpt || ''}]]></description>
+      <description><![CDATA[${escapeCdata(post.excerpt || '')}]]></description>
       <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
       ${post.category ? `<category>${escapeXml(post.category)}</category>` : ''}
+      <dc:creator><![CDATA[WritingDeveloper]]></dc:creator>
       <dc:language>${post.language}</dc:language>
     </item>`
     })

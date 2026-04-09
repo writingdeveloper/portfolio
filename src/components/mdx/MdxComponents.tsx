@@ -94,7 +94,7 @@ export function createMdxComponents() {
   pre: CodeBlock,
   img: (props: ComponentPropsWithoutRef<'img'>) => (
     <figure className="my-8">
-      <img className="rounded-lg w-full h-auto" loading="lazy" {...props} alt={props.alt || 'image'} />
+      <img className="rounded-lg w-full h-auto" loading="lazy" {...props} alt={props.alt || ''} />
     </figure>
   ),
   strong: (props: ComponentPropsWithoutRef<'strong'>) => <strong className="font-semibold text-[var(--text-primary)]" {...props} />,

@@ -45,6 +45,9 @@ export function ShareButtons({ url, title }: ShareButtonsProps) {
       >
         {copied ? <Check size={16} aria-hidden="true" /> : <LinkIcon size={16} aria-hidden="true" />}
       </button>
+      <span className="sr-only" aria-live="polite" role="status">
+        {copied ? ta('linkCopiedFeedback') : ''}
+      </span>
     </div>
   )
 }

@@ -2,7 +2,8 @@
 
 import { useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
-import * as THREE from 'three'
+import { Color, DoubleSide, Object3D } from 'three'
+import type { ShaderMaterial, InstancedMesh } from 'three'
 
 const DUST_COUNT = 200
 
@@ -16,13 +17,13 @@ export function AuroraParticles({ dustCount = DUST_COUNT }: { dustCount?: number
 }
 
 function AuroraFog() {
-  const materialRef = useRef<THREE.ShaderMaterial>(null)
+  const materialRef = useRef<ShaderMaterial>(null)
 
   const uniforms = useMemo(
     () => ({
       uTime: { value: 0 },
-      uColor1: { value: new THREE.Color('#4f46e5') },
-      uColor2: { value: new THREE.Color('#7c6cf0') },
+      uColor1: { value: new Color('#4f46e5') },
+      uColor2: { value: new Color('#7c6cf0') },
     }),
     []
   )
@@ -100,7 +101,7 @@ function AuroraFog() {
             uniforms={uniforms}
             transparent
             depthWrite={false}
-            side={THREE.DoubleSide}
+            side={DoubleSide}
           />
         </mesh>
       ))}
@@ -120,13 +121,14 @@ function generateParticles(count: number) {
 }
 
 function LightDust({ count }: { count: number }) {
-  const meshRef = useRef<THREE.InstancedMesh>(null)
-  const dummy = useMemo(() => new THREE.Object3D(), [])
+  const meshRef = useRef<InstancedMesh>(null)
+  const dummy = useMemo(() => new Object3D(), [])
   const particlesRef = useRef(generateParticles(count))
   const particles = particlesRef.current
 
   useFrame(({ clock }) => {
-    if (!meshRef.current) return
+    const mesh = meshRef.current
+    if (!mesh) return
     const t = clock.getElapsedTime()
     particles.forEach((p, i) => {
       dummy.position.set(
@@ -136,9 +138,9 @@ function LightDust({ count }: { count: number }) {
       )
       dummy.scale.setScalar(p.scale * (0.8 + Math.sin(t + p.offset) * 0.2))
       dummy.updateMatrix()
-      meshRef.current!.setMatrixAt(i, dummy.matrix)
+      mesh.setMatrixAt(i, dummy.matrix)
     })
-    meshRef.current.instanceMatrix.needsUpdate = true
+    mesh.instanceMatrix.needsUpdate = true
   })
 
   return (

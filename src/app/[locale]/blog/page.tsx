@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { useTranslations, useLocale } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getAllPosts, getCategories, getAllTags } from '@/lib/mdx'
+import { getAllPosts, getCategories } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
 import type { PostMeta, CategoryItem } from '@/lib/mdx'
 import { PostCard } from '@/components/blog/PostCard'
@@ -64,8 +64,6 @@ export default async function BlogPage({
   const currentPage = Math.max(1, parseInt(pageStr || '1', 10) || 1)
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
   const paginatedPosts = filteredPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE)
-
-  const allTags = getAllTags(locale)
 
   return <BlogContent posts={paginatedPosts} allPosts={allPosts} categories={categories} activeCategory={validCategory} activeTag={tag || null} currentPage={currentPage} totalPages={totalPages} />
 }

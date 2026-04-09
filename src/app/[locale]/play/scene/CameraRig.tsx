@@ -3,7 +3,7 @@
 import { useRef, useEffect } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useScroll } from '@react-three/drei'
-import * as THREE from 'three'
+import { MathUtils } from 'three'
 
 export const SECTION_SPACING = 15
 const SECTION_COUNT = 5
@@ -27,7 +27,7 @@ export function CameraRig({ onSectionChange, scrollRef }: CameraRigProps) {
     const targetY = -offset * TOTAL_DISTANCE
 
     // Smooth camera Y movement
-    state.camera.position.y = THREE.MathUtils.lerp(
+    state.camera.position.y = MathUtils.lerp(
       state.camera.position.y,
       targetY,
       0.05
@@ -36,7 +36,7 @@ export function CameraRig({ onSectionChange, scrollRef }: CameraRigProps) {
     // Subtle mouse parallax
     const mouseX = state.pointer.x * 0.3
     const mouseY = state.pointer.y * 0.2
-    state.camera.position.x = THREE.MathUtils.lerp(
+    state.camera.position.x = MathUtils.lerp(
       state.camera.position.x,
       mouseX,
       0.05

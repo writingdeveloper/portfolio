@@ -1,14 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import type { Project, Skill, TimelineItem } from '@/types/content'
-
-interface PostSummary {
-  slug: string
-  title: string
-  excerpt: string
-  category: string
-}
+import type { Project, Skill, TimelineItem, PostSummary } from '@/types/content'
 
 interface PlayLoaderProps {
   projects: Project[]
