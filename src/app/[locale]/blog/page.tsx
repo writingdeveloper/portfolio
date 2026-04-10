@@ -13,6 +13,10 @@ import { SearchBar } from '@/components/blog/SearchBar'
 import { Pagination } from '@/components/blog/Pagination'
 import { Newsletter } from '@/components/blog/Newsletter'
 
+// Revalidate every hour — the blog list reads from module-level MDX cache
+// and doesn't depend on per-request data.
+export const revalidate = 3600
+
 export async function generateMetadata({
   params,
 }: {

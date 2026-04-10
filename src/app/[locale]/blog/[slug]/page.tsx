@@ -23,6 +23,9 @@ function getOgImageUrl(post: { coverImage: string; title: string; excerpt: strin
   return `${SITE_URL}/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(desc)}`
 }
 
+// Revalidate every hour — posts are filesystem-sourced MDX, no per-request data.
+export const revalidate = 3600
+
 export function generateStaticParams() {
   const koSlugs = getAllSlugs('ko').map((slug) => ({ slug }))
   const enSlugs = getAllSlugs('en').map((slug) => ({ slug }))

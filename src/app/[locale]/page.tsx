@@ -13,6 +13,9 @@ import { generateWebsiteJsonLd, safeJsonLd } from '@/lib/seo'
 import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import type { Metadata } from 'next'
 
+// Revalidate every hour — home page reads the MDX cache + static JSON.
+export const revalidate = 3600
+
 export async function generateMetadata({
   params,
 }: {

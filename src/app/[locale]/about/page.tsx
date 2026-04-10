@@ -9,6 +9,9 @@ import type { Skill, TimelineItem } from '@/types/content'
 import { skillCategories } from '@/types/content'
 import { generatePersonJsonLd, generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 
+// Revalidate every hour — about page is static content.
+export const revalidate = 3600
+
 export async function generateMetadata({
   params,
 }: {
