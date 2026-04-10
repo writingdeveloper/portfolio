@@ -2,9 +2,12 @@ import createMiddleware from 'next-intl/middleware'
 import { routing } from './i18n/routing'
 import type { NextRequest, NextResponse } from 'next/server'
 
+// Renamed from middleware.ts to proxy.ts to follow the Next.js 16.2+
+// file convention (the "middleware" name is deprecated). Behavior is
+// identical — per-request CSP nonce composed with next-intl routing.
 const intlMiddleware = createMiddleware(routing)
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   // Generate a per-request nonce for CSP.
   // Using crypto.randomUUID() keeps this compatible with the edge runtime.
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
