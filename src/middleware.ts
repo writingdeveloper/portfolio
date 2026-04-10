@@ -12,10 +12,13 @@ export default function middleware(request: NextRequest) {
   const isDev = process.env.NODE_ENV === 'development'
 
   // Next.js dev needs 'unsafe-eval' for HMR; production does not.
+  // We deliberately do NOT use 'strict-dynamic' here — Vercel Analytics /
+  // Speed Insights inject same-origin /_vercel/*/script.js tags at runtime
+  // without nonces, which strict-dynamic would block. 'self' + nonce still
+  // blocks any inline / cross-origin script injection we care about.
   const scriptSrc = [
     "'self'",
     `'nonce-${nonce}'`,
-    "'strict-dynamic'",
     'https://giscus.app',
     'https://va.vercel-scripts.com',
     isDev ? "'unsafe-eval'" : '',
