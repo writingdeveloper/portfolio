@@ -5,8 +5,7 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
+import { LayoutChrome } from '@/components/layout/LayoutChrome'
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '@/lib/constants'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -107,14 +106,13 @@ export default async function LocaleLayout({
       </head>
       <body className={`${inter.variable} ${notoSansKR.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}>
         <NextIntlClientProvider messages={messages}>
-          <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--btn-primary-bg)] focus:text-[var(--btn-primary-text)] focus:rounded-lg">
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--btn-primary-bg)] focus:text-[var(--btn-primary-text)] focus:rounded-lg"
+          >
             {ta('skipToContent')}
           </a>
-          <Header />
-          <main id="main-content" className="max-w-5xl mx-auto px-4 py-8">
-            {children}
-          </main>
-          <Footer />
+          <LayoutChrome>{children}</LayoutChrome>
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />

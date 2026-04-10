@@ -1,9 +1,9 @@
 'use client'
 
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { Canvas } from '@react-three/fiber'
-import { ScrollControls } from '@react-three/drei'
+import { ScrollControls, type ScrollControlsState } from '@react-three/drei'
 import { ArrowLeft } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 import type { Project, Skill, TimelineItem, PostSummary } from '@/types/content'
@@ -33,36 +33,13 @@ interface PlayClientProps {
 
 export function PlayClient({ projects, skills, timeline, posts, locale }: PlayClientProps) {
   const t = useTranslations('play')
+  const th = useTranslations('home')
   const [selectedItem, setSelectedItem] = useState<DetailItem | null>(null)
   const [activeSection, setActiveSection] = useState(0)
   const [isMobile] = useState(
     () => typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0
   )
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const scrollRef = useRef<any>(null)
-
-  // Hide header/footer when play page is mounted
-  useEffect(() => {
-    const header = document.querySelector('header')
-    const footer = document.querySelector('footer')
-    const main = document.getElementById('main-content')
-    if (header) header.style.display = 'none'
-    if (footer) footer.style.display = 'none'
-    if (main) {
-      main.style.maxWidth = 'none'
-      main.style.padding = '0'
-      main.style.margin = '0'
-    }
-    return () => {
-      if (header) header.style.display = ''
-      if (footer) footer.style.display = ''
-      if (main) {
-        main.style.maxWidth = ''
-        main.style.padding = ''
-        main.style.margin = ''
-      }
-    }
-  }, [])
+  const scrollRef = useRef<ScrollControlsState | null>(null)
 
   const sectionLabels: Record<string, string> = {
     intro: t('sections.intro'),
@@ -72,10 +49,11 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
     blog: t('sections.blog'),
   }
 
-  const introText =
-    locale === 'ko'
-      ? { name: '이시형', role: '개발자 & 창업가' }
-      : { name: 'Sihyung Lee', role: 'Developer & Entrepreneur' }
+  // Use translated hero text rather than hardcoded per-locale strings.
+  const introText = {
+    name: th('hero.name'),
+    role: th('hero.role'),
+  }
 
   const handleNavigate = useCallback((index: number) => {
     if (scrollRef.current?.el) {
@@ -98,8 +76,75 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
       {/* Section nav */}
       <SectionNav labels={sectionLabels} activeIndex={activeSection} onNavigate={handleNavigate} />
 
-      {/* 3D Canvas */}
+      {/* Accessible semantic fallback for screen readers and keyboard users.
+          The 3D Canvas is decorative — all content below is the source of
+          truth for assistive technology. FOLIO-19. */}
+      <div className="sr-only">
+        <h1>{introText.name}</h1>
+        <p>{introText.role}</p>
+
+        <section aria-labelledby="sr-projects">
+          <h2 id="sr-projects">{sectionLabels.projects}</h2>
+          <ul>
+            {projects.map((p) => (
+              <li key={p.name}>
+                <strong>{p.name}</strong>
+                {p.descriptionKo || p.descriptionEn ? (
+                  <p>{locale === 'ko' ? p.descriptionKo : p.descriptionEn}</p>
+                ) : null}
+                {p.website ? (
+                  <a href={p.website} target="_blank" rel="noopener noreferrer">
+                    Visit {p.name}
+                  </a>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="sr-skills">
+          <h2 id="sr-skills">{sectionLabels.skills}</h2>
+          <ul>
+            {skills.map((s) => (
+              <li key={s.name}>
+                <strong>{s.name}</strong> ({s.category})
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="sr-timeline">
+          <h2 id="sr-timeline">{sectionLabels.timeline}</h2>
+          <ul>
+            {timeline.map((item, i) => (
+              <li key={`${item.date}-${i}`}>
+                <time>{item.date}</time>
+                <strong>{locale === 'ko' ? item.titleKo : item.titleEn}</strong>
+                <p>{locale === 'ko' ? item.descriptionKo : item.descriptionEn}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="sr-blog">
+          <h2 id="sr-blog">{sectionLabels.blog}</h2>
+          <ul>
+            {posts.map((post) => (
+              <li key={post.slug}>
+                <a href={`/${locale}/blog/${post.slug}`}>
+                  <strong>{post.title}</strong>
+                </a>
+                <p>{post.excerpt}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+
+      {/* 3D Canvas is purely decorative; hide from assistive tech. */}
       <Canvas
+        aria-hidden="true"
+        role="presentation"
         camera={{ position: [0, 0, 10], fov: 50 }}
         dpr={[1, 2]}
         gl={{ alpha: false, antialias: true }}

@@ -21,10 +21,11 @@ export function SectionNav({ labels, activeIndex, onNavigate }: SectionNavProps)
       {SECTIONS.map((section, i) => (
         <button
           key={section}
+          type="button"
           onClick={() => onNavigate(i)}
           aria-label={labels[section] ?? section}
           aria-current={i === activeIndex ? 'step' : undefined}
-          className="group flex items-center gap-3"
+          className="group flex items-center gap-3 min-w-11 min-h-11 justify-end"
         >
           <span
             aria-hidden="true"

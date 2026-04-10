@@ -5,6 +5,9 @@ import { useTranslations } from 'next-intl'
 import { X, ExternalLink, Github } from 'lucide-react'
 import type { Project, TimelineItem } from '@/types/content'
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+
 type DetailItem =
   | { type: 'project'; data: Project }
   | { type: 'timeline'; data: TimelineItem }
@@ -23,20 +26,51 @@ export function DetailOverlay({ item, locale, onClose }: DetailOverlayProps) {
   const ta = useTranslations('accessibility')
   const dialogRef = useRef<HTMLDivElement>(null)
 
+  // Escape closes + focus trap. Previously Tab could escape back into the
+  // Canvas behind the dialog (WCAG 2.4.3 violation).
   useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
-    window.addEventListener('keydown', handleEsc)
-    return () => window.removeEventListener('keydown', handleEsc)
-  }, [onClose])
+    if (!item) return
+    const dialog = dialogRef.current
+    if (!dialog) return
 
-  // Auto-focus the dialog container on mount for keyboard accessibility
-  useEffect(() => {
-    if (item && dialogRef.current) {
-      dialogRef.current.focus()
+    const previouslyFocused = document.activeElement as HTMLElement | null
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        onClose()
+        return
+      }
+      if (e.key !== 'Tab') return
+
+      const focusable = Array.from(
+        dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+      )
+      if (focusable.length === 0) {
+        e.preventDefault()
+        dialog.focus()
+        return
+      }
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+      const active = document.activeElement as HTMLElement | null
+      if (e.shiftKey && (active === first || active === dialog)) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault()
+        first.focus()
+      }
     }
-  }, [item])
+
+    document.addEventListener('keydown', handleKey)
+    dialog.focus()
+
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      previouslyFocused?.focus?.()
+    }
+  }, [item, onClose])
 
   if (!item) return null
 
