@@ -8,8 +8,13 @@ export async function GET(request: NextRequest) {
   const title = searchParams.get('title')
   const description = searchParams.get('description')
 
+  // Route-level headers — /api/og is not covered by the src/proxy.ts matcher
+  // (api routes are excluded), so we set the security headers here directly.
   const cacheHeaders = {
     'Cache-Control': 'public, max-age=86400, s-maxage=604800',
+    'X-Content-Type-Options': 'nosniff',
+    'Referrer-Policy': 'strict-origin-when-cross-origin',
+    'Cross-Origin-Resource-Policy': 'same-origin',
   }
 
   if (!title) {

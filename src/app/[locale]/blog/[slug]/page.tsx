@@ -63,6 +63,7 @@ export async function generateMetadata({
       url,
       siteName: SITE_NAME,
       locale: locale === 'ko' ? 'ko_KR' : 'en_US',
+      alternateLocale: locale === 'ko' ? ['en_US'] : ['ko_KR'],
       images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
     },
     twitter: {

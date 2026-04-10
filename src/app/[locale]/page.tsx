@@ -32,6 +32,9 @@ export async function generateMetadata({
       url: pageUrl,
       title: `${t('hero.name')} - ${t('hero.role')}`,
       description: t('hero.description'),
+      locale: locale === 'ko' ? 'ko_KR' : 'en_US',
+      alternateLocale: locale === 'ko' ? ['en_US'] : ['ko_KR'],
+      type: 'website',
       images: [{ url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('hero.name'))}&description=${encodeURIComponent(t('hero.role'))}`, width: 1200, height: 630, alt: t('hero.name') }],
     },
     alternates: {

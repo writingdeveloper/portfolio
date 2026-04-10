@@ -33,6 +33,9 @@ export async function generateMetadata({
       url: pageUrl,
       title: t('title'),
       description: t('description'),
+      locale: locale === 'ko' ? 'ko_KR' : 'en_US',
+      alternateLocale: locale === 'ko' ? ['en_US'] : ['ko_KR'],
+      type: 'website',
       images: [{ url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`, width: 1200, height: 630, alt: t('title') }],
     },
     alternates: {
