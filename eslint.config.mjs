@@ -15,7 +15,8 @@ const eslintConfig = defineConfig([
   ]),
   {
     rules: {
-      "@typescript-eslint/no-explicit-any": "warn",
+      // Promoted to error in FOLIO-24 to prevent new `any` from creeping in.
+      "@typescript-eslint/no-explicit-any": "error",
     },
   },
 ]);

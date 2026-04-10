@@ -68,9 +68,21 @@ export async function GET(
     return new NextResponse('Unsupported file type', { status: 415 })
   }
 
-  const fileBuffer = await fs.readFile(filePath)
+  // Size guard: refuse to serve suspiciously large files (> 20 MB) through
+  // the serverless function. Also handles the access->readFile race where
+  // the file could disappear between the two calls.
+  let fileBuffer: Buffer
+  try {
+    const stats = await fs.stat(filePath)
+    if (stats.size > 20 * 1024 * 1024) {
+      return new NextResponse('Payload too large', { status: 413 })
+    }
+    fileBuffer = await fs.readFile(filePath)
+  } catch {
+    return new NextResponse('Not found', { status: 404 })
+  }
 
-  return new NextResponse(fileBuffer, {
+  return new NextResponse(fileBuffer as BodyInit, {
     headers: {
       'Content-Type': contentType,
       'Cache-Control': 'public, max-age=31536000, immutable',

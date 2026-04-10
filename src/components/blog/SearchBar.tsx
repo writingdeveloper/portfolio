@@ -17,6 +17,7 @@ export function SearchBar({ posts }: SearchBarProps) {
   const router = useRouter()
   const [query, setQuery] = useState('')
   const [activeIndex, setActiveIndex] = useState(-1)
+  const [prevQuery, setPrevQuery] = useState('')
   const listboxId = useId()
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
@@ -36,10 +37,12 @@ export function SearchBar({ posts }: SearchBarProps) {
       ? `${listboxId}-option-${results[activeIndex].slug}`
       : undefined
 
-  // Reset highlight whenever the query / results change
-  useEffect(() => {
+  // Reset highlight whenever the query changes — render-phase state reset
+  // (React's "storing information from previous renders" pattern).
+  if (query !== prevQuery) {
+    setPrevQuery(query)
     setActiveIndex(results.length > 0 ? 0 : -1)
-  }, [query, results.length])
+  }
 
   // Keep the active option scrolled into view
   useEffect(() => {
