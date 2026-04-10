@@ -13,7 +13,10 @@ export function CategoryFilter({ categories, activeCategory }: CategoryFilterPro
   const t = useTranslations('blog')
 
   return (
-    <div className="flex flex-wrap gap-2 mb-8">
+    <nav
+      aria-label={t('categoryFilter')}
+      className="flex flex-wrap gap-2 mb-8"
+    >
       <Link
         href="/blog"
         aria-current={!activeCategory ? 'page' : undefined}
@@ -39,6 +42,6 @@ export function CategoryFilter({ categories, activeCategory }: CategoryFilterPro
           {cat.label}
         </Link>
       ))}
-    </div>
+    </nav>
   )
 }

@@ -27,6 +27,7 @@
     "title": "Blog",
     "description": "Stories about development, technology, and startups",
     "allCategories": "All",
+    "categoryFilter": "Category filter",
     "readingTime": "min read",
     "noPosts": "No posts yet.",
     "minRead": "{minutes} min read",

@@ -27,6 +27,7 @@
     "title": "블로그",
     "description": "개발, 기술, 스타트업에 대한 이야기",
     "allCategories": "전체",
+    "categoryFilter": "카테고리 필터",
     "readingTime": "분 소요",
     "noPosts": "글이 없습니다.",
     "minRead": "{minutes}분 소요",

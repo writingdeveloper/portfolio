@@ -22,8 +22,11 @@ export function Newsletter() {
       </div>
       <p className="text-sm text-[var(--text-secondary)] mb-4">{t('newsletterDescription')}</p>
       {submitted ? (
-        <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-[var(--accent-bg)] border border-[var(--accent-border)]">
-          <Info size={16} className="text-[var(--accent-text)] shrink-0" />
+        <div
+          role="status"
+          className="flex items-center gap-2 px-4 py-3 rounded-lg bg-[var(--accent-bg)] border border-[var(--accent-border)]"
+        >
+          <Info size={16} className="text-[var(--accent-text)] shrink-0" aria-hidden="true" />
           <p className="text-sm text-[var(--accent-text)] font-medium">{t('newsletterComingSoon')}</p>
         </div>
       ) : (
