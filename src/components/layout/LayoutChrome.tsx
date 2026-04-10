@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation'
 import { Header } from './Header'
 import { Footer } from './Footer'
+import { isImmersiveRoute } from './layout-chrome-rules'
 
 interface LayoutChromeProps {
   children: React.ReactNode
@@ -17,12 +18,9 @@ interface LayoutChromeProps {
  * header/footer imperatively.
  */
 export function LayoutChrome({ children }: LayoutChromeProps) {
-  const pathname = usePathname() ?? ''
+  const pathname = usePathname()
 
-  // /play and /en/play
-  const isImmersive = /(^|\/)(play)(\/|$)/.test(pathname)
-
-  if (isImmersive) {
+  if (isImmersiveRoute(pathname)) {
     return <>{children}</>
   }
 
