@@ -5,7 +5,9 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
-import { LayoutChrome } from '@/components/layout/LayoutChrome'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
+import { isImmersiveRoute } from '@/components/layout/layout-chrome-rules'
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '@/lib/constants'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -92,7 +94,10 @@ export default async function LocaleLayout({
   setRequestLocale(locale)
   const ta = await getTranslations({ locale, namespace: 'accessibility' })
   const messages = await getMessages()
-  const nonce = (await headers()).get('x-nonce') ?? undefined
+  const headersList = await headers()
+  const nonce = headersList.get('x-nonce') ?? undefined
+  const pathname = headersList.get('x-pathname') ?? ''
+  const immersive = isImmersiveRoute(pathname)
 
   return (
     <html lang={locale} className="dark" suppressHydrationWarning>
@@ -106,13 +111,26 @@ export default async function LocaleLayout({
       </head>
       <body className={`${inter.variable} ${notoSansKR.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}>
         <NextIntlClientProvider messages={messages}>
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--btn-primary-bg)] focus:text-[var(--btn-primary-text)] focus:rounded-lg"
-          >
-            {ta('skipToContent')}
-          </a>
-          <LayoutChrome>{children}</LayoutChrome>
+          {immersive ? (
+            children
+          ) : (
+            <>
+              <a
+                href="#main-content"
+                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--btn-primary-bg)] focus:text-[var(--btn-primary-text)] focus:rounded-lg"
+              >
+                {ta('skipToContent')}
+              </a>
+              <Header />
+              <main
+                id="main-content"
+                className="max-w-5xl mx-auto px-4 py-8"
+              >
+                {children}
+              </main>
+              <Footer />
+            </>
+          )}
         </NextIntlClientProvider>
         <Analytics />
         <SpeedInsights />

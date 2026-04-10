@@ -49,6 +49,10 @@ export default function proxy(request: NextRequest) {
   // Next.js middleware composition shares the request object across middlewares,
   // so this propagates to the next-intl middleware and downstream handlers.
   request.headers.set('x-nonce', nonce)
+  // Expose the pathname to server components. LocaleLayout uses this to
+  // decide whether to render the Header/Footer chrome or hand the full
+  // viewport to the page (immersive /play route).
+  request.headers.set('x-pathname', request.nextUrl.pathname)
 
   const response = intlMiddleware(request) as NextResponse
   response.headers.set('Content-Security-Policy', cspHeader)
