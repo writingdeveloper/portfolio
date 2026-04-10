@@ -32,8 +32,22 @@ export default function proxy(request: NextRequest) {
   const cspHeader = [
     "default-src 'self'",
     `script-src ${scriptSrc}`,
-    // style-src still needs 'unsafe-inline' for Tailwind / inline styles.
-    // Moving these to nonce would require invasive refactoring.
+    // style-src intentionally keeps 'unsafe-inline'. Tightening this to
+    // nonce-only requires:
+    //   1) refactoring dynamic `style={{}}` attributes in ReadingProgress,
+    //      TableOfContents, PlayClient, error.tsx (their values are
+    //      computed at render time so `'unsafe-hashes'` cannot cover them)
+    //   2) ensuring next/font + next/image inline styles still receive
+    //      the CSP nonce in the Next 16 / Turbopack build pipeline
+    //   3) handling Tailwind v4's @property injections
+    // Empirically confirmed: naively propagating the CSP to request
+    // headers (the Next.js docs pattern) breaks RSC stream hydration in
+    // this stack — the article subtree loses its fiber tree and Suspense
+    // stays in the fallback state on the client.
+    // For a personal blog with author-controlled MDX (no user-generated
+    // HTML), CSS-injection is not a meaningful attack surface, so the
+    // cost of the refactor outweighs the CSP-Evaluator rating bump.
+    // Revisit if we ever accept untrusted input.
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: https:",
     "font-src 'self'",
