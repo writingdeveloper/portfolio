@@ -6,6 +6,7 @@ import projectsData from '../../../../content/projects.json'
 import aboutData from '../../../../content/about.json'
 import type { Project, Skill, TimelineItem } from '@/types/content'
 import { PlayLoader } from './PlayLoader'
+import { PlaySemanticFallback } from './PlaySemanticFallback'
 
 export async function generateMetadata({
   params,
@@ -57,12 +58,21 @@ export default async function PlayPage({
     }))
 
   return (
-    <PlayLoader
-      projects={projects}
-      skills={skills}
-      timeline={timeline}
-      posts={posts}
-      locale={locale}
-    />
+    <>
+      <PlaySemanticFallback
+        projects={projects}
+        skills={skills}
+        timeline={timeline}
+        posts={posts}
+        locale={locale}
+      />
+      <PlayLoader
+        projects={projects}
+        skills={skills}
+        timeline={timeline}
+        posts={posts}
+        locale={locale}
+      />
+    </>
   )
 }

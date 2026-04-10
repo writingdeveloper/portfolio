@@ -76,70 +76,9 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
       {/* Section nav */}
       <SectionNav labels={sectionLabels} activeIndex={activeSection} onNavigate={handleNavigate} />
 
-      {/* Accessible semantic fallback for screen readers and keyboard users.
-          The 3D Canvas is decorative — all content below is the source of
-          truth for assistive technology. FOLIO-19. */}
-      <div className="sr-only">
-        <h1>{introText.name}</h1>
-        <p>{introText.role}</p>
-
-        <section aria-labelledby="sr-projects">
-          <h2 id="sr-projects">{sectionLabels.projects}</h2>
-          <ul>
-            {projects.map((p) => (
-              <li key={p.name}>
-                <strong>{p.name}</strong>
-                {p.descriptionKo || p.descriptionEn ? (
-                  <p>{locale === 'ko' ? p.descriptionKo : p.descriptionEn}</p>
-                ) : null}
-                {p.website ? (
-                  <a href={p.website} target="_blank" rel="noopener noreferrer">
-                    Visit {p.name}
-                  </a>
-                ) : null}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section aria-labelledby="sr-skills">
-          <h2 id="sr-skills">{sectionLabels.skills}</h2>
-          <ul>
-            {skills.map((s) => (
-              <li key={s.name}>
-                <strong>{s.name}</strong> ({s.category})
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section aria-labelledby="sr-timeline">
-          <h2 id="sr-timeline">{sectionLabels.timeline}</h2>
-          <ul>
-            {timeline.map((item, i) => (
-              <li key={`${item.date}-${i}`}>
-                <time>{item.date}</time>
-                <strong>{locale === 'ko' ? item.titleKo : item.titleEn}</strong>
-                <p>{locale === 'ko' ? item.descriptionKo : item.descriptionEn}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section aria-labelledby="sr-blog">
-          <h2 id="sr-blog">{sectionLabels.blog}</h2>
-          <ul>
-            {posts.map((post) => (
-              <li key={post.slug}>
-                <a href={`/${locale}/blog/${post.slug}`}>
-                  <strong>{post.title}</strong>
-                </a>
-                <p>{post.excerpt}</p>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </div>
+      {/* Accessible semantic fallback is rendered server-side by
+          PlaySemanticFallback so it exists in the initial HTML response
+          (PlayClient itself is dynamically imported with ssr:false). */}
 
       {/* 3D Canvas is purely decorative; hide from assistive tech. */}
       <Canvas
