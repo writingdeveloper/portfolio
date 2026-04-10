@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Include the Korean webfont alongside Inter so ko locale text does not fall
+   back to the system font and cause CLS. FOLIO-22. */
+@theme inline {
+  --font-sans: var(--font-inter), var(--font-noto-kr), ui-sans-serif, system-ui,
+    -apple-system, 'Segoe UI', Roboto, 'Apple SD Gothic Neo', 'Malgun Gothic',
+    sans-serif;
+}
+
 /* ===== Theme System ===== */
 .dark {
   --bg-primary: #030712;
@@ -8,7 +16,7 @@
   --bg-elevated-hover: #374151;
   --text-primary: #f3f4f6;
   --text-secondary: #b4bcc8;
-  --text-muted: #6b7280;
+  --text-muted: #9099a8;
   --text-emphasis: #ffffff;
   --border-default: #1f2937;
   --border-hover: #374151;
@@ -50,7 +58,7 @@
   --bg-elevated-hover: #e5e7eb;
   --text-primary: #111827;
   --text-secondary: #4b5563;
-  --text-muted: #6b7280;
+  --text-muted: #5d6570;
   --text-emphasis: #030712;
   --border-default: #e5e7eb;
   --border-hover: #d1d5db;

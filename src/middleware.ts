@@ -1,10 +1,55 @@
-import createMiddleware from 'next-intl/middleware';
-import { routing } from './i18n/routing';
+import createMiddleware from 'next-intl/middleware'
+import { routing } from './i18n/routing'
+import type { NextRequest, NextResponse } from 'next/server'
 
-export default createMiddleware(routing);
+const intlMiddleware = createMiddleware(routing)
+
+export default function middleware(request: NextRequest) {
+  // Generate a per-request nonce for CSP.
+  // Using crypto.randomUUID() keeps this compatible with the edge runtime.
+  const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
+
+  const isDev = process.env.NODE_ENV === 'development'
+
+  // Next.js dev needs 'unsafe-eval' for HMR; production does not.
+  const scriptSrc = [
+    "'self'",
+    `'nonce-${nonce}'`,
+    "'strict-dynamic'",
+    'https://giscus.app',
+    'https://va.vercel-scripts.com',
+    isDev ? "'unsafe-eval'" : '',
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const cspHeader = [
+    "default-src 'self'",
+    `script-src ${scriptSrc}`,
+    // style-src still needs 'unsafe-inline' for Tailwind / inline styles.
+    // Moving these to nonce would require invasive refactoring.
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data: https:",
+    "font-src 'self'",
+    "connect-src 'self' https://giscus.app https://vitals.vercel-insights.com https://va.vercel-scripts.com https://api.github.com",
+    'frame-src https://giscus.app',
+    "frame-ancestors 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    'upgrade-insecure-requests',
+  ].join('; ')
+
+  // Mutate the incoming request headers so RSC can read the nonce via next/headers.
+  // Next.js middleware composition shares the request object across middlewares,
+  // so this propagates to the next-intl middleware and downstream handlers.
+  request.headers.set('x-nonce', nonce)
+
+  const response = intlMiddleware(request) as NextResponse
+  response.headers.set('Content-Security-Policy', cspHeader)
+
+  return response
+}
 
 export const config = {
-  matcher: [
-    '/((?!api|keystatic|_next|_vercel|.*\\..*).*)',
-  ],
-};
+  matcher: ['/((?!api|keystatic|_next|_vercel|.*\\..*).*)'],
+}
