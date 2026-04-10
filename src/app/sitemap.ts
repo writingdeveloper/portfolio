@@ -2,17 +2,29 @@ import type { MetadataRoute } from 'next'
 import { getAllPosts, hasTranslation } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
 
+// Revalidate every hour to avoid regenerating the sitemap on every request.
+export const revalidate = 3600
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const buildDate = new Date().toISOString()
   const koPosts = getAllPosts('ko')
   const enPosts = getAllPosts('en')
 
-  const staticPages = ['', '/blog', '/projects', '/about']
+  const staticPages = ['', '/blog', '/projects', '/about', '/play']
 
   // 한국어 + 영어 정적 페이지 모두 등록
   const staticUrls = staticPages.flatMap((page) => {
     const changeFrequency = page === '' || page === '/blog' ? 'daily' as const : 'monthly' as const
-    const priority = page === '' ? 1 : page === '/blog' ? 0.9 : page === '/projects' ? 0.7 : 0.5
+    const priority =
+      page === ''
+        ? 1
+        : page === '/blog'
+        ? 0.9
+        : page === '/projects'
+        ? 0.7
+        : page === '/play'
+        ? 0.6
+        : 0.5
     const alternates = {
       languages: {
         ko: `${SITE_URL}${page}`,

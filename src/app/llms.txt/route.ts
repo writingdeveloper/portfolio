@@ -1,6 +1,9 @@
 import { getAllPosts } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
 
+// Revalidate every hour
+export const revalidate = 3600
+
 export async function GET() {
   const koPosts = getAllPosts('ko')
   const enPosts = getAllPosts('en')

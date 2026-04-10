@@ -2,6 +2,9 @@ import { getAllPosts } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
 import type { NextRequest } from 'next/server'
 
+// Revalidate every hour
+export const revalidate = 3600
+
 function escapeXml(s: string): string {
   return s.replace(/[&<>"']/g, (c) =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[c] ?? c
@@ -26,7 +29,8 @@ function generateRss(posts: ReturnType<typeof getAllPosts>, lang?: string) {
       <description><![CDATA[${escapeCdata(post.excerpt || '')}]]></description>
       <pubDate>${new Date(post.publishedAt).toUTCString()}</pubDate>
       ${post.category ? `<category>${escapeXml(post.category)}</category>` : ''}
-      <dc:creator><![CDATA[WritingDeveloper]]></dc:creator>
+      <author>noreply@writingdeveloper.blog (${escapeXml(post.author || 'WritingDeveloper')})</author>
+      <dc:creator><![CDATA[${escapeCdata(post.author || 'WritingDeveloper')}]]></dc:creator>
       <dc:language>${post.language}</dc:language>
     </item>`
     })
