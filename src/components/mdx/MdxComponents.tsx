@@ -1,5 +1,5 @@
-/* eslint-disable @next/next/no-img-element */
 import type { ComponentPropsWithoutRef } from 'react'
+import Image from 'next/image'
 import { highlightCode } from '@/lib/shiki'
 import { CopyButton } from './CopyButton'
 
@@ -92,11 +92,27 @@ export function createMdxComponents() {
     return <code className="bg-[var(--inline-code-bg)] px-1.5 py-0.5 rounded text-sm" {...props} />
   },
   pre: CodeBlock,
-  img: (props: ComponentPropsWithoutRef<'img'>) => (
-    <figure className="my-8">
-      <img className="rounded-lg w-full h-auto" loading="lazy" {...props} alt={props.alt || ''} />
-    </figure>
-  ),
+  img: (props: ComponentPropsWithoutRef<'img'>) => {
+    // MDX content images don't carry real dimensions, so we use the max
+    // rendered column width as a hint and let CSS scale to fit. next/image
+    // will still serve AVIF/WebP variants via the optimizer.
+    const src = typeof props.src === 'string' ? props.src : ''
+    if (!src) return null
+    const alt = props.alt || ''
+    return (
+      <figure className="my-8">
+        <Image
+          src={src}
+          alt={alt}
+          width={1600}
+          height={900}
+          className="rounded-lg w-full h-auto"
+          sizes="(max-width: 768px) 100vw, 768px"
+          unoptimized={src.startsWith('http')}
+        />
+      </figure>
+    )
+  },
   strong: (props: ComponentPropsWithoutRef<'strong'>) => <strong className="font-semibold text-[var(--text-primary)]" {...props} />,
   hr: () => <hr className="my-8 border-[var(--border-default)]" />,
   }
