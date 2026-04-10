@@ -1,80 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs/promises'
 import path from 'path'
-
-const VALID_LOCALES = new Set(['ko', 'en'])
+import { validateContentImageRequest } from '@/lib/content-image-path'
 
 const CONTENT_DIR = path.join(process.cwd(), 'content', 'posts')
-
-const MIME_TYPES: Record<string, string> = {
-  '.png': 'image/png',
-  '.jpg': 'image/jpeg',
-  '.jpeg': 'image/jpeg',
-  '.gif': 'image/gif',
-  '.webp': 'image/webp',
-  '.avif': 'image/avif',
-}
+const MAX_BYTES = 20 * 1024 * 1024
 
 export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ path: string[] }> }
 ) {
   const segments = (await params).path
+  const validation = validateContentImageRequest(segments, CONTENT_DIR)
+  if (!validation.ok) {
+    const statusMap: Record<string, number> = {
+      'not-found': 404,
+      'forbidden-locale': 403,
+      'path-traversal': 403,
+      'unsupported-mime': 415,
+    }
+    return new NextResponse(validation.error, { status: statusMap[validation.error] })
+  }
 
-  // Expected: /api/content-image/{locale}/{slug}/{filename}
-  if (segments.length !== 3) {
+  const { candidates, contentType } = validation
+
+  // Probe candidate paths: direct (Keystatic directory mode) first, then
+  // legacy `content/` subdirectory.
+  let filePath: string | null = null
+  for (const candidate of candidates) {
+    try {
+      await fs.access(candidate)
+      filePath = candidate
+      break
+    } catch {
+      // try next
+    }
+  }
+  if (!filePath) {
     return new NextResponse('Not found', { status: 404 })
   }
 
-  const [locale, slug, filename] = segments
-
-  // Validate locale against allowlist
-  if (!VALID_LOCALES.has(locale)) {
-    return new NextResponse('Forbidden', { status: 403 })
-  }
-
-  // Prevent path traversal - blocklist check
-  if (
-    locale.includes('..') ||
-    slug.includes('..') ||
-    filename.includes('..')
-  ) {
-    return new NextResponse('Forbidden', { status: 403 })
-  }
-
-  // Check both direct (Keystatic directory mode) and content/ subdirectory
-  let filePath = path.join(CONTENT_DIR, locale, slug, filename)
-  try {
-    await fs.access(filePath)
-  } catch {
-    filePath = path.join(CONTENT_DIR, locale, slug, 'content', filename)
-  }
-
-  // Resolved-path containment check to prevent traversal bypasses
-  const resolvedPath = path.resolve(filePath)
-  if (!resolvedPath.startsWith(path.resolve(CONTENT_DIR))) {
-    return new NextResponse('Forbidden', { status: 403 })
-  }
-
-  try {
-    await fs.access(filePath)
-  } catch {
-    return new NextResponse('Not found', { status: 404 })
-  }
-
-  const ext = path.extname(filename).toLowerCase()
-  const contentType = MIME_TYPES[ext]
-  if (!contentType) {
-    return new NextResponse('Unsupported file type', { status: 415 })
-  }
-
-  // Size guard: refuse to serve suspiciously large files (> 20 MB) through
-  // the serverless function. Also handles the access->readFile race where
-  // the file could disappear between the two calls.
+  // Size guard + access->read race handling
   let fileBuffer: Buffer
   try {
     const stats = await fs.stat(filePath)
-    if (stats.size > 20 * 1024 * 1024) {
+    if (stats.size > MAX_BYTES) {
       return new NextResponse('Payload too large', { status: 413 })
     }
     fileBuffer = await fs.readFile(filePath)
