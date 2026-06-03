@@ -20,7 +20,73 @@
         "Playwright"
       ],
       "status": "active",
-      "website": "https://soursea.io",
+      "private": true,
+      "featured": true
+    },
+    {
+      "name": "HealFrame",
+      "slug": "healframe",
+      "descriptionKo": "Judith Herman의 트라우마 회복 3단계 모델을 기반으로 직접 설계한 AI 멘탈헬스 SaaS. Gemini로 회복 단계별 글쓰기 프롬프트와 위기 신호(GREEN/AMBER/RED) 안전 파이프라인을 구현하고, 동료 지지 서클·Stripe 구독·Capacitor 기반 Android 앱까지 웹·모바일을 1인 풀스택으로 개발했습니다.",
+      "descriptionEn": "A mental health SaaS I designed around Judith Herman's three-stage trauma recovery model. I built AI-guided journaling with a Gemini-powered crisis-detection safety pipeline (GREEN/AMBER/RED), evidence-based peer support circles, Stripe billing, and an Android build via Capacitor — solo full-stack across web and mobile.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "PostgreSQL",
+        "Prisma",
+        "NextAuth",
+        "Google Gemini",
+        "Stripe",
+        "Capacitor",
+        "Upstash Redis",
+        "Tailwind CSS"
+      ],
+      "status": "building",
+      "website": "https://healframe.app",
+      "private": true,
+      "featured": true
+    },
+    {
+      "name": "Argus Fusion",
+      "slug": "argus-fusion",
+      "descriptionKo": "정보기관 감시실을 콘셉트로 만든 실시간 OSINT 상황인식 웹앱. USGS·OpenSky·CISA·NASA 등 10개 이상의 공개 API를 config 기반 피드 레지스트리와 서버 캐싱 레이어로 통합하고, Three.js 3D 지구본·사이버 취약점 보드·위성 궤도 추적 등 4개 뷰로 시각화했습니다.",
+      "descriptionEn": "A real-time OSINT situational-awareness web app styled as an intelligence watch floor. I aggregated 10+ live public feeds (USGS, OpenSky ADS-B, CISA KEV, NASA, GDELT, CelesTrak…) through a config-driven feed registry with server-side caching, and visualized them across four views — a Three.js 3D globe, a cyber-vulnerability board, and satellite/orbital tracking.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "Three.js",
+        "React Three Fiber",
+        "satellite.js",
+        "Zustand",
+        "Vitest",
+        "Tailwind CSS"
+      ],
+      "status": "launched",
+      "website": "https://argus-fusion.vercel.app",
+      "private": true,
+      "featured": true
+    },
+    {
+      "name": "Minddump",
+      "slug": "minddump",
+      "descriptionKo": "감정을 글로 쏟아내고 3D 화염 애니메이션으로 태워버리는 익명 감정 해소 앱. React Three Fiber와 Blender CG 파이프라인으로 burn 연출을 만들고, AES-256 암호화 에스크로 구조로 익명 위로 메시지를 안전하게 전달합니다. Turborepo 모노레포에서 Next.js 웹과 Expo 모바일을 함께 개발했습니다.",
+      "descriptionEn": "An anonymous emotional-release app where you pour out what's weighing on you and burn it with a 3D fire animation. I built the burn effect with React Three Fiber and a Blender CG pipeline, routed anonymous comfort messages through an AES-256 encrypted escrow design, and shipped it as a Turborepo monorepo spanning a Next.js web app and an Expo mobile app.",
+      "techStack": [
+        "TypeScript",
+        "Turborepo",
+        "Next.js",
+        "Expo",
+        "React Native",
+        "PostgreSQL",
+        "Prisma",
+        "Three.js",
+        "React Three Fiber",
+        "Google Gemini"
+      ],
+      "status": "building",
+      "website": "https://minddump-seven.vercel.app",
+      "private": true,
       "featured": true
     },
     {
@@ -39,7 +105,127 @@
       "status": "active",
       "website": "https://github.com/writingdeveloper/dont-touch-electron",
       "github": "https://github.com/writingdeveloper/dont-touch-electron",
+      "private": false,
       "featured": true
+    },
+    {
+      "name": "Zodiacly",
+      "slug": "zodiacly",
+      "descriptionKo": "미국·남미 시장을 겨냥해 기획·개발한 AI 운세 웹 플랫폼. astronomy-engine으로 실제 행성 위치를 계산하고, 별자리·궁합·주간/월간 운세 페이지를 6개 언어 SEO 구조로 정적 생성해 오가닉 트래픽을 확보하도록 설계했습니다.",
+      "descriptionEn": "An AI horoscope platform I built for the US and Latin American market. It computes real planetary positions with astronomy-engine and statically generates zodiac, compatibility, and weekly/monthly horoscope pages in a six-language SEO architecture designed to capture organic traffic.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "Supabase",
+        "astronomy-engine",
+        "Claude API",
+        "next-intl",
+        "Tailwind CSS"
+      ],
+      "status": "launched",
+      "website": "https://zodiacly.vercel.app",
+      "private": true,
+      "featured": false
+    },
+    {
+      "name": "TransitLA",
+      "slug": "transit-la",
+      "descriptionKo": "차 없이 대중교통으로 갈 수 있는 LA의 장소(해변·하이킹·데이트 코스)를 탐색하는 웹앱. LA Metro GTFS 데이터를 직접 파이프라인으로 가공해 PostGIS 도달성 스코어링을 구현하고, 자체 호스팅한 OpenTripPlanner 2로 실시간 환승 경로를 제공하며 GitHub Actions CI/CD와 Docker로 배포했습니다.",
+      "descriptionEn": "A web app for discovering places across Greater LA — beaches, hikes, date courses — reachable without a car. I built the full data pipeline (GTFS ingestion, OSM scraping, PostGIS reachability scoring) and ran a self-hosted OpenTripPlanner 2 instance for live multimodal routing, deployed through a GitHub Actions CI/CD pipeline on Docker.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "PostgreSQL",
+        "PostGIS",
+        "Drizzle ORM",
+        "MapLibre GL",
+        "OpenTripPlanner 2",
+        "Docker",
+        "Playwright"
+      ],
+      "status": "launched",
+      "website": "https://transitla.devmanage.duckdns.org",
+      "private": true,
+      "featured": false
+    },
+    {
+      "name": "Hoverslam",
+      "slug": "hoverslam",
+      "descriptionKo": "SpaceX 메카질라 부스터 캐치에서 영감을 받은 멀티플레이 브라우저 게임. 공개 데이터로 보정한 수어사이드 번 물리를 직접 구현하고, Colyseus 권위 서버로 실시간 경쟁과 리더보드를, Three.js WebGL로 9개 카메라 모드와 한·영 UI를 만들었습니다.",
+      "descriptionEn": "A real-physics multiplayer browser game inspired by SpaceX's Mechazilla booster catch. I implemented suicide-burn physics calibrated against public SpaceX data, real-time competition and a leaderboard on an authoritative Colyseus server, and Three.js WebGL rendering with nine camera modes and a bilingual EN/KO UI.",
+      "techStack": [
+        "TypeScript",
+        "Three.js",
+        "Colyseus",
+        "WebGL",
+        "Vite",
+        "Docker"
+      ],
+      "status": "launched",
+      "github": "https://github.com/writingdeveloper/hoverslam",
+      "private": false,
+      "featured": false
+    },
+    {
+      "name": "Sobriety App",
+      "slug": "sobriety-app",
+      "descriptionKo": "금전적 공약을 걸고 매일 셀피 체크인으로 금주를 지키는 모바일 앱. Stripe Connect 비수탁(manual-capture) 구조로 실패 시 스테이크가 자선단체에 자동 기부되도록 설계하고, Expo + Fastify 모노레포로 313개 테스트와 GitHub Actions CI까지 갖춰 구현했습니다.",
+      "descriptionEn": "A sobriety commitment app where you stake real money and verify each day with a selfie check-in. I designed a non-custodial Stripe Connect flow that auto-donates the stake to charity on failure (the platform never holds funds), and built it as an Expo + Fastify monorepo with 313+ tests and full CI.",
+      "techStack": [
+        "TypeScript",
+        "Expo",
+        "React Native",
+        "Fastify",
+        "PostgreSQL",
+        "Stripe Connect",
+        "Clerk",
+        "i18next",
+        "Docker"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false
+    },
+    {
+      "name": "Voice Studio",
+      "slug": "voice-studio",
+      "descriptionKo": "영상 속 특정 인물의 목소리를 골라 GPT-SoVITS v4 TTS 모델을 자동으로 파인튜닝하는 로컬 웹 스튜디오. 보컬 분리 → 화자 분리 → 클러스터링 → 전사 → 학습까지 흩어져 있던 스크립트를 GPU 작업 큐로 묶어 클릭 한 번의 파이프라인으로 만들었습니다.",
+      "descriptionEn": "A local web studio that automates voice cloning — pick a speaker from any video and it fine-tunes a GPT-SoVITS v4 model end to end. I collapsed a scattered set of scripts (vocal separation, diarization, clustering, transcription, training) into a single one-click pipeline orchestrated by a GPU job queue.",
+      "techStack": [
+        "Python",
+        "FastAPI",
+        "React",
+        "GPT-SoVITS",
+        "pyannote",
+        "faster-whisper",
+        "CUDA",
+        "TypeScript"
+      ],
+      "status": "building",
+      "github": "https://github.com/writingdeveloper/voice-studio",
+      "private": false,
+      "featured": false
+    },
+    {
+      "name": "ComfyUI Web",
+      "slug": "comfyui-web",
+      "descriptionKo": "Claude Code를 프롬프트 엔지니어로 활용하는 셀프호스팅 이미지·영상 생성 플랫폼. 자연어(한/영) 입력을 최적화된 프롬프트와 ComfyUI API 워크플로 JSON으로 자동 변환하고, 순차 작업 큐·썸네일 생성·좋아요·댓글·갤러리까지 멀티유저 기능을 풀스택으로 구현했습니다.",
+      "descriptionEn": "A self-hosted image and video generation platform that uses Claude Code as an automated prompt engineer — turning Korean or English input into optimized prompts and ComfyUI API-format workflow JSON. I built the full multi-user layer around it: a sequential job queue, thumbnail pipeline, and a social gallery with likes and comments.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "Prisma",
+        "SQLite",
+        "NextAuth",
+        "Claude Code",
+        "ComfyUI",
+        "sharp"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false
     }
   ]
 }
