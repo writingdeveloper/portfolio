@@ -103,7 +103,6 @@
         "Vite"
       ],
       "status": "active",
-      "website": "https://github.com/writingdeveloper/dont-touch-electron",
       "github": "https://github.com/writingdeveloper/dont-touch-electron",
       "private": false,
       "featured": true
@@ -225,6 +224,23 @@
       ],
       "status": "building",
       "private": true,
+      "featured": false
+    },
+    {
+      "name": "KL125 Controller",
+      "slug": "kl125-controller",
+      "descriptionKo": "TP-Link Kasa KL125 스마트 전구를 제어하는 Windows 트레이 앱. python-kasa로 LAN 내 전구를 직접 제어하고, 선택한 모니터의 대표 색상을 실시간으로 추출해 전구에 반영하는 Ambient 모드(필립스 휴 싱크 방식)를 구현했습니다. 멀티 모니터 선택·전역 단축키·색상 프리셋·한영 UI를 PySide6로 만들고, 자격 증명은 Windows Credential Manager에 저장하며 PyInstaller 단일 EXE로 배포했습니다.",
+      "descriptionEn": "A Windows tray app for the TP-Link Kasa KL125 smart bulb. I drive the bulb directly over the LAN with python-kasa and built an Ambient mode that samples a selected monitor's dominant color in real time and mirrors it to the bulb — Philips Hue Sync for a single bulb. Built with PySide6 with multi-monitor selection, global hotkeys, a color-preset library, and a bilingual KO/EN UI; credentials live in Windows Credential Manager and it ships as a single-file EXE via PyInstaller.",
+      "techStack": [
+        "Python",
+        "PySide6",
+        "python-kasa",
+        "Qt",
+        "PyInstaller"
+      ],
+      "status": "active",
+      "github": "https://github.com/writingdeveloper/kl125-blink",
+      "private": false,
       "featured": false
     }
   ]
