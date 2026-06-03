@@ -21,6 +21,14 @@
       "category": "frontend"
     },
     {
+      "name": "React Native",
+      "category": "frontend"
+    },
+    {
+      "name": "Three.js",
+      "category": "frontend"
+    },
+    {
       "name": "NestJS",
       "category": "backend"
     },
@@ -29,11 +37,27 @@
       "category": "backend"
     },
     {
+      "name": "Python",
+      "category": "backend"
+    },
+    {
+      "name": "FastAPI",
+      "category": "backend"
+    },
+    {
       "name": "Supabase",
       "category": "backend"
     },
     {
       "name": "PostgreSQL",
+      "category": "backend"
+    },
+    {
+      "name": "Prisma",
+      "category": "backend"
+    },
+    {
+      "name": "Redis",
       "category": "backend"
     },
     {
@@ -51,9 +75,33 @@
     {
       "name": "Stripe",
       "category": "tools"
+    },
+    {
+      "name": "Playwright",
+      "category": "tools"
+    },
+    {
+      "name": "Google Gemini",
+      "category": "tools"
+    },
+    {
+      "name": "Claude API",
+      "category": "tools"
+    },
+    {
+      "name": "Turborepo",
+      "category": "tools"
     }
   ],
   "timeline": [
+    {
+      "date": "2026",
+      "titleKo": "AI 제품 연속 출시",
+      "titleEn": "Shipping AI products",
+      "descriptionKo": "healframe(멘탈헬스), argus-fusion(실시간 OSINT), zodiacly(운세), minddump(감정 케어) 등 AI 기반 웹·모바일 제품을 빠르게 기획·개발·출시.",
+      "descriptionEn": "Rapidly designed, built, and shipped AI-driven web and mobile products — healframe (mental health), argus-fusion (real-time OSINT), zodiacly (horoscope), and minddump (emotional care).",
+      "type": "project"
+    },
     {
       "date": "2025 - Present",
       "titleKo": "Soursea 개발",
@@ -69,6 +117,14 @@
       "descriptionKo": "발모벽 극복을 위해 직접 만든 웹캠 기반 습관 교정 데스크톱 앱. MediaPipe Vision으로 실시간 손-얼굴 접촉 감지",
       "descriptionEn": "Built a webcam-based habit-breaking desktop app driven by personal experience with trichotillomania. Real-time hand-to-face detection using MediaPipe Vision",
       "type": "project"
+    },
+    {
+      "date": "2024 - 2026",
+      "titleKo": "ItemBox — 이커머스 SaaS 개발",
+      "titleEn": "ItemBox — E-commerce SaaS",
+      "descriptionKo": "이커머스 셀러용 멀티서비스 SaaS 개발에 참여. React 프론트엔드와 NestJS 백엔드, Shopify·Cafe24 마켓 연동, 구독 결제, OCR·AI 이미지 도구를 구현.",
+      "descriptionEn": "Contributed to a multi-service e-commerce SaaS for online sellers — React frontend and NestJS backend, Shopify/Cafe24 marketplace integration, subscription billing, and OCR/AI image tooling.",
+      "type": "work"
     }
   ]
 }

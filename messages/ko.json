@@ -57,6 +57,7 @@
     "description": "만들고 있는 것들",
     "viewProject": "프로젝트 보기",
     "viewCode": "코드 보기",
+    "private": "비공개",
     "status": {
       "active": "활성",
       "building": "개발 중",

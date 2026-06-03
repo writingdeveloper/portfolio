@@ -57,6 +57,7 @@
     "description": "Things I'm building",
     "viewProject": "View Project",
     "viewCode": "View Code",
+    "private": "Private",
     "status": {
       "active": "Active",
       "building": "Building",

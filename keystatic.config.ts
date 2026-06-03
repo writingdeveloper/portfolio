@@ -108,6 +108,7 @@ export default config({
             }),
             website: fields.text({ label: '웹사이트 URL' }),
             github: fields.text({ label: 'GitHub URL' }),
+            private: fields.checkbox({ label: '비공개 (Private)' }),
             featured: fields.checkbox({ label: '메인 페이지 노출' }),
           }),
           {
