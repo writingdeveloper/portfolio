@@ -10,8 +10,8 @@ export const DEFAULT_OG_IMAGE = `${SITE_URL}/api/og`
 export const ADSENSE_CLIENT =
   process.env.NEXT_PUBLIC_ADSENSE_CLIENT ?? 'ca-pub-3427879236190872'
 
-// Google Analytics 4 Measurement ID, e.g. "G-XXXXXXXXXX" (property account:
-// sihyeongdev@gmail.com). Intentionally empty until the GA4 property exists —
-// the analytics component renders nothing while this is blank. Set it via the
-// NEXT_PUBLIC_GA_ID environment variable in the Vercel project settings.
-export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? ''
+// Google Analytics 4 Measurement ID — property "글쓰는 개발자 - GA4", web stream
+// "writingdeveloper.blog" (stream 15021980866), account sihyeongdev@gmail.com.
+// Public value (it appears in the page source), so it defaults inline; override
+// per-env via NEXT_PUBLIC_GA_ID if ever needed.
+export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? 'G-77H1KB1H05'
