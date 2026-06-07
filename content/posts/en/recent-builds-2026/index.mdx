@@ -1,0 +1,40 @@
+---
+title: "What I've Been Building Lately"
+excerpt: "A roundup of the side projects I've poured out over the past few months, across wildly different domains — a short record of what I built and why."
+publishedAt: "2026-06-07"
+author: "이시형"
+category: development
+tags: ["side-projects", "indie-hacking", "ai"]
+coverImage: ""
+faqs:
+  - question: "How do you build this many projects as a solo developer?"
+    answer: "I build the smallest version that works before chasing polish, and automate anything repetitive. Lately AI tools like Claude Code cut down boilerplate and research time so much that one person can work across several domains at once."
+  - question: "What tech stack do you usually use?"
+    answer: "Next.js, TypeScript and Tailwind on the web; NestJS or Fastify with PostgreSQL on the backend. Three.js and React Three Fiber for 3D, Electron for desktop, and Python with FastAPI for AI and media pipelines."
+---
+
+# What I've Been Building Lately
+
+The past few months have been an unusually productive stretch of building, across domains that don't have much in common — so I wanted to gather it all in one place. This is less a launch announcement than a record of where my hands have been.
+
+## AI as a tool I reach for
+
+**ComfyUI Web** is a self-hosted image and video generation platform, and the fun part is that it uses Claude Code as a "prompt engineer." It turns a request written in Korean or English into an optimized prompt and ComfyUI workflow JSON, with a job queue and a social gallery layered on top.
+
+**Voice Studio** is a local studio that picks a speaker out of any video and automatically fine-tunes a GPT-SoVITS model. I collapsed a scattered set of scripts — vocal separation, diarization, transcription, training — into a single GPU job queue that runs end to end with one click.
+
+## Apps that scratch my own itch
+
+**KL125 Controller** is a Windows tray app that drives a TP-Link Kasa smart bulb directly over the LAN. I added an ambient mode that samples my monitor's dominant color in real time and mirrors it to the bulb — Philips Hue Sync, faked with a single bulb. I built it because I wanted to use it.
+
+I'm also building two apps about the mind: one is a journaling tool that follows the stages of trauma recovery, the other an anonymous app where you write out a feeling and burn it away with a 3D fire animation. Both started from my own experience, so I'm building them more carefully than the rest.
+
+## Just because it sounded fun
+
+**Argus Fusion** is a web app styled as an intelligence watch floor — it pulls 10+ live public feeds (earthquakes, aircraft, satellites, cyber vulnerabilities) and visualizes them on a Three.js globe. **Hoverslam** is a real-time multiplayer game inspired by SpaceX's Mechazilla booster catch, with suicide-burn physics I implemented from scratch. Both began with "that would be fun to build."
+
+## Why I build this much
+
+Laid out like this, a pattern shows up: almost everything started from something I was curious about or annoyed by, and AI tools are what let one person move across domains. I'm letting go of some of the pressure to launch and finish, and trying instead to keep a record of the building itself.
+
+The full list, with demo and code links, lives on the [projects page](/en/projects). In the next post I'll pick one of these and go deeper.
