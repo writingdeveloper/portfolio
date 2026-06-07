@@ -6,7 +6,7 @@ import type { Project } from '@/types/content'
 import { SITE_URL } from '@/lib/constants'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
-import { generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
+import { generateBreadcrumbJsonLd, generateProjectListJsonLd, safeJsonLd } from '@/lib/seo'
 import { useLocale } from 'next-intl'
 
 export async function generateMetadata({
@@ -52,12 +52,25 @@ function ProjectsContent() {
     { name: locale === 'ko' ? '홈' : 'Home', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}` },
     { name: locale === 'ko' ? '프로젝트' : 'Projects', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/projects` },
   ])
+  const projectListJsonLd = generateProjectListJsonLd(
+    (projectsData.projects as Project[]).map((project) => ({
+      name: project.name,
+      description: locale === 'ko' ? project.descriptionKo : project.descriptionEn,
+      url: project.website ?? (!project.private && project.github ? project.github : undefined),
+      techStack: project.techStack,
+    })),
+    locale,
+  )
 
   return (
     <PageTransition>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(projectListJsonLd) }}
       />
       <div>
         <header className="mb-12">

@@ -4,6 +4,7 @@ import {
   generateArticleJsonLd,
   generateBreadcrumbJsonLd,
   generateFaqJsonLd,
+  generateProjectListJsonLd,
 } from '../seo'
 
 describe('safeJsonLd', () => {
@@ -106,5 +107,34 @@ describe('generateFaqJsonLd', () => {
     expect(result['@type']).toBe('FAQPage')
     expect(result.mainEntity[0]['@type']).toBe('Question')
     expect(result.mainEntity[0].acceptedAnswer.text).toBe('Because.')
+  })
+})
+
+describe('generateProjectListJsonLd', () => {
+  it('builds an ItemList of authored CreativeWorks', () => {
+    const result = generateProjectListJsonLd(
+      [
+        { name: 'Alpha', description: 'First', url: 'https://alpha.dev', techStack: ['TypeScript', 'Next.js'] },
+        { name: 'Beta', description: 'Second' },
+      ],
+      'en',
+    )
+    expect(result['@type']).toBe('ItemList')
+    expect(result.numberOfItems).toBe(2)
+    expect(result.itemListElement[0].position).toBe(1)
+    expect(result.itemListElement[0].item['@type']).toBe('CreativeWork')
+    expect(result.itemListElement[0].item.author).toEqual({
+      '@type': 'Person',
+      name: 'Si Hyeong Lee',
+      url: 'https://writingdeveloper.blog/about',
+    })
+    expect(result.itemListElement[0].item).toHaveProperty('keywords', 'TypeScript, Next.js')
+  })
+
+  it('omits url and keywords when absent and localizes the author', () => {
+    const result = generateProjectListJsonLd([{ name: 'Beta', description: 'Second' }], 'ko')
+    expect(result.itemListElement[0].item).not.toHaveProperty('url')
+    expect(result.itemListElement[0].item).not.toHaveProperty('keywords')
+    expect(result.itemListElement[0].item.author.name).toBe('이시형')
   })
 })

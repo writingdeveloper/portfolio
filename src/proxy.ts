@@ -19,11 +19,26 @@ export default function proxy(request: NextRequest) {
   // Speed Insights inject same-origin /_vercel/*/script.js tags at runtime
   // without nonces, which strict-dynamic would block. 'self' + nonce still
   // blocks any inline / cross-origin script injection we care about.
+  // Google AdSense (account super2451894) + Google Analytics gtag.js.
+  // AdSense dynamically injects further ad scripts at runtime from these Google
+  // ad origins; because we deliberately avoid 'strict-dynamic' (see below), each
+  // origin a script can load from must be allowlisted explicitly. This is a
+  // conscious loosening of an otherwise tight script-src — the trade-off we
+  // accept to monetize via AdSense. Tighten/remove if AdSense is ever dropped.
+  const googleAdsAndAnalytics = [
+    'https://pagead2.googlesyndication.com',
+    'https://*.googlesyndication.com',
+    'https://partner.googleadservices.com',
+    'https://tpc.googlesyndication.com',
+    'https://www.googletagmanager.com',
+  ]
+
   const scriptSrc = [
     "'self'",
     `'nonce-${nonce}'`,
     'https://giscus.app',
     'https://va.vercel-scripts.com',
+    ...googleAdsAndAnalytics,
     isDev ? "'unsafe-eval'" : '',
   ]
     .filter(Boolean)
@@ -49,10 +64,17 @@ export default function proxy(request: NextRequest) {
     // cost of the refactor outweighs the CSP-Evaluator rating bump.
     // Revisit if we ever accept untrusted input.
     "style-src 'self' 'unsafe-inline'",
+    // img-src already permits any https: origin, which covers AdSense ad
+    // creatives and the GA collect pixel — no change needed there.
     "img-src 'self' data: https:",
     "font-src 'self'",
-    "connect-src 'self' https://giscus.app https://vitals.vercel-insights.com https://va.vercel-scripts.com https://api.github.com",
-    'frame-src https://giscus.app',
+    // GA beacons (google-analytics / analytics.google.com / googletagmanager)
+    // and AdSense's runtime XHR/beacon traffic (googlesyndication / doubleclick
+    // / adtrafficquality) are added alongside the existing same-origin + giscus
+    // + Vercel insights endpoints.
+    "connect-src 'self' https://giscus.app https://vitals.vercel-insights.com https://va.vercel-scripts.com https://api.github.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google",
+    // AdSense renders ad units inside cross-origin iframes from these origins.
+    'frame-src https://giscus.app https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google https://www.google.com',
     "frame-ancestors 'none'",
     "base-uri 'self'",
     "form-action 'self'",
