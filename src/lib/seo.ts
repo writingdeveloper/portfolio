@@ -106,6 +106,37 @@ export function generateFaqJsonLd(faqs: { question: string; answer: string }[]) 
   }
 }
 
+/** ItemList of the portfolio's projects, so search/AI engines can enumerate the
+ *  body of work as discrete CreativeWorks (each authored by the site owner). */
+export function generateProjectListJsonLd(
+  projects: { name: string; description: string; url?: string; techStack?: string[] }[],
+  locale: string,
+) {
+  const authorName = locale === 'ko' ? '이시형' : 'Si Hyeong Lee'
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: locale === 'ko' ? '프로젝트' : 'Projects',
+    numberOfItems: projects.length,
+    itemListElement: projects.map((project, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'CreativeWork',
+        name: project.name,
+        description: project.description,
+        ...(project.url ? { url: project.url } : {}),
+        ...(project.techStack?.length ? { keywords: project.techStack.join(', ') } : {}),
+        author: {
+          '@type': 'Person',
+          name: authorName,
+          url: `${SITE_URL}/about`,
+        },
+      },
+    })),
+  }
+}
+
 export function generateBreadcrumbJsonLd(items: { name: string; url: string }[]) {
   return {
     '@context': 'https://schema.org',

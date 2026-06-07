@@ -11,6 +11,8 @@ import { isImmersiveRoute } from '@/components/layout/layout-chrome-rules'
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '@/lib/constants'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { GoogleAdSense } from '@/components/analytics/GoogleAdSense'
+import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import '../globals.css'
 
 const inter = Inter({
@@ -102,6 +104,8 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className="dark" suppressHydrationWarning>
       <head>
+        <GoogleAdSense nonce={nonce} />
+        <GoogleAnalytics nonce={nonce} />
         <script
           nonce={nonce}
           dangerouslySetInnerHTML={{
