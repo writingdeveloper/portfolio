@@ -11,6 +11,7 @@ import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import { Globe } from 'lucide-react'
 import type { Metadata } from 'next'
 import { RelatedPosts } from '@/components/blog/RelatedPosts'
+import { Link } from '@/i18n/navigation'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { Comments } from '@/components/blog/Comments'
 
@@ -145,13 +146,17 @@ export default async function BlogPostPage({
               <span>{post.readingTime}</span>
             </div>
             {post.hasTranslation && (
-              <a
-                href={locale === 'ko' ? `/en/blog/${slug}` : `/blog/${slug}`}
+              /* next-intl Link with an explicit locale also updates the locale
+                 cookie. A plain <a> to the unprefixed ko URL broke here: the
+                 middleware saw the stale en cookie and bounced right back. */
+              <Link
+                href={`/blog/${slug}`}
+                locale={locale === 'ko' ? 'en' : 'ko'}
                 className="inline-flex items-center gap-1.5 mt-3 text-sm px-3 py-1.5 rounded-full bg-[var(--accent-bg)] text-[var(--accent-text)] border border-[var(--accent-border)] hover:bg-[var(--accent-bg-active)] hover:text-[var(--accent-text-hover)] transition-colors"
               >
                 <Globe size={14} />
                 {locale === 'ko' ? t('readInEnglish') : t('readInKorean')}
-              </a>
+              </Link>
             )}
           </header>
 
