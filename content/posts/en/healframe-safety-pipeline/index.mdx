@@ -1,0 +1,44 @@
+---
+title: "Should Someone Like Me Be Building a Mental Health App?"
+excerpt: "It started with a library book and ended with an AI pipeline that isn't allowed to miss a crisis signal. The question I've held onto longest while building HealFrame isn't technical — it's about legitimacy."
+publishedAt: "2026-06-10"
+author: "이시형"
+category: development
+tags: ["healframe", "mental-health", "ai-safety", "gemini"]
+coverImage: ""
+faqs:
+  - question: "Does HealFrame replace therapy?"
+    answer: "No. It's a tool that supports stage-appropriate journaling — it does not replace therapy or diagnosis. Keeping that line bright is part of the design principles this post describes."
+  - question: "How is the crisis-detection pipeline validated?"
+    answer: "With an LLM-judge eval harness run against a zero-tolerance bar for missed crisis signals (false negatives). When classification is uncertain, the input stage fails closed — it treats the entry as a crisis."
+---
+
+# Should Someone Like Me Be Building a Mental Health App?
+
+In 2026 I borrowed Judith Herman's *Trauma and Recovery* from the library. I've long been interested in counseling and psychoanalysis, and there were personal reasons the model didn't read as foreign to me. I'll leave that part there.
+
+What stayed with me was the structure: recovery moves through three stages — establishing safety, remembrance and mourning, reconnection. Reading it, I kept thinking the structure could be the skeleton of a writing tool. If what you should be writing differs by which stage you're in, then a tool could hand you prompts that match your stage. That's how [HealFrame](https://healframe.app) started.
+
+## The heaviest feature is the least visible one
+
+In a mental health app where AI guides your writing, the technically heaviest part isn't clever prompts. It's reading crisis signals in what the user writes.
+
+HealFrame runs a Gemini-based crisis-detection pipeline that classifies each entry as GREEN, AMBER, or RED. The most important design decision was asymmetry. **Input classification fails closed** — if the classification is uncertain or the system is degraded, it errs toward the safe interpretation and treats the entry as a crisis. **Output fails open** — a misbehaving safety check is not allowed to block the response a user needs from reaching them. The cost of missing a crisis and the cost of over-flagging are not symmetric, so the system's failure directions shouldn't be either.
+
+Validation follows the same logic. I built an LLM-judge eval harness that repeatedly tests the pipeline against one non-negotiable bar: **zero missed crisis signals.** Every other metric is up for discussion. That one isn't.
+
+## But does it actually work?
+
+That was the engineering part. Here's the honest part.
+
+I'm not the only one building crisis detection. Plenty of AI companies are building it, with far more people and far more data. And still, out in the world, people keep attempting and completing suicide. Between "my eval harness passes" and "this system works on the darkest night of a real person's life" there is a distance I cannot prove across.
+
+And underneath that sits a more basic question. I'm not a PhD. I'm not a clinician. I'm a developer who read a book, cares about this, and has some lived experience. Is someone like that allowed to build an app that touches people's minds? That question never went away while I was building. It still hasn't.
+
+## Lines instead of answers
+
+I haven't answered the question. What I have instead is a set of lines I hold while building.
+
+First, this app is not therapy, and it never claims to be — it's a tool that supports stage-appropriate writing, and that's where it stops. Second, the most dangerous failure (a missed crisis) gets a zero-tolerance bar, enforced by an eval harness rather than by good intentions. Third, I try not to forget that I don't know. I've come to see the anxiety of not being an expert less as something to get rid of and more as a safety mechanism — the thing that keeps me building carefully in a domain that demands it.
+
+I still have no certainty that I should be building this. But lately I think someone building without certainty might be less dangerous, in this particular domain, than someone building with it.

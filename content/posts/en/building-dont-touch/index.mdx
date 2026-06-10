@@ -1,0 +1,42 @@
+---
+title: "I Built an App to Fix My Hair-Pulling Habit (It's Not Fixed Yet)"
+excerpt: "The real problem with trichotillomania is that you don't notice your hand going up. An honest record of building Don't Touch — a webcam app that catches that moment — then using it, abandoning it, and getting one email that made it worth it."
+publishedAt: "2026-06-10"
+author: "이시형"
+category: development
+tags: ["dont-touch", "electron", "mediapipe", "mental-health"]
+coverImage: ""
+faqs:
+  - question: "Is the webcam footage sent anywhere?"
+    answer: "No. All video processing happens on-device with MediaPipe — nothing is recorded, stored, or transmitted."
+  - question: "Did it actually help with the hair pulling?"
+    answer: "It depended on the environment. It helped while I worked on a laptop with a camera, but trichotillomania is rooted in psychological anxiety, and the honest conclusion from the person who built it is that an app alone is unlikely to fix it."
+---
+
+# I Built an App to Fix My Hair-Pulling Habit (It's Not Fixed Yet)
+
+I have trichotillomania — a compulsive hair-pulling condition. There's one thing about it that's hard to understand unless you've lived it: **you don't notice your hand going up.** You only realize after it's done — "ah, I did it again." It's less a willpower problem than a blind spot in awareness.
+
+If the problem is not noticing, then maybe a machine that notices for you would help. That was the start of [Don't Touch](https://github.com/writingdeveloper/dont-touch-electron).
+
+## What I built
+
+It's an Electron desktop app. The webcam tracks your hand and face in real time, and the moment your hand enters a zone you've configured — scalp, eyebrows, cheeks — it alerts you instantly. Detection zones are finely adjustable, and daily stats and streaks let you see the trend.
+
+The most important technical decision was that **all video processing stays on the device.** MediaPipe Vision runs well enough in a browser-grade runtime to make that possible. This is an app that watches your face all day. If even a single frame of that left the machine, I wouldn't use it myself. Nothing is recorded or transmitted — only the detection events remain.
+
+## An honest record of whether it worked
+
+From here on, this is a record, not a pitch.
+
+While I worked on a laptop, it genuinely helped. The alert would fire, my hand would come down, and at minimum I became aware of where my hands were dozens of times a day. Then I moved back to a desktop — which had no camera. Same app, but an environment where it couldn't run, and so it sat abandoned for a while. The person who built the tool proved, firsthand, that tools depend on environment more than willpower.
+
+I posted it on Reddit once. A brief flicker of attention, then quiet. Then one day, a feature request arrived in my personal email. Someone out there was actually using the app, and cared enough about using it better to sit down and write to a stranger. I shipped the update right away, replied, and even got their feedback afterward. That one email weighed more than any download count — it meant someone with the same problem exists, and something I made is actually part of their day.
+
+## Writing down the limits too
+
+I want to be clear about something. Trichotillomania comes from an underlying anxiety mechanism. What this app catches is the surface of the behavior — not the anxiety underneath it. I think consistent use helps, but my honest view is that an app alone won't fix it.
+
+The evidence is simple: I built it, and mine isn't fixed yet.
+
+I'm keeping the app around anyway. A mirror pointed at your blind spot is clearly better than nothing — laptop-era me can vouch for that.

@@ -1,6 +1,6 @@
 ---
-title: "Adopting Keystatic CMS"
-excerpt: "How I integrated Keystatic CMS into my blog to enable web-based content editing."
+title: "Adopting Keystatic CMS — Why I Insisted on File-Based"
+excerpt: "When I decided to add a CMS to this blog, the real question was which kind. How I chose Keystatic on one criterion — the source of truth never leaves my repo — and what it still doesn't solve."
 publishedAt: "2026-02-23"
 author: "이시형"
 category: development
@@ -8,26 +8,39 @@ tags: ["keystatic", "cms", "nextjs"]
 coverImage: ""
 ---
 
-# Adopting Keystatic CMS
+# Adopting Keystatic CMS — Why I Insisted on File-Based
 
-While running my blog, manually creating MDX files every time was inconvenient. I had to remember the frontmatter format, follow file naming conventions, and a single typo could break the build. That's why I decided to adopt Keystatic, a file-based CMS.
+Every post on this blog is an MDX file inside a git repository. Writing a new one meant creating a folder, hand-typing frontmatter, and breaking the build if I got a single field wrong. File management came before writing — and it was becoming my excuse not to write. So I decided to add a CMS. The real question turned out to be *which kind*.
 
-## What is Keystatic?
+## The candidates, and why they lost
 
-Keystatic is a file-based CMS built by Thinkmill. It provides a web-based editor UI while keeping the existing MDX/Markdown file structure intact. No database is needed, and content is stored directly in the Git repository.
+**Notion or a headless CMS (Contentful, Sanity, etc.)**: your content's source of truth moves into someone else's database. This blog doubles as my portfolio, and I didn't want the canonical copy of my writing living outside my repository. If the service shuts down or changes its pricing, your posts become hostages.
 
-## Adoption Process
+**A custom admin on a database**: buildable, but running a database and an admin panel for one personal blog is the tail wagging the dog.
 
-The adoption was simpler than expected:
+**A file-based CMS (Keystatic, TinaCMS, Decap)**: content stays in git exactly as it is, with an editing UI layered on top. Not a single line of my existing MDX-reading logic has to change. This was the category I picked from, and Keystatic looked like the least friction within it — the schema is defined in TypeScript, and it mounts into the Next.js App Router as a single route.
 
-1. Install `@keystatic/core` and `@keystatic/next` packages
-2. Define a collection in `keystatic.config.ts` matching the existing frontmatter schema
-3. Add an Admin UI route at `/keystatic` in the Next.js App Router
-4. Exclude the `/keystatic` path from the i18n middleware
+## The setup
 
-## Benefits
+Adoption itself was half a day's work:
 
-- **Web-based editor**: Write and edit posts directly in the browser
-- **Preserves existing structure**: File-based, so no changes needed to the existing MDX reading logic
-- **Type safety**: Schema defined in TypeScript prevents frontmatter errors
-- **Local development friendly**: Just run `npm run dev` and access `/keystatic` right away
+1. Install `@keystatic/core` and `@keystatic/next`
+2. Define a collection in `keystatic.config.ts` mirroring the existing frontmatter schema (title, excerpt, publishedAt, category, tags, coverImage, faqs)
+3. Add the Admin UI route at `/keystatic` in the App Router
+4. Exclude `/keystatic` from the i18n middleware matcher — skip this and the admin gets caught in locale redirects
+
+I kept storage in local mode. With `npm run dev` running, anything I edit at `/keystatic` is written straight to local files, and I commit as usual. There's an env-var switch to GitHub mode, but for a one-person blog, local is plenty.
+
+## This blog's particular problem: ko/en pairs
+
+Posts here exist as a Korean–English pair (`content/posts/ko/<slug>` and `content/posts/en/<slug>`). Keystatic has no concept of "these two entries are translations of the same post." I ended up defining two separate collections, `posts-ko` and `posts-en`, and keeping the slugs aligned and the content in sync is still a human job.
+
+What the CMS solved was *formatting mistakes*, not *editorial rules* — something I only saw clearly after adopting it.
+
+## What changed, what didn't
+
+**Changed**: frontmatter typos can no longer break the build. The schema is TypeScript, so fields like category are a dropdown. I can write and edit straight from the browser.
+
+**Unchanged**: keeping ko/en in sync, translating, wrangling images. The parts of writing that actually take time are beyond any CMS.
+
+A CMS doesn't make you write. It just removes one excuse not to. For me, that was worth the price of admission.

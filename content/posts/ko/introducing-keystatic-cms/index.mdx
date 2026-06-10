@@ -1,6 +1,6 @@
 ---
-title: Keystatic CMS 도입기
-excerpt: 블로그에 Keystatic CMS를 도입하여 웹 기반 에디터로 글을 작성할 수 있게 된 과정을 공유합니다.
+title: Keystatic CMS 도입기 — 파일 기반을 고집한 이유
+excerpt: 블로그에 CMS를 붙이기로 했을 때, 진짜 문제는 "어떤 CMS냐"였습니다. 콘텐츠의 원본을 내 저장소 밖으로 내보내지 않겠다는 기준으로 Keystatic을 고른 과정과, 도입 후에도 남아 있는 한계를 기록합니다.
 publishedAt: 2026-02-23
 author: 이시형
 category: development
@@ -10,26 +10,39 @@ tags:
   - nextjs
 faqs: []
 ---
-# Keystatic CMS 도입기
+# Keystatic CMS 도입기 — 파일 기반을 고집한 이유
 
-블로그를 운영하면서 매번 MDX 파일을 수동으로 만드는 것이 불편했습니다. frontmatter 형식을 기억해야 하고, 파일명 규칙도 지켜야 하고, 오타라도 나면 빌드가 깨지기도 합니다. 그래서 파일 기반 CMS인 Keystatic을 도입하게 되었습니다.
+이 블로그의 글은 전부 git 저장소 안의 MDX 파일입니다. 새 글을 쓰려면 폴더를 만들고, frontmatter를 손으로 타이핑하고, 형식을 하나라도 틀리면 빌드가 깨졌습니다. 글쓰기보다 파일 관리가 먼저 오는 구조였고, 그게 글을 안 쓰게 되는 핑계가 되고 있었습니다. 그래서 CMS를 붙이기로 했는데 — 진짜 문제는 "어떤 CMS냐"였습니다.
 
-## Keystatic이란?
+## 후보들, 그리고 탈락 이유
 
-Keystatic은 Thinkmill에서 만든 파일 기반 CMS입니다. 기존 MDX/Markdown 파일 구조를 그대로 유지하면서, 웹 기반 에디터 UI를 제공합니다. 데이터베이스가 필요 없고, Git 저장소에 콘텐츠가 직접 저장됩니다.
+**Notion이나 headless CMS(Contentful, Sanity류)**: 글의 원본이 외부 서비스의 DB로 들어갑니다. 이 블로그는 제 포트폴리오이기도 해서, 콘텐츠의 단일 원본이 제 저장소 밖에 있는 게 싫었습니다. 서비스가 문을 닫거나 가격 정책이 바뀌면 글이 인질이 됩니다.
+
+**DB 기반 자체 어드민**: 만들 수야 있지만, 개인 블로그 하나 때문에 DB와 어드민을 운영하는 건 배보다 배꼽입니다.
+
+**파일 기반 CMS(Keystatic, TinaCMS, Decap)**: 콘텐츠는 그대로 git에 남고, 그 위에 편집 UI만 얹습니다. 기존 MDX 읽기 로직을 한 줄도 바꿀 필요가 없습니다. 결국 이 부류에서 골랐고, 그중 Keystatic이 TypeScript로 스키마를 정의하고 Next.js App Router에 라우트 하나로 올라간다는 점에서 가장 마찰이 적어 보였습니다.
 
 ## 도입 과정
 
-도입은 생각보다 간단했습니다:
+도입 자체는 반나절 작업이었습니다:
 
-1. `@keystatic/core`와 `@keystatic/next` 패키지 설치
-2. `keystatic.config.ts`에서 기존 frontmatter 스키마에 맞는 collection 정의
-3. Next.js App Router에 `/keystatic` 경로로 Admin UI 라우트 추가
-4. i18n 미들웨어에서 `/keystatic` 경로 제외
+1. `@keystatic/core`와 `@keystatic/next` 설치
+2. `keystatic.config.ts`에 기존 frontmatter 스키마(title, excerpt, publishedAt, category, tags, coverImage, faqs)를 그대로 옮긴 collection 정의
+3. App Router에 `/keystatic` Admin UI 라우트 추가
+4. i18n 미들웨어 matcher에서 `/keystatic` 경로 제외 — 이걸 빼먹으면 어드민이 로케일 리다이렉트에 휘말립니다
 
-## 장점
+스토리지는 기본 local 모드로 두었습니다. `npm run dev` 하나 띄우면 `/keystatic`에서 편집한 내용이 곧바로 로컬 파일에 쓰이고, 커밋은 평소처럼 제가 합니다. 환경 변수를 설정하면 GitHub 모드로 전환되도록 해뒀지만, 혼자 쓰는 블로그에는 local이 충분합니다.
 
-* **웹 기반 에디터**: 브라우저에서 바로 글을 작성하고 편집할 수 있습니다
-* **기존 구조 유지**: 파일 기반이라 기존 MDX 읽기 로직을 변경할 필요가 없습니다
-* **타입 안전**: TypeScript로 스키마를 정의하므로 frontmatter 오류를 방지합니다
-* **로컬 개발 친화적**: `npm run dev`만 실행하면 `/keystatic`에서 바로 사용 가능합니다
+## 이 블로그 특유의 문제: ko/en 쌍
+
+이 블로그의 글은 한국어와 영어 두 파일이 한 쌍입니다(`content/posts/ko/<슬러그>`, `content/posts/en/<슬러그>`). 그런데 Keystatic에는 "이 두 글이 같은 글의 번역"이라는 개념이 없습니다. 결국 `posts-ko`, `posts-en` 두 개의 컬렉션으로 나눠 정의했고, 두 글의 슬러그를 맞추고 내용을 동기화하는 일은 여전히 사람 몫입니다.
+
+CMS가 해결해 준 것은 "형식 실수"이지 "운영 규칙"이 아니라는 걸 도입하고 나서야 분명히 알게 됐습니다.
+
+## 달라진 것, 달라지지 않은 것
+
+**달라진 것**: frontmatter 오타로 빌드가 깨질 일이 없어졌습니다. 스키마가 TypeScript라 카테고리 같은 필드는 선택지에서 고르면 끝입니다. 브라우저에서 바로 쓰고 고칠 수 있습니다.
+
+**달라지지 않은 것**: ko/en 쌍 맞추기, 번역, 이미지 정리. 글쓰기에서 정말 오래 걸리는 부분은 CMS가 건드리지 못합니다.
+
+CMS는 글을 쓰게 만들어주지 않습니다. 다만 글을 안 쓰는 핑계 하나를 없애줄 뿐입니다. 그 정도면 도입한 값은 충분히 했다고 생각합니다.

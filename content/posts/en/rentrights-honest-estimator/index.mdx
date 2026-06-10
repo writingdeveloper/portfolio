@@ -1,0 +1,42 @@
+---
+title: "There Was No Public API, So I Built an Honest Estimator"
+excerpt: "When my room-share rent in LA suddenly jumped, I didn't even know whether the increase was legal — so I just paid. A record of building RentRights, an open-source estimator for which rent-control rules likely apply to your address."
+publishedAt: "2026-06-10"
+author: "이시형"
+category: development
+tags: ["rentrights", "civic-tech", "open-data", "open-source"]
+coverImage: ""
+faqs:
+  - question: "Is RentRights' result a legal determination?"
+    answer: "No — it's an estimate built on open data. There is no official RSO-registry API that gives definitive answers, so results are always labeled as estimates, and ambiguous boundaries lean toward tenant protection. It does not replace legal advice."
+  - question: "What data does it estimate from?"
+    answer: "Public data from the Census and the LA County Assessor. Signals like a building's construction year drive the estimate of whether City RSO, AB1482, or LA County rules likely apply."
+---
+
+# There Was No Public API, So I Built an Honest Estimator
+
+When I first came to LA, I lived in a room-share. A few months in, the rent jumped — and I just paid it. It's not that I didn't think of pushing back; **I had no way of even knowing whether the increase was legal.** Rent regulation differs by state, by city, sometimes by building, and figuring out which rules cover you is close to impossible for an ordinary person.
+
+Years later, not much has changed. My lease has three months left, US rent is as brutal as ever, and as someone running his own business, my income is close to nothing right now. What my landlord can raise at the next renewal is not an abstract question for me. And that's when the old memory came back: if a tool like this had existed back then, I might at least have worked up the nerve to ask someone for help.
+
+So I built [RentRights](https://github.com/writingdeveloper/rentrights) — an open-source web app that takes an address and estimates which rent-control regime most likely applies: LA City RSO, California's AB1482, or LA County rules (RSTPO/JCO).
+
+## The problem: definitive data doesn't exist
+
+The first wall I hit was this: there is no public API that can tell you, definitively, "this address is covered by RSO." A registry exists, but not in a form a program can query.
+
+That left two options: don't build it because you can't be certain, or estimate from the data you can get. I chose the second, with one condition attached: **never hide the fact that it's an estimate.** The app gathers signals like construction year from Census and LA County Assessor open data and computes a likelihood — and the result is always labeled as an estimate. The moment a tool like this starts selling certainty, it stops being help and becomes a hazard. That's why it calls itself an *honest estimator*.
+
+## Confessing the bias
+
+The rules engine has one explicit lean: when a construction year lands on a boundary or the data is ambiguous, the engine **tilts toward tenant protection.** "You may be covered — worth checking" beats "not applicable."
+
+I'd love to write that this came from some grand principle of justice, but honestly, I think it leaned that way because I'm a tenant. If a landlord had built it, it might lean the other way. What mattered to me was not hiding the lean: the tilt is coded explicitly into the rules engine and pinned down by 198 tests. Anyone can open the code and see which way this tool leans. I believe writing your bias into the code and locking it with tests is more honest than pretending you don't have one.
+
+## With public data, trust is everything
+
+A tool like this is finished the first time it gives someone a wrong answer, so I spent real time on robustness. Profiling showed some Assessor queries taking 13–55 seconds on certain paths, so I built an indexed-query fallback that returns in about a second. External API calls go through whitelisted parameters to shut down injection. None of this is glamorous — but for someone who landed here after searching "my rent went up, is this allowed," a 60-second load or a broken response is just a reason to close the tab.
+
+## For the me back then
+
+This app can't replace legal advice, and the goal is humbler than that. It's for the person I was — holding a rent-increase notice, not even knowing whether it was legitimate, deciding to just pay — to walk away with **at least the nerve to look up whether there's somewhere to ask.** That's as far as an estimator can take you. I want it to do that part properly.
