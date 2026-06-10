@@ -10,7 +10,7 @@ faqs:
   - question: "Does HealFrame replace therapy?"
     answer: "No. It's a tool that supports stage-appropriate journaling — it does not replace therapy or diagnosis. Keeping that line bright is part of the design principles this post describes."
   - question: "How is the crisis-detection pipeline validated?"
-    answer: "With an LLM-judge eval harness run against a zero-tolerance bar for missed crisis signals (false negatives). When classification is uncertain, the input stage fails closed — it treats the entry as a crisis."
+    answer: "With an LLM-judge eval harness run against a zero-tolerance bar for missed crisis signals (false negatives) on the eval set — a passing criterion, not a guarantee of zero misses in the wild. For the gaps the evals can't reach, the input stage fails closed: when classification is uncertain, it treats the entry as a crisis."
 ---
 
 # Should Someone Like Me Be Building a Mental Health App?
@@ -25,7 +25,7 @@ In a mental health app where AI guides your writing, the technically heaviest pa
 
 HealFrame runs a Gemini-based crisis-detection pipeline that classifies each entry as GREEN, AMBER, or RED. The most important design decision was asymmetry. **Input classification fails closed** — if the classification is uncertain or the system is degraded, it errs toward the safe interpretation and treats the entry as a crisis. **Output fails open** — a misbehaving safety check is not allowed to block the response a user needs from reaching them. The cost of missing a crisis and the cost of over-flagging are not symmetric, so the system's failure directions shouldn't be either.
 
-Validation follows the same logic. I built an LLM-judge eval harness that repeatedly tests the pipeline against one non-negotiable bar: **zero missed crisis signals.** Every other metric is up for discussion. That one isn't.
+Validation follows the same logic. I built an LLM-judge eval harness that repeatedly tests the pipeline against one non-negotiable bar: **zero missed crisis signals on the eval set.** Every other metric is up for discussion; that tolerance isn't. I want to be precise about what that bar is, though — it's a passing criterion for my eval set, not proof of zero misses in the wild, and an LLM judging an LLM carries an obvious circularity: the judge itself can be wrong. That's exactly why the asymmetry above matters — for whatever the evals don't reach, the fail-closed input layer that treats uncertainty as crisis is the last layer underneath.
 
 ## But does it actually work?
 
@@ -42,3 +42,7 @@ I haven't answered the question. What I have instead is a set of lines I hold wh
 First, this app is not therapy, and it never claims to be — it's a tool that supports stage-appropriate writing, and that's where it stops. Second, the most dangerous failure (a missed crisis) gets a zero-tolerance bar, enforced by an eval harness rather than by good intentions. Third, I try not to forget that I don't know. I've come to see the anxiety of not being an expert less as something to get rid of and more as a safety mechanism — the thing that keeps me building carefully in a domain that demands it.
 
 I still have no certainty that I should be building this. But lately I think someone building without certainty might be less dangerous, in this particular domain, than someone building with it.
+
+---
+
+> If you're going through a hard time right now, you don't have to carry it alone. In the US, call or text **988** (Suicide & Crisis Lifeline). Elsewhere, [findahelpline.com](https://findahelpline.com) lists free, confidential services by country.

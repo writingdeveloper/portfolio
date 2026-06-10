@@ -35,7 +35,7 @@ I'd love to write that this came from some grand principle of justice, but hones
 
 ## With public data, trust is everything
 
-A tool like this is finished the first time it gives someone a wrong answer, so I spent real time on robustness. Profiling showed some Assessor queries taking 13–55 seconds on certain paths, so I built an indexed-query fallback that returns in about a second. External API calls go through whitelisted parameters to shut down injection. None of this is glamorous — but for someone who landed here after searching "my rent went up, is this allowed," a 60-second load or a broken response is just a reason to close the tab.
+A tool like this is finished the first time it gives someone a wrong answer, so I spent real time on robustness. Profiling showed some Assessor queries taking 13–55 seconds on certain paths, so I built an indexed-query fallback that returns in about a second. External API calls never interpolate user input straight into the query string — only whitelisted parameters get through, which shrinks the surface for query tampering. None of this is glamorous — but for someone who landed here after searching "my rent went up, is this allowed," a 60-second load or a broken response is just a reason to close the tab.
 
 ## For the me back then
 
