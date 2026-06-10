@@ -7,6 +7,7 @@ const postSchema = {
   title: fields.slug({ name: { label: '제목' } }),
   excerpt: fields.text({ label: '요약', multiline: true }),
   publishedAt: fields.date({ label: '발행일' }),
+  updatedAt: fields.date({ label: '수정일 (선택)' }),
   author: fields.text({ label: '작성자', defaultValue: '이시형' }),
   category: fields.select({
     label: '카테고리',

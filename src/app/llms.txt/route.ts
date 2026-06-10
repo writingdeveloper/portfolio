@@ -64,6 +64,7 @@ React, Next.js, TypeScript, Tailwind CSS, Three.js / React Three Fiber, NestJS, 
 ## Links
 
 - Website: ${SITE_URL}
+- Full post text for LLMs: ${SITE_URL}/llms-full.txt
 - RSS Feed: ${SITE_URL}/feed.xml
 - Sitemap: ${SITE_URL}/sitemap.xml
 `

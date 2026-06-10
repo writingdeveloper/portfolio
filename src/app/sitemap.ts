@@ -64,7 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return {
       url: `${SITE_URL}/blog/${post.slug}`,
-      lastModified: new Date(post.publishedAt),
+      lastModified: new Date(post.updatedAt || post.publishedAt),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
       alternates: { languages },
@@ -86,7 +86,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     return {
       url: `${SITE_URL}/en/blog/${post.slug}`,
-      lastModified: new Date(post.publishedAt),
+      lastModified: new Date(post.updatedAt || post.publishedAt),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
       alternates: { languages },

@@ -96,6 +96,14 @@
   "timeline": [
     {
       "date": "2026",
+      "titleKo": "오픈소스·시빅테크로 확장",
+      "titleEn": "Expanding into open source & civic tech",
+      "descriptionKo": "RentRights(LA 세입자 임대료 규제 추정기), DevDeck(Claude Code 프로젝트 관제 데스크톱 앱), TransitLA(차 없이 대중교통으로 가는 LA 탐색) 등 공개 데이터·개발 도구 프로젝트를 공개.",
+      "descriptionEn": "Released public-data and developer-tool projects — RentRights (LA rent-control estimator for tenants), DevDeck (a command-deck desktop app for Claude Code projects), and TransitLA (car-free LA discovery on public transit).",
+      "type": "project"
+    },
+    {
+      "date": "2026",
       "titleKo": "AI 제품 연속 출시",
       "titleEn": "Shipping AI products",
       "descriptionKo": "healframe(멘탈헬스), argus-fusion(실시간 OSINT), zodiacly(운세), minddump(감정 케어) 등 AI 기반 웹·모바일 제품을 빠르게 기획·개발·출시.",

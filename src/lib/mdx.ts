@@ -17,6 +17,8 @@ export interface PostMeta {
   title: string
   excerpt: string
   publishedAt: string
+  /** Last substantive revision (YYYY-MM-DD); empty when never revised. */
+  updatedAt: string
   author: string
   category: string
   tags: string[]
@@ -84,12 +86,18 @@ function loadLocaleMap(locale: string): PostMap {
       const { data, content } = matter(fileContent)
       const stats = readingTime(content)
 
+      // Unquoted YAML dates arrive as Date objects from gray-matter;
+      // normalize to YYYY-MM-DD strings so consumers can rely on one shape.
+      const toDateString = (v: unknown): string =>
+        v instanceof Date ? v.toISOString().slice(0, 10) : v ? String(v) : ''
+
       map.set(slug, {
         meta: {
           slug,
           title: data.title || '',
           excerpt: data.excerpt || '',
           publishedAt: data.publishedAt || '',
+          updatedAt: toDateString(data.updatedAt),
           author: data.author || '',
           category: data.category || '',
           tags: Array.isArray(data.tags) ? data.tags : [],
