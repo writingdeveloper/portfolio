@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl'
-import { Github, Linkedin, Twitter } from 'lucide-react'
+import { Github, Linkedin } from 'lucide-react'
 
 export function Footer() {
   const t = useTranslations('footer')
@@ -16,11 +16,8 @@ export function Footer() {
           <a href="https://github.com/writingdeveloper" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors" aria-label={ta('github')}>
             <Github size={18} aria-hidden="true" />
           </a>
-          <a href="https://linkedin.com/in/writingdeveloper" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors" aria-label={ta('linkedin')}>
+          <a href="https://www.linkedin.com/in/sihyeonglee/" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors" aria-label={ta('linkedin')}>
             <Linkedin size={18} aria-hidden="true" />
-          </a>
-          <a href="https://twitter.com/writingdev" target="_blank" rel="noopener noreferrer" className="text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors" aria-label={ta('twitter')}>
-            <Twitter size={18} aria-hidden="true" />
           </a>
         </div>
       </div>

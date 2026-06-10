@@ -86,6 +86,7 @@ export function generatePersonJsonLd(locale: string) {
       ],
       sameAs: [
         'https://github.com/writingdeveloper',
+        'https://www.linkedin.com/in/sihyeonglee/',
       ],
     },
   }
