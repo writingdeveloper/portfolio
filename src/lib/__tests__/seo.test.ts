@@ -35,7 +35,7 @@ describe('safeJsonLd', () => {
 })
 
 describe('generateArticleJsonLd', () => {
-  it('produces a valid Article schema', () => {
+  it('produces a valid BlogPosting schema', () => {
     const result = generateArticleJsonLd({
       title: 'Test Post',
       description: 'An example',
@@ -43,10 +43,40 @@ describe('generateArticleJsonLd', () => {
       publishedAt: '2026-01-01',
       authorName: 'Alice',
     })
-    expect(result['@type']).toBe('Article')
+    expect(result['@type']).toBe('BlogPosting')
     expect(result.headline).toBe('Test Post')
-    expect(result.author).toEqual({ '@type': 'Person', name: 'Alice' })
+    expect(result.author).toEqual({
+      '@type': 'Person',
+      name: 'Alice',
+      url: 'https://writingdeveloper.blog/about',
+    })
     expect(result.dateModified).toBe('2026-01-01')
+  })
+
+  it('includes inLanguage and keywords when locale and tags are given', () => {
+    const result = generateArticleJsonLd({
+      title: 'T',
+      description: 'D',
+      url: 'u',
+      publishedAt: '2026-01-01',
+      authorName: 'A',
+      locale: 'ko',
+      tags: ['nextjs', 'seo'],
+    })
+    expect(result).toHaveProperty('inLanguage', 'ko-KR')
+    expect(result).toHaveProperty('keywords', 'nextjs, seo')
+  })
+
+  it('omits inLanguage and keywords when absent', () => {
+    const result = generateArticleJsonLd({
+      title: 'T',
+      description: 'D',
+      url: 'u',
+      publishedAt: '2026-01-01',
+      authorName: 'A',
+    })
+    expect(result).not.toHaveProperty('inLanguage')
+    expect(result).not.toHaveProperty('keywords')
   })
 
   it('includes image when provided', () => {

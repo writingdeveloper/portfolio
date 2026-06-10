@@ -14,6 +14,8 @@ export function generateArticleJsonLd({
   publishedAt,
   dateModified,
   authorName,
+  locale,
+  tags,
 }: {
   title: string
   description: string
@@ -22,16 +24,21 @@ export function generateArticleJsonLd({
   publishedAt: string
   dateModified?: string
   authorName: string
+  locale?: string
+  tags?: string[]
 }) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    // BlogPosting (a subtype of Article) is the precise type for blog content.
+    '@type': 'BlogPosting',
     headline: title,
     description,
     url,
     ...(imageUrl ? { image: imageUrl } : {}),
     datePublished: publishedAt,
     dateModified: dateModified || publishedAt,
+    ...(locale ? { inLanguage: locale === 'ko' ? 'ko-KR' : 'en-US' } : {}),
+    ...(tags?.length ? { keywords: tags.join(', ') } : {}),
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': url,
@@ -39,6 +46,9 @@ export function generateArticleJsonLd({
     author: {
       '@type': 'Person',
       name: authorName,
+      // Entity link so search/AI engines can connect the author across pages
+      // (matches the Person URL used in the projects ItemList).
+      url: `${SITE_URL}/about`,
     },
     publisher: {
       '@type': 'Organization',

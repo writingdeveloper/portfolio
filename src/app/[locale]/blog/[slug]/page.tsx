@@ -103,6 +103,8 @@ export default async function BlogPostPage({
     imageUrl: ogImage,
     publishedAt: post.publishedAt,
     authorName: post.author,
+    locale,
+    tags: post.tags,
   })
 
   const breadcrumbJsonLd = generateBreadcrumbJsonLd([
