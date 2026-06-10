@@ -1,0 +1,44 @@
+---
+title: "I'm Building a Sobriety App That Donates My Money If I Fail"
+excerpt: "I once bought a breathalyzer and made a deal with a friend: send a capture of every reading, or pay a fine. That clumsy contraption worked surprisingly well — so now I'm building it properly: a sobriety app where a failed check-in sends your stake to charity."
+publishedAt: "2026-06-10"
+author: "이시형"
+category: development
+tags: ["sobriety-app", "commitment-device", "stripe-connect", "react-native"]
+coverImage: ""
+faqs:
+  - question: "Where does the money go if I fail a check-in?"
+    answer: "Your stake is automatically donated to charity. The platform is non-custodial — it never holds the money at any point."
+  - question: "Can't the selfie check-in be cheated?"
+    answer: "Honestly: yes, I haven't fully closed that hole. Proxy photos and similar tricks are the app's weakest link, and it's the part I'm still wrestling with — the post covers that openly."
+---
+
+I'm attempting sobriety myself right now. This app came out of that attempt.
+
+There's one method that actually worked for me before. I bought a breathalyzer and made a deal with a friend: send a capture of every reading, and pay a fine if I didn't. It looks like a silly contraption, but it worked surprisingly well. Looking back, the reason it worked wasn't the precision of the device. **There was money to lose, and someone watching.** The thing behavioral economics calls a commitment device — I had duct-taped one together out of a breathalyzer and a friend.
+
+Building that clumsy contraption properly is where this app started.
+
+## The structure: stake money, prove it daily
+
+The structure is simple. You put up an amount as a stake and check in every day with a selfie. Keep the streak, and nothing happens. Fail, and the stake is automatically donated to charity. You don't just lose the money — it gets taken by a good cause. A loss that stings but that you can stand behind: that distinction mattered to me.
+
+I'm building the mobile app with Expo and the backend with Fastify, with 313 tests and CI already in place. It's still in progress — I'm writing that down as plainly as everything else.
+
+## A design that never touches the money
+
+The most important design decision in this app: **the platform never holds the user's money.** It's a non-custodial Stripe Connect flow (manual capture), so the stake is processed without ever passing through the platform's account.
+
+Honestly, this wasn't the picture I drew first. It was the structure Claude Code — which I was consulting on the design — recommended most strongly. Once I heard it, it was obvious. The moment a solo developer holds other people's money, the weight that follows — trust, refund disputes, security — isn't the weight of one feature. If you never hold the money, most of those problems never exist. Even when the recommendation comes from an AI, a right recommendation is right, and I'm writing that down.
+
+## The weakest link: a selfie can be faked
+
+This is the part of the post that has to be the most honest. The selfie check-in can be beaten. Someone else can take the photo for you, and I haven't found a technical way to stop someone determined to cheat.
+
+Come to think of it, the breathalyzer-era "send a capture" was technically flimsy too. It still worked — probably because the person receiving the capture was a friend. I could have cheated, but the cost of lying to a friend was higher than the fine. The app has to fill that friend's seat, and the more I build, the clearer it gets that this isn't a technology problem. For now, all I can write is that I'm still wrestling with it.
+
+## One line I'm drawing
+
+To be clear about one thing: a device like this can help with a casual commitment to drink less, but anything that looks like alcohol dependence is not an app's territory. Professional counseling and treatment come first.
+
+For now, I'm user number one. Whether the contraption I once assembled out of a breathalyzer and a friend still works as an app — I'm finding out on myself first.
