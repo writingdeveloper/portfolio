@@ -31,6 +31,19 @@ interface PlayClientProps {
   locale: string
 }
 
+/** True when the browser can actually create a WebGL context. */
+function detectWebGL(): boolean {
+  try {
+    const canvas = document.createElement('canvas')
+    return Boolean(
+      window.WebGLRenderingContext &&
+        (canvas.getContext('webgl2') || canvas.getContext('webgl')),
+    )
+  } catch {
+    return false
+  }
+}
+
 export function PlayClient({ projects, skills, timeline, posts, locale }: PlayClientProps) {
   const t = useTranslations('play')
   const th = useTranslations('home')
@@ -39,6 +52,11 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
   const [isMobile] = useState(
     () => typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0
   )
+  // Gate the Canvas on real WebGL support so devices without it fall through to
+  // the visible PlaySemanticFallback instead of showing a blank/black canvas.
+  // Lazy initializer is safe here: PlayClient is loaded with ssr:false, so it
+  // only ever renders in the browser (no hydration mismatch).
+  const [hasWebGL] = useState(detectWebGL)
   const scrollRef = useRef<ScrollControlsState | null>(null)
 
   const sectionLabels: Record<string, string> = {
@@ -61,6 +79,10 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
       scrollEl.scrollTop = (index / 4) * (scrollEl.scrollHeight - scrollEl.clientHeight)
     }
   }, [])
+
+  // No WebGL → don't mount the opaque Canvas overlay; let the visible
+  // PlaySemanticFallback underneath be the experience.
+  if (!hasWebGL) return null
 
   return (
     <div className="fixed inset-0 z-[60]" style={{ background: '#06060f' }}>
