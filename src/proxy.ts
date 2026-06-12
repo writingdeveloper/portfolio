@@ -72,7 +72,12 @@ export default function proxy(request: NextRequest) {
     // and AdSense's runtime XHR/beacon traffic (googlesyndication / doubleclick
     // / adtrafficquality) are added alongside the existing same-origin + giscus
     // + Vercel insights endpoints.
-    "connect-src 'self' https://giscus.app https://vitals.vercel-insights.com https://va.vercel-scripts.com https://api.github.com https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google",
+    // NOTE: gtag.js v2 posts the /g/collect beacon to the APEX host
+    // `analytics.google.com` (and falls back to `www.google.com/g/collect`
+    // for Google Signals). A `*.analytics.google.com` wildcard matches only
+    // sub-domains, NOT the apex, so both beacons were silently blocked here —
+    // listing the apex hosts explicitly is required for hits to reach GA.
+    "connect-src 'self' https://giscus.app https://vitals.vercel-insights.com https://va.vercel-scripts.com https://api.github.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google",
     // AdSense renders ad units inside cross-origin iframes from these origins.
     'frame-src https://giscus.app https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google https://www.google.com',
     "frame-ancestors 'none'",
