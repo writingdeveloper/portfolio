@@ -333,6 +333,62 @@
       "status": "building",
       "private": true,
       "featured": false
+    },
+    {
+      "name": "Observer of Lines",
+      "slug": "observer-of-lines",
+      "descriptionKo": "《슈타인즈 게이트》의 다이버전스 미터에서 영감받은 실시간 참여형 웹앱. Reddit의 실제 뉴스 피드를 끌어와 월드라인 수치를 움직이고, 방문자가 남긴 긍정적 관측(D-메일)이 공유된 세계선을 정해진 수렴값으로 끌어당기도록 만들었습니다. 닉시관·네온 CRT 감성의 터미널 UI를 직접 구현했습니다.",
+      "descriptionEn": "A real-time, participatory web app inspired by the divergence meter in Steins;Gate. It pulls live news feeds from Reddit to nudge a shared world-line value, and lets visitors submit positive observations (\"D-Mails\") that pull the divergence toward its canonical attractor. I hand-built the nixie-tube / neon-CRT terminal UI.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "PostgreSQL",
+        "Tailwind CSS"
+      ],
+      "status": "launched",
+      "website": "https://observer-of-lines.vercel.app",
+      "private": true,
+      "featured": false
+    },
+    {
+      "name": "Growgle",
+      "slug": "growgle",
+      "descriptionKo": "구글 지도·옐프 리뷰 URL을 넣으면 리뷰를 수집해 AI로 분석하고 점수·키워드·개선 제안을 돌려주는 로컬 비즈니스 리뷰 분석 SaaS. Playwright 스크레이퍼로 리뷰를 모아 OpenAI로 분석하는 FastAPI 백엔드와, React Three Fiber 3D 카드 UI를 얹은 프런트엔드를 풀스택으로 만들었습니다.",
+      "descriptionEn": "A local-business review-analysis SaaS: paste a Google Maps or Yelp URL and it scrapes the reviews, analyzes them with AI, and returns scores, keywords, and growth suggestions. I built the full stack — a FastAPI backend that scrapes with Playwright and analyzes with OpenAI, and a React frontend with a React Three Fiber 3D card UI.",
+      "techStack": [
+        "TypeScript",
+        "React",
+        "Vite",
+        "FastAPI",
+        "OpenAI",
+        "Supabase",
+        "Playwright",
+        "React Three Fiber"
+      ],
+      "status": "launched",
+      "website": "https://growgle-frontend.vercel.app",
+      "private": true,
+      "featured": false
+    },
+    {
+      "name": "Mini Games Hub",
+      "slug": "mini-games",
+      "descriptionKo": "여러 미니게임을 한곳에 모은 웹 게임 허브. Next.js로 만들고 Vitest 단위·통합 테스트와 Playwright E2E를 GitHub Actions CI로 자동화했습니다. 도주 게임 등 캐주얼 게임들을 직접 구현해 라이브로 배포했습니다.",
+      "descriptionEn": "A web hub that collects several mini-games in one place, built with Next.js. I wired up Vitest unit/integration tests and Playwright E2E behind a GitHub Actions CI pipeline, implemented casual games (an escape game and more), and shipped it live.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "Vitest",
+        "Playwright"
+      ],
+      "status": "launched",
+      "website": "https://mini-games-dun.vercel.app",
+      "github": "https://github.com/writingdeveloper/Mini-Games",
+      "private": false,
+      "featured": false
     }
   ]
 }
