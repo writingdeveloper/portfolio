@@ -16,6 +16,22 @@ const nextConfig: NextConfig = {
     // Serve content images from the same-origin API route through the image optimizer.
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
+  async redirects() {
+    // Lock down the local-mode Keystatic CMS on production. It can't function
+    // on Vercel's read-only FS and would otherwise expose its admin UI to
+    // anonymous visitors. Bounce /keystatic to home in production unless GitHub
+    // storage (which enforces its own OAuth) is configured. This runs at the
+    // platform routing layer, so it's guaranteed regardless of middleware/route
+    // quirks; dev is untouched so local editing at /keystatic still works.
+    // (The /api/keystatic handler and a page-level guard provide defense in depth.)
+    if (process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG) {
+      return [
+        { source: '/keystatic', destination: '/', permanent: false },
+        { source: '/keystatic/:path*', destination: '/', permanent: false },
+      ]
+    }
+    return []
+  },
   async headers() {
     return [
       {
