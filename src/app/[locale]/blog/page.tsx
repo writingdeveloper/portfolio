@@ -12,6 +12,7 @@ import { Globe } from 'lucide-react'
 import { SearchBar } from '@/components/blog/SearchBar'
 import { Pagination } from '@/components/blog/Pagination'
 import { Newsletter } from '@/components/blog/Newsletter'
+import { Link } from '@/i18n/navigation'
 
 // Revalidate every hour — the blog list reads from module-level MDX cache
 // and doesn't depend on per-request data.
@@ -95,13 +96,14 @@ function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, c
           <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>
           <div className="flex items-center justify-between">
             <p className="text-[var(--text-secondary)]">{t('description')}</p>
-            <a
-              href={locale === 'ko' ? '/en/blog' : '/blog'}
+            <Link
+              href="/blog"
+              locale={locale === 'ko' ? 'en' : 'ko'}
               className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-full bg-[var(--bg-elevated)] text-[var(--text-secondary)] hover:bg-[var(--bg-elevated-hover)] hover:text-[var(--text-emphasis)] transition-colors whitespace-nowrap"
             >
               <Globe size={14} />
               {locale === 'ko' ? t('viewEnglishPosts') : t('viewKoreanPosts')}
-            </a>
+            </Link>
           </div>
         </header>
 
@@ -117,9 +119,9 @@ function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, c
             <span className="text-sm px-2.5 py-1 rounded-full bg-[var(--accent-bg-active)] text-[var(--accent-text)]">
               #{activeTag}
             </span>
-            <a href={activeCategory ? `/blog?category=${activeCategory}` : '/blog'} className="text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors">
+            <Link href={activeCategory ? `/blog?category=${activeCategory}` : '/blog'} className="text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors">
               ✕ {t('clearFilter')}
-            </a>
+            </Link>
           </div>
         )}
 
