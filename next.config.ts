@@ -24,7 +24,11 @@ const nextConfig: NextConfig = {
     // platform routing layer, so it's guaranteed regardless of middleware/route
     // quirks; dev is untouched so local editing at /keystatic still works.
     // (The /api/keystatic handler and a page-level guard provide defense in depth.)
-    if (process.env.NODE_ENV === 'production' && !process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG) {
+    // Gate on VERCEL (always injected during a Vercel build) rather than
+    // NODE_ENV, which isn't reliably 'production' when next.config is evaluated.
+    const onVercel = process.env.VERCEL === '1'
+    const hasGitHubStorage = Boolean(process.env.NEXT_PUBLIC_KEYSTATIC_GITHUB_APP_SLUG)
+    if (onVercel && !hasGitHubStorage) {
       return [
         { source: '/keystatic', destination: '/', permanent: false },
         { source: '/keystatic/:path*', destination: '/', permanent: false },
