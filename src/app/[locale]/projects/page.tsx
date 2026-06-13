@@ -20,11 +20,11 @@ export async function generateMetadata({
   const pageUrl = `${SITE_URL}${localePath}/projects`
   return {
     title: t('title'),
-    description: t('description'),
+    description: t('metaDescription'),
     openGraph: {
       url: pageUrl,
       title: t('title'),
-      description: t('description'),
+      description: t('metaDescription'),
       images: [{ url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`, width: 1200, height: 630, alt: t('title') }],
     },
     alternates: {

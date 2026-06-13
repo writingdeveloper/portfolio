@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "WritingDeveloper",
-    "description": "Dev stories, tech tutorials, and startup journey"
+    "description": "Dev stories, deep-dive build logs, and hands-on tutorials from Si Hyeong Lee — a full-stack developer shipping web, AI, and indie projects."
   },
   "nav": {
     "home": "Home",
@@ -21,11 +21,13 @@
     "viewAll": "View All",
     "featuredProjects": "Projects",
     "noPosts": "No posts yet.",
-    "explore": "Explore my world"
+    "explore": "Explore my world",
+    "metaDescription": "Si Hyeong Lee — full-stack developer and indie maker. I ship web, mobile, desktop, AI, and game projects, and write about how each one was built."
   },
   "blog": {
     "title": "Blog",
     "description": "Stories about development, technology, and startups",
+    "metaDescription": "In-depth build logs and dev stories from Si Hyeong Lee — AI safety, full-stack architecture, indie hacking, and lessons from shipping real products.",
     "allCategories": "All",
     "categoryFilter": "Category filter",
     "readingTime": "min read",
@@ -55,6 +57,7 @@
   "projects": {
     "title": "Projects",
     "description": "Things I'm building",
+    "metaDescription": "20+ projects by Si Hyeong Lee across web, mobile, desktop, AI, and games — SaaS apps, developer tools, data viz, and experimental builds, with live demos.",
     "viewProject": "View Project",
     "viewCode": "View Code",
     "private": "Private",
@@ -68,6 +71,7 @@
   "about": {
     "title": "About",
     "description": "My journey as a developer and entrepreneur",
+    "metaDescription": "Si Hyeong Lee — full-stack developer and entrepreneur. The story behind Soursea, HealFrame, and 20+ builds, with the tech stack and timeline behind them.",
     "body": "As a developer and entrepreneur, I solve problems with technology. I build projects like Soursea and Don't Touch — each born from a real problem I faced — and share what I learn through this blog.",
     "skills": "Tech Stack",
     "timeline": "Timeline"
@@ -104,6 +108,7 @@
   "play": {
     "title": "Explore",
     "description": "Explore the portfolio in 3D space",
+    "metaDescription": "Explore Si Hyeong Lee's portfolio in an interactive 3D space — navigate projects, skills, timeline, and writing rendered in real-time WebGL.",
     "loading": "Loading...",
     "exit": "Exit",
     "sections": {

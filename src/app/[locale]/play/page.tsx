@@ -20,11 +20,11 @@ export async function generateMetadata({
 
   return {
     title: t('title'),
-    description: t('description'),
+    description: t('metaDescription'),
     openGraph: {
       url: pageUrl,
       title: t('title'),
-      description: t('description'),
+      description: t('metaDescription'),
       images: [
         {
           url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`,
@@ -39,6 +39,7 @@ export async function generateMetadata({
       languages: {
         ko: `${SITE_URL}/play`,
         en: `${SITE_URL}/en/play`,
+        'x-default': `${SITE_URL}/play`,
       },
     },
   }

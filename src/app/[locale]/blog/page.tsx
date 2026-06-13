@@ -29,11 +29,11 @@ export async function generateMetadata({
   const pageUrl = `${SITE_URL}${localePath}/blog`
   return {
     title: t('title'),
-    description: t('description'),
+    description: t('metaDescription'),
     openGraph: {
       url: pageUrl,
       title: t('title'),
-      description: t('description'),
+      description: t('metaDescription'),
       locale: locale === 'ko' ? 'ko_KR' : 'en_US',
       alternateLocale: locale === 'ko' ? ['en_US'] : ['ko_KR'],
       type: 'website',
