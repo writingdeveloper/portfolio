@@ -68,7 +68,10 @@ export default function proxy(request: NextRequest) {
     // HTML), CSS-injection is not a meaningful attack surface, so the
     // cost of the refactor outweighs the CSP-Evaluator rating bump.
     // Revisit if we ever accept untrusted input.
-    "style-src 'self' 'unsafe-inline'",
+    // giscus injects its comment-widget stylesheet from giscus.app; allow it
+    // here (style-src-elem falls back to style-src) so the comments render
+    // styled instead of being blocked by CSP.
+    "style-src 'self' 'unsafe-inline' https://giscus.app",
     // img-src already permits any https: origin, which covers AdSense ad
     // creatives and the GA collect pixel — no change needed there.
     "img-src 'self' data: https:",
