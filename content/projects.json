@@ -49,8 +49,8 @@
     {
       "name": "Argus Fusion",
       "slug": "argus-fusion",
-      "descriptionKo": "정보기관 감시실을 콘셉트로 만든 실시간 OSINT 상황인식 웹앱. USGS·OpenSky·CISA·NASA 등 10개 이상의 공개 API를 config 기반 피드 레지스트리와 서버 캐싱 레이어로 통합하고, Three.js 3D 지구본·사이버 취약점 보드·위성 궤도 추적 등 4개 뷰로 시각화했습니다.",
-      "descriptionEn": "A real-time OSINT situational-awareness web app styled as an intelligence watch floor. I aggregated 10+ live public feeds (USGS, OpenSky ADS-B, CISA KEV, NASA, GDELT, CelesTrak…) through a config-driven feed registry with server-side caching, and visualized them across four views — a Three.js 3D globe, a cyber-vulnerability board, and satellite/orbital tracking.",
+      "descriptionKo": "정보기관 감시실을 콘셉트로 만든 실시간 OSINT 상황인식 웹앱. USGS·OpenSky(ADS-B)·CISA(KEV)·NASA·GDELT·CelesTrak 등 10개 이상의 공개 API를 config 기반 피드 레지스트리와 서버 캐싱 레이어로 통합하고, Three.js 3D 지구본·사이버 취약점 보드·위성 궤도 추적 등 4개 뷰로 시각화했습니다.",
+      "descriptionEn": "A real-time OSINT situational-awareness web app styled as an intelligence watch floor. I aggregated 10+ live public feeds (USGS, OpenSky ADS-B, CISA KEV, NASA, GDELT, CelesTrak…) through a config-driven feed registry with server-side caching, and visualized them across four views, including a Three.js 3D globe, a cyber-vulnerability board, and satellite/orbital tracking.",
       "techStack": [
         "TypeScript",
         "Next.js",
@@ -110,7 +110,7 @@
     {
       "name": "RentRights",
       "slug": "rentrights",
-      "descriptionKo": "LA 세입자가 자기 주소에 어떤 임대료 규제(City RSO·AB1482·LA County 등)가 적용되는지 추정해주는 오픈소스 웹앱. RSO 등록부 공개 API가 없는 현실에서 Census·LA County Assessor 공개 데이터만으로 '정직한 추정기'를 설계했고, 모든 모호한 경계를 세입자 보호 방향으로 기울이는 룰 엔진을 198개 테스트로 고정했습니다. 인덱스 쿼리 폴백(1초 vs 13~55초)·인젝션 화이트리스트 등 공개데이터 통합의 견고성에 집중했습니다.",
+      "descriptionKo": "LA 세입자가 자기 주소에 어떤 임대료 규제(City RSO·AB1482·LA County RSTPO/JCO 등)가 적용되는지 추정해주는 오픈소스 웹앱. RSO 등록부 공개 API가 없는 현실에서 Census·LA County Assessor 공개 데이터만으로 '정직한 추정기'를 설계했고, 모든 모호한 경계를 세입자 보호 방향으로 기울이는 룰 엔진을 198개 테스트로 고정했습니다. 인덱스 쿼리 폴백(1초 vs 13~55초)·인젝션 화이트리스트 등 공개데이터 통합의 견고성에 집중했습니다.",
       "descriptionEn": "An open-source web app that estimates which rent-control regime (City RSO, AB1482, LA County RSTPO/JCO) likely applies to a given address. With no public RSO-registry API to lean on, I designed an 'honest estimator' over Census and LA County Assessor open data, with a rules engine that leans protective at every ambiguous boundary — locked by 198 tests. The focus was robustness of public-data integration: a profiled indexed-query fallback (1s vs 13–55s) and injection-whitelisted API calls.",
       "techStack": [
         "TypeScript",
@@ -151,7 +151,7 @@
       "name": "Zodiacly",
       "slug": "zodiacly",
       "descriptionKo": "미국·중남미 시장을 겨냥한 운세 콘텐츠 웹 플랫폼. astronomy-engine으로 실제 행성 위치를 계산하는 출생 차트 계산기를 만들고, 별자리·궁합·점성술 학습 페이지를 영어·스페인어·포르투갈어 3개 언어 SEO 구조로 정적 생성해 오가닉 검색 트래픽을 노리도록 설계했습니다.",
-      "descriptionEn": "A horoscope content platform aimed at the US and Latin American market. I built a birth-chart calculator on real planetary positions (astronomy-engine) and statically generate zodiac, compatibility, and astrology-learning pages across a three-language (EN/ES/PT) SEO architecture designed to capture organic search traffic.",
+      "descriptionEn": "A horoscope content platform aimed at the US and Latin American markets. I built a birth-chart calculator on real planetary positions (astronomy-engine) and statically generate zodiac, compatibility, and astrology-learning pages across a three-language (EN/ES/PT) SEO architecture designed to capture organic search traffic.",
       "techStack": [
         "TypeScript",
         "Next.js",
@@ -228,7 +228,7 @@
       "name": "Sobriety App",
       "slug": "sobriety-app",
       "descriptionKo": "금전적 공약을 걸고 매일 셀피 체크인으로 금주를 지키는 모바일 앱. Stripe Connect 비수탁(manual-capture) 구조로 실패 시 스테이크가 자선단체에 자동 기부되도록 설계하고, Expo + Fastify 모노레포로 313개 테스트와 GitHub Actions CI까지 갖춰 구현했습니다.",
-      "descriptionEn": "A sobriety commitment app where you stake real money and verify each day with a selfie check-in. I designed a non-custodial Stripe Connect flow that auto-donates the stake to charity on failure (the platform never holds funds), and built it as an Expo + Fastify monorepo with 313+ tests and full CI.",
+      "descriptionEn": "A sobriety commitment app where you stake real money and verify each day with a selfie check-in. I designed a non-custodial Stripe Connect flow that auto-donates the stake to charity on failure (the platform never holds funds), and built it as an Expo + Fastify monorepo with 313 tests and full CI.",
       "techStack": [
         "TypeScript",
         "Expo",
@@ -337,7 +337,7 @@
     {
       "name": "Observer of Lines",
       "slug": "observer-of-lines",
-      "descriptionKo": "《슈타인즈 게이트》의 다이버전스 미터에서 영감받은 실시간 참여형 웹앱. Reddit의 실제 뉴스 피드를 끌어와 월드라인 수치를 움직이고, 방문자가 남긴 긍정적 관측(D-메일)이 공유된 세계선을 정해진 수렴값으로 끌어당기도록 만들었습니다. 닉시관·네온 CRT 감성의 터미널 UI를 직접 구현했습니다.",
+      "descriptionKo": "《슈타인즈 게이트》의 다이버전스 미터에서 영감받은 실시간 참여형 웹앱. Reddit의 실제 뉴스 피드를 끌어와 세계선 수치를 움직이고, 방문자가 남긴 긍정적 관측(D-메일)이 공유된 세계선을 정해진 수렴값으로 끌어당기도록 만들었습니다. 닉시관·네온 CRT 감성의 터미널 UI를 직접 구현했습니다.",
       "descriptionEn": "A real-time, participatory web app inspired by the divergence meter in Steins;Gate. It pulls live news feeds from Reddit to nudge a shared world-line value, and lets visitors submit positive observations (\"D-Mails\") that pull the divergence toward its canonical attractor. I hand-built the nixie-tube / neon-CRT terminal UI.",
       "techStack": [
         "TypeScript",
@@ -354,7 +354,7 @@
     {
       "name": "Growgle",
       "slug": "growgle",
-      "descriptionKo": "구글 지도·옐프 리뷰 URL을 넣으면 리뷰를 수집해 AI로 분석하고 점수·키워드·개선 제안을 돌려주는 로컬 비즈니스 리뷰 분석 SaaS. Playwright 스크레이퍼로 리뷰를 모아 OpenAI로 분석하는 FastAPI 백엔드와, React Three Fiber 3D 카드 UI를 얹은 프런트엔드를 풀스택으로 만들었습니다.",
+      "descriptionKo": "구글 지도·옐프 리뷰 URL을 넣으면 리뷰를 수집해 AI로 분석하고 점수·키워드·개선 제안을 돌려주는 로컬 비즈니스 리뷰 분석 SaaS. Playwright 스크레이퍼로 리뷰를 모아 OpenAI로 분석하는 FastAPI 백엔드와, React Three Fiber 3D 카드 UI를 얹은 프론트엔드를 풀스택으로 만들었습니다.",
       "descriptionEn": "A local-business review-analysis SaaS: paste a Google Maps or Yelp URL and it scrapes the reviews, analyzes them with AI, and returns scores, keywords, and growth suggestions. I built the full stack — a FastAPI backend that scrapes with Playwright and analyzes with OpenAI, and a React frontend with a React Three Fiber 3D card UI.",
       "techStack": [
         "TypeScript",
@@ -374,8 +374,8 @@
     {
       "name": "Mini Games Hub",
       "slug": "mini-games",
-      "descriptionKo": "여러 미니게임을 한곳에 모은 웹 게임 허브. Next.js로 만들고 Vitest 단위·통합 테스트와 Playwright E2E를 GitHub Actions CI로 자동화했습니다. 도주 게임 등 캐주얼 게임들을 직접 구현해 라이브로 배포했습니다.",
-      "descriptionEn": "A web hub that collects several mini-games in one place, built with Next.js. I wired up Vitest unit/integration tests and Playwright E2E behind a GitHub Actions CI pipeline, implemented casual games (an escape game and more), and shipped it live.",
+      "descriptionKo": "여러 미니게임을 한곳에 모은 웹 게임 허브. Next.js로 만들고 Vitest 단위·통합 테스트와 Playwright E2E를 GitHub Actions CI로 자동화했습니다. 탈출 게임 등 캐주얼 게임들을 직접 구현해 라이브로 배포했습니다.",
+      "descriptionEn": "A web hub that collects several mini-games in one place, built with Next.js. I wired up Vitest unit/integration tests and Playwright E2E in a GitHub Actions CI pipeline, implemented casual games (an escape game and more), and shipped it live.",
       "techStack": [
         "TypeScript",
         "Next.js",

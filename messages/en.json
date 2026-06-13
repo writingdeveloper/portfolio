@@ -15,7 +15,7 @@
       "greeting": "Hello",
       "name": "Si Hyeong Lee",
       "role": "Developer & Entrepreneur",
-      "description": "Solving problems with code, sharing experiences through writing."
+      "description": "I solve problems with code and share my experiences through writing."
     },
     "latestPosts": "Latest Posts",
     "viewAll": "View All",
@@ -57,7 +57,7 @@
   "projects": {
     "title": "Projects",
     "description": "Things I'm building",
-    "metaDescription": "20+ projects by Si Hyeong Lee across web, mobile, desktop, AI, and games — SaaS apps, developer tools, data viz, and experimental builds, with live demos.",
+    "metaDescription": "Around 20 projects by Si Hyeong Lee across web, mobile, desktop, AI, and games — SaaS apps, developer tools, data visualizations, and experimental builds, with live demos.",
     "viewProject": "View Project",
     "viewCode": "View Code",
     "private": "Private",
@@ -71,7 +71,7 @@
   "about": {
     "title": "About",
     "description": "My journey as a developer and entrepreneur",
-    "metaDescription": "Si Hyeong Lee — full-stack developer and entrepreneur. The story behind Soursea, HealFrame, and 20+ builds, with the tech stack and timeline behind them.",
+    "metaDescription": "Si Hyeong Lee — full-stack developer and entrepreneur. The story behind Soursea, HealFrame, and around 20 builds, with the tech stack and timeline behind them.",
     "body": "As a developer and entrepreneur, I solve problems with technology. I build projects like Soursea and Don't Touch — each born from a real problem I faced — and share what I learn through this blog.",
     "skills": "Tech Stack",
     "timeline": "Timeline"
