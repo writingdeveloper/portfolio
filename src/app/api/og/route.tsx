@@ -3,10 +3,29 @@ import type { NextRequest } from 'next/server'
 
 export const runtime = 'edge'
 
+// Clamp untrusted query input before it reaches ImageResponse: caps the work
+// the renderer does (no multi-MB strings) and strips control chars / bidi
+// overrides that could garble or spoof the generated card. Filtering by code
+// point keeps this regex-free (no literal control chars in source).
+function clampParam(value: string | null, max: number): string | null {
+  if (!value) return null
+  let cleaned = ''
+  for (const ch of value) {
+    const code = ch.codePointAt(0) ?? 0
+    // Drop C0 controls (0x00–0x1F), DEL (0x7F), and bidi overrides.
+    if (code <= 0x1f || code === 0x7f) continue
+    if (code === 0x200e || code === 0x200f || (code >= 0x202a && code <= 0x202e)) continue
+    cleaned += ch
+  }
+  cleaned = cleaned.trim()
+  if (!cleaned) return null
+  return cleaned.length > max ? cleaned.slice(0, max) : cleaned
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
-  const title = searchParams.get('title')
-  const description = searchParams.get('description')
+  const title = clampParam(searchParams.get('title'), 120)
+  const description = clampParam(searchParams.get('description'), 200)
 
   // Route-level headers — /api/og is not covered by the src/proxy.ts matcher
   // (api routes are excluded), so we set the security headers here directly.
@@ -15,6 +34,8 @@ export async function GET(request: NextRequest) {
     'X-Content-Type-Options': 'nosniff',
     'Referrer-Policy': 'strict-origin-when-cross-origin',
     'Cross-Origin-Resource-Policy': 'same-origin',
+    'X-Frame-Options': 'DENY',
+    'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'",
   }
 
   if (!title) {

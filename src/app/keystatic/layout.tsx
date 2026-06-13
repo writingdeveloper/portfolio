@@ -1,5 +1,7 @@
+import { notFound } from 'next/navigation'
 import KeystaticApp from './keystatic'
 import { getTranslationStatus } from '@/lib/translation-status'
+import { isKeystaticDisabled } from '@/lib/keystatic-access'
 
 function TranslationBanner() {
   const { untranslated } = getTranslationStatus()
@@ -28,6 +30,12 @@ function TranslationBanner() {
 }
 
 export default function KeystaticLayout() {
+  // Local-mode CMS is useless and exposed on production (Vercel read-only FS);
+  // return 404 there. GitHub-storage mode enforces its own auth, so it stays on.
+  if (isKeystaticDisabled()) {
+    notFound()
+  }
+
   return (
     <html lang="ko">
       <body>
