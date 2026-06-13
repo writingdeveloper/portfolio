@@ -1,30 +1,18 @@
 import createMiddleware from 'next-intl/middleware'
-import { NextResponse } from 'next/server'
 import { routing } from './i18n/routing'
-import type { NextRequest } from 'next/server'
-import { isKeystaticDisabled } from './lib/keystatic-access'
+import type { NextRequest, NextResponse } from 'next/server'
 
 // Renamed from middleware.ts to proxy.ts to follow the Next.js 16.2+
 // file convention (the "middleware" name is deprecated). Behavior is
 // identical — per-request CSP nonce composed with next-intl routing.
+// NOTE on Keystatic: the CMS lives under /keystatic and /api/keystatic, which
+// are excluded from this matcher. Their production lockdown is handled at the
+// route level instead (keystatic/[[...params]]/page.tsx + not-found.tsx for
+// the UI, api/keystatic route handler for the API), because middleware does
+// not reliably run on the optional-catch-all /keystatic route.
 const intlMiddleware = createMiddleware(routing)
 
 export default function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl
-
-  // Keystatic guard. The CMS ships in the production bundle but is useless
-  // (and unauthenticated) in local-storage mode on Vercel's read-only FS.
-  // A page-level notFound() blocks rendering but can't set a 404 status from
-  // this segment's own root layout, so we hard-404 the UI + route handler here
-  // where the status is guaranteed. When GitHub storage is configured the CMS
-  // enforces its own OAuth, so we let it through untouched.
-  if (pathname === '/keystatic' || pathname.startsWith('/keystatic/') || pathname.startsWith('/api/keystatic')) {
-    if (isKeystaticDisabled()) {
-      return new NextResponse('Not Found', { status: 404 })
-    }
-    return NextResponse.next()
-  }
-
   // Generate a per-request nonce for CSP.
   // Using crypto.randomUUID() keeps this compatible with the edge runtime.
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
@@ -120,14 +108,5 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Note: `keystatic` is intentionally NOT in the negative-lookahead exclusion
-  // (only api/_next/_vercel/static files are). That lets /keystatic and
-  // /keystatic/* flow through the middleware so the guard above can hard-404
-  // them in production; the guard early-returns before the nonce/CSP/intl work,
-  // so non-keystatic routes are unaffected. /api/keystatic is excluded by `api`
-  // in the lookahead, so it gets its own explicit entry.
-  matcher: [
-    '/((?!api|_next|_vercel|.*\\..*).*)',
-    '/api/keystatic/:path*',
-  ],
+  matcher: ['/((?!api|keystatic|_next|_vercel|.*\\..*).*)'],
 }
