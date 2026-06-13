@@ -87,7 +87,7 @@
       "status": "building",
       "website": "https://minddump-seven.vercel.app",
       "private": true,
-      "featured": true
+      "featured": false
     },
     {
       "name": "Don't Touch",
@@ -105,7 +105,7 @@
       "status": "active",
       "github": "https://github.com/writingdeveloper/dont-touch-electron",
       "private": false,
-      "featured": true
+      "featured": false
     },
     {
       "name": "RentRights",
@@ -184,7 +184,7 @@
       "status": "launched",
       "website": "https://transitla.writingdeveloper.blog",
       "private": true,
-      "featured": true
+      "featured": false
     },
     {
       "name": "Receipt Tracker",
