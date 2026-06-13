@@ -123,6 +123,7 @@
         "Docker"
       ],
       "status": "building",
+      "website": "https://rentrights.writingdeveloper.blog",
       "github": "https://github.com/writingdeveloper/rentrights",
       "private": false,
       "featured": true
@@ -149,20 +150,18 @@
     {
       "name": "Zodiacly",
       "slug": "zodiacly",
-      "descriptionKo": "미국·남미 시장을 겨냥해 기획·개발한 AI 운세 웹 플랫폼. astronomy-engine으로 실제 행성 위치를 계산하고, 별자리·궁합·주간/월간 운세 페이지를 6개 언어 SEO 구조로 정적 생성해 오가닉 트래픽을 확보하도록 설계했습니다.",
-      "descriptionEn": "An AI horoscope platform I built for the US and Latin American market. It computes real planetary positions with astronomy-engine and statically generates zodiac, compatibility, and weekly/monthly horoscope pages in a six-language SEO architecture designed to capture organic traffic.",
+      "descriptionKo": "미국·중남미 시장을 겨냥한 운세 콘텐츠 웹 플랫폼. astronomy-engine으로 실제 행성 위치를 계산하는 출생 차트 계산기를 만들고, 별자리·궁합·점성술 학습 페이지를 영어·스페인어·포르투갈어 3개 언어 SEO 구조로 정적 생성해 오가닉 검색 트래픽을 노리도록 설계했습니다.",
+      "descriptionEn": "A horoscope content platform aimed at the US and Latin American market. I built a birth-chart calculator on real planetary positions (astronomy-engine) and statically generate zodiac, compatibility, and astrology-learning pages across a three-language (EN/ES/PT) SEO architecture designed to capture organic search traffic.",
       "techStack": [
         "TypeScript",
         "Next.js",
         "React",
-        "Supabase",
         "astronomy-engine",
-        "Claude API",
         "next-intl",
         "Tailwind CSS"
       ],
       "status": "launched",
-      "website": "https://zodiacly.vercel.app",
+      "website": "https://zodiacly.writingdeveloper.blog",
       "private": true,
       "featured": false
     },
@@ -183,7 +182,7 @@
         "Playwright"
       ],
       "status": "launched",
-      "website": "https://transitla.devmanage.duckdns.org",
+      "website": "https://transitla.writingdeveloper.blog",
       "private": true,
       "featured": true
     },
@@ -202,7 +201,8 @@
         "sharp",
         "Vitest"
       ],
-      "status": "building",
+      "status": "active",
+      "website": "https://receo.writingdeveloper.blog",
       "private": true,
       "featured": false
     },
@@ -299,6 +299,39 @@
       "status": "active",
       "github": "https://github.com/writingdeveloper/kl125-blink",
       "private": false,
+      "featured": false
+    },
+    {
+      "name": "Normandy Cliff Defense",
+      "slug": "normandy-cliff-defense",
+      "descriptionKo": "1944년 노르망디 해안 절벽을 지키는 WW2 브라우저 FPS·디펜스 게임. 보병 지휘, 전차·헬기·전투기 운용, 함대 교전, 보급 트럭 상점 같은 RTS 경제까지 얹은 하이브리드 전장을 Three.js로 구현하고, PeerJS 기반 P2P 협동 멀티플레이와 한·영 UI를 단일 HTML 빌드로 배포했습니다.",
+      "descriptionEn": "A WW2 browser FPS/defense game holding the 1944 Normandy cliffs. I built a hybrid battlefield in Three.js — commanding infantry, operating tanks, helicopters and fighters, naval engagements, and an RTS-style supply-truck economy — with PeerJS-based P2P co-op multiplayer and a bilingual KO/EN UI, shipped as a single deployable HTML build.",
+      "techStack": [
+        "JavaScript",
+        "Three.js",
+        "WebGL",
+        "PeerJS"
+      ],
+      "status": "launched",
+      "website": "https://normandy-cliff-defense.pages.dev",
+      "private": true,
+      "featured": false
+    },
+    {
+      "name": "Piano Scribe",
+      "slug": "piano-scribe",
+      "descriptionKo": "오디오 파일이나 유튜브 URL을 넣으면 피아노 연주를 자동 채보해 악보(PDF·MusicXML)와 MIDI로 내보내는 로컬 도구. PyTorch 피아노 트랜스크립션 모델로 음을 추출하고 MuseScore CLI로 악보를 렌더링하며, 변환이 실패해도 부분 결과는 돌려주도록 파이프라인을 설계했습니다.",
+      "descriptionEn": "A local tool that auto-transcribes piano performances from an audio file or a YouTube URL into sheet music (PDF/MusicXML) and MIDI. It extracts notes with a PyTorch piano-transcription model and renders scores through the MuseScore CLI, with a pipeline that still returns partial results when a conversion step fails.",
+      "techStack": [
+        "Python",
+        "PyTorch",
+        "Gradio",
+        "librosa",
+        "yt-dlp",
+        "MuseScore"
+      ],
+      "status": "building",
+      "private": true,
       "featured": false
     }
   ]
