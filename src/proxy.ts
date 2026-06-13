@@ -111,5 +111,9 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|keystatic|_next|_vercel|.*\\..*).*)'],
+  // `apple-icon` is the one generated metadata route with no file extension,
+  // so it isn't caught by the `.*\..*` file exclusion; list it explicitly or
+  // next-intl hijacks /apple-icon into locale routing and it 404s. (icon.svg,
+  // manifest.webmanifest, robots.txt, sitemap.xml all have dots → covered.)
+  matcher: ['/((?!api|keystatic|apple-icon|_next|_vercel|.*\\..*).*)'],
 }
