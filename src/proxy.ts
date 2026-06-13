@@ -120,14 +120,14 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // First entry: all app routes except api/keystatic/_next/_vercel/files —
-  // these get the nonce + CSP + intl routing. The extra entries opt the
-  // Keystatic UI and its route handler back IN so the guard above can hard-404
-  // them in production (they are otherwise excluded by the first pattern).
+  // Note: `keystatic` is intentionally NOT in the negative-lookahead exclusion
+  // (only api/_next/_vercel/static files are). That lets /keystatic and
+  // /keystatic/* flow through the middleware so the guard above can hard-404
+  // them in production; the guard early-returns before the nonce/CSP/intl work,
+  // so non-keystatic routes are unaffected. /api/keystatic is excluded by `api`
+  // in the lookahead, so it gets its own explicit entry.
   matcher: [
-    '/((?!api|keystatic|_next|_vercel|.*\\..*).*)',
-    '/keystatic',
-    '/keystatic/:path*',
+    '/((?!api|_next|_vercel|.*\\..*).*)',
     '/api/keystatic/:path*',
   ],
 }
