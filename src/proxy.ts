@@ -1,6 +1,8 @@
 import createMiddleware from 'next-intl/middleware'
+import { NextResponse } from 'next/server'
 import { routing } from './i18n/routing'
-import type { NextRequest, NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+import { isKeystaticDisabled } from './lib/keystatic-access'
 
 // Renamed from middleware.ts to proxy.ts to follow the Next.js 16.2+
 // file convention (the "middleware" name is deprecated). Behavior is
@@ -8,6 +10,21 @@ import type { NextRequest, NextResponse } from 'next/server'
 const intlMiddleware = createMiddleware(routing)
 
 export default function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl
+
+  // Keystatic guard. The CMS ships in the production bundle but is useless
+  // (and unauthenticated) in local-storage mode on Vercel's read-only FS.
+  // A page-level notFound() blocks rendering but can't set a 404 status from
+  // this segment's own root layout, so we hard-404 the UI + route handler here
+  // where the status is guaranteed. When GitHub storage is configured the CMS
+  // enforces its own OAuth, so we let it through untouched.
+  if (pathname === '/keystatic' || pathname.startsWith('/keystatic/') || pathname.startsWith('/api/keystatic')) {
+    if (isKeystaticDisabled()) {
+      return new NextResponse('Not Found', { status: 404 })
+    }
+    return NextResponse.next()
+  }
+
   // Generate a per-request nonce for CSP.
   // Using crypto.randomUUID() keeps this compatible with the edge runtime.
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
@@ -103,5 +120,14 @@ export default function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!api|keystatic|_next|_vercel|.*\\..*).*)'],
+  // First entry: all app routes except api/keystatic/_next/_vercel/files —
+  // these get the nonce + CSP + intl routing. The extra entries opt the
+  // Keystatic UI and its route handler back IN so the guard above can hard-404
+  // them in production (they are otherwise excluded by the first pattern).
+  matcher: [
+    '/((?!api|keystatic|_next|_vercel|.*\\..*).*)',
+    '/keystatic',
+    '/keystatic/:path*',
+    '/api/keystatic/:path*',
+  ],
 }
