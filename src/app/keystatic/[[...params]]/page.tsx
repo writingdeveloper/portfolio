@@ -3,6 +3,11 @@ import KeystaticApp from '../keystatic'
 import { getTranslationStatus } from '@/lib/translation-status'
 import { isKeystaticDisabled } from '@/lib/keystatic-access'
 
+// Render per-request, not at build. A statically prerendered notFound() bakes
+// the 404 UI into a 200 response; rendering dynamically lets notFound() set a
+// real 404 status (with the segment's not-found.tsx boundary).
+export const dynamic = 'force-dynamic'
+
 function TranslationBanner() {
   const { untranslated } = getTranslationStatus()
   if (untranslated.length === 0) return null
