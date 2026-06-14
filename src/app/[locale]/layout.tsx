@@ -104,8 +104,6 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className="dark" suppressHydrationWarning>
       <head>
-        <GoogleAdSense nonce={nonce} />
-        <GoogleAnalytics nonce={nonce} />
         <script
           nonce={nonce}
           dangerouslySetInnerHTML={{
@@ -136,6 +134,10 @@ export default async function LocaleLayout({
             </>
           )}
         </NextIntlClientProvider>
+        {/* Third-party analytics/ads load after hydration (next/script
+            afterInteractive) so they stay off the critical render path. */}
+        <GoogleAnalytics nonce={nonce} />
+        <GoogleAdSense nonce={nonce} />
         <Analytics />
         <SpeedInsights />
       </body>

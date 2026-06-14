@@ -1,11 +1,14 @@
+import Script from 'next/script'
 import { GA_MEASUREMENT_ID } from '@/lib/constants'
 
 /**
  * Google Analytics 4 (gtag.js).
  *
- * Server component so it can stamp the per-request CSP `nonce` onto the inline
- * config script (the gtag loader is allowlisted by host in proxy.ts, but the
- * inline `gtag('config', …)` block is executable and needs the nonce).
+ * Loaded with next/script `afterInteractive` so gtag.js and its config run
+ * after hydration rather than on the critical path (Google's recommended Next
+ * strategy). The inline config carries the per-request CSP `nonce` (script-src
+ * is nonce-based, not 'unsafe-inline'); the gtag loader host is allowlisted in
+ * proxy.ts.
  *
  * Renders nothing until GA_MEASUREMENT_ID is set (NEXT_PUBLIC_GA_ID), so the
  * site ships safely before the GA4 property (sihyeongdev@gmail.com) exists.
@@ -15,17 +18,15 @@ export function GoogleAnalytics({ nonce }: { nonce?: string }) {
 
   return (
     <>
-      <script
-        async
+      <Script
+        id="ga-loader"
+        strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         nonce={nonce}
       />
-      <script
-        nonce={nonce}
-        dangerouslySetInnerHTML={{
-          __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`,
-        }}
-      />
+      <Script id="ga-config" strategy="afterInteractive" nonce={nonce}>
+        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`}
+      </Script>
     </>
   )
 }
