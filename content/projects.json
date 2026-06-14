@@ -374,19 +374,40 @@
     {
       "name": "Mini Games Hub",
       "slug": "mini-games",
-      "descriptionKo": "여러 미니게임을 한곳에 모은 웹 게임 허브. Next.js로 만들고 Vitest 단위·통합 테스트와 Playwright E2E를 GitHub Actions CI로 자동화했습니다. 탈출 게임 등 캐주얼 게임들을 직접 구현해 라이브로 배포했습니다.",
-      "descriptionEn": "A web hub that collects several mini-games in one place, built with Next.js. I wired up Vitest unit/integration tests and Playwright E2E in a GitHub Actions CI pipeline, implemented casual games (an escape game and more), and shipped it live.",
+      "descriptionKo": "여러 미니게임을 한곳에 모은 웹 게임 허브 + 독립 Socket.io 멀티플레이어 서버. 2D Canvas·Babylon.js·CesiumJS·Three.js 등 서로 다른 엔진으로 만든 5개 게임(도주·3D 서바이벌·Sky Explorer·Dust Drifter·Fryffel Tower)을 제공합니다. 최근에는 cannon-es 물리로 감자튀김을 쌓는 3D 게임과, 각 클라이언트가 자기 타워를 시뮬레이션하고 서버가 높이를 중계·판정하는 실시간 2~4인 경쟁 멀티플레이를 직접 구현했습니다. 순수 로직은 Vitest 단위 테스트로, 게임은 Playwright E2E로 GitHub Actions CI에서 게이트화했습니다.",
+      "descriptionEn": "A web hub collecting several mini-games plus a standalone Socket.io multiplayer server. It serves five games built on different engines (2D Canvas, Babylon.js, CesiumJS, Three.js): an escape racer, a 3D survival world, a flight sim over real Earth, a desert drifter, and Fryffel Tower. Most recently I built a 3D fry-stacking game on cannon-es physics with real-time 2–4 player competitive multiplayer — each client simulates its own tower while the server relays heights and adjudicates best-of rounds — with pure logic under Vitest and the games under Playwright E2E, gated in GitHub Actions CI.",
       "techStack": [
         "TypeScript",
         "Next.js",
         "React",
+        "Three.js",
+        "cannon-es",
+        "Socket.io",
         "Tailwind CSS",
         "Vitest",
         "Playwright"
       ],
       "status": "launched",
-      "website": "https://mini-games-dun.vercel.app",
+      "website": "https://games.writingdeveloper.blog",
       "github": "https://github.com/writingdeveloper/Mini-Games",
+      "private": false,
+      "featured": false
+    },
+    {
+      "name": "Tantrum Tower",
+      "slug": "tantrum-tower",
+      "descriptionKo": "성질 급한 호통 반장이 무능한 작업자들을 닦달해 건물을 올리는 PS2 레트로 건설 관리 게임. 작업자를 윽박지르면 생산성은 오르지만 빡침(rage)도 올라 방치·사보타주·도주·폭동으로 이어지는 양날의 검 루프를 설계하고, 업무를 위임하는 AI 관리자(베테랑·드릴·바이브·인턴), 결정론적 시드 RNG, 순수 로직 유닛 테스트를 갖췄습니다. 빌드리스 Three.js ESM + PS2풍(버텍스 스냅·디더·포그) 렌더 파이프라인으로 만들었고 스토리 모드(Act 1)까지 구현했습니다. Mini Games에서 자체 저장소로 분리했습니다.",
+      "descriptionEn": "A comedic PS2-retro construction-management game where a hot-tempered foreman bullies incompetent workers into raising a building. I designed a double-edged-sword loop — pushing workers boosts output but raises their rage, leading to slacking, sabotage, fleeing, or riots — with delegating AI managers (veteran/drill/vibe/intern), deterministic seeded RNG, and pure-logic unit tests. Built on build-free Three.js ESM with a PS2-style render pipeline (vertex snapping, dithering, fog), including a Story Mode (Act 1). Extracted from Mini Games into its own repo.",
+      "techStack": [
+        "JavaScript",
+        "Three.js",
+        "WebGL",
+        "Vitest",
+        "Playwright"
+      ],
+      "status": "launched",
+      "website": "https://tantrum-tower.writingdeveloper.blog",
+      "github": "https://github.com/writingdeveloper/tantrum-tower",
       "private": false,
       "featured": false
     }
