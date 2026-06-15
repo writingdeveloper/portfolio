@@ -245,26 +245,6 @@
       "featured": false
     },
     {
-      "name": "Voice Studio",
-      "slug": "voice-studio",
-      "descriptionKo": "영상 속 특정 인물의 목소리를 골라 GPT-SoVITS v4 TTS 모델을 자동으로 파인튜닝하는 로컬 웹 스튜디오. 보컬 분리 → 화자 분리 → 클러스터링 → 전사 → 학습까지 흩어져 있던 스크립트를 GPU 작업 큐로 묶어 클릭 한 번의 파이프라인으로 만들었습니다.",
-      "descriptionEn": "A local web studio that automates voice cloning — pick a speaker from any video and it fine-tunes a GPT-SoVITS v4 model end to end. I collapsed a scattered set of scripts (vocal separation, diarization, clustering, transcription, training) into a single one-click pipeline orchestrated by a GPU job queue.",
-      "techStack": [
-        "Python",
-        "FastAPI",
-        "React",
-        "GPT-SoVITS",
-        "pyannote",
-        "faster-whisper",
-        "CUDA",
-        "TypeScript"
-      ],
-      "status": "building",
-      "github": "https://github.com/writingdeveloper/voice-studio",
-      "private": false,
-      "featured": false
-    },
-    {
       "name": "ComfyUI Web",
       "slug": "comfyui-web",
       "descriptionKo": "Claude Code를 프롬프트 엔지니어로 활용하는 셀프호스팅 이미지·영상 생성 플랫폼. 자연어(한/영) 입력을 최적화된 프롬프트와 ComfyUI API 워크플로 JSON으로 자동 변환하고, 순차 작업 큐·썸네일 생성·좋아요·댓글·갤러리까지 멀티유저 기능을 풀스택으로 구현했습니다.",
