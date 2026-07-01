@@ -119,6 +119,50 @@ export default config({
         ),
       },
     }),
+    graveyard: singleton({
+      label: '프로젝트 묘지',
+      path: 'content/graveyard',
+      format: 'json',
+      schema: {
+        tombstones: fields.array(
+          fields.object({
+            name: fields.text({ label: '프로젝트명' }),
+            slug: fields.text({ label: 'URL 슬러그' }),
+            bornAt: fields.text({ label: '시작 (예: 2024)' }),
+            diedAt: fields.text({ label: '종료 (예: 2025)' }),
+            causeOfDeath: fields.select({
+              label: '사인 (Cause of death)',
+              options: [
+                { value: 'no-pmf', label: '수요를 찾지 못함' },
+                { value: 'burnout', label: '번아웃' },
+                { value: 'outcompeted', label: '경쟁에서 밀림' },
+                { value: 'pivoted', label: '방향 전환' },
+                { value: 'too-complex', label: '과설계' },
+                { value: 'lost-interest', label: '흥미 상실' },
+                { value: 'funding', label: '자금 부족' },
+                { value: 'other', label: '기타' },
+              ],
+              defaultValue: 'no-pmf',
+            }),
+            epitaphKo: fields.text({ label: '묘비명 (한국어)' }),
+            epitaphEn: fields.text({ label: '묘비명 (English)' }),
+            retroKo: fields.text({ label: '회고 (한국어)', multiline: true }),
+            retroEn: fields.text({ label: '회고 (English)', multiline: true }),
+            techStack: fields.array(fields.text({ label: '기술' }), {
+              label: '기술 스택',
+              itemLabel: (props) => props.value,
+            }),
+            website: fields.text({ label: '웹사이트 URL (선택)' }),
+            github: fields.text({ label: 'GitHub URL (선택)' }),
+            private: fields.checkbox({ label: '비공개 (Private)' }),
+          }),
+          {
+            label: '묘비 목록',
+            itemLabel: (props) => props.fields.name.value,
+          }
+        ),
+      },
+    }),
     about: singleton({
       label: '소개 페이지',
       path: 'content/about',

@@ -11,6 +11,32 @@ export interface Project {
   featured: boolean
 }
 
+export type CauseOfDeath =
+  | 'no-pmf'
+  | 'burnout'
+  | 'outcompeted'
+  | 'pivoted'
+  | 'too-complex'
+  | 'lost-interest'
+  | 'funding'
+  | 'other'
+
+export interface Tombstone {
+  name: string
+  slug: string
+  bornAt: string
+  diedAt: string
+  causeOfDeath: CauseOfDeath
+  epitaphKo: string
+  epitaphEn: string
+  retroKo: string
+  retroEn: string
+  techStack: string[]
+  website?: string
+  github?: string
+  private?: boolean
+}
+
 export interface Skill {
   name: string
   category: 'frontend' | 'backend' | 'tools'

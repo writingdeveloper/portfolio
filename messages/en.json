@@ -7,6 +7,7 @@
     "home": "Home",
     "blog": "Blog",
     "projects": "Projects",
+    "graveyard": "Graveyard",
     "about": "About",
     "play": "Explore"
   },
@@ -66,6 +67,27 @@
       "building": "Building",
       "launched": "Launched",
       "archived": "Archived"
+    }
+  },
+  "graveyard": {
+    "title": "Project Graveyard",
+    "description": "Here lie the projects I built and lost — an honest record of what failure taught me.",
+    "metaDescription": "A memorial to projects Si Hyeong Lee built and then failed or discontinued. Each tombstone carries its cause of death, an honest post-mortem, and the lessons learned.",
+    "empty": "No projects rest here yet.",
+    "restInPeace": "R.I.P",
+    "causeLabel": "Cause",
+    "private": "Private",
+    "viewTraces": "View traces",
+    "viewCode": "View Code",
+    "cause": {
+      "no-pmf": "No product-market fit",
+      "burnout": "Burnout",
+      "outcompeted": "Outcompeted",
+      "pivoted": "Pivoted away",
+      "too-complex": "Over-engineered",
+      "lost-interest": "Lost interest",
+      "funding": "Ran out of funds",
+      "other": "Other"
     }
   },
   "about": {

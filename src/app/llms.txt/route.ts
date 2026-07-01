@@ -57,6 +57,11 @@ ${enPosts.map((post) => `- [${post.title}](${SITE_URL}/en/blog/${post.slug}): ${
 
 ${projectLines}
 
+## Project Graveyard
+
+- [Project Graveyard (Korean)](${SITE_URL}/graveyard): A memorial to projects Si Hyeong Lee built and then failed or discontinued — each with its cause of death, an honest post-mortem, and lessons learned.
+- [Project Graveyard (English)](${SITE_URL}/en/graveyard): A memorial to projects Si Hyeong Lee built and then failed or discontinued — each with its cause of death, an honest post-mortem, and lessons learned.
+
 ## Technical Stack
 
 React, Next.js, TypeScript, Tailwind CSS, Three.js / React Three Fiber, NestJS, Node.js, Python, FastAPI, Electron, Expo / React Native, PostgreSQL, Prisma, Supabase, Stripe, Docker

@@ -1,0 +1,30 @@
+{
+  "tombstones": [
+    {
+      "name": "Sample: Sourcing Copilot",
+      "slug": "sample-sourcing-copilot",
+      "bornAt": "2023",
+      "diedAt": "2024",
+      "causeOfDeath": "no-pmf",
+      "epitaphKo": "만들 수는 있었지만, 아무도 기다리지 않았다.",
+      "epitaphEn": "I could build it — nobody was waiting for it.",
+      "retroKo": "AI 소싱 어시스턴트를 몇 주 만에 풀스택으로 만들었지만, 정작 잠재 고객과 한 번도 대화하지 않았다. 출시 후에야 이 문제를 이미 스프레드시트로 충분히 푸는 사람이 많다는 걸 알았다. 배운 점: 코드를 쓰기 전에 수요를 먼저 검증한다. 다음엔 랜딩 페이지와 대기자 명단부터.",
+      "retroEn": "I shipped a full-stack AI sourcing assistant in a few weeks but never once talked to a potential customer. Only after launch did I learn most people already solve this well enough with a spreadsheet. Lesson: validate demand before writing code. Next time, a landing page and a waitlist first.",
+      "techStack": ["TypeScript", "Next.js", "Supabase", "Gemini"],
+      "private": true
+    },
+    {
+      "name": "Sample: Habit Garden",
+      "slug": "sample-habit-garden",
+      "bornAt": "2024",
+      "diedAt": "2025",
+      "causeOfDeath": "burnout",
+      "epitaphKo": "혼자 너무 많이, 너무 오래 짊어졌다.",
+      "epitaphEn": "Carried too much, alone, for too long.",
+      "retroKo": "기능을 계속 늘리다 스코프가 감당할 수 없이 커졌고, 릴리스 없는 몇 달이 이어지자 동기가 사라졌다. 배운 점: 작게 자르고 자주 배포한다. 완벽한 v1보다 부끄러운 v0.1이 낫다.",
+      "retroEn": "I kept adding features until the scope outgrew a solo maker, and months without a release drained the motivation. Lesson: cut small, ship often. An embarrassing v0.1 beats a perfect v1 that never ships.",
+      "techStack": ["TypeScript", "Expo", "PostgreSQL"],
+      "private": true
+    }
+  ]
+}

@@ -7,6 +7,7 @@
     "home": "홈",
     "blog": "블로그",
     "projects": "프로젝트",
+    "graveyard": "묘지",
     "about": "소개",
     "play": "탐험"
   },
@@ -66,6 +67,27 @@
       "building": "개발 중",
       "launched": "출시됨",
       "archived": "보관됨"
+    }
+  },
+  "graveyard": {
+    "title": "프로젝트 묘지",
+    "description": "여기 잠든 프로젝트들 — 실패에서 배운 기록입니다.",
+    "metaDescription": "이시형이 만들었다 실패하거나 중단한 프로젝트들의 추모관. 각 묘비에는 사인(死因)과 정직한 회고, 배운 점을 담았습니다.",
+    "empty": "아직 잠든 프로젝트가 없습니다.",
+    "restInPeace": "R.I.P",
+    "causeLabel": "사인",
+    "private": "비공개",
+    "viewTraces": "흔적 보기",
+    "viewCode": "코드 보기",
+    "cause": {
+      "no-pmf": "수요를 찾지 못함",
+      "burnout": "번아웃",
+      "outcompeted": "경쟁에서 밀림",
+      "pivoted": "방향 전환",
+      "too-complex": "과설계",
+      "lost-interest": "흥미 상실",
+      "funding": "자금 부족",
+      "other": "기타"
     }
   },
   "about": {

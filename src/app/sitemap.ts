@@ -10,7 +10,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const koPosts = getAllPosts('ko')
   const enPosts = getAllPosts('en')
 
-  const staticPages = ['', '/blog', '/projects', '/about', '/play']
+  const staticPages = ['', '/blog', '/projects', '/graveyard', '/about', '/play']
 
   // 한국어 + 영어 정적 페이지 모두 등록
   const staticUrls = staticPages.flatMap((page) => {
