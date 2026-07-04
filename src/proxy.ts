@@ -1,6 +1,6 @@
 import createMiddleware from 'next-intl/middleware'
 import { routing } from './i18n/routing'
-import type { NextRequest, NextResponse } from 'next/server'
+import { NextResponse, type NextRequest } from 'next/server'
 
 // Renamed from middleware.ts to proxy.ts to follow the Next.js 16.2+
 // file convention (the "middleware" name is deprecated). Behavior is
@@ -12,7 +12,29 @@ import type { NextRequest, NextResponse } from 'next/server'
 // not reliably run on the optional-catch-all /keystatic route.
 const intlMiddleware = createMiddleware(routing)
 
+// Legacy-URL redirects (301). The blog moved from root-level permalinks to the
+// /blog/[slug] structure, and one post's slug was shortened. These old URLs are
+// still indexed by Google and now 404; redirecting them to their current
+// canonical location preserves their accumulated link equity instead of losing
+// it. Keyed by pathname with any trailing slash stripped (see lookup below).
+const LEGACY_REDIRECTS: Record<string, string> = {
+  '/thoughts-about-giving-back': '/blog/thoughts-about-giving-back',
+  '/studying-english-with-chatgpt-and-experience-about-the-using-english-in-interview':
+    '/blog/studying-english-with-chatgpt',
+  // Legacy Tistory-era numeric permalink with no 1:1 successor — send it to the
+  // blog index rather than let it 404.
+  '/311': '/blog',
+}
+
 export default function proxy(request: NextRequest) {
+  // Legacy-URL cleanup runs first: 301-redirect old permalinks to their current
+  // location before any CSP/i18n work, so the redirect response stays minimal.
+  const legacyPath = request.nextUrl.pathname.replace(/\/+$/, '') || '/'
+  const legacyTarget = LEGACY_REDIRECTS[legacyPath]
+  if (legacyTarget) {
+    return NextResponse.redirect(new URL(legacyTarget, request.url), 301)
+  }
+
   // Generate a per-request nonce for CSP.
   // Using crypto.randomUUID() keeps this compatible with the edge runtime.
   const nonce = Buffer.from(crypto.randomUUID()).toString('base64')
