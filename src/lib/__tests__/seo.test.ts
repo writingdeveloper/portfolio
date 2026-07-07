@@ -181,7 +181,8 @@ describe('generateProjectListJsonLd', () => {
       ],
       'en',
     )
-    const item = result.itemListElement[0].item
+    // The item is a MobileApplication|CreativeWork union; widen to read app fields.
+    const item = result.itemListElement[0].item as Record<string, unknown>
     expect(item['@type']).toBe('MobileApplication')
     expect(item.operatingSystem).toBe('ANDROID')
     expect(item.applicationCategory).toBe('HealthApplication')
@@ -195,7 +196,8 @@ describe('generateProjectListJsonLd', () => {
       [{ name: 'X', description: 'Y', playStore: 'https://play.google.com/store/apps/details?id=x' }],
       'en',
     )
-    expect(result.itemListElement[0].item.applicationCategory).toBe('LifestyleApplication')
+    const item = result.itemListElement[0].item as Record<string, unknown>
+    expect(item.applicationCategory).toBe('LifestyleApplication')
   })
 
   it('keeps CreativeWork when playStore is absent', () => {
