@@ -7,6 +7,7 @@ export interface Project {
   status: 'active' | 'building' | 'launched' | 'archived'
   website?: string
   github?: string
+  playStore?: string
   private?: boolean
   featured: boolean
 }
