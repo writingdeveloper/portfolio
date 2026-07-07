@@ -14,11 +14,24 @@ const statusColors: Record<string, string> = {
   archived: 'bg-[var(--status-archived-bg)] text-[var(--status-archived-text)]',
 }
 
-// lucide-react ships no Google Play brand mark, so define a small play triangle.
-function PlayStoreIcon({ size = 14 }: { size?: number }) {
+// lucide-react ships no Google Play brand mark. Render the Play triangle in the
+// brand's diagonal gradient (cyan → teal → yellow → red) so it reads as the real
+// Google Play logo rather than a generic media-play glyph.
+function GooglePlayIcon({ size = 16 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M4 2.5v19a1 1 0 0 0 1.5.87l16.5-9.5a1 1 0 0 0 0-1.74L5.5 1.63A1 1 0 0 0 4 2.5Z" />
+    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
+      <defs>
+        <linearGradient id="gp-grad" x1="4" y1="2.5" x2="20" y2="21.5" gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor="#00C3FF" />
+          <stop offset="0.35" stopColor="#00E0A8" />
+          <stop offset="0.7" stopColor="#FFCE00" />
+          <stop offset="1" stopColor="#FF3D5A" />
+        </linearGradient>
+      </defs>
+      <path
+        fill="url(#gp-grad)"
+        d="M4 2.5v19a1 1 0 0 0 1.5.87l16.5-9.5a1 1 0 0 0 0-1.74L5.5 1.63A1 1 0 0 0 4 2.5Z"
+      />
     </svg>
   )
 }
@@ -71,7 +84,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </a>
       )}
 
-      <div className="flex gap-3">
+      <div className="flex flex-wrap items-center gap-3">
         {project.website && (
           <a href={project.website} target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
@@ -86,8 +99,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
         )}
         {project.playStore && (
           <a href={project.playStore} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
-            <PlayStoreIcon /> {t('googlePlay')}
+            aria-label={t('viewOnPlayStore')}
+            className="inline-flex items-center gap-2 rounded-lg bg-black px-3 py-1.5 text-white border border-white/15 hover:bg-neutral-800 transition-colors">
+            <GooglePlayIcon size={16} />
+            <span className="flex flex-col leading-none text-left">
+              <span className="text-[9px] uppercase tracking-wide opacity-80">{t('getItOn')}</span>
+              <span className="text-sm font-semibold">Google Play</span>
+            </span>
           </a>
         )}
       </div>
