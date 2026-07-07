@@ -19,6 +19,7 @@
       "status": "active",
       "website": "https://drymora.writingdeveloper.blog",
       "playStore": "https://play.google.com/store/apps/details?id=com.soursea.drymora",
+      "succeeds": "sobriety-app",
       "private": true,
       "featured": true
     },
@@ -193,6 +194,7 @@
       ],
       "status": "building",
       "website": "https://kindling.writingdeveloper.blog",
+      "succeeds": "minddump",
       "private": true,
       "featured": false
     },
