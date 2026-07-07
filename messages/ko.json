@@ -58,9 +58,10 @@
   "projects": {
     "title": "프로젝트",
     "description": "만들고 있는 것들",
-    "metaDescription": "웹·모바일·데스크톱·AI·게임을 아우르는 이시형의 20여 개 프로젝트. SaaS, 개발자 도구, 데이터 시각화, 실험적 빌드까지 라이브 데모와 함께 정리했습니다.",
+    "metaDescription": "웹·모바일·데스크톱·AI·게임을 아우르는 이시형의 30여 개 프로젝트. SaaS, 개발자 도구, 데이터 시각화, 실험적 빌드까지 라이브 데모와 함께 정리했습니다.",
     "viewProject": "프로젝트 보기",
     "viewCode": "코드 보기",
+    "googlePlay": "Google Play",
     "private": "비공개",
     "status": {
       "active": "활성",
