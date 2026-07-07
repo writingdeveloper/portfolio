@@ -167,4 +167,39 @@ describe('generateProjectListJsonLd', () => {
     expect(result.itemListElement[0].item).not.toHaveProperty('keywords')
     expect(result.itemListElement[0].item.author.name).toBe('이시형')
   })
+
+  it('emits a MobileApplication when playStore is present', () => {
+    const result = generateProjectListJsonLd(
+      [
+        {
+          name: 'Drymora',
+          description: 'Sobriety',
+          playStore: 'https://play.google.com/store/apps/details?id=com.soursea.drymora',
+          appCategory: 'HealthApplication',
+          techStack: ['Next.js'],
+        },
+      ],
+      'en',
+    )
+    const item = result.itemListElement[0].item
+    expect(item['@type']).toBe('MobileApplication')
+    expect(item.operatingSystem).toBe('ANDROID')
+    expect(item.applicationCategory).toBe('HealthApplication')
+    expect(item.installUrl).toBe('https://play.google.com/store/apps/details?id=com.soursea.drymora')
+    expect(item.offers).toEqual({ '@type': 'Offer', price: '0', priceCurrency: 'USD' })
+    expect(item).toHaveProperty('keywords', 'Next.js')
+  })
+
+  it('defaults applicationCategory to LifestyleApplication', () => {
+    const result = generateProjectListJsonLd(
+      [{ name: 'X', description: 'Y', playStore: 'https://play.google.com/store/apps/details?id=x' }],
+      'en',
+    )
+    expect(result.itemListElement[0].item.applicationCategory).toBe('LifestyleApplication')
+  })
+
+  it('keeps CreativeWork when playStore is absent', () => {
+    const result = generateProjectListJsonLd([{ name: 'Web', description: 'D', url: 'https://w.dev' }], 'en')
+    expect(result.itemListElement[0].item['@type']).toBe('CreativeWork')
+  })
 })
