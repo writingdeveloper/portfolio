@@ -13,6 +13,15 @@ const statusColors: Record<string, string> = {
   archived: 'bg-[var(--status-archived-bg)] text-[var(--status-archived-text)]',
 }
 
+// lucide-react ships no Google Play brand mark, so define a small play triangle.
+function PlayStoreIcon({ size = 14 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M4 2.5v19a1 1 0 0 0 1.5.87l16.5-9.5a1 1 0 0 0 0-1.74L5.5 1.63A1 1 0 0 0 4 2.5Z" />
+    </svg>
+  )
+}
+
 export function ProjectCard({ project }: ProjectCardProps) {
   const t = useTranslations('projects')
   const locale = useLocale()
@@ -63,6 +72,12 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <a href={project.github} target="_blank" rel="noopener noreferrer"
             className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
             <Github size={14} /> {t('viewCode')}
+          </a>
+        )}
+        {project.playStore && (
+          <a href={project.playStore} target="_blank" rel="noopener noreferrer"
+            className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
+            <PlayStoreIcon /> {t('googlePlay')}
           </a>
         )}
       </div>
