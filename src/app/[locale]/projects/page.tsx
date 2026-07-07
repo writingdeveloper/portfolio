@@ -7,6 +7,7 @@ import { SITE_URL } from '@/lib/constants'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { generateBreadcrumbJsonLd, generateProjectListJsonLd, safeJsonLd } from '@/lib/seo'
+import { sortProjectsFeaturedFirst } from '@/lib/projects'
 import { useLocale } from 'next-intl'
 
 export async function generateMetadata({
@@ -52,12 +53,20 @@ function ProjectsContent() {
     { name: locale === 'ko' ? '홈' : 'Home', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}` },
     { name: locale === 'ko' ? '프로젝트' : 'Projects', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/projects` },
   ])
+  // schema.org applicationCategory per shipped app (defaults to Lifestyle in seo.ts).
+  const APP_CATEGORY: Record<string, string> = {
+    drymora: 'HealthApplication',
+    healframe: 'HealthApplication',
+    'receipt-tracker': 'FinanceApplication',
+  }
+  const allProjects = sortProjectsFeaturedFirst(projectsData.projects as Project[])
   const projectListJsonLd = generateProjectListJsonLd(
-    (projectsData.projects as Project[]).map((project) => ({
+    allProjects.map((project) => ({
       name: project.name,
       description: locale === 'ko' ? project.descriptionKo : project.descriptionEn,
       url: project.website ?? (!project.private && project.github ? project.github : undefined),
       techStack: project.techStack,
+      ...(project.playStore ? { playStore: project.playStore, appCategory: APP_CATEGORY[project.slug] } : {}),
     })),
     locale,
   )
@@ -79,7 +88,7 @@ function ProjectsContent() {
         </header>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          {(projectsData.projects as Project[]).map((project) => (
+          {allProjects.map((project) => (
             <ProjectCard key={project.slug} project={project} />
           ))}
         </div>
