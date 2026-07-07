@@ -230,14 +230,12 @@
     {
       "name": "nag-coach",
       "slug": "nag-coach",
-      "descriptionKo": "무시하면 더 집요해지는 삐진 AI 코치. 고정 시간에 짧은 운동 미션을 던지고 안 하면 점점 집요하게 재촉하는 디스코드 기반 압박 봇으로, 폰은 버튼·워치는 음성 자연어로 이중 응답하고 스트릭·에스컬레이션·셀프체크를 갖췄습니다. Python·discord.py·Claude(Haiku).",
-      "descriptionEn": "A sulky AI coach that gets more persistent the more you ignore it. A Discord-based accountability bot that fires short workout missions on a schedule and escalates its nagging when you skip — with dual input (phone = buttons, watch = spoken natural language), streaks, escalation, and self-check. Python, discord.py, Claude (Haiku).",
+      "descriptionKo": "최애 캐릭터의 목소리를 합성해 태블릿 PC에서 내 할 일을 집요하게 재촉하는 개인 생산성 프로그램. Claude가 상황에 맞는 재촉 대사를 쓰고, 라우드니스를 정규화한 캐릭터 음성 클립으로 회피를 비싸게 만듭니다. 무시할수록 더 집요해지는 '삐진 코치' 페르소나로 동작합니다.",
+      "descriptionEn": "A personal-productivity program that synthesizes my favorite character's voice to nag me about my to-dos on a tablet PC. Claude writes context-aware nagging lines, and loudness-normalized character voice clips make avoidance expensive — a 'sulky coach' persona that only gets more persistent the more you ignore it.",
       "techStack": [
         "Python",
-        "discord.py",
-        "APScheduler",
         "Claude",
-        "SQLite"
+        "Text-to-Speech"
       ],
       "status": "building",
       "private": true,
