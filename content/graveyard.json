@@ -11,6 +11,7 @@
       "retroKo": "Expo + Fastify 모노레포에 Stripe Connect 비수탁 스테이크 구조까지 313개 테스트로 갖췄지만, 실사용 흐름을 다시 그리며 PWA인 Drymora로 재구축했습니다. 아키텍처를 갈아엎은 결정 자체는 옳았다고 봅니다.",
       "retroEn": "I got as far as an Expo + Fastify monorepo with a non-custodial Stripe Connect stake flow under 313 tests, but rebuilt the whole thing as a PWA (Drymora) while redrawing the real usage flow. Rewriting the architecture was the right call.",
       "techStack": ["TypeScript", "Expo", "React Native", "Fastify", "Stripe Connect", "Clerk"],
+      "supersededBy": "drymora",
       "private": true
     },
     {
@@ -25,6 +26,7 @@
       "retroEn": "I built the burn effect with React Three Fiber and a Blender pipeline and even put up a Play Store listing, but ultimately took it down. I kept only the core — anonymous emotional release — and restarted as Kindling on the shipwright starter.",
       "techStack": ["TypeScript", "Turborepo", "Next.js", "Expo", "Three.js", "React Three Fiber"],
       "website": "https://minddump-seven.vercel.app",
+      "supersededBy": "kindling",
       "private": true
     },
     {

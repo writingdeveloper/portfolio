@@ -1,6 +1,7 @@
-import { ExternalLink, Github, Lock } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Github, Lock } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 import type { Project } from '@/types/content'
+import { predecessorOf } from '@/lib/lineage'
 
 interface ProjectCardProps {
   project: Project
@@ -25,6 +26,8 @@ function PlayStoreIcon({ size = 14 }: { size?: number }) {
 export function ProjectCard({ project }: ProjectCardProps) {
   const t = useTranslations('projects')
   const locale = useLocale()
+  const predecessor = predecessorOf(project)
+  const graveyardHref = locale === 'ko' ? '/graveyard' : `/${locale}/graveyard`
 
   return (
     <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] p-4 sm:p-6 hover:border-[var(--border-hover)] transition-all">
@@ -59,6 +62,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </span>
           ))}
         </div>
+      )}
+
+      {predecessor && (
+        <a href={graveyardHref}
+          className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors mb-3">
+          <ArrowLeft size={12} /> {t('continuedFrom', { name: predecessor.name })}
+        </a>
       )}
 
       <div className="flex gap-3">

@@ -8,6 +8,8 @@ export interface Project {
   website?: string
   github?: string
   playStore?: string
+  /** slug of a graveyard tombstone this project was rebuilt from (lineage). */
+  succeeds?: string
   private?: boolean
   featured: boolean
 }
@@ -35,6 +37,8 @@ export interface Tombstone {
   techStack: string[]
   website?: string
   github?: string
+  /** slug of the live project that superseded this one (lineage). */
+  supersededBy?: string
   private?: boolean
 }
 

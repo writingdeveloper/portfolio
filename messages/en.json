@@ -62,6 +62,7 @@
     "viewProject": "View Project",
     "viewCode": "View Code",
     "googlePlay": "Google Play",
+    "continuedFrom": "Continued from {name}",
     "private": "Private",
     "status": {
       "active": "Active",
@@ -80,6 +81,7 @@
     "private": "Private",
     "viewTraces": "View traces",
     "viewCode": "View Code",
+    "continuedAs": "Continued as {name}",
     "cause": {
       "no-pmf": "No product-market fit",
       "burnout": "Burnout",

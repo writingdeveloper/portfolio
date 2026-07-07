@@ -1,10 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ExternalLink, Github, Lock } from 'lucide-react'
+import { ArrowRight, ChevronDown, ExternalLink, Github, Lock } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 import type { Tombstone as TombstoneData } from '@/types/content'
 import { tombstoneCopy } from '@/lib/graveyard'
+import { successorOf } from '@/lib/lineage'
 
 interface TombstoneProps {
   tomb: TombstoneData
@@ -15,6 +16,7 @@ export function Tombstone({ tomb }: TombstoneProps) {
   const locale = useLocale()
   const [open, setOpen] = useState(false)
   const { epitaph, retro, lifespan } = tombstoneCopy(tomb, locale)
+  const successor = successorOf(tomb)
   const panelId = `tomb-${tomb.slug}`
 
   return (
@@ -61,6 +63,21 @@ export function Tombstone({ tomb }: TombstoneProps) {
           {retro && (
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-line mb-4">
               {retro}
+            </p>
+          )}
+
+          {successor && (
+            <p className="mb-4">
+              {successor.url ? (
+                <a href={successor.url} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-[var(--text-emphasis)] hover:opacity-80 transition-opacity">
+                  {t('continuedAs', { name: successor.name })} <ArrowRight size={14} />
+                </a>
+              ) : (
+                <span className="inline-flex items-center gap-1.5 text-sm text-[var(--text-emphasis)]">
+                  {t('continuedAs', { name: successor.name })} <ArrowRight size={14} />
+                </span>
+              )}
             </p>
           )}
 
