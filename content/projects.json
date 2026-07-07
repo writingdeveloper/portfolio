@@ -77,8 +77,8 @@
     {
       "name": "MarketDeck",
       "slug": "marketdeck",
-      "descriptionKo": "약 40개 프로젝트 전체의 마케팅 준비도를 한 화면에서 관리하는 로컬 우선 Electron 도구. 로컬 git 레포를 스캔해 14개 결정론적 신호(README 스크린샷·데모 URL 도달성·SEO 메타·JSON-LD·CHANGELOG 신선도 등)로 0–100점과 신호등을 매기고, 준비가 덜 된 프로젝트를 먼저 정렬합니다. 계정·텔레메트리 없이 전부 로컬에서 돌아가며 MIT입니다.",
-      "descriptionEn": "A local-first Electron tool that manages the marketing readiness of your whole ~40-project portfolio on one screen. It scans local git repos and scores each with 14 deterministic signals (README screenshot, demo-URL reachability, SEO meta, JSON-LD, CHANGELOG freshness…), producing a 0–100 score and a traffic light, sorting the least-ready first. No accounts, no telemetry — all local, MIT.",
+      "descriptionKo": "내 전체 프로젝트(약 40개)의 마케팅 준비도를 한 화면에서 관리하려고 만든 로컬 우선 Windows(Electron) 도구 + MCP. 로컬 git 레포를 스캔해 14개 결정론적 신호(README 스크린샷·데모 URL 도달성·SEO 메타·JSON-LD·CHANGELOG 신선도 등)로 0–100점과 신호등을 매기고, 준비가 덜 된 프로젝트를 먼저 정렬합니다. 계정·텔레메트리 없이 전부 로컬에서 돌아갑니다.",
+      "descriptionEn": "A local-first Windows (Electron) tool + MCP I built to manage the marketing readiness of my whole ~40-project portfolio on one screen. It scans local git repos and scores each with 14 deterministic signals (README screenshot, demo-URL reachability, SEO meta, JSON-LD, CHANGELOG freshness…), producing a 0–100 score and a traffic light, sorting the least-ready first. No accounts, no telemetry — all local.",
       "techStack": [
         "TypeScript",
         "Electron",
@@ -88,7 +88,7 @@
         "Vitest"
       ],
       "status": "active",
-      "private": false,
+      "private": true,
       "featured": false
     },
     {
