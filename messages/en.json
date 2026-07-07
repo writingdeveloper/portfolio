@@ -58,9 +58,10 @@
   "projects": {
     "title": "Projects",
     "description": "Things I'm building",
-    "metaDescription": "Around 20 projects by Si Hyeong Lee across web, mobile, desktop, AI, and games — SaaS apps, developer tools, data visualizations, and experimental builds, with live demos.",
+    "metaDescription": "Around 30 projects by Si Hyeong Lee across web, mobile, desktop, AI, and games — SaaS apps, developer tools, data visualizations, and experimental builds, with live demos.",
     "viewProject": "View Project",
     "viewCode": "View Code",
+    "googlePlay": "Google Play",
     "private": "Private",
     "status": {
       "active": "Active",
