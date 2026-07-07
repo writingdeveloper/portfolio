@@ -37,8 +37,8 @@
       "causeOfDeath": "lost-interest",
       "epitaphKo": "힐링을 노렸지만, 정작 힐링되지 않았다.",
       "epitaphEn": "It aimed for healing but never quite healed.",
-      "retroKo": "수묵 감성의 명상형 성장 게임으로 기획해 이틀 만에 135커밋을 쏟았지만, 조작감이 의도한 '실질적인 힐링감'을 끝내 살리지 못했습니다. 마음이 다른 게임들로 옮겨가며 추진력을 잃었습니다.",
-      "retroEn": "I poured 135 commits into it in two days as a meditative, ink-wash growth game, but the controls never delivered the 'actually healing' feel I was after. My attention drifted to other games and it lost momentum.",
+      "retroKo": "수묵 감성의 명상형 성장 게임으로 기획해 이틀 만에 135커밋을 쏟았지만, 조작감이 의도한 '실질적인 힐링감'을 끝내 살리지 못했습니다. 돌아보면 저 자신이 힐링을 잘 모르는데 힐링을 설계하려니 쉬울 리 없었습니다. 개발은 결국 만드는 사람의 인식 바운더리 안에서만 이뤄진다는 걸 체감했고, 그래서 내가 모르는 분야를 어떻게 더 빠르게 캐치할지에 대한 방향성을 고민하게 됐습니다. 마음이 다른 게임들로 옮겨가며 추진력은 잃었지만, 남은 질문은 그것이었습니다.",
+      "retroEn": "I poured 135 commits into it in two days as a meditative, ink-wash growth game, but the controls never delivered the 'actually healing' feel I was after. Looking back, I don't really know healing myself — so designing it was never going to be easy. It drove home that development only happens within the maker's own boundary of perception, which turned into a real question: how do I catch a domain I don't know faster? My attention drifted to other games and it lost momentum, but that question is what stayed.",
       "techStack": ["TypeScript", "Three.js", "WebGL", "Vite"],
       "website": "https://rockgaze.vercel.app",
       "private": true
