@@ -141,7 +141,7 @@ export default async function BlogPostPage({
                 {getCategoryLabel(post.category, locale)}
               </span>
             )}
-            <h1 className="text-3xl sm:text-4xl font-bold mb-4">{post.title}</h1>
+            <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">{post.title}</h1>
             <div className="flex items-center gap-4 text-sm text-[var(--text-secondary)]">
               <span>{post.author}</span>
               <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}</time>
