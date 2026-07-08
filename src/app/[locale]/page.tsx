@@ -1,14 +1,9 @@
-import { useTranslations } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
-import { getAllPosts, getCategories } from '@/lib/mdx'
-import type { PostMeta } from '@/lib/mdx'
+import { getAllPosts } from '@/lib/mdx'
 import projectsData from '../../../content/projects.json'
-import type { Project } from '@/types/content'
-import { Link } from '@/i18n/navigation'
-import { ArrowRight, Sparkles } from 'lucide-react'
-import { PostCard } from '@/components/blog/PostCard'
-import { ProjectCard } from '@/components/projects/ProjectCard'
-import { PageTransition } from '@/components/ui/PageTransition'
+import graveyardData from '../../../content/graveyard.json'
+import type { Project, Tombstone } from '@/types/content'
+import { LedgerHome } from './LedgerHome'
 import { generateWebsiteJsonLd, safeJsonLd } from '@/lib/seo'
 import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import type { Metadata } from 'next'
@@ -53,67 +48,17 @@ export default async function HomePage({
   setRequestLocale(locale)
 
   const posts = getAllPosts(locale).slice(0, 3)
-  const categories = getCategories(locale)
-  const categoryMap = Object.fromEntries(categories.map((c) => [c.value, c.label]))
-  const featuredProjects = (projectsData.projects as Project[]).filter((p) => p.featured)
-
-  return <HomeContent posts={posts} projects={featuredProjects} locale={locale} categoryMap={categoryMap} />
-}
-
-function HomeContent({ posts, projects: featuredProjects, locale, categoryMap }: { posts: PostMeta[]; projects: Project[]; locale: string; categoryMap: Record<string, string> }) {
-  const t = useTranslations('home')
+  const projects = projectsData.projects as Project[]
+  const tombstones = graveyardData.tombstones as Tombstone[]
   const webSiteJsonLd = generateWebsiteJsonLd(locale)
 
   return (
-    <PageTransition>
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(webSiteJsonLd) }}
       />
-      <div className="space-y-20">
-        <section className="pt-12 pb-8">
-          <p className="text-[var(--text-secondary)] text-lg mb-2">{t('hero.greeting')}</p>
-          <h1 className="text-4xl sm:text-5xl font-bold mb-4">{t('hero.name')}</h1>
-          <p className="text-xl text-[var(--accent-text)] mb-4">{t('hero.role')}</p>
-          <p className="text-[var(--text-secondary)] max-w-xl text-lg">{t('hero.description')}</p>
-          <Link
-            href="/play"
-            className="inline-flex items-center gap-2 mt-6 px-6 py-3 bg-[var(--accent-text)] text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
-          >
-            <Sparkles size={20} />
-            {t('explore')}
-          </Link>
-        </section>
-
-        <section>
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold">{t('latestPosts')}</h2>
-            <Link href="/blog" className="flex items-center gap-1 text-sm text-[var(--accent-text)] hover:text-[var(--accent-text-hover)] transition-colors">
-              {t('viewAll')} <ArrowRight size={14} />
-            </Link>
-          </div>
-          {posts.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-                <PostCard key={post.slug} post={post} categoryLabel={categoryMap[post.category]} />
-              ))}
-            </div>
-          ) : (
-            <p className="text-[var(--text-muted)] text-center py-12">{t('noPosts')}</p>
-          )}
-        </section>
-
-        {featuredProjects.length > 0 && (
-          <section>
-            <h2 className="text-2xl font-bold mb-8">{t('featuredProjects')}</h2>
-            <div className="grid gap-6 sm:grid-cols-2">
-              {featuredProjects.map((project) => (
-                <ProjectCard key={project.slug} project={project} />
-              ))}
-            </div>
-          </section>
-        )}
-      </div>
-    </PageTransition>
+      <LedgerHome projects={projects} tombstones={tombstones} posts={posts} locale={locale} />
+    </>
   )
 }
