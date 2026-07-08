@@ -93,7 +93,7 @@ function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, c
       />
       <div>
         <header className="mb-12">
-          <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>
+          <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-2">{t('title')}</h1>
           <div className="flex items-center justify-between">
             <p className="text-[var(--text-secondary)]">{t('description')}</p>
             <Link

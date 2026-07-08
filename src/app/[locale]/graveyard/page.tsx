@@ -66,7 +66,7 @@ function GraveyardContent() {
           className="pointer-events-none absolute inset-x-0 -top-6 h-40 bg-gradient-to-b from-[var(--bg-elevated)] to-transparent opacity-60"
         />
         <header className="relative mb-12">
-          <h1 className="text-2xl sm:text-3xl font-bold mb-2">{t('title')}</h1>
+          <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-2">{t('title')}</h1>
           <p className="text-[var(--text-secondary)]">{t('description')}</p>
         </header>
 
