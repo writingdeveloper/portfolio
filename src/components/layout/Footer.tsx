@@ -8,7 +8,7 @@ export function Footer() {
 
   return (
     <footer className="border-t border-[var(--border-default)] mt-20">
-      <div className="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="ledger-mono text-xs tracking-[0.1em] text-[var(--text-muted)]">
           <span className="text-[var(--accent-text)]" aria-hidden="true">▪</span> &copy; {year} WRITINGDEVELOPER · {t('copyright')}
         </p>
