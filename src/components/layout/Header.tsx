@@ -63,8 +63,10 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--header-bg)] backdrop-blur-md transition-colors duration-200">
       <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link href="/" className="text-lg font-bold tracking-tight">
-          WritingDeveloper
+        <Link href="/" className="ledger-mono text-sm font-bold tracking-[0.15em] flex items-center gap-1.5">
+          <span className="text-[var(--accent-text)]" aria-hidden="true">▪</span>
+          WRITINGDEVELOPER
+          <span className="ledger-cursor" aria-hidden="true" />
         </Link>
 
         <nav aria-label="Main navigation" className="hidden md:flex items-center gap-6">
@@ -72,7 +74,7 @@ export function Header() {
             <Link
               key={link.key}
               href={link.href}
-              className="text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors"
+              className="ledger-mono text-xs tracking-[0.18em] uppercase text-[var(--text-secondary)] hover:text-[var(--accent-text)] transition-colors"
             >
               {t(link.key)}
             </Link>
@@ -105,7 +107,7 @@ export function Header() {
               <Link
                 key={link.key}
                 href={link.href}
-                className="text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors py-2.5"
+                className="ledger-mono text-sm tracking-[0.15em] uppercase text-[var(--text-secondary)] hover:text-[var(--accent-text)] transition-colors py-2.5"
                 onClick={closeMobile}
                 tabIndex={mobileOpen ? 0 : -1}
               >
