@@ -30,9 +30,10 @@ describe('isImmersiveRoute', () => {
     expect(isImmersiveRoute('/about')).toBe(false)
   })
 
-  it('returns false for the home page', () => {
-    expect(isImmersiveRoute('/')).toBe(false)
-    expect(isImmersiveRoute('/en')).toBe(false)
+  it('returns true for the home page (immersive Builder\'s Ledger home)', () => {
+    expect(isImmersiveRoute('/')).toBe(true)
+    expect(isImmersiveRoute('/en')).toBe(true)
+    expect(isImmersiveRoute('/ko')).toBe(true)
   })
 
   it('does not false-match /display', () => {

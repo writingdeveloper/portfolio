@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import { Inter, Noto_Sans_KR } from 'next/font/google'
+import { Inter, Noto_Sans_KR, Bricolage_Grotesque, Space_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
 import { headers } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
@@ -30,6 +31,29 @@ const notoSansKR = Noto_Sans_KR({
   variable: '--font-noto-kr',
   display: 'swap',
   preload: true,
+})
+
+// Builder's Ledger redesign type system: Bricolage Grotesque (editorial
+// display), Space Mono (ledger labels), Pretendard (Korean + body). Pretendard
+// is self-hosted (public/fonts) so the strict nonce CSP never needs a font CDN.
+const bricolage = Bricolage_Grotesque({
+  subsets: ['latin'],
+  variable: '--font-bricolage',
+  display: 'swap',
+})
+
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-space-mono',
+  display: 'swap',
+})
+
+const pretendard = localFont({
+  src: '../../../public/fonts/PretendardVariable.woff2',
+  variable: '--font-pretendard',
+  display: 'swap',
+  weight: '100 900',
 })
 
 export function generateStaticParams() {
@@ -111,7 +135,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${notoSansKR.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}>
+      <body className={`${inter.variable} ${notoSansKR.variable} ${bricolage.variable} ${spaceMono.variable} ${pretendard.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}>
         <NextIntlClientProvider messages={messages}>
           {immersive ? (
             children
