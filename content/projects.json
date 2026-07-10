@@ -111,12 +111,13 @@
     {
       "name": "ClipShrink",
       "slug": "clipshrink",
-      "descriptionKo": "픽픽 등으로 캡처한 이미지가 디스코드 무료 업로드 한도(10MB)를 넘으면 클립보드 이미지를 자동 압축해 바로 붙여넣게 해주는 Windows 트레이 상주 프로그램. 해상도를 유지한 채 WebP→JPEG 순으로 9.5MB 이하까지 낮추고, 그래도 크면 단계적으로 축소합니다. Python·MIT·다국어(영/한/스페인어).",
-      "descriptionEn": "A Windows tray app that auto-compresses clipboard images when a screenshot exceeds Discord's 10 MB free-upload limit, so you can paste and upload immediately. It keeps resolution and steps WebP→JPEG down to ≤9.5 MB, scaling resolution only if needed. Python, MIT, multilingual (EN/KO/ES).",
+      "descriptionKo": "디스코드 무료 유저용 트레이 컴패니언. 캡처 이미지가 무료 업로드 한도(10MB)를 넘으면 클립보드에서 자동 압축(WebP→JPEG→축소)하고, v2.0부터는 니트로가 잠근 이모지·스티커·GIF 피커를 핫키 팝업(WebView2, 디스코드 다크테마 재현)으로 대체합니다 — 클라이언트 무수정·계정 자동화 없음(ToS 안전 설계), APNG→GIF 자동 변환, 선택 시 자동 붙여넣기(전송은 사용자 몫). Python·MIT·5개 언어.",
+      "descriptionEn": "A tray companion for Discord free users. It auto-compresses clipboard images that exceed the 10 MB free-upload limit (WebP→JPEG→downscale), and since v2.0 replaces the Nitro-gated emoji/sticker/GIF picker with a hotkey popup (WebView2, Discord-style dark UI) — no client mods, no account automation (ToS-safe by design), with APNG→GIF conversion and auto-paste on select while sending stays manual. Python, MIT, five languages.",
       "techStack": [
         "Python",
         "Pillow",
-        "pystray"
+        "pystray",
+        "pywebview (WebView2)"
       ],
       "status": "active",
       "github": "https://github.com/writingdeveloper/ClipShrink",
