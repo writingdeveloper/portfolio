@@ -92,6 +92,7 @@
       "too-complex": "Over-engineered",
       "lost-interest": "Lost interest",
       "funding": "Ran out of funds",
+      "consolidated": "Consolidated",
       "other": "Other"
     }
   },

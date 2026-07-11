@@ -22,6 +22,7 @@ export type CauseOfDeath =
   | 'too-complex'
   | 'lost-interest'
   | 'funding'
+  | 'consolidated'
   | 'other'
 
 export interface Tombstone {

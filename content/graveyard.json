@@ -42,6 +42,20 @@
       "techStack": ["TypeScript", "Three.js", "WebGL", "Vite"],
       "website": "https://rockgaze.vercel.app",
       "private": true
+    },
+    {
+      "name": "3d-asset-studio",
+      "slug": "3d-asset-studio",
+      "bornAt": "2026",
+      "diedAt": "2026",
+      "causeOfDeath": "consolidated",
+      "epitaphKo": "이미지를 텍스처 3D로 바꾸던 파이프라인. 5모달리티 팩토리 studios로 합쳐졌다.",
+      "epitaphEn": "A pipeline that turned images into textured 3D. Folded into studios, the five-modality factory.",
+      "retroKo": "RTX 4080에서 Hunyuan3D 2.1 + ComfyUI로 이미지→텍스처 3D(.glb)를 뽑고 Claude Code로 품질 게이트를 자동화해 Studio Apartment의 에셋을 공급했습니다. 이후 이미지·영상·음성·음악 생성을 같은 커널·자산 스토어·검수 흐름으로 묶으면서, 3D 전용 레포를 studios 모노레포의 3d-studio로 흡수했습니다. cleanup 스크립트는 vendor로 포팅해 남겼습니다.",
+      "retroEn": "On an RTX 4080 I generated textured 3D (.glb) from images with Hunyuan3D 2.1 + ComfyUI and automated the quality gate with Claude Code, supplying the assets for Studio Apartment. As I unified image, video, voice, and music generation under one kernel, asset store, and review flow, I absorbed the 3D-only repo into the studios monorepo as 3d-studio — porting its cleanup scripts into vendor so nothing was lost.",
+      "techStack": ["Python", "ComfyUI", "Hunyuan3D", "PowerShell", "Playwright"],
+      "supersededBy": "studios",
+      "private": true
     }
   ]
 }

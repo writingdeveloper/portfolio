@@ -140,6 +140,7 @@ export default config({
                 { value: 'too-complex', label: '과설계' },
                 { value: 'lost-interest', label: '흥미 상실' },
                 { value: 'funding', label: '자금 부족' },
+                { value: 'consolidated', label: '통합' },
                 { value: 'other', label: '기타' },
               ],
               defaultValue: 'no-pmf',

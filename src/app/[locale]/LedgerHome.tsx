@@ -24,7 +24,7 @@ const STACK = ['TypeScript', 'Next.js', 'React', 'Three.js', 'NestJS', 'Electron
 const CATEGORY: Record<'products' | 'games' | 'tools', string[]> = {
   products: ['soursea', 'healframe', 'drymora', 'fitcheck', 'rentrights', 'receipt-tracker', 'zodiacly', 'transit-la', 'kindling', 'growgle', 'argus-fusion', 'observer-of-lines'],
   games: ['hoverslam', 'normandy-cliff-defense', 'mini-games', 'tantrum-tower', 'unclog-la', 'youtube-rhythm-game', 'liminal-bestiary', 'studio-apartment'],
-  tools: ['devdeck', 'sitedeck', 'marketdeck', 'clipshrink', 'kl125-controller', '3d-asset-studio', 'ai-4080-ops', 'nag-coach', 'piano-scribe', 'comfyui-web', 'shipwright', 'dont-touch'],
+  tools: ['devdeck', 'sitedeck', 'marketdeck', 'notro', 'kl125-controller', 'studios', 'ai-4080-ops', 'nag-coach', 'piano-scribe', 'comfyui-web', 'shipwright', 'dont-touch'],
 }
 
 // YAML frontmatter dates (`publishedAt: 2026-06-10`) parse to a Date at runtime

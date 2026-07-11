@@ -109,8 +109,8 @@
       "featured": false
     },
     {
-      "name": "ClipShrink",
-      "slug": "clipshrink",
+      "name": "Notro",
+      "slug": "notro",
       "descriptionKo": "디스코드 무료 유저용 트레이 컴패니언. 캡처 이미지가 무료 업로드 한도(10MB)를 넘으면 클립보드에서 자동 압축(WebP→JPEG→축소)하고, v2.0부터는 니트로가 잠근 이모지·스티커·GIF 피커를 핫키 팝업(WebView2, 디스코드 다크테마 재현)으로 대체합니다 — 클라이언트 무수정·계정 자동화 없음(ToS 안전 설계), APNG→GIF 자동 변환, 선택 시 자동 붙여넣기(전송은 사용자 몫). Python·MIT·5개 언어.",
       "descriptionEn": "A tray companion for Discord free users. It auto-compresses clipboard images that exceed the 10 MB free-upload limit (WebP→JPEG→downscale), and since v2.0 replaces the Nitro-gated emoji/sticker/GIF picker with a hotkey popup (WebView2, Discord-style dark UI) — no client mods, no account automation (ToS-safe by design), with APNG→GIF conversion and auto-paste on select while sending stays manual. Python, MIT, five languages.",
       "techStack": [
@@ -120,7 +120,7 @@
         "pywebview (WebView2)"
       ],
       "status": "active",
-      "github": "https://github.com/writingdeveloper/ClipShrink",
+      "github": "https://github.com/writingdeveloper/Notro",
       "private": false,
       "featured": false
     },
@@ -200,18 +200,21 @@
       "featured": false
     },
     {
-      "name": "3d-asset-studio",
-      "slug": "3d-asset-studio",
-      "descriptionKo": "이미지나 텍스트를 넣으면 게임용 텍스처 3D 에셋(.glb)을 로컬에서 생성하는 파이프라인. RTX 4080 SUPER에서 Hunyuan3D 2.1 + ComfyUI로 구동하고, SDXL→rembg→Hunyuan3D 경로와 자동 품질 게이트(메트릭·albedo 추출·다각도 contact sheet 검수)를 Claude Code로 오케스트레이션합니다. Studio Apartment의 3D 에셋 공급원.",
-      "descriptionEn": "A local pipeline that turns an image or text prompt into a game-ready textured 3D asset (.glb). It runs Hunyuan3D 2.1 + ComfyUI on an RTX 4080 SUPER, orchestrating an SDXL→rembg→Hunyuan3D path and an automated quality gate (metrics, albedo extraction, multi-angle contact-sheet review) with Claude Code. The asset source behind Studio Apartment.",
+      "name": "studios",
+      "slug": "studios",
+      "descriptionKo": "이미지·영상·3D·음성·음악을 Claude가 MCP 툴로 생성→기계 게이트→썸네일 직접 검수→재시도하는 5모달리티 개인 생성 팩토리. 공유 커널(GPU 중재·SQLite 자산 스토어·썸네일)과 모달리티별 MCP 서버, FastAPI+React 갤러리를 히스토리 보존 subtree 병합으로 단일 모노레포에 통합하고, 생성 GPU·데이터·프론트를 RTX 4080 노트북 한 대로 일원화했습니다. 자산 계보와 검수 판정을 DB로 관리해 에이전트의 판단이 라이브러리로 흐르게 했고 300개 이상 테스트로 고정했습니다. Studio Apartment의 에셋을 공급하던 3d-asset-studio를 흡수·계승했습니다.",
+      "descriptionEn": "A five-modality personal generation factory where Claude drives image, video, 3D, voice, and music through MCP tools — generate → machine gate → inspect the thumbnail directly → retry. I consolidated a shared kernel (GPU arbitration, a SQLite asset store, thumbnails), per-modality MCP servers, and a FastAPI + React gallery into a single monorepo via history-preserving subtree merges, centralizing the generation GPU, data, and frontend on one RTX 4080 laptop. Asset lineage and review verdicts live in the DB so an agent's judgment flows back into the library, locked by 300+ tests. It absorbs and succeeds 3d-asset-studio, which supplied the assets for Studio Apartment.",
       "techStack": [
         "Python",
+        "Model Context Protocol",
         "ComfyUI",
         "Hunyuan3D",
-        "PowerShell",
-        "Playwright"
+        "FastAPI",
+        "React",
+        "SQLite"
       ],
-      "status": "building",
+      "status": "active",
+      "succeeds": "3d-asset-studio",
       "private": true,
       "featured": false
     },
