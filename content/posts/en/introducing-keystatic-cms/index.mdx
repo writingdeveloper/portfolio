@@ -14,7 +14,7 @@ Every post on this blog is an MDX file inside a git repository. Writing a new on
 
 ## The candidates, and why they lost
 
-**Notion or a headless CMS (Contentful, Sanity, etc.)**: your content's source of truth moves into someone else's database. This blog doubles as my portfolio, and I didn't want the canonical copy of my writing living outside my repository. If the service shuts down or changes its pricing, your posts become hostages.
+**Notion or a headless CMS (Contentful, Sanity, etc.)**: the content's source of truth moves into someone else's database. This blog doubles as my portfolio, and I didn't want the canonical copy of my writing living outside my repository. If the service shuts down or changes its pricing, the posts become hostages.
 
 **A custom admin on a database**: buildable, but running a database and an admin panel for one personal blog is the tail wagging the dog.
 
@@ -35,7 +35,7 @@ I kept storage in local mode. With `npm run dev` running, anything I edit at `/k
 
 Posts here exist as a Korean–English pair (`content/posts/ko/<slug>` and `content/posts/en/<slug>`). Keystatic has no concept of "these two entries are translations of the same post." I ended up defining two separate collections, `posts-ko` and `posts-en`, and keeping the slugs aligned and the content in sync is still a human job.
 
-What the CMS solved was *formatting mistakes*, not *editorial rules* — something I only saw clearly after adopting it.
+What the CMS solved was *formatting mistakes*, not *operational rules* — something I only saw clearly after adopting it.
 
 ## What changed, what didn't
 
@@ -45,4 +45,4 @@ What the CMS solved was *formatting mistakes*, not *editorial rules* — somethi
 
 Honestly, even after adopting it, a doubt lingered for a while: was it right to pass on something as battle-tested as WordPress for this? Whenever it comes back, I return to the original criterion — every post stays as plain text inside my own repository. On that criterion, this is still the right call.
 
-A CMS doesn't make you write. It just removes one excuse not to. For me, that was worth the price of admission.
+Honestly, a CMS doesn't write the posts for me. It just removed one excuse not to write — and for me, even that much made it worth adopting.
