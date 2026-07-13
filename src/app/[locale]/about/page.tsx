@@ -66,6 +66,7 @@ function AboutContent() {
     frontend: skills.filter((s) => s.category === 'frontend'),
     backend: skills.filter((s) => s.category === 'backend'),
     tools: skills.filter((s) => s.category === 'tools'),
+    infra: skills.filter((s) => s.category === 'infra'),
   }
 
   return (
