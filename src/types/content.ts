@@ -45,7 +45,7 @@ export interface Tombstone {
 
 export interface Skill {
   name: string
-  category: 'frontend' | 'backend' | 'tools'
+  category: 'frontend' | 'backend' | 'tools' | 'infra'
 }
 
 export interface TimelineItem {
@@ -69,4 +69,5 @@ export const skillCategories = {
   frontend: { ko: '프론트엔드', en: 'Frontend' },
   backend: { ko: '백엔드', en: 'Backend' },
   tools: { ko: '도구', en: 'Tools' },
+  infra: { ko: '인프라', en: 'Infra' },
 } as const
