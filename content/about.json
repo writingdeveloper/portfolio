@@ -91,9 +91,41 @@
     {
       "name": "Turborepo",
       "category": "tools"
+    },
+    {
+      "name": "Tailscale",
+      "category": "infra"
+    },
+    {
+      "name": "Caddy",
+      "category": "infra"
+    },
+    {
+      "name": "Oracle Cloud",
+      "category": "infra"
+    },
+    {
+      "name": "Infisical",
+      "category": "infra"
+    },
+    {
+      "name": "Uptime Kuma",
+      "category": "infra"
+    },
+    {
+      "name": "Ollama",
+      "category": "infra"
     }
   ],
   "timeline": [
+    {
+      "date": "2025 - Present",
+      "titleKo": "홈서버·셀프호스팅 인프라 구축·운영",
+      "titleEn": "Building & running self-hosted infrastructure",
+      "descriptionKo": "집 GPU 워크스테이션(RTX 4080)과 Oracle Cloud VM을 Tailscale 사설망으로 묶어 self-host 인프라를 구축. Caddy·DuckDNS로 필요한 서비스만 공개 노출하고, Infisical(시크릿)·Plane(프로젝트 관리)을 직접 운영하며 PowerShell 상태점검 스크립트와 Uptime Kuma로 모니터링. 이 인프라 위에서 studios·ai-4080-ops 같은 생성 파이프라인이 돌아감.",
+      "descriptionEn": "Tied a home GPU workstation (RTX 4080) and an Oracle Cloud VM together over a Tailscale mesh to run self-hosted infrastructure. Caddy and DuckDNS expose only what needs to be public; Infisical (secrets) and Plane (project management) run self-hosted, monitored via PowerShell health-check scripts and Uptime Kuma. The generative pipelines in studios and ai-4080-ops run on top of this.",
+      "type": "project"
+    },
     {
       "date": "2026",
       "titleKo": "오픈소스·시빅테크로 확장",
