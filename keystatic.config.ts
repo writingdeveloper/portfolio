@@ -178,6 +178,7 @@ export default config({
                 { value: 'frontend', label: '프론트엔드' },
                 { value: 'backend', label: '백엔드' },
                 { value: 'tools', label: '도구' },
+                { value: 'infra', label: '인프라' },
               ],
               defaultValue: 'frontend',
             }),

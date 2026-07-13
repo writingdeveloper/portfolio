@@ -6,11 +6,13 @@ import { GlowOrb } from '../components/GlowOrb'
 import { SectionLabel } from '../components/SectionLabel'
 import { SectionDivider } from '../components/SectionDivider'
 import { SECTION_SPACING } from '../scene/CameraRig'
+import { categoryX } from '@/lib/skills-layout'
 
 const CATEGORY_COLORS: Record<string, string> = {
   frontend: '#7b6f99',
   backend: '#8b7355',
   tools: '#6b6891',
+  infra: '#5f8b7a',
 }
 
 interface SkillsSectionProps {
@@ -26,6 +28,7 @@ export function SkillsSection({ skills, locale, sectionLabel }: SkillsSectionPro
     frontend: skills.filter((s) => s.category === 'frontend'),
     backend: skills.filter((s) => s.category === 'backend'),
     tools: skills.filter((s) => s.category === 'tools'),
+    infra: skills.filter((s) => s.category === 'infra'),
   }
 
   const categoryLabel = (cat: string) =>
@@ -36,7 +39,7 @@ export function SkillsSection({ skills, locale, sectionLabel }: SkillsSectionPro
       <SectionDivider position={[0, sectionY + 5, 0]} number="02" />
       <SectionLabel position={[0, sectionY + 4, 0]} label={sectionLabel} />
       {Object.entries(grouped).map(([category, items], catIdx) => {
-        const catX = (catIdx - 1) * 5
+        const catX = categoryX(catIdx, Object.keys(grouped).length)
         return (
           <group key={category}>
             <SectionLabel
