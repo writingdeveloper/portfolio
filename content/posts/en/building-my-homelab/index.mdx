@@ -1,0 +1,54 @@
+---
+title: "My Home Server Is a Laptop"
+excerpt: "One RTX 4080 laptop and one Oracle Cloud VM, tied together over a Tailscale mesh, run my generative pipelines and internal tools. Here's what lives at home, what lives in the cloud, what's public, and what stays locked."
+publishedAt: "2026-07-17"
+author: "이시형"
+category: development
+tags: ["homelab", "self-hosting", "infrastructure"]
+coverImage: ""
+faqs:
+  - question: "Why not put everything in the cloud?"
+    answer: "The center of my work is GPU-heavy generation, and that GPU already lives at home. So the heavy work goes to the RTX 4080 laptop, and only the lightweight always-on services live on a cloud VM. The reverse is also true: I don't keep everything at home because a laptop is not a machine you leave running 24/7."
+  - question: "How do you reach the home server from outside?"
+    answer: "Tailscale, by default. My machines only see each other inside the private mesh. The few screens that need to be public go out narrowly through a Caddy reverse proxy and DuckDNS, and some of those are locked once more behind basic auth."
+---
+
+Say "homelab" and people picture a rack of servers with blinking LEDs. My home server is a Windows laptop. It has an RTX 4080 in it, and there's no hypervisor — Docker containers and Python venvs run straight on the host. Add one Ubuntu VM on Oracle Cloud, tie the two together over a Tailscale mesh, and that's the whole setup.
+
+On top of these two machines run my image, video, 3D, voice, and music generation pipelines, a secrets manager, a project management tool, and a local LLM. I wanted to write down how the pieces are split, and why.
+
+## Heavy things at home, always-on things in the cloud
+
+The dividing rule is simple. Anything that needs the GPU goes to the laptop — the generation pipelines' compute, data, and frontend all live on this one machine.
+
+The problem is that a laptop is not a machine you leave running 24/7. So the things that must always be alive moved to the Ubuntu VM on Oracle Cloud: **Infisical**, the secrets manager, and **Plane**, the project management tool, run there. I can shut the laptop down and my secrets and project boards stay up.
+
+It looks less impressive than one big server that does everything. But with each machine doing only what it's good at, neither one is straining.
+
+## Everything travels over Tailscale
+
+The laptop, the VM, and my dev machines all sit on a Tailscale mesh. Traffic between my machines moves only inside this private network. When I reach the laptop from outside, it's through this mesh too.
+
+A few screens do need to be public. Only those go out through a Caddy reverse proxy and DuckDNS dynamic DNS. Things like the gallery where I review generation results — pages I want reachable but not open to everyone — get one more lock with basic auth. I won't write the addresses here. It would be a strange way to end a story about keeping the public surface small.
+
+## What self-hosting the secrets and the project board actually means
+
+Infisical holds the API keys and environment variables for my projects; Plane holds the project boards. These are things a managed SaaS would happily do for me, and I run them myself anyway.
+
+It isn't free. I pay in operations instead of fees — two more services to watch, updates that are now my job. In exchange, I decide where the secrets live and who can see them. At my current scale, I still think that trade comes out ahead.
+
+## How I keep watch
+
+**Uptime Kuma** watches whether services are alive. Health checks are handled by the PowerShell scripts in [ai-4080-ops](/en/projects), an internal toolkit — they check the GPU, ports, Funnel (Tailscale's selective public-exposure feature), and Caddy. The laptop itself is driven over SSH across Tailscale, and PowerShell headed for the machine goes through a wrapper that ships it as an EncodedCommand so quoting doesn't break in transit. These tools were built so a Claude Code session could operate the server directly in the first place.
+
+There's no Grafana, no Prometheus. There aren't enough services to justify a dashboard, and scripts plus Uptime Kuma are still enough. There's also no backup system yet — and that one isn't "enough", it's simply not built. I'm writing it down as homework.
+
+## What actually runs on this
+
+This setup didn't start as infrastructure looking for a use. The things to run came first, and the infrastructure followed.
+
+The laptop runs [studios](/en/projects) — a five-modality personal generation factory where Claude drives image, video, 3D, voice, and music through MCP tools, generating and inspecting the results. It has a shared kernel for GPU arbitration and a SQLite asset store, a FastAPI + React gallery in the same monorepo, and 300+ tests holding it all in place. [ComfyUI Web](/en/projects), which turns natural language into optimized prompts and workflow JSON, runs on the same laptop, and so does Ollama, the local LLM.
+
+So the infrastructure in this post is not for show — it's lived-in. A good share of the projects from [What I've Been Building Lately](/en/blog/recent-builds-2026) were built on these two machines.
+
+I don't think this setup is final. It runs as much as I need today, and when it stops being enough, I'll change it then.
