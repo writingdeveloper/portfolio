@@ -27,8 +27,11 @@ export function GoogleAnalytics({ nonce }: { nonce?: string }) {
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
         nonce={nonce}
       />
+      {/* Browsers hide the nonce content attribute after parsing, so React's
+          hydration diff always mismatches on it — suppress that one warning. */}
       <script
         nonce={nonce}
+        suppressHydrationWarning
         dangerouslySetInnerHTML={{
           __html: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_MEASUREMENT_ID}');`,
         }}
