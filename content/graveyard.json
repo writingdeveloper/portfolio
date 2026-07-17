@@ -56,6 +56,21 @@
       "techStack": ["Python", "ComfyUI", "Hunyuan3D", "PowerShell", "Playwright"],
       "supersededBy": "studios",
       "private": true
+    },
+    {
+      "name": "Don't Touch (Python)",
+      "slug": "dont-touch-python",
+      "bornAt": "2025",
+      "diedAt": "2025",
+      "causeOfDeath": "pivoted",
+      "epitaphKo": "웹캠으로 손이 얼굴에 닿는 걸 감지하던 첫 Python 버전. 같은 앱을 Electron으로 다시 지었다.",
+      "epitaphEn": "The first Python build that watched the webcam for hand-to-face contact. The same app, rebuilt in Electron.",
+      "retroKo": "OpenCV와 MediaPipe로 실시간 손-얼굴 감지를 구현하고, CustomTkinter 데스크톱 앱에 일일·주간 통계와 스트릭, 6개 언어, Windows 설치본까지 담아 v1.0.0을 공개했습니다. 이후 같은 앱을 Electron과 React로 다시 만들면서 이 Python 원본은 보관 처리했습니다. 발모벽을 고치려는 목적은 그대로 두고 껍데기만 바꿔 Don't Touch로 이어집니다.",
+      "retroEn": "I shipped v1.0.0 as a CustomTkinter desktop app with real-time hand-to-face detection on OpenCV and MediaPipe, plus daily and weekly stats, streaks, six languages, and a Windows installer. I later rebuilt the same app in Electron and React and archived this Python original. The purpose — a tool to fight trichotillomania — stayed put; only the shell changed, and it carries on as Don't Touch.",
+      "techStack": ["Python", "OpenCV", "MediaPipe", "CustomTkinter"],
+      "github": "https://github.com/writingdeveloper/dont-touch-python",
+      "supersededBy": "dont-touch",
+      "private": false
     }
   ]
 }

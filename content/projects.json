@@ -330,6 +330,7 @@
       ],
       "status": "active",
       "github": "https://github.com/writingdeveloper/dont-touch-electron",
+      "succeeds": "dont-touch-python",
       "private": false,
       "featured": false
     },
@@ -415,8 +416,8 @@
     {
       "name": "Receipt Tracker",
       "slug": "receipt-tracker",
-      "descriptionKo": "영수증 사진을 올리면 Gemini OCR로 상점·금액·날짜·카테고리를 추출해 가계부로 정리하는 멀티유저 PWA. 모든 엔드포인트를 사용자별로 격리하고(SSE 스트림·이미지 서빙 seam까지), 트랜잭션 행 잠금으로 사용량 쿼터를 동시성-안전하게 처리하며, 재배포로 끊긴 OCR 작업을 회수하는 janitor까지 구현했습니다.",
-      "descriptionEn": "A multi-user PWA that turns a receipt photo into a tidy budget entry — Gemini OCR extracts merchant, total, date, and category. I scoped every endpoint per user (down to the SSE-stream and image-serving seams), made the usage quota concurrency-safe with transactional row locks, and added a janitor that reclaims OCR jobs stranded by a mid-process redeploy.",
+      "descriptionKo": "영수증 사진을 올리면 Gemini OCR로 상점·금액·날짜·카테고리를 추출해 가계부로 정리하는 멀티유저 PWA. 모든 엔드포인트를 사용자별로 격리하고(SSE 스트림·이미지 서빙 seam까지), 트랜잭션 행 잠금으로 사용량 쿼터를 동시성-안전하게 처리하며, 재배포로 끊긴 OCR 작업을 회수하는 janitor까지 구현했습니다. 최근에는 매주 지출을 정리·분석한 인사이트를 크론으로 이메일 발송하는 주간 리포트를 더했습니다.",
+      "descriptionEn": "A multi-user PWA that turns a receipt photo into a tidy budget entry — Gemini OCR extracts merchant, total, date, and category. I scoped every endpoint per user (down to the SSE-stream and image-serving seams), made the usage quota concurrency-safe with transactional row locks, and added a janitor that reclaims OCR jobs stranded by a mid-process redeploy. More recently I added a weekly report that emails cron-scheduled spending insights.",
       "techStack": [
         "TypeScript",
         "Next.js",
