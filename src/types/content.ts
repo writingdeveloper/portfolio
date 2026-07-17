@@ -55,6 +55,8 @@ export interface TimelineItem {
   descriptionKo: string
   descriptionEn: string
   type: 'work' | 'education' | 'project'
+  /** optional locale-relative path (e.g. /blog/slug) the entry links to */
+  href?: string
 }
 
 export interface PostSummary {

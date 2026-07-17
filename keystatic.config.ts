@@ -204,6 +204,9 @@ export default config({
               ],
               defaultValue: 'project',
             }),
+            href: fields.text({
+              label: '링크 (선택, 내부 경로 예: /blog/slug)',
+            }),
           }),
           {
             label: '타임라인',

@@ -1,5 +1,6 @@
 import { useTranslations, useLocale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
+import { Link } from '@/i18n/navigation'
 import { PageTransition } from '@/components/ui/PageTransition'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
@@ -122,7 +123,16 @@ function AboutContent() {
                 <div className="absolute -left-[25px] w-3 h-3 rounded-full bg-[var(--timeline-dot)] border-2 border-[var(--bg-primary)]" />
                 <span className="text-xs text-[var(--text-muted)] block mb-1">{item.date}</span>
                 <h3 className="font-semibold text-[var(--text-primary)]">
-                  {locale === 'en' ? (item.titleEn || item.titleKo) : item.titleKo}
+                  {item.href ? (
+                    <Link
+                      href={item.href}
+                      className="underline decoration-[var(--border-hover)] underline-offset-4 hover:decoration-[var(--text-primary)] transition-colors"
+                    >
+                      {locale === 'en' ? (item.titleEn || item.titleKo) : item.titleKo}
+                    </Link>
+                  ) : (
+                    locale === 'en' ? (item.titleEn || item.titleKo) : item.titleKo
+                  )}
                 </h3>
                 <p className="text-sm text-[var(--text-secondary)] mt-1">
                   {locale === 'en' ? (item.descriptionEn || item.descriptionKo) : item.descriptionKo}

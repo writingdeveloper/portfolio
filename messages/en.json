@@ -99,8 +99,8 @@
   "about": {
     "title": "About",
     "description": "My journey as a developer and entrepreneur",
-    "metaDescription": "Si Hyeong Lee — full-stack developer and entrepreneur. The story behind Soursea, HealFrame, and around 20 builds, with the tech stack and timeline behind them.",
-    "body": "As a developer and entrepreneur, I solve problems with technology. I build projects like Soursea and Don't Touch — each born from a real problem I faced — and share what I learn through this blog.",
+    "metaDescription": "Si Hyeong Lee — full-stack developer and entrepreneur. The story behind Soursea, HealFrame, and around 30 builds, with the tech stack and timeline behind them.",
+    "body": "As a developer and entrepreneur, I solve problems with technology. I build projects like Soursea and Don't Touch — each born from a real problem I faced — and share what I learn through this blog. I don't stop at building, either: my generative pipelines and internal tools run on self-hosted infrastructure I operate myself — a home GPU workstation and a cloud VM tied together over a Tailscale mesh.",
     "skills": "Tech Stack",
     "timeline": "Timeline"
   },
