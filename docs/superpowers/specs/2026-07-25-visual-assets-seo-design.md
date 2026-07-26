@@ -159,14 +159,11 @@ Claude가 `generate_image` 응답의 썸네일을 실제로 보고 판정한다.
 - `verify-hero.ts`의 팔레트 판정 순수 함수에 대한 단위 테스트를 추가한다
 - 이미지가 없는 포스트/프로젝트에서 렌더링이 정상 동작하는지 확인한다 (조건부 분기)
 
-## 구현 전 확인이 필요한 미결 사항
+## image-studio 파일 회수 방식 (확정)
 
-`generate_image` 문서에 "서버가 원격에서 돌면 path는 서버 머신 경로라 Read 불가"라는 단서가 있다. image-studio가 로컬에서 도는지 원격인지에 따라 생성된 파일을 `public/images/posts/`로 가져오는 방법이 달라진다.
+테스트 이미지 1장을 생성해 확인했다. `generate_image` 응답의 `path`는 `C:\ComfyUI-LTX\output\Krea2_gen\01_01259_.png`였고(`size_adjusted: false`, 요청한 1600x896 그대로 생성됨), 이 경로를 Read 도구로 열자 "File does not exist. Note: your current working directory is C:\Users\SIHYEONG\Documents\GitHub\portfolio."로 실패했다. 경로의 사용자 디렉터리(`sihye`)도 이 머신의 사용자(`SIHYEONG`)와 다르다.
 
-- 로컬인 경우: `out` 파라미터로 목적지를 직접 지정한다
-- 원격인 경우: 별도 전송 경로가 필요하며 설계를 조정한다
-
-**구현 첫 단계에서 테스트 이미지 1장을 생성해 즉시 확인한다.** 원격으로 판명되면 이 문서를 갱신한다.
+**결론: 원격 모드.** image-studio는 이 머신과 다른 서버에서 돌고, `generate_image`가 반환하는 `path`는 그 서버 머신의 로컬 경로이며 이 머신에서는 Read로 열 수 없다. 따라서 Task 8은 `out` 파라미터로 `public/images/posts/`를 직접 지정하는 방식을 쓸 수 없고, 별도 회수 경로(예: 응답에 첨부되는 이미지 블록/`gallery` URL을 통한 다운로드 등)가 필요하다. 구체적인 회수 방법은 Task 8에서 설계를 조정한다.
 
 ## 범위 밖
 
