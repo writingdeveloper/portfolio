@@ -1,6 +1,7 @@
 import { Link } from '@/i18n/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { Globe } from 'lucide-react'
+import Image from 'next/image'
 import type { PostMeta } from '@/lib/mdx'
 
 interface PostCardProps {
@@ -15,6 +16,17 @@ export function PostCard({ post, categoryLabel }: PostCardProps) {
   return (
     <Link href={`/blog/${post.slug}`}>
       <article className="group rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] overflow-hidden hover:border-[var(--border-hover)] focus-within:border-[var(--border-hover)] transition-all hover:-translate-y-1">
+        {post.coverImage && (
+          <div className="relative aspect-video bg-[var(--bg-elevated)]">
+            <Image
+              src={post.coverImage}
+              alt={post.coverImageAlt}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </div>
+        )}
         <div className="p-4 sm:p-5">
           <div className="flex items-center justify-between mb-2">
             {post.category && (

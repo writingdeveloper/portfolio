@@ -1,5 +1,6 @@
 import { ArrowLeft, ExternalLink, Github, Lock } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
+import Image from 'next/image'
 import type { Project } from '@/types/content'
 import { predecessorOf } from '@/lib/lineage'
 
@@ -41,9 +42,23 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const locale = useLocale()
   const predecessor = predecessorOf(project)
   const graveyardHref = locale === 'ko' ? '/graveyard' : `/${locale}/graveyard`
+  const screenshotAlt =
+    (locale === 'en' ? project.screenshotAltEn : project.screenshotAltKo) ?? ''
 
   return (
-    <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] p-4 sm:p-6 hover:border-[var(--border-hover)] transition-all">
+    <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] overflow-hidden hover:border-[var(--border-hover)] transition-all">
+      {project.screenshot && (
+        <div className="relative aspect-[16/10] bg-[var(--bg-elevated)] border-b border-[var(--border-default)]">
+          <Image
+            src={project.screenshot}
+            alt={screenshotAlt}
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            className="object-cover object-top"
+          />
+        </div>
+      )}
+      <div className="p-4 sm:p-6">
       <div className="flex items-start gap-4 mb-4">
         <div className="flex-1">
           <div className="flex items-center gap-2">
@@ -108,6 +123,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </span>
           </a>
         )}
+      </div>
       </div>
     </div>
   )

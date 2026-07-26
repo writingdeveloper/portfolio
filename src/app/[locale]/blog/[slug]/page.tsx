@@ -14,6 +14,7 @@ import { RelatedPosts } from '@/components/blog/RelatedPosts'
 import { Link } from '@/i18n/navigation'
 import { ReadingProgress } from '@/components/blog/ReadingProgress'
 import { Comments } from '@/components/blog/Comments'
+import Image from 'next/image'
 
 function getOgImageUrl(post: { coverImage: string; title: string; excerpt: string }) {
   if (post.coverImage) {
@@ -161,6 +162,19 @@ export default async function BlogPostPage({
               </Link>
             )}
           </header>
+
+          {post.coverImage && (
+            <div className="relative aspect-video mb-8 rounded-xl overflow-hidden border border-[var(--border-default)] bg-[var(--bg-elevated)]">
+              <Image
+                src={post.coverImage}
+                alt={post.coverImageAlt}
+                fill
+                priority
+                sizes="(max-width: 1024px) 100vw, 800px"
+                className="object-cover"
+              />
+            </div>
+          )}
 
           {/* Mobile TOC */}
           <div className="lg:hidden">
