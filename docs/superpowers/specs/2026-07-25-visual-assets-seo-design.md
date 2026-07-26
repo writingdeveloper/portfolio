@@ -161,14 +161,14 @@ Claude가 `generate_image` 응답의 썸네일을 실제로 보고 판정한다.
 
 ## image-studio 파일 회수 방식 (확정)
 
-테스트 이미지 1장을 생성해 확인했다. `generate_image` 응답의 `path`는 `C:\ComfyUI-LTX\output\Krea2_gen\01_01259_.png`였고(`size_adjusted: false`, 요청한 1600x896 그대로 생성됨), 이 경로를 Read 도구로 열자 "File does not exist. Note: your current working directory is C:\Users\SIHYEONG\Documents\GitHub\portfolio."로 실패했다. 경로의 사용자 디렉터리(`sihye`)도 이 머신의 사용자(`SIHYEONG`)와 다르다.
+테스트 이미지 1장을 생성해 확인했다. `generate_image` 응답의 `path`는 `<remote output dir>\01_01259_.png`였고(`size_adjusted: false`, 요청한 1600x896 그대로 생성됨), 이 경로를 Read 도구로 열자 "File does not exist. Note: your current working directory is C:\Users\SIHYEONG\Documents\GitHub\portfolio."로 실패했다.
 
 **경로는 원격이지만 회수는 가능하다.** image-studio는 이 머신과 다른 서버에서 돌고, `generate_image`가 반환하는 `path`는 그 서버 머신의 로컬 경로다. 따라서 `out` 파라미터로 `public/images/posts/`를 직접 지정할 수는 없다.
 
 그러나 MCP 트랜스포트 자체가 SSH다. `.claude.json`의 image-studio 항목은 `type: "stdio"`에 `command: "ssh"`로 원격 파이썬 모듈을 실행한다. 즉 **이 머신에서 원격으로의 비대화식 SSH가 이미 성립해 있다.** 실증 결과 다음이 그대로 동작한다:
 
 ```bash
-scp -o BatchMode=yes "<user>@<host>:C:/ComfyUI-LTX/output/Krea2_gen/01_01259_.png" <로컬경로>
+scp -o BatchMode=yes "<user>@<host>:<remote output dir (forward slashes)>/01_01259_.png" <로컬경로>
 ```
 
 회수한 파일은 1,269,509바이트의 유효한 PNG였고 해상도도 요청한 1600x896 그대로였다.

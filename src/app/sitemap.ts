@@ -2,6 +2,8 @@ import type { MetadataRoute } from 'next'
 import { getAllPosts, hasTranslation } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
 import { toAbsoluteUrl } from '@/lib/seo'
+import projectsData from '../../content/projects.json'
+import type { Project } from '@/types/content'
 
 // Revalidate every hour to avoid regenerating the sitemap on every request.
 export const revalidate = 3600
@@ -12,6 +14,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const enPosts = getAllPosts('en')
 
   const staticPages = ['', '/blog', '/projects', '/graveyard', '/about', '/play']
+
+  // 프로젝트 스크린샷을 /projects 엔트리에 붙여 이미지 사이트맵에 노출한다.
+  const projectImages = (projectsData.projects as Project[])
+    .filter((p) => p.screenshot)
+    .map((p) => toAbsoluteUrl(p.screenshot!))
 
   // 한국어 + 영어 정적 페이지 모두 등록
   const staticUrls = staticPages.flatMap((page) => {
@@ -34,12 +41,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     }
 
+    const images = page === '/projects' ? projectImages : []
+
     return [
       {
         url: `${SITE_URL}${page}`,
         lastModified: buildDate,
         changeFrequency,
         priority,
+        ...(images.length ? { images } : {}),
         alternates,
       },
       {
@@ -47,6 +57,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         lastModified: buildDate,
         changeFrequency,
         priority: Math.max(priority - 0.1, 0.5),
+        ...(images.length ? { images } : {}),
         alternates,
       },
     ]

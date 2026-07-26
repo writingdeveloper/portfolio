@@ -6,10 +6,13 @@ import { predecessorOf } from '@/lib/lineage'
 
 interface ProjectCardProps {
   project: Project
-  /** Eager-load this card's screenshot. Only the cards in the first grid row
-   *  should set it: the first screenshot is the page's LCP element, and leaving
-   *  it lazy costs ~1.1s of load delay. Applying it further down the grid would
-   *  make every image compete for bandwidth and undo the gain. */
+  /** Eager-load this card's screenshot. The call site sets this via a fixed
+   *  index cut (index < 2) tuned to the desktop 2-column row: the first
+   *  screenshot is the page's LCP element, and leaving it lazy costs ~1.1s of
+   *  load delay. At the 1-column breakpoint that cut also lands on a card
+   *  below the fold — a minor over-application, not a correctness issue.
+   *  Applying it further down the grid would make every image compete for
+   *  bandwidth and undo the gain. */
   priority?: boolean
 }
 

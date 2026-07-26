@@ -1,0 +1,38 @@
+import { describe, it, expect } from 'vitest'
+import sitemap from '../../app/sitemap'
+import { SITE_URL } from '../constants'
+import projectsData from '../../../content/projects.json'
+import type { Project } from '@/types/content'
+
+describe('sitemap', () => {
+  it('attaches every project screenshot as an absolute URL to the ko and en /projects entries', async () => {
+    const entries = await sitemap()
+    const expectedImages = (projectsData.projects as Project[])
+      .filter((p) => p.screenshot)
+      .map((p) => `${SITE_URL}${p.screenshot}`)
+
+    const koProjects = entries.find((e) => e.url === `${SITE_URL}/projects`)
+    const enProjects = entries.find((e) => e.url === `${SITE_URL}/en/projects`)
+
+    expect(koProjects).toBeDefined()
+    expect(enProjects).toBeDefined()
+    expect(koProjects?.images).toEqual(expectedImages)
+    expect(enProjects?.images).toEqual(expectedImages)
+
+    // Every attached image must be an absolute http(s) URL.
+    for (const url of koProjects?.images ?? []) {
+      expect(url.startsWith('http')).toBe(true)
+    }
+  })
+
+  it('omits the images key entirely on entries with no images', async () => {
+    const entries = await sitemap()
+    const home = entries.find((e) => e.url === SITE_URL)
+    const graveyard = entries.find((e) => e.url === `${SITE_URL}/graveyard`)
+
+    expect(home).toBeDefined()
+    expect(graveyard).toBeDefined()
+    expect(home).not.toHaveProperty('images')
+    expect(graveyard).not.toHaveProperty('images')
+  })
+})

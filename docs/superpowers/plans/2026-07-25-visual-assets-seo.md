@@ -1211,7 +1211,7 @@ mkdir -p /tmp/hero-src
 scp -o BatchMode=yes "$HOST:<generate_image가 돌려준 path를 슬래시로 바꾼 것>" /tmp/hero-src/<slug>.png
 ```
 
-`path`는 `C:\ComfyUI-LTX\output\...` 형태의 백슬래시 경로로 돌아온다. `scp` 인자로는 `C:/ComfyUI-LTX/output/...`처럼 슬래시로 바꿔 넘긴다.
+`path`는 `<remote output dir>\...` 형태의 백슬래시 경로로 돌아온다. `scp` 인자로는 `<remote output dir>/...`처럼 슬래시로 바꿔 넘긴다.
 
 - [ ] **Step 5: 회수분을 WebP로 변환한다**
 

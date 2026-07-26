@@ -5,9 +5,12 @@
  *   --bg-primary  #0a0a0b  (near-black backdrop)
  *   --accent-text #c6f24e  (acid green, hue ~76deg)
  *
- * These functions are pure so the verdict is a number, not a matter of taste —
- * an image that drifts off-palette cannot be waved through by a reviewer who
- * is grading their own work.
+ * These functions are pure so the verdict is a number, not a matter of taste.
+ * scripts/to-hero-webp.ts already resizes every candidate to exactly 1600x900
+ * WebP, so format, minimum width and aspect ratio hold by construction — this
+ * gate only checks the palette (on-brand hue/saturation/lightness) and the
+ * file-size ceiling. It cannot see rendered text, human figures or cliché
+ * motifs; those still need a human or model reviewer.
  */
 
 /** Accent hue band, in degrees. #c6f24e sits at ~76. */
