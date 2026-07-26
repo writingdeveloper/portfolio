@@ -7,9 +7,14 @@ import type { PostMeta } from '@/lib/mdx'
 interface PostCardProps {
   post: PostMeta
   categoryLabel?: string
+  /** Eager-load this card's cover image. Only the cards in the first grid row
+   *  should set it: the first cover is the list page's LCP element, and leaving
+   *  it lazy costs ~0.5s of load delay. Applying it further down the grid would
+   *  make every image compete for bandwidth and undo the gain. */
+  priority?: boolean
 }
 
-export function PostCard({ post, categoryLabel }: PostCardProps) {
+export function PostCard({ post, categoryLabel, priority = false }: PostCardProps) {
   const locale = useLocale()
   const t = useTranslations('blog')
 
@@ -22,6 +27,7 @@ export function PostCard({ post, categoryLabel }: PostCardProps) {
               src={post.coverImage}
               alt={post.coverImageAlt}
               fill
+              priority={priority}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover transition-transform duration-300 group-hover:scale-105"
             />

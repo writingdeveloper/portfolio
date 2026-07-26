@@ -127,8 +127,9 @@ function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, c
 
         {posts.length > 0 ? (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => (
-              <PostCard key={post.slug} post={post} categoryLabel={categoryMap[post.category]} />
+            {posts.map((post, index) => (
+              // The grid is 3-up at desktop width, so only the first row is above the fold.
+              <PostCard key={post.slug} post={post} categoryLabel={categoryMap[post.category]} priority={index < 3} />
             ))}
           </div>
         ) : (

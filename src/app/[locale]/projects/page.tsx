@@ -89,8 +89,9 @@ function ProjectsContent() {
         </header>
 
         <div className="grid gap-6 sm:grid-cols-2">
-          {allProjects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+          {allProjects.map((project, index) => (
+            // The grid is 2-up, so only the first row is above the fold.
+            <ProjectCard key={project.slug} project={project} priority={index < 2} />
           ))}
         </div>
       </div>

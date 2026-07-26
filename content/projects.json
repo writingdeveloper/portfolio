@@ -21,7 +21,10 @@
       "playStore": "https://play.google.com/store/apps/details?id=com.soursea.drymora",
       "succeeds": "sobriety-app",
       "private": true,
-      "featured": true
+      "featured": true,
+      "screenshot": "/images/projects/drymora.webp",
+      "screenshotAltKo": "Drymora 웹앱 홈 화면. 왼쪽에 Home·Progress·Learn·Ask·Tools·Plan 사이드바가 있고, 가운데에는 환영 문구와 시작 버튼 아래 근거 자료 아티클 목록이, 오른쪽에는 추천 읽을거리 목록이 놓여 있다.",
+      "screenshotAltEn": "Drymora web app home. A left sidebar lists Home, Progress, Learn, Ask, Tools and Plan; the centre shows a welcome heading with get-started buttons above a list of evidence-informed articles, and a right rail suggests further reading."
     },
     {
       "name": "FitCheck",
@@ -38,7 +41,10 @@
       "status": "launched",
       "website": "https://fitcheck.writingdeveloper.blog",
       "private": true,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/fitcheck.webp",
+      "screenshotAltKo": "FitCheck 시작 화면. 상단에 EN·한국어·ES 언어 전환 버튼이 있고, 제목과 한 줄 소개 아래 비어 있는 촬영 영역에 카메라로 전신을 찍거나 사진을 업로드하라는 안내 문구가 떠 있다.",
+      "screenshotAltEn": "FitCheck start screen. Language toggles for EN, Korean and ES sit at the top; under the title and tagline, an empty capture area prompts the visitor to shoot a full-body photo with the camera or upload one."
     },
     {
       "name": "Studio Apartment",
@@ -55,7 +61,10 @@
       "website": "https://studio-apartment.vercel.app",
       "github": "https://github.com/writingdeveloper/studio-apartment",
       "private": false,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/studio-apartment.webp",
+      "screenshotAltKo": "스튜디오 아파트먼트 도입 화면. 검은 배경 가운데 한국어/English 언어 선택 버튼과, 값이 싸서 고른 낡은 아파트로 오늘 이사 왔다는 한국어 도입 문장이 놓여 있고, 맨 아래에 '클릭하여 시작' 안내가 있다.",
+      "screenshotAltEn": "Opening screen of Studio Apartment. On a black background, a Korean/English language toggle sits above several lines of Korean prose about moving into a cheap old apartment today, with a 'click to start' prompt at the bottom."
     },
     {
       "name": "SiteDeck",
@@ -106,7 +115,10 @@
       "status": "launched",
       "website": "https://liminal-bestiary.vercel.app",
       "private": false,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/liminal-bestiary.webp",
+      "screenshotAltKo": "The Liminal Bestiary 화면. 왼쪽 목록에 The Smiler·The Clump·The Hound 같은 크리처 카드와 태그가 나열되고, 오른쪽 3D 뷰포트에는 빛나는 이빨이 달린 검은 크리처가 떠 있으며, 아래 패널에 해당 크리처 설명과 .glb 내려받기 버튼이 있다.",
+      "screenshotAltEn": "The Liminal Bestiary. A left-hand list shows creature cards such as The Smiler, The Clump and The Hound with tags, while the right-hand 3D viewport displays a black polygonal creature with glowing teeth; an overlay panel gives its description and a Download .glb button."
     },
     {
       "name": "Notro",
@@ -159,7 +171,10 @@
       "website": "https://unclog-la.vercel.app",
       "github": "https://github.com/writingdeveloper/unclog-la",
       "private": false,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/unclog-la.webp",
+      "screenshotAltKo": "Unclog LA 플레이 화면. 가운데 로스앤젤레스 지도 위에 색깔별 메트로 노선이 그려져 있고, 왼쪽 패널에는 노선 건설·정책 토글과 노선 목록이, 오른쪽 패널에는 대중교통 분담률 5.2%와 일일 이용객 342,407명 같은 지표가, 아래쪽에는 2025년에서 2050년까지의 연도 슬라이더와 'Advance Year' 버튼이 있다.",
+      "screenshotAltEn": "Unclog LA in play. A dark map of Los Angeles carries colour-coded Metro lines; a left panel holds build-and-policy controls plus the line list, a right panel reports a 5.2% transit mode share, 342,407 daily riders and a $1.28B annual balance, and a 2025-to-2050 timeline with an 'Advance Year' button runs along the bottom."
     },
     {
       "name": "shipwright",
@@ -197,7 +212,10 @@
       "website": "https://kindling.writingdeveloper.blog",
       "succeeds": "minddump",
       "private": true,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/kindling.webp",
+      "screenshotAltKo": "Kindling 화면. 검은 배경 가운데 'the internet's bonfire' 제목과 'throw a worry into the fire...' 입력창, 주황색 'let it burn' 버튼이 있고, 그 아래 작은 불씨 하나와 지금은 불이 조용하다는 안내 문구가 보인다.",
+      "screenshotAltEn": "Kindling's screen. On a near-black background sit the title 'the internet's bonfire', a text box with the placeholder 'throw a worry into the fire...' and an orange 'let it burn' button, with a single ember below it and a note that the fire is quiet right now."
     },
     {
       "name": "studios",
@@ -292,7 +310,10 @@
       "website": "https://healframe.app",
       "playStore": "https://play.google.com/store/apps/details?id=app.healframe",
       "private": true,
-      "featured": true
+      "featured": true,
+      "screenshot": "/images/projects/healframe.webp",
+      "screenshotAltKo": "HealFrame 랜딩 화면. 상단 내비게이션에 Circle·Dashboard·Pricing·Account가 있고, 'Reset your nervous system in 2 minutes' 헤드라인 아래 'Tap to breathe'라고 적힌 원형 호흡 버튼과 초록색 시작 버튼이 놓여 있다.",
+      "screenshotAltEn": "HealFrame landing page. The top nav shows Circle, Dashboard, Pricing and Account; below the headline 'Reset your nervous system in 2 minutes' sit a gradient circle labelled 'Tap to breathe' and a green 'Start breathing — it's free' button."
     },
     {
       "name": "Argus Fusion",
@@ -313,7 +334,10 @@
       "status": "launched",
       "website": "https://argus-fusion.vercel.app",
       "private": true,
-      "featured": true
+      "featured": true,
+      "screenshot": "/images/projects/argus-fusion.webp",
+      "screenshotAltKo": "ARGUS 랜딩 화면. 화면 위아래에 초록색 UNCLASSIFIED 경고 띠가 있고, ARGUS 제목과 'All-Source OSINT Watch Floor' 부제 아래 'Enter Watch Floor'와 'Source & Attribution' 버튼이, 그 밑으로 FAQ 문답이 이어진다.",
+      "screenshotAltEn": "ARGUS landing page. Green UNCLASSIFIED banners run across the top and bottom of the screen; below the ARGUS title and the subtitle 'All-Source OSINT Watch Floor' sit 'Enter Watch Floor' and 'Source & Attribution' buttons, followed by a FAQ section."
     },
     {
       "name": "Don't Touch",
@@ -353,7 +377,10 @@
       "website": "https://rentrights.writingdeveloper.blog",
       "github": "https://github.com/writingdeveloper/rentrights",
       "private": false,
-      "featured": true
+      "featured": true,
+      "screenshot": "/images/projects/rentrights.webp",
+      "screenshotAltKo": "RentRights 랜딩 화면. 'You have rights.' 헤드라인 아래 로스앤젤레스 주소를 넣는 입력창과 Check 버튼이 있고, 공공기록·갱신일·주소 미저장 배지에 이어 3단계 이용 안내와 RSO 관련 FAQ가 보인다.",
+      "screenshotAltEn": "RentRights landing page. Under the headline 'You have rights.' sit an address field showing a Los Angeles example and a Check button, followed by badges for public records, the update date and 'free, no address saved', a three-step how-it-works list and an FAQ about LA's Rent Stabilization Ordinance."
     },
     {
       "name": "DevDeck",
@@ -390,7 +417,10 @@
       "status": "launched",
       "website": "https://zodiacly.writingdeveloper.blog",
       "private": true,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/zodiacly.webp",
+      "screenshotAltKo": "Zodiacly 랜딩 화면. 별이 뿌려진 어두운 배경에 Home·Compatibility·Birth Chart·About 내비게이션이 있고, 'Explore Your Zodiac Sign' 헤드라인 아래 'Find Your Match'와 'Select Your Zodiac Sign' 버튼, 별자리를 고르라는 띠 배너, 그리고 'Zodiac Wheel' 섹션 머리말이 이어진다.",
+      "screenshotAltEn": "Zodiacly landing page. Over a dark starfield, a nav bar lists Home, Compatibility, Birth Chart and About; below the headline 'Explore Your Zodiac Sign' sit 'Find Your Match' and 'Select Your Zodiac Sign' buttons, a banner inviting the visitor to pick a sign, and the start of a 'Zodiac Wheel' section."
     },
     {
       "name": "TransitLA",
@@ -411,7 +441,10 @@
       "status": "launched",
       "website": "https://transitla.writingdeveloper.blog",
       "private": true,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/transit-la.webp",
+      "screenshotAltKo": "TransitLA 화면. 밝은 배경에 'Explore Los Angeles, car-free.' 헤드라인과 장소 검색창이 있고, 그 아래 'Iconic Los Angeles', 'Beaches by transit', 'Weekend hikes' 줄마다 사진 카드가 가로로 나열되며, 각 카드에 그리피스 천문대 도보 4분처럼 대중교통에서 걸리는 도보 시간이 적혀 있다.",
+      "screenshotAltEn": "TransitLA. On a light background, the headline 'Explore Los Angeles, car-free.' sits above a place search box; rows titled Iconic Los Angeles, Beaches by transit and Weekend hikes show photo cards for spots such as Griffith Observatory and Santa Monica Pier, each labelled with its walking time from transit."
     },
     {
       "name": "Receipt Tracker",
@@ -432,7 +465,10 @@
       "website": "https://receo.writingdeveloper.blog",
       "playStore": "https://play.google.com/store/apps/details?id=com.soursea.receo",
       "private": true,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/receipt-tracker.webp",
+      "screenshotAltKo": "Receo 영수증 트래커 랜딩 화면. 'Snap a receipt. Done.' 헤드라인과 시작 버튼 옆에 품목과 합계 $5.48이 적힌 영수증 카드와 'Scanned by AI' 태그가 놓여 있고, 아래쪽에는 은행 연동 없음·광고 없음·언제든 내보내기 같은 프라이버시 배지가 줄지어 있다.",
+      "screenshotAltEn": "Receo receipt-tracker landing page. Beside the headline 'Snap a receipt. Done.' and its call-to-action buttons sits a receipt card listing items and a $5.48 total with a 'Scanned by AI' tag; a row of privacy badges — no bank linking, no ads, export anytime — runs below."
     },
     {
       "name": "Hoverslam",
@@ -503,7 +539,10 @@
       "status": "launched",
       "website": "https://normandy-cliff-defense.pages.dev",
       "private": true,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/normandy-cliff-defense.webp",
+      "screenshotAltKo": "노르망디 절벽 방어 타이틀 화면. 흐릿한 해변 3D 배경 위에 게임 제목과 1944 배경, 버전 v1.2 표기가 있고, 최고 점수 0과 전적 아래로 싱글 플레이·멀티플레이(Co-op)·옵션·조작법 버튼이 세로로 놓여 있다.",
+      "screenshotAltEn": "Title screen of Normandy Cliff Defense. Over a hazy 3D beach, the Korean game title, the line \"NORMANDY CLIFF DEFENSE — 1944 · v1.2\" and a zero high score sit above a stacked menu of single play, co-op multiplayer, options and controls."
     },
     {
       "name": "Piano Scribe",
@@ -537,7 +576,10 @@
       "status": "launched",
       "website": "https://observer-of-lines.vercel.app",
       "private": true,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/observer-of-lines.webp",
+      "screenshotAltKo": "Observer of Lines 화면. 어두운 초록 터미널 UI 위쪽에 주황색 닉시관 숫자로 0.503286% 다이버전스 값이 표시되고, Send a D-Mail 버튼과 로그 콘솔, 명령 입력줄, 아직 비어 있는 최근 D-Mail 목록이 이어진다.",
+      "screenshotAltEn": "Observer of Lines. A dark green terminal UI shows a divergence reading of 0.503286% in orange nixie-tube digits, a Send a D-Mail button, a scrolling log console, a command input line and an empty list of recent D-Mails."
     },
     {
       "name": "Growgle",
@@ -557,7 +599,10 @@
       "status": "launched",
       "website": "https://growgle-frontend.vercel.app",
       "private": true,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/growgle.webp",
+      "screenshotAltKo": "Growgle 랜딩 화면. 연보라 배경에 'AI-Powered Review Analysis' 배지와 Growgle 로고, 'Start Free Analysis' 버튼이 있고 그 아래 Instant Analysis·AI-Powered Insights·Actionable Recommendations 세 장의 소개 카드가 놓여 있다.",
+      "screenshotAltEn": "Growgle landing page. On a pale lavender background sit an 'AI-Powered Review Analysis' badge, the Growgle wordmark and a 'Start Free Analysis' button, above three feature cards: Instant Analysis, AI-Powered Insights and Actionable Recommendations."
     },
     {
       "name": "Mini Games Hub",
@@ -579,7 +624,10 @@
       "website": "https://games.writingdeveloper.blog",
       "github": "https://github.com/writingdeveloper/Mini-Games",
       "private": false,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/mini-games.webp",
+      "screenshotAltKo": "Mini Games Hub 화면. 보라·파랑 그라데이션 배경에 'JELLY CATCHER', '마키마 says', '역전국수', 'Dust Drifter', 'Sky Explorer', '도주 게임' 카드가 격자로 놓여 있고, 각 카드에 터치 지원 또는 PC 권장 배지와 '플레이하기' 버튼이 달려 있다.",
+      "screenshotAltEn": "Mini Games Hub. On a purple-to-blue gradient, a grid of colourful cards lists games including JELLY CATCHER, Makima Says, Yeokjeon Guksu, Dust Drifter, Sky Explorer and a getaway game, each with a touch-supported or PC-recommended badge and a play button."
     },
     {
       "name": "Tantrum Tower",
@@ -597,7 +645,10 @@
       "website": "https://tantrum-tower.writingdeveloper.blog",
       "github": "https://github.com/writingdeveloper/tantrum-tower",
       "private": false,
-      "featured": false
+      "featured": false,
+      "screenshot": "/images/projects/tantrum-tower.webp",
+      "screenshotAltKo": "Tantrum Tower 시작 화면. 어두운 카드 안에 노란 TANTRUM TOWER 로고와 한 줄 소개, '스토리 시작' 버튼과 쉬움·보통·어려움 난이도 선택, '현장 투입' 버튼이 있고, 그 아래 조작키 안내와 현장 이벤트 목록이 정리돼 있다.",
+      "screenshotAltEn": "Tantrum Tower start screen. Inside a dark panel, the glowing yellow logo sits above a one-line Korean pitch, a story-start button, easy/normal/hard difficulty buttons and a quick-play button, with a key-binding list and a table of site events underneath."
     }
   ]
 }

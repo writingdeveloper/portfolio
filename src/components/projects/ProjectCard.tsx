@@ -6,6 +6,11 @@ import { predecessorOf } from '@/lib/lineage'
 
 interface ProjectCardProps {
   project: Project
+  /** Eager-load this card's screenshot. Only the cards in the first grid row
+   *  should set it: the first screenshot is the page's LCP element, and leaving
+   *  it lazy costs ~1.1s of load delay. Applying it further down the grid would
+   *  make every image compete for bandwidth and undo the gain. */
+  priority?: boolean
 }
 
 const statusColors: Record<string, string> = {
@@ -37,7 +42,7 @@ function GooglePlayIcon({ size = 16 }: { size?: number }) {
   )
 }
 
-export function ProjectCard({ project }: ProjectCardProps) {
+export function ProjectCard({ project, priority = false }: ProjectCardProps) {
   const t = useTranslations('projects')
   const locale = useLocale()
   const predecessor = predecessorOf(project)
@@ -53,7 +58,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
             src={project.screenshot}
             alt={screenshotAlt}
             fill
-            sizes="(max-width: 640px) 100vw, 50vw"
+            priority={priority}
+            sizes="(max-width: 640px) 100vw, (max-width: 1480px) 47vw, 660px"
             className="object-cover object-top"
           />
         </div>
