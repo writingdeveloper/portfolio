@@ -354,7 +354,7 @@ export function evaluatePalette(stats: PaletteStats): PaletteVerdict {
 - [ ] **Step 4: 테스트를 실행해 통과를 확인한다**
 
 Run: `npm test -- hero-palette`
-Expected: PASS (13개 테스트)
+Expected: PASS (14개 테스트)
 
 - [ ] **Step 5: 커밋**
 
