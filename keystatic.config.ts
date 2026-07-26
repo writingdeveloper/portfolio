@@ -23,6 +23,10 @@ const postSchema = {
     directory: 'public/images/posts',
     publicPath: '/images/posts/',
   }),
+  coverImageAlt: fields.text({
+    label: '커버 이미지 대체 텍스트',
+    description: '이미지를 정직하게 서술하세요. 키워드를 나열하지 마세요.',
+  }),
   content: fields.mdx({
     label: '본문',
     options: {

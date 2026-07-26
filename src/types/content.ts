@@ -10,6 +10,11 @@ export interface Project {
   playStore?: string
   /** slug of a graveyard tombstone this project was rebuilt from (lineage). */
   succeeds?: string
+  /** Path to a real screenshot of the live site, e.g. /images/projects/slug.webp.
+   *  Never a generated image — the portfolio only shows real product UI. */
+  screenshot?: string
+  screenshotAltKo?: string
+  screenshotAltEn?: string
   private?: boolean
   featured: boolean
 }

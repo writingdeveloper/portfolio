@@ -24,6 +24,9 @@ export interface PostMeta {
   tags: string[]
   language: string
   coverImage: string
+  /** Describes the cover image for screen readers and image search. Empty when
+   *  the post has no cover. */
+  coverImageAlt: string
   readingTime: string
   readingTimeMinutes: number
   hasTranslation: boolean
@@ -103,6 +106,7 @@ function loadLocaleMap(locale: string): PostMap {
           tags: Array.isArray(data.tags) ? data.tags : [],
           language: locale,
           coverImage: data.coverImage || '',
+          coverImageAlt: data.coverImageAlt || '',
           readingTime: stats.text,
           readingTimeMinutes: Math.ceil(stats.minutes),
           hasTranslation: false, // populated after cross-locale pass
