@@ -14,7 +14,8 @@
     "test:watch": "vitest",
     "type-check": "tsc --noEmit",
     "untranslated": "npx tsx scripts/untranslated.ts",
-    "verify:hero": "tsx scripts/verify-hero.ts"
+    "verify:hero": "tsx scripts/verify-hero.ts",
+    "capture:screenshots": "tsx scripts/capture-screenshots.ts"
   },
   "dependencies": {
     "@keystatic/core": "^0.5.48",
@@ -47,6 +48,7 @@
     "@types/three": "^0.183.1",
     "eslint": "^9",
     "eslint-config-next": "^16.2.6",
+    "playwright": "^1.62.0",
     "prettier": "^3.8.1",
     "sharp": "^0.35.3",
     "tailwindcss": "^4",
