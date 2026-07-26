@@ -5,7 +5,7 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { createMdxComponents } from '@/components/mdx/MdxComponents'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { TableOfContents } from '@/components/blog/TableOfContents'
-import { generateArticleJsonLd, generateBreadcrumbJsonLd, generateFaqJsonLd, safeJsonLd } from '@/lib/seo'
+import { generateArticleJsonLd, generateBreadcrumbJsonLd, generateFaqJsonLd, safeJsonLd, toAbsoluteUrl } from '@/lib/seo'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import { Globe } from 'lucide-react'
@@ -18,7 +18,7 @@ import Image from 'next/image'
 
 function getOgImageUrl(post: { coverImage: string; title: string; excerpt: string }) {
   if (post.coverImage) {
-    return post.coverImage.startsWith('http') ? post.coverImage : `${SITE_URL}${post.coverImage}`
+    return toAbsoluteUrl(post.coverImage)
   }
   const title = post.title.length > 60 ? post.title.slice(0, 57) + '...' : post.title
   const desc = (post.excerpt || '').length > 100 ? (post.excerpt || '').slice(0, 97) + '...' : (post.excerpt || '')

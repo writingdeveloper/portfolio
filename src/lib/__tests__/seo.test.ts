@@ -5,7 +5,20 @@ import {
   generateBreadcrumbJsonLd,
   generateFaqJsonLd,
   generateProjectListJsonLd,
+  toAbsoluteUrl,
 } from '../seo'
+import { SITE_URL } from '../constants'
+
+describe('toAbsoluteUrl', () => {
+  it('prefixes SITE_URL onto a root-relative path', () => {
+    expect(toAbsoluteUrl('/images/projects/a.webp')).toBe(`${SITE_URL}/images/projects/a.webp`)
+  })
+
+  it('returns an already-absolute http(s) url unchanged, without double-prefixing', () => {
+    expect(toAbsoluteUrl('https://cdn.example.com/a.webp')).toBe('https://cdn.example.com/a.webp')
+    expect(toAbsoluteUrl('http://cdn.example.com/a.webp')).toBe('http://cdn.example.com/a.webp')
+  })
+})
 
 describe('safeJsonLd', () => {
   it('serializes a plain object to JSON', () => {

@@ -6,6 +6,15 @@ export function safeJsonLd(data: unknown): string {
   return JSON.stringify(data).replace(/</g, '\\u003c')
 }
 
+/** Stored image paths are usually root-relative (`/images/...`), but fields
+ *  like `coverImage` are Keystatic-editable and could hold an absolute URL
+ *  (e.g. an external CDN). Every call site that turns a stored path into an
+ *  absolute URL for JSON-LD/sitemap/OG output must go through this so they
+ *  can't disagree on the rule and double-prefix `SITE_URL`. */
+export function toAbsoluteUrl(pathOrUrl: string): string {
+  return pathOrUrl.startsWith('http') ? pathOrUrl : `${SITE_URL}${pathOrUrl}`
+}
+
 export function generateArticleJsonLd({
   title,
   description,

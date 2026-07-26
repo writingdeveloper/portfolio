@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { getAllPosts, hasTranslation } from '@/lib/mdx'
 import { SITE_URL } from '@/lib/constants'
+import { toAbsoluteUrl } from '@/lib/seo'
 
 // Revalidate every hour to avoid regenerating the sitemap on every request.
 export const revalidate = 3600
@@ -67,7 +68,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(post.updatedAt || post.publishedAt),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
-      ...(post.coverImage ? { images: [`${SITE_URL}${post.coverImage}`] } : {}),
+      ...(post.coverImage ? { images: [toAbsoluteUrl(post.coverImage)] } : {}),
       alternates: { languages },
     }
   })
@@ -90,7 +91,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(post.updatedAt || post.publishedAt),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
-      ...(post.coverImage ? { images: [`${SITE_URL}${post.coverImage}`] } : {}),
+      ...(post.coverImage ? { images: [toAbsoluteUrl(post.coverImage)] } : {}),
       alternates: { languages },
     }
   })

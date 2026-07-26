@@ -6,7 +6,7 @@ import type { Project } from '@/types/content'
 import { SITE_URL } from '@/lib/constants'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
-import { generateBreadcrumbJsonLd, generateProjectListJsonLd, safeJsonLd } from '@/lib/seo'
+import { generateBreadcrumbJsonLd, generateProjectListJsonLd, safeJsonLd, toAbsoluteUrl } from '@/lib/seo'
 import { sortProjectsFeaturedFirst } from '@/lib/projects'
 import { useLocale } from 'next-intl'
 
@@ -66,7 +66,7 @@ function ProjectsContent() {
       description: locale === 'ko' ? project.descriptionKo : project.descriptionEn,
       url: project.website ?? (!project.private && project.github ? project.github : undefined),
       techStack: project.techStack,
-      ...(project.screenshot ? { image: `${SITE_URL}${project.screenshot}` } : {}),
+      ...(project.screenshot ? { image: toAbsoluteUrl(project.screenshot) } : {}),
       ...(project.playStore ? { playStore: project.playStore, appCategory: APP_CATEGORY[project.slug] } : {}),
     })),
     locale,
