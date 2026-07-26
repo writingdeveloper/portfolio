@@ -1187,7 +1187,33 @@ boards, no brains, no lightbulbs, no lens flare, no hexagonal HUD
 5. 워터마크·서명 흔적이 있는가 → 있으면 탈락
 6. 형태 은유가 포스트 주제와 연결되는가 → 연결되지 않으면 탈락
 
-- [ ] **Step 4: Gate B 통과분을 WebP로 변환한다**
+- [ ] **Step 4: Gate B 통과분을 로컬로 회수한다**
+
+image-studio는 원격 머신에서 돌지만 MCP 트랜스포트가 SSH이므로 `scp`가 그대로 동작한다 (Task 1에서 실증됨). 접속 대상은 `.claude.json`의 image-studio 항목 `args[0]`에서 읽는다.
+
+**IP나 호스트명을 리포의 어떤 파일에도 쓰지 않는다.** 리포트에도 남기지 않는다. 셸 변수로만 다룬다.
+
+```bash
+HOST=$(python -c "
+import json
+d=json.load(open('/c/Users/SIHYEONG/.claude.json',encoding='utf-8'))
+out=[]
+def walk(o):
+    if isinstance(o,dict):
+        for k,v in o.items():
+            if k=='image-studio' and isinstance(v,dict) and v.get('args'): out.append(v['args'][0])
+            walk(v)
+    elif isinstance(o,list):
+        for i in o: walk(i)
+walk(d); print(out[0])
+")
+mkdir -p /tmp/hero-src
+scp -o BatchMode=yes "$HOST:<generate_image가 돌려준 path를 슬래시로 바꾼 것>" /tmp/hero-src/<slug>.png
+```
+
+`path`는 `C:\ComfyUI-LTX\output\...` 형태의 백슬래시 경로로 돌아온다. `scp` 인자로는 `C:/ComfyUI-LTX/output/...`처럼 슬래시로 바꿔 넘긴다.
+
+- [ ] **Step 5: 회수분을 WebP로 변환한다**
 
 재사용할 변환 스크립트를 만든다.
 
@@ -1232,7 +1258,7 @@ npx tsx scripts/to-hero-webp.ts <원본경로> <slug>
 
 exit 1이면 quality를 70, 그래도 넘으면 60으로 낮춰 재실행한다. **60에서도 200KB를 넘으면 그 후보는 탈락 처리한다.** 이 스크립트는 Task 8 마지막에 함께 커밋한다.
 
-- [ ] **Step 5: Gate A — 기계 검증을 실행한다**
+- [ ] **Step 6: Gate A — 기계 검증을 실행한다**
 
 ```bash
 npm run verify:hero -- public/images/posts/<slug>.webp
@@ -1240,17 +1266,17 @@ npm run verify:hero -- public/images/posts/<slug>.webp
 
 Expected: `PASS`. `FAIL`이면 그 파일을 삭제하고 같은 포스트의 다른 후보로 넘어간다. **실패 사유를 무시하고 진행하지 않는다.**
 
-- [ ] **Step 6: Studio에 판정을 기록한다**
+- [ ] **Step 7: Studio에 판정을 기록한다**
 
 각 후보에 대해 `mcp__image-studio__verify_asset(id, verdict, note)`를 호출한다. `verdict`는 `'approved'` 또는 `'rejected'`, `note`에는 Gate B의 탈락 사유 또는 채택 사유를 적는다.
 
-- [ ] **Step 7: 전량 탈락한 포스트는 1회만 재시도한다**
+- [ ] **Step 8: 전량 탈락한 포스트는 1회만 재시도한다**
 
-4장 모두 탈락하면 프롬프트에서 실패 원인을 보정해 (예: 글자가 나왔으면 `no text` 관련 문구를 강화) 4장을 다시 생성하고 Step 3~6을 반복한다.
+4장 모두 탈락하면 프롬프트에서 실패 원인을 보정해 (예: 글자가 나왔으면 `no text` 관련 문구를 강화) 4장을 다시 생성하고 Step 3~7을 반복한다.
 
 **두 번째 시도도 전량 탈락하면 그 포스트는 히어로 없이 간다.** `coverImage`를 빈 문자열로 두고 다음 포스트로 넘어간다. 나쁜 이미지를 넣지 않는다.
 
-- [ ] **Step 8: frontmatter를 채운다**
+- [ ] **Step 9: frontmatter를 채운다**
 
 게이트를 통과한 포스트만, ko와 en 양쪽 `index.mdx`의 frontmatter를 수정한다:
 
@@ -1261,11 +1287,11 @@ coverImageAlt: "<이미지를 정직하게 서술한 문장>"
 
 alt는 로케일에 맞는 언어로 쓴다. 이미지에 실제로 보이는 것만 쓴다. 포스트 제목이나 키워드를 alt에 밀어 넣지 않는다.
 
-- [ ] **Step 9: 리포트를 작성한다**
+- [ ] **Step 10: 리포트를 작성한다**
 
 Create `docs/media/hero-generation-report.md`. 포스트별로 형태 은유, 시도 횟수, 후보별 Gate B 서술과 판정, Gate A 출력, 최종 채택 여부와 seed, 사용한 프롬프트를 기록한다. 히어로 없이 간 포스트는 사유를 명시한다.
 
-- [ ] **Step 10: 전체 게이트를 다시 돌리고 빌드한다**
+- [ ] **Step 11: 전체 게이트를 다시 돌리고 빌드한다**
 
 ```bash
 npm run verify:hero -- public/images/posts/*.webp
@@ -1274,7 +1300,7 @@ npm test && npm run type-check && npm run build
 
 Expected: 모든 히어로가 `PASS`, 테스트와 빌드 통과
 
-- [ ] **Step 11: 커밋**
+- [ ] **Step 12: 커밋**
 
 ```bash
 git add public/images/posts scripts/to-hero-webp.ts docs/media/hero-generation-report.md content/posts

@@ -64,7 +64,7 @@ Vercel Blob 등 원격 스토리지는 40여 장 규모에서 `remotePatterns`·
 
 - `content/projects.json`에서 `website`가 있는 항목만 대상
 - Playwright headless, 1440x900 뷰포트, `prefers-color-scheme: dark`로 사이트 톤에 맞춤
-- 출력: `public/images/projects/<slug>.avif`
+- 출력: `public/images/projects/<slug>.webp`
 - **실패는 스킵하고 리포트에 기록한다.** 죽은 링크와 로그인 벽이 있는 프로젝트가 32개 중 상당수일 것이므로 전량 성공을 전제하지 않는다
 - `private: true` 프로젝트도 `website`가 공개면 캡처 대상이다 (Private 배지는 코드 링크만 숨기는 규칙이므로 충돌하지 않는다)
 
@@ -163,7 +163,19 @@ Claude가 `generate_image` 응답의 썸네일을 실제로 보고 판정한다.
 
 테스트 이미지 1장을 생성해 확인했다. `generate_image` 응답의 `path`는 `C:\ComfyUI-LTX\output\Krea2_gen\01_01259_.png`였고(`size_adjusted: false`, 요청한 1600x896 그대로 생성됨), 이 경로를 Read 도구로 열자 "File does not exist. Note: your current working directory is C:\Users\SIHYEONG\Documents\GitHub\portfolio."로 실패했다. 경로의 사용자 디렉터리(`sihye`)도 이 머신의 사용자(`SIHYEONG`)와 다르다.
 
-**결론: 원격 모드.** image-studio는 이 머신과 다른 서버에서 돌고, `generate_image`가 반환하는 `path`는 그 서버 머신의 로컬 경로이며 이 머신에서는 Read로 열 수 없다. 따라서 Task 8은 `out` 파라미터로 `public/images/posts/`를 직접 지정하는 방식을 쓸 수 없고, 별도 회수 경로(예: 응답에 첨부되는 이미지 블록/`gallery` URL을 통한 다운로드 등)가 필요하다. 구체적인 회수 방법은 Task 8에서 설계를 조정한다.
+**경로는 원격이지만 회수는 가능하다.** image-studio는 이 머신과 다른 서버에서 돌고, `generate_image`가 반환하는 `path`는 그 서버 머신의 로컬 경로다. 따라서 `out` 파라미터로 `public/images/posts/`를 직접 지정할 수는 없다.
+
+그러나 MCP 트랜스포트 자체가 SSH다. `.claude.json`의 image-studio 항목은 `type: "stdio"`에 `command: "ssh"`로 원격 파이썬 모듈을 실행한다. 즉 **이 머신에서 원격으로의 비대화식 SSH가 이미 성립해 있다.** 실증 결과 다음이 그대로 동작한다:
+
+```bash
+scp -o BatchMode=yes "<user>@<host>:C:/ComfyUI-LTX/output/Krea2_gen/01_01259_.png" <로컬경로>
+```
+
+회수한 파일은 1,269,509바이트의 유효한 PNG였고 해상도도 요청한 1600x896 그대로였다.
+
+**결론:** Task 8의 회수 단계는 `scp`다. `list_images`가 돌려주는 `path`를 그대로 원본 경로로 쓰고, 로컬로 내려받은 뒤 WebP로 변환해 커밋한다.
+
+**호스트 정보는 리포에 커밋하지 않는다.** 접속 대상은 `.claude.json`에서 런타임에 읽고, 스크립트나 문서에 IP·호스트명을 기록하지 않는다. 그래서 회수는 커밋되는 스크립트가 아니라 Task 8 실행 중의 셸 명령으로 처리한다.
 
 ## 범위 밖
 
