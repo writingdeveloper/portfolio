@@ -127,6 +127,8 @@ export function generateProjectListJsonLd(
     techStack?: string[]
     playStore?: string
     appCategory?: string
+    /** Absolute URL of a real screenshot of the project. */
+    image?: string
   }[],
   locale: string,
 ) {
@@ -143,6 +145,7 @@ export function generateProjectListJsonLd(
         description: project.description,
         ...(project.url ? { url: project.url } : {}),
         ...(project.techStack?.length ? { keywords: project.techStack.join(', ') } : {}),
+        ...(project.image ? { image: project.image } : {}),
         author,
       }
       // Projects with a Play Store listing are typed as MobileApplication so
@@ -155,6 +158,7 @@ export function generateProjectListJsonLd(
             operatingSystem: 'ANDROID',
             applicationCategory: project.appCategory ?? 'LifestyleApplication',
             installUrl: project.playStore,
+            ...(project.image ? { screenshot: project.image } : {}),
             offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
           }
         : { '@type': 'CreativeWork', ...common }

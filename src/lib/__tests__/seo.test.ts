@@ -204,4 +204,34 @@ describe('generateProjectListJsonLd', () => {
     const result = generateProjectListJsonLd([{ name: 'Web', description: 'D', url: 'https://w.dev' }], 'en')
     expect(result.itemListElement[0].item['@type']).toBe('CreativeWork')
   })
+
+  it('includes an absolute image url on the item when one is supplied', () => {
+    const jsonLd = generateProjectListJsonLd(
+      [{ name: 'A', description: 'd', image: 'https://example.com/images/projects/a.webp' }],
+      'ko',
+    )
+    const item = (jsonLd.itemListElement[0] as { item: Record<string, unknown> }).item
+    expect(item.image).toBe('https://example.com/images/projects/a.webp')
+  })
+
+  it('omits the image key entirely when no image is supplied', () => {
+    const jsonLd = generateProjectListJsonLd([{ name: 'A', description: 'd' }], 'ko')
+    const item = (jsonLd.itemListElement[0] as { item: Record<string, unknown> }).item
+    expect(item).not.toHaveProperty('image')
+  })
+
+  it('exposes the image as a screenshot on mobile app items', () => {
+    const jsonLd = generateProjectListJsonLd(
+      [{
+        name: 'A',
+        description: 'd',
+        playStore: 'https://play.google.com/store/apps/details?id=x',
+        image: 'https://example.com/images/projects/a.webp',
+      }],
+      'ko',
+    )
+    const item = (jsonLd.itemListElement[0] as { item: Record<string, unknown> }).item
+    expect(item['@type']).toBe('MobileApplication')
+    expect(item.screenshot).toBe('https://example.com/images/projects/a.webp')
+  })
 })

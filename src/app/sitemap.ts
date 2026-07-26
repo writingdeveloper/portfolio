@@ -67,6 +67,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(post.updatedAt || post.publishedAt),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
+      ...(post.coverImage ? { images: [`${SITE_URL}${post.coverImage}`] } : {}),
       alternates: { languages },
     }
   })
@@ -89,6 +90,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: new Date(post.updatedAt || post.publishedAt),
       changeFrequency: 'weekly' as const,
       priority: 0.8,
+      ...(post.coverImage ? { images: [`${SITE_URL}${post.coverImage}`] } : {}),
       alternates: { languages },
     }
   })

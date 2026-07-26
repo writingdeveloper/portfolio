@@ -66,6 +66,7 @@ function ProjectsContent() {
       description: locale === 'ko' ? project.descriptionKo : project.descriptionEn,
       url: project.website ?? (!project.private && project.github ? project.github : undefined),
       techStack: project.techStack,
+      ...(project.screenshot ? { image: `${SITE_URL}${project.screenshot}` } : {}),
       ...(project.playStore ? { playStore: project.playStore, appCategory: APP_CATEGORY[project.slug] } : {}),
     })),
     locale,

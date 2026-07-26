@@ -25,6 +25,12 @@ function getOgImageUrl(post: { coverImage: string; title: string; excerpt: strin
   return `${SITE_URL}/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(desc)}`
 }
 
+/** Cover images ship at 16:9; the satori fallback card is 1200x630. Declaring
+ *  the wrong ratio makes crawlers letterbox or crop the card badly. */
+function getOgImageSize(post: { coverImage: string }) {
+  return post.coverImage ? { width: 1600, height: 900 } : { width: 1200, height: 630 }
+}
+
 // Revalidate every hour — posts are filesystem-sourced MDX, no per-request data.
 export const revalidate = 3600
 
@@ -67,7 +73,7 @@ export async function generateMetadata({
       siteName: SITE_NAME,
       locale: locale === 'ko' ? 'ko_KR' : 'en_US',
       alternateLocale: locale === 'ko' ? ['en_US'] : ['ko_KR'],
-      images: [{ url: ogImage, width: 1200, height: 630, alt: post.title }],
+      images: [{ ...getOgImageSize(post), url: ogImage, alt: post.title }],
     },
     twitter: {
       card: 'summary_large_image',
