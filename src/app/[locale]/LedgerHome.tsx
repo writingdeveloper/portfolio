@@ -21,10 +21,17 @@ const BORDER = 'var(--l-border)'
 const STACK = ['TypeScript', 'Next.js', 'React', 'Three.js', 'NestJS', 'Electron', 'Python']
 
 // ALL WORK grouping — implies the 39-project scale without listing everything.
+//
+// Only the first six of each list render (the rest collapse into "+N more"), so
+// order is editorial, not incidental: appending new work to the end would have
+// hidden the newest and strongest entries behind older ones. Each group leads
+// with what a first-time reader should see — a shipped store game and the only
+// Unreal title, the newest live product, the one public repo with measured
+// results — and trails off into the long tail.
 const CATEGORY: Record<'products' | 'games' | 'tools', string[]> = {
-  products: ['soursea', 'healframe', 'drymora', 'fitcheck', 'rentrights', 'receipt-tracker', 'zodiacly', 'transit-la', 'kindling', 'growgle', 'argus-fusion', 'observer-of-lines', 'toolsmith'],
-  games: ['hoverslam', 'normandy-cliff-defense', 'mini-games', 'tantrum-tower', 'unclog-la', 'youtube-rhythm-game', 'liminal-bestiary', 'studio-apartment', 'coinrace', 'wishing-stones'],
-  tools: ['devdeck', 'sitedeck', 'marketdeck', 'notro', 'kl125-controller', 'studios', 'ai-4080-ops', 'nag-coach', 'piano-scribe', 'comfyui-web', 'shipwright', 'dont-touch', 'citefirst', 'unitwise', 'amazon-chat-archiver', 'sitesmith'],
+  products: ['soursea', 'healframe', 'drymora', 'toolsmith', 'rentrights', 'receipt-tracker', 'fitcheck', 'zodiacly', 'transit-la', 'kindling', 'growgle', 'argus-fusion', 'observer-of-lines'],
+  games: ['coinrace', 'wishing-stones', 'hoverslam', 'normandy-cliff-defense', 'tantrum-tower', 'mini-games', 'unclog-la', 'youtube-rhythm-game', 'liminal-bestiary', 'studio-apartment'],
+  tools: ['citefirst', 'devdeck', 'studios', 'sitedeck', 'marketdeck', 'notro', 'unitwise', 'amazon-chat-archiver', 'sitesmith', 'kl125-controller', 'ai-4080-ops', 'nag-coach', 'piano-scribe', 'comfyui-web', 'shipwright', 'dont-touch'],
 }
 
 // YAML frontmatter dates (`publishedAt: 2026-06-10`) parse to a Date at runtime

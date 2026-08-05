@@ -19,13 +19,17 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: 'projects' })
   const localePath = locale === 'ko' ? '' : `/${locale}`
   const pageUrl = `${SITE_URL}${localePath}/projects`
+  // The search title is separate from t('title'), which is also the visible h1:
+  // "프로젝트 | WritingDeveloper" gives a searcher no reason to click. The count
+  // comes from the data so it can never drift the way a written-in number did.
+  const count = projectsData.projects.length
   return {
-    title: t('title'),
-    description: t('metaDescription'),
+    title: t('metaTitle', { count }),
+    description: t('metaDescription', { count }),
     openGraph: {
       url: pageUrl,
-      title: t('title'),
-      description: t('metaDescription'),
+      title: t('metaTitle', { count }),
+      description: t('metaDescription', { count }),
       images: [{ url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`, width: 1200, height: 630, alt: t('title') }],
     },
     alternates: {

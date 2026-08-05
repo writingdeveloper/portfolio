@@ -19,7 +19,7 @@ export async function generateMetadata({
   const localePath = locale === 'ko' ? '' : `/${locale}`
   const pageUrl = `${SITE_URL}${localePath}/graveyard`
   return {
-    title: t('title'),
+    title: t('metaTitle'),
     description: t('metaDescription'),
     openGraph: {
       url: pageUrl,

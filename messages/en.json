@@ -28,6 +28,7 @@
   "blog": {
     "title": "Blog",
     "description": "Stories about development, technology, and startups",
+    "metaTitle": "Build Logs from Shipping Real Products",
     "metaDescription": "In-depth build logs and dev stories from Si Hyeong Lee — AI safety, full-stack architecture, indie hacking, and lessons from shipping real products.",
     "allCategories": "All",
     "categoryFilter": "Category filter",
@@ -58,7 +59,8 @@
   "projects": {
     "title": "Projects",
     "description": "Things I'm building",
-    "metaDescription": "Around 30 projects by Si Hyeong Lee across web, mobile, desktop, AI, and games — SaaS apps, developer tools, data visualizations, and experimental builds, with live demos.",
+    "metaTitle": "{count} Projects — Web, Games, Dev Tools",
+    "metaDescription": "{count} projects built solo by Si Hyeong Lee — SaaS, developer tools, games and AI experiments, each with a live demo or store link.",
     "viewProject": "View Project",
     "viewCode": "View Code",
     "googlePlay": "Google Play",
@@ -76,7 +78,8 @@
   "graveyard": {
     "title": "Project Graveyard",
     "description": "Here lie the projects I built and lost — an honest record of what failure taught me.",
-    "metaDescription": "A memorial to projects Si Hyeong Lee built and then failed or discontinued. Each tombstone carries its cause of death, an honest post-mortem, and the lessons learned.",
+    "metaTitle": "Project Graveyard — What Failure Taught Me",
+    "metaDescription": "A memorial to the projects Si Hyeong Lee built and then lost. Each tombstone carries its cause of death, an honest post-mortem, and what it taught.",
     "empty": "No projects rest here yet.",
     "restInPeace": "R.I.P",
     "causeLabel": "Cause",
@@ -99,7 +102,8 @@
   "about": {
     "title": "About",
     "description": "My journey as a developer and entrepreneur",
-    "metaDescription": "Si Hyeong Lee — full-stack developer and entrepreneur. The story behind Soursea, HealFrame, and around 30 builds, with the tech stack and timeline behind them.",
+    "metaTitle": "About — Full-Stack Developer & Indie Maker",
+    "metaDescription": "Si Hyeong Lee — full-stack developer and entrepreneur. The story behind Soursea, HealFrame and {count} other builds, with the stack and timeline.",
     "body": "As a developer and entrepreneur, I solve problems with technology. I build projects like Soursea and Don't Touch — each born from a real problem I faced — and share what I learn through this blog. I don't stop at building, either: my generative pipelines and internal tools run on self-hosted infrastructure I operate myself — a home GPU workstation and a cloud VM tied together over a Tailscale mesh.",
     "skills": "Tech Stack",
     "timeline": "Timeline"

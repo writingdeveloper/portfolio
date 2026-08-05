@@ -6,6 +6,7 @@ import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { SITE_URL } from '@/lib/constants'
 import aboutData from '../../../../content/about.json'
+import projectsData from '../../../../content/projects.json'
 import type { Skill, TimelineItem } from '@/types/content'
 import { skillCategories } from '@/types/content'
 import { generatePersonJsonLd, generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
@@ -22,13 +23,16 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: 'about' })
   const localePath = locale === 'ko' ? '' : `/${locale}`
   const pageUrl = `${SITE_URL}${localePath}/about`
+  // Search title is separate from t('title') ("소개"), which is also the h1.
+  // The build count comes from the data so it cannot drift out of date.
+  const count = projectsData.projects.length
   return {
-    title: t('title'),
-    description: t('metaDescription'),
+    title: t('metaTitle'),
+    description: t('metaDescription', { count }),
     openGraph: {
       url: pageUrl,
-      title: t('title'),
-      description: t('metaDescription'),
+      title: t('metaTitle'),
+      description: t('metaDescription', { count }),
       locale: locale === 'ko' ? 'ko_KR' : 'en_US',
       alternateLocale: locale === 'ko' ? ['en_US'] : ['ko_KR'],
       type: 'profile',
