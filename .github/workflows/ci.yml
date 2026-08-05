@@ -1,0 +1,60 @@
+# The repo had no CI at all: 119 tests, the type-checker, the production build
+# and the generated-hero gate all existed but nothing ran them except a human
+# remembering to. This gates them on every push and pull request.
+#
+# Deployment is not here on purpose — Vercel already builds and deploys from
+# GitHub, so duplicating that would just spend minutes to reach the same answer
+# more slowly. What this adds is the checks Vercel does not run.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+# A new push to the same branch makes the previous run's answer irrelevant.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # ci, not install: the lockfile is the input, and a run that quietly
+      # resolved different versions would not be testing what ships.
+      - run: npm ci
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit tests
+        run: npm test
+
+      # Generated hero images must clear the palette and file-size gate. The
+      # gate cannot see motifs or text — that part stays a judgement call — but
+      # it does stop an off-brand or oversized image reaching main.
+      - name: Verify hero images
+        run: npm run verify:hero -- public/images/posts/*.webp
+
+      - name: Build
+        run: npm run build
+
+      # Advisories land without anyone touching this repo, so this is the one
+      # step allowed to fail the build on something no commit here caused.
+      # High and above only: moderate findings in dev-only tooling are not
+      # worth blocking a content commit over.
+      - name: Audit dependencies
+        run: npm audit --audit-level=high
