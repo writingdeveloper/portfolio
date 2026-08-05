@@ -1,4 +1,4 @@
-import { ArrowLeft, ExternalLink, Github, Lock } from 'lucide-react'
+import { ArrowLeft, BookOpen, ExternalLink, Github, Lock } from 'lucide-react'
 import { useTranslations, useLocale } from 'next-intl'
 import Image from 'next/image'
 import type { Project } from '@/types/content'
@@ -14,6 +14,10 @@ interface ProjectCardProps {
    *  Applying it further down the grid would make every image compete for
    *  bandwidth and undo the gain. */
   priority?: boolean
+  /** The deep-dive post about this project, when one exists. Gives the card an
+   *  inbound route to the blog — previously a reader on the card had no way to
+   *  reach the post explaining how it was built. */
+  relatedPost?: { slug: string; title: string }
 }
 
 const statusColors: Record<string, string> = {
@@ -45,16 +49,22 @@ function GooglePlayIcon({ size = 16 }: { size?: number }) {
   )
 }
 
-export function ProjectCard({ project, priority = false }: ProjectCardProps) {
+export function ProjectCard({ project, priority = false, relatedPost }: ProjectCardProps) {
   const t = useTranslations('projects')
   const locale = useLocale()
   const predecessor = predecessorOf(project)
   const graveyardHref = locale === 'ko' ? '/graveyard' : `/${locale}/graveyard`
+  const postHref = locale === 'ko' ? `/blog/${relatedPost?.slug}` : `/${locale}/blog/${relatedPost?.slug}`
   const screenshotAlt =
     (locale === 'en' ? project.screenshotAltEn : project.screenshotAltKo) ?? ''
 
   return (
-    <div className="rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] overflow-hidden hover:border-[var(--border-hover)] transition-all">
+    // id + scroll-mt make /projects#<slug> a usable target: a post links back
+    // here, and the offset keeps the card clear of the header on the jump.
+    <div
+      id={project.slug}
+      className="scroll-mt-24 rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] overflow-hidden hover:border-[var(--border-hover)] transition-all"
+    >
       {project.screenshot && (
         <div className="relative aspect-[16/10] bg-[var(--bg-elevated)] border-b border-[var(--border-default)]">
           <Image
@@ -105,6 +115,13 @@ export function ProjectCard({ project, priority = false }: ProjectCardProps) {
         <a href={graveyardHref}
           className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors mb-3">
           <ArrowLeft size={12} /> {t('continuedFrom', { name: predecessor.name })}
+        </a>
+      )}
+
+      {relatedPost && (
+        <a href={postHref}
+          className="flex items-start gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors mb-3">
+          <BookOpen size={12} className="mt-0.5 shrink-0" /> {t('readTheBuildLog', { title: relatedPost.title })}
         </a>
       )}
 

@@ -27,6 +27,11 @@ const postSchema = {
     label: '커버 이미지 대체 텍스트',
     description: '이미지를 정직하게 서술하세요. 키워드를 나열하지 마세요.',
   }),
+  project: fields.text({
+    label: '연결할 프로젝트 슬러그',
+    description:
+      '이 글이 특정 프로젝트를 다룬 글이면 content/projects.json의 slug를 그대로 적으세요(예: rentrights). 글과 프로젝트 카드가 서로 링크됩니다. 아니면 비워 두세요.',
+  }),
   content: fields.mdx({
     label: '본문',
     options: {

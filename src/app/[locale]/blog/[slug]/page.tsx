@@ -1,5 +1,9 @@
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getPost, getAllSlugs, extractHeadings, getCategoryLabel, getRelatedPosts } from '@/lib/mdx'
+import { FolderGit2 } from 'lucide-react'
+import projectsData from '../../../../../content/projects.json'
+import type { Project } from '@/types/content'
+import { projectAnchorHref } from '@/lib/post-project-links'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { createMdxComponents } from '@/components/mdx/MdxComponents'
@@ -99,6 +103,12 @@ export default async function BlogPostPage({
 
   const post = getPost(slug, locale)
   if (!post) notFound()
+
+  // Resolved against projects.json so a frontmatter typo renders nothing
+  // rather than a link into an anchor that does not exist.
+  const linkedProject = post.project
+    ? (projectsData.projects as Project[]).find((p) => p.slug === post.project)
+    : undefined
 
   const headings = extractHeadings(post.content)
   const postUrl = locale === 'ko' ? `${SITE_URL}/blog/${slug}` : `${SITE_URL}/${locale}/blog/${slug}`
@@ -205,6 +215,19 @@ export default async function BlogPostPage({
                 ))}
               </div>
             </div>
+          )}
+
+          {/* A deep dive should hand the reader off to the thing it is about;
+              without this the post was a dead end for anyone who wanted to go
+              try it. Only rendered when the slug matches a real project. */}
+          {linkedProject && (
+            <a
+              href={locale === 'ko' ? projectAnchorHref(linkedProject.slug) : `/${locale}${projectAnchorHref(linkedProject.slug)}`}
+              className="mt-8 flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] px-4 py-3 text-sm text-[var(--text-secondary)] hover:border-[var(--border-hover)] hover:text-[var(--text-emphasis)] transition-colors"
+            >
+              <FolderGit2 size={15} className="shrink-0" />
+              {t('seeTheProject', { name: linkedProject.name })}
+            </a>
           )}
 
           <ShareButtons

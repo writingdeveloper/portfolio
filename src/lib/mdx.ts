@@ -27,6 +27,9 @@ export interface PostMeta {
   /** Describes the cover image for screen readers and image search. Empty when
    *  the post has no cover. */
   coverImageAlt: string
+  /** Slug of the project this post is a deep dive on; empty when it is not
+   *  about one. Drives the link in both directions — see post-project-links. */
+  project: string
   readingTime: string
   readingTimeMinutes: number
   hasTranslation: boolean
@@ -107,6 +110,7 @@ function loadLocaleMap(locale: string): PostMap {
           language: locale,
           coverImage: data.coverImage || '',
           coverImageAlt: data.coverImageAlt || '',
+          project: data.project || '',
           readingTime: stats.text,
           readingTimeMinutes: Math.ceil(stats.minutes),
           hasTranslation: false, // populated after cross-locale pass

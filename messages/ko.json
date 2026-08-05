@@ -43,6 +43,7 @@
     "filterByTag": "태그 필터",
     "clearFilter": "필터 해제",
     "relatedPosts": "관련 글",
+    "seeTheProject": "{name} 프로젝트 보기",
     "searchPlaceholder": "글 검색...",
     "noSearchResults": "검색 결과가 없습니다.",
     "pagination": "페이지 네비게이션",
@@ -68,6 +69,7 @@
     "viewOnPlayStore": "Google Play에서 보기",
     "continuedFrom": "{name}에서 이어받음",
     "private": "비공개",
+    "readTheBuildLog": "만든 과정: {title}",
     "status": {
       "active": "활성",
       "building": "개발 중",

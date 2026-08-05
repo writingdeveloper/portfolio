@@ -8,6 +8,8 @@ import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { generateBreadcrumbJsonLd, generateProjectListJsonLd, safeJsonLd, toAbsoluteUrl } from '@/lib/seo'
 import { sortProjectsFeaturedFirst } from '@/lib/projects'
+import { getAllPosts } from '@/lib/mdx'
+import { buildProjectPostMap, type LinkedPost } from '@/lib/post-project-links'
 import { useLocale } from 'next-intl'
 
 export async function generateMetadata({
@@ -47,10 +49,17 @@ export default async function ProjectsPage({
   const { locale } = await params
   setRequestLocale(locale)
 
-  return <ProjectsContent />
+  // Reading posts needs the filesystem, so the lookup is built here and handed
+  // down rather than inside ProjectsContent.
+  const projectPosts = buildProjectPostMap(
+    getAllPosts(locale),
+    (projectsData.projects as Project[]).map((p) => p.slug),
+  )
+
+  return <ProjectsContent projectPosts={projectPosts} />
 }
 
-function ProjectsContent() {
+function ProjectsContent({ projectPosts }: { projectPosts: Map<string, LinkedPost> }) {
   const t = useTranslations('projects')
   const locale = useLocale()
   const breadcrumbJsonLd = generateBreadcrumbJsonLd([
@@ -97,7 +106,12 @@ function ProjectsContent() {
         <div className="grid gap-6 sm:grid-cols-2">
           {allProjects.map((project, index) => (
             // The grid is 2-up, so only the first row is above the fold.
-            <ProjectCard key={project.slug} project={project} priority={index < 2} />
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              priority={index < 2}
+              relatedPost={projectPosts.get(project.slug)}
+            />
           ))}
         </div>
       </div>

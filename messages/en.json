@@ -43,6 +43,7 @@
     "filterByTag": "Filtered by tag",
     "clearFilter": "Clear filter",
     "relatedPosts": "Related Posts",
+    "seeTheProject": "See the {name} project",
     "searchPlaceholder": "Search posts...",
     "noSearchResults": "No results found.",
     "pagination": "Page navigation",
@@ -68,6 +69,7 @@
     "viewOnPlayStore": "View on Google Play",
     "continuedFrom": "Continued from {name}",
     "private": "Private",
+    "readTheBuildLog": "Build log: {title}",
     "status": {
       "active": "Active",
       "building": "Building",
