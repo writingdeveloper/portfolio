@@ -176,6 +176,77 @@ export function generateProjectListJsonLd(
   }
 }
 
+/**
+ * Structured data for a single project's own page.
+ *
+ * The type is chosen from what the project actually is, because `screenshot`
+ * is only valid on SoftwareApplication and its subtypes:
+ *   - a Play Store listing  -> MobileApplication
+ *   - a live site, no store -> WebApplication (still a SoftwareApplication,
+ *                              so the screenshot is legal here too)
+ *   - neither               -> CreativeWork, and no screenshot claim
+ *
+ * The list on /projects deliberately stays coarser (CreativeWork for anything
+ * without a store listing); this is the page where being precise pays off.
+ */
+export function generateProjectJsonLd(
+  project: {
+    name: string
+    description: string
+    /** Canonical URL of this project's own page. */
+    url: string
+    techStack?: string[]
+    website?: string
+    github?: string
+    playStore?: string
+    appCategory?: string
+    /** Absolute URL of a real screenshot. Never a generated image. */
+    image?: string
+  },
+  locale: string,
+) {
+  const authorName = locale === 'ko' ? '이시형' : 'Si Hyeong Lee'
+  const sameAs = [project.website, project.github, project.playStore].filter(Boolean) as string[]
+
+  const common = {
+    name: project.name,
+    description: project.description,
+    url: project.url,
+    ...(project.techStack?.length ? { keywords: project.techStack.join(', ') } : {}),
+    ...(project.image ? { image: project.image } : {}),
+    ...(sameAs.length ? { sameAs } : {}),
+    inLanguage: locale === 'ko' ? 'ko-KR' : 'en-US',
+    author: { '@type': 'Person', name: authorName, url: `${SITE_URL}/about` },
+  }
+
+  if (project.playStore) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'MobileApplication',
+      ...common,
+      operatingSystem: 'ANDROID',
+      applicationCategory: project.appCategory ?? 'LifestyleApplication',
+      installUrl: project.playStore,
+      ...(project.image ? { screenshot: project.image } : {}),
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    }
+  }
+
+  if (project.website) {
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'WebApplication',
+      ...common,
+      applicationCategory: project.appCategory ?? 'WebApplication',
+      browserRequirements: 'Requires JavaScript',
+      ...(project.image ? { screenshot: project.image } : {}),
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+    }
+  }
+
+  return { '@context': 'https://schema.org', '@type': 'CreativeWork', ...common }
+}
+
 export function generateBreadcrumbJsonLd(items: { name: string; url: string }[]) {
   return {
     '@context': 'https://schema.org',

@@ -70,6 +70,8 @@
     "continuedFrom": "Continued from {name}",
     "private": "Private",
     "readTheBuildLog": "Build log: {title}",
+    "backToProjects": "All projects",
+    "viewDetails": "Details",
     "status": {
       "active": "Active",
       "building": "Building",

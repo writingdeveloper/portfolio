@@ -70,6 +70,8 @@
     "continuedFrom": "{name}에서 이어받음",
     "private": "비공개",
     "readTheBuildLog": "만든 과정: {title}",
+    "backToProjects": "프로젝트 목록으로",
+    "viewDetails": "자세히 보기",
     "status": {
       "active": "활성",
       "building": "개발 중",

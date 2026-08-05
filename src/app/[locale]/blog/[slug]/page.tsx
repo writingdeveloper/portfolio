@@ -3,7 +3,7 @@ import { getPost, getAllSlugs, extractHeadings, getCategoryLabel, getRelatedPost
 import { FolderGit2 } from 'lucide-react'
 import projectsData from '../../../../../content/projects.json'
 import type { Project } from '@/types/content'
-import { projectAnchorHref } from '@/lib/post-project-links'
+import { projectHref } from '@/lib/projects'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
 import { createMdxComponents } from '@/components/mdx/MdxComponents'
@@ -222,7 +222,7 @@ export default async function BlogPostPage({
               try it. Only rendered when the slug matches a real project. */}
           {linkedProject && (
             <a
-              href={locale === 'ko' ? projectAnchorHref(linkedProject.slug) : `/${locale}${projectAnchorHref(linkedProject.slug)}`}
+              href={projectHref(linkedProject.slug, locale)}
               className="mt-8 flex items-center gap-2 rounded-xl border border-[var(--border-default)] bg-[var(--bg-card)] px-4 py-3 text-sm text-[var(--text-secondary)] hover:border-[var(--border-hover)] hover:text-[var(--text-emphasis)] transition-colors"
             >
               <FolderGit2 size={15} className="shrink-0" />

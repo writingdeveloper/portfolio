@@ -3,6 +3,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import Image from 'next/image'
 import type { Project } from '@/types/content'
 import { predecessorOf } from '@/lib/lineage'
+import { projectHref } from '@/lib/projects'
 
 interface ProjectCardProps {
   project: Project
@@ -55,6 +56,7 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
   const predecessor = predecessorOf(project)
   const graveyardHref = locale === 'ko' ? '/graveyard' : `/${locale}/graveyard`
   const postHref = locale === 'ko' ? `/blog/${relatedPost?.slug}` : `/${locale}/blog/${relatedPost?.slug}`
+  const detailHref = projectHref(project.slug, locale)
   const screenshotAlt =
     (locale === 'en' ? project.screenshotAltEn : project.screenshotAltKo) ?? ''
 
@@ -81,7 +83,13 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
       <div className="flex items-start gap-4 mb-4">
         <div className="flex-1">
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-lg">{project.name}</h3>
+            {/* The name is the route into the project's own page — every card
+                needs one inbound link or those pages are orphans. */}
+            <h3 className="font-semibold text-lg">
+              <a href={detailHref} className="hover:text-[var(--text-emphasis)] transition-colors">
+                {project.name}
+              </a>
+            </h3>
             {project.status && (
               <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[project.status] || statusColors.archived}`}>
                 {t(`status.${project.status}`)}

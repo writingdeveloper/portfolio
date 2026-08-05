@@ -51,8 +51,3 @@ export function buildProjectPostMap(
 
   return new Map([...chosen].map(([projectSlug, v]) => [projectSlug, v.post]))
 }
-
-/** The anchor a post uses to point back at its project card on /projects. */
-export function projectAnchorHref(projectSlug: string): string {
-  return `/projects#${projectSlug}`
-}

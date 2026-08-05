@@ -7,7 +7,7 @@ import { SITE_URL } from '@/lib/constants'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { generateBreadcrumbJsonLd, generateProjectListJsonLd, safeJsonLd, toAbsoluteUrl } from '@/lib/seo'
-import { sortProjectsFeaturedFirst } from '@/lib/projects'
+import { sortProjectsFeaturedFirst, APP_CATEGORY } from '@/lib/projects'
 import { getAllPosts } from '@/lib/mdx'
 import { buildProjectPostMap, type LinkedPost } from '@/lib/post-project-links'
 import { useLocale } from 'next-intl'
@@ -66,14 +66,6 @@ function ProjectsContent({ projectPosts }: { projectPosts: Map<string, LinkedPos
     { name: locale === 'ko' ? '홈' : 'Home', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}` },
     { name: locale === 'ko' ? '프로젝트' : 'Projects', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/projects` },
   ])
-  // schema.org applicationCategory per shipped app (defaults to Lifestyle in seo.ts).
-  const APP_CATEGORY: Record<string, string> = {
-    drymora: 'HealthApplication',
-    healframe: 'HealthApplication',
-    kindling: 'HealthApplication',
-    'receipt-tracker': 'FinanceApplication',
-    coinrace: 'GameApplication',
-  }
   const allProjects = sortProjectsFeaturedFirst(projectsData.projects as Project[])
   const projectListJsonLd = generateProjectListJsonLd(
     allProjects.map((project) => ({

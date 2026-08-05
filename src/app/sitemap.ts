@@ -107,5 +107,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   })
 
-  return [...staticUrls, ...koPostUrls, ...enPostUrls]
+  // 프로젝트 상세 페이지. 39개 프로젝트가 /projects 한 장에만 있던 동안에는
+  // 각자의 제목·설명·스크린샷으로 검색에 걸릴 수 없었다.
+  const projectUrls = (projectsData.projects as Project[]).flatMap((project) => {
+    const languages = {
+      ko: `${SITE_URL}/projects/${project.slug}`,
+      en: `${SITE_URL}/en/projects/${project.slug}`,
+      'x-default': `${SITE_URL}/projects/${project.slug}`,
+    }
+    const images = project.screenshot ? [toAbsoluteUrl(project.screenshot)] : []
+
+    return [
+      {
+        url: `${SITE_URL}/projects/${project.slug}`,
+        lastModified: buildDate,
+        changeFrequency: 'monthly' as const,
+        // Featured work outranks the long tail, but every project stays above
+        // the 0.5 floor used for the static pages.
+        priority: project.featured ? 0.8 : 0.6,
+        ...(images.length ? { images } : {}),
+        alternates: { languages },
+      },
+      {
+        url: `${SITE_URL}/en/projects/${project.slug}`,
+        lastModified: buildDate,
+        changeFrequency: 'monthly' as const,
+        priority: project.featured ? 0.7 : 0.5,
+        ...(images.length ? { images } : {}),
+        alternates: { languages },
+      },
+    ]
+  })
+
+  return [...staticUrls, ...projectUrls, ...koPostUrls, ...enPostUrls]
 }

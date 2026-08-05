@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { buildProjectPostMap, projectAnchorHref } from '../post-project-links'
+import { buildProjectPostMap } from '../post-project-links'
 
 type P = Parameters<typeof buildProjectPostMap>[0][number]
 
@@ -61,11 +61,5 @@ describe('buildProjectPostMap', () => {
   it('tolerates a missing project field', () => {
     const withoutField = { slug: 'x', title: 'X', publishedAt: '2026-01-01' } as P
     expect(buildProjectPostMap([withoutField], KNOWN).size).toBe(0)
-  })
-})
-
-describe('projectAnchorHref', () => {
-  it('points at the project card on the projects page', () => {
-    expect(projectAnchorHref('drymora')).toBe('/projects#drymora')
   })
 })
