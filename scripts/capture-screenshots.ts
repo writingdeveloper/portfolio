@@ -44,9 +44,28 @@ const DISMISS_LABELS: RegExp[] = [
   /^(accept|accept all|accept all cookies|accept cookies|allow all|i accept|i agree|agree)$/i,
   // Consent: refuse. Just as good for us, and kinder to the reader.
   /^(essentials only|only essential|essential only|necessary only|reject all|reject non-essential|decline)$/i,
+  // Consent, Korean. Several of these sites ship a ko-first consent bar.
+  /^(모두 ?허용|전체 ?허용|필수만 ?허용|필수 ?쿠키만|동의|모두 ?동의|거부)$/,
   // First-run acknowledgements.
   /^(ok|okay|got it|understood|dismiss|close|no thanks|let'?s go|let’s go)$/i,
+  /^(확인|닫기|알겠습니다|시작하기)$/,
 ]
+
+/**
+ * A first-run language gate is not a banner over the product — it is a wall in
+ * front of it, so the allowlist above never reaches the thing worth capturing.
+ *
+ * Language buttons are too dangerous to put in DISMISS_LABELS: plenty of these
+ * sites carry a language switcher in the header, and clicking it mid-capture
+ * would silently re-shoot every screenshot in another locale. So the gate is
+ * only ever cleared when a heading says that is what we are looking at.
+ *
+ * Unlike the consent allowlist, this one accepts a link as well as a button:
+ * a language gate is normally a set of <a href="/en"> choices, and following
+ * one is the whole point rather than the navigation accident we guard against.
+ */
+const LANGUAGE_GATE_HEADING = /choose your language|select your language|언어를? (선택|고르)/i
+const LANGUAGE_GATE_CHOICE = /^(english|영어)$/i
 
 /**
  * Refused outright even when the accessible name matches above. The allowlist is
@@ -64,6 +83,27 @@ const NEVER_CLICK =
  */
 async function dismissOverlays(page: import('playwright').Page): Promise<string[]> {
   const dismissed: string[] = []
+
+  try {
+    // The language gate goes first: until it is cleared there is no product
+    // underneath, and any consent bar is hidden behind it anyway.
+    const gate = page.getByRole('heading', { name: LANGUAGE_GATE_HEADING }).filter({ visible: true })
+    if ((await gate.count().catch(() => 0)) > 0) {
+      for (const role of ['button', 'link'] as const) {
+        const choice = page.getByRole(role, { name: LANGUAGE_GATE_CHOICE }).filter({ visible: true })
+        if ((await choice.count().catch(() => 0)) === 0) continue
+
+        await choice.first().click({ timeout: DISMISS_CLICK_TIMEOUT_MS })
+        dismissed.push('language gate')
+        // A link choice navigates, so wait for the destination, not a transition.
+        await page.waitForLoadState('networkidle', { timeout: NAV_TIMEOUT_MS }).catch(() => {})
+        await page.waitForTimeout(SETTLE_MS)
+        break
+      }
+    }
+  } catch {
+    // Same contract as below: a gate we cannot clear is not a failed capture.
+  }
 
   try {
     for (let round = 0; round < MAX_DISMISSALS; round++) {
