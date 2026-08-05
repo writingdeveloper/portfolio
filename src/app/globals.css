@@ -1,15 +1,26 @@
 @import "tailwindcss";
+/* Pretendard as ~90 unicode-range subsets, so a page downloads only the ranges
+   it paints instead of one 2.0MB file. Generated — see
+   scripts/fetch-pretendard-subset.ts. */
+@import "./pretendard.css";
 
 /* Include the Korean webfont alongside Inter so ko locale text does not fall
    back to the system font and cause CLS. FOLIO-22. */
 @theme inline {
   /* Builder's Ledger type system, applied site-wide: Pretendard (body/Korean),
      Bricolage Grotesque (display), Space Mono (ledger labels). */
-  --font-sans: var(--font-pretendard), var(--font-inter), var(--font-noto-kr),
+  --font-sans: var(--font-pretendard), var(--font-inter),
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
     'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --font-display: var(--font-bricolage), var(--font-pretendard), 'Bricolage Grotesque', sans-serif;
   --font-mono: var(--font-space-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;
+}
+
+/* next/font used to inject --font-pretendard through a generated class on
+   <body>. The family is now declared directly in pretendard.css, so name it
+   here instead — everything downstream still reads the same variable. */
+:root {
+  --font-pretendard: 'Pretendard Variable';
 }
 
 /* ===== Theme System ===== */
@@ -245,7 +256,8 @@ html {
   --l-border: #26262b;
   --l-display: var(--font-bricolage), 'Bricolage Grotesque', var(--font-pretendard), sans-serif;
   --l-mono: var(--font-space-mono), 'Space Mono', ui-monospace, monospace;
-  --l-body: var(--font-pretendard), var(--font-noto-kr), system-ui, sans-serif;
+  --l-body: var(--font-pretendard), system-ui, 'Apple SD Gothic Neo',
+    'Malgun Gothic', sans-serif;
 
   /* The immersive home is always dark, so pin the theme accent to acid-green
      regardless of the light/dark toggle (used by .ledger-cursor etc.). */

@@ -72,7 +72,13 @@ After the `priority` fix, the LCP image on `/projects` transfers 13 KB and
 loads in 47 ms. There is no image-side lever left; the page cannot reach 2.5 s
 while that font is on the critical path.
 
-### Recommended follow-up (out of scope here)
+### Recommended follow-up (out of scope here) — since done
+
+> **Resolved 2026-08-04.** See [`font-subsetting.md`](./font-subsetting.md).
+> The font now ships as unicode-range subsets and Noto Sans KR (a redundant
+> second Korean face) was dropped: every page below is now 96–98 with LCP
+> 1.0–1.2 s. The prediction in this section held.
+
 
 Subset `PretendardVariable.woff2`. A Latin + Hangul subset typically lands
 around 300–500 KB, which the experiment above suggests would take `/projects`

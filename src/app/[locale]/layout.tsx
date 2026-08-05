@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Noto_Sans_KR, Bricolage_Grotesque, Space_Mono } from 'next/font/google'
-import localFont from 'next/font/local'
+import { Inter, Bricolage_Grotesque, Space_Mono } from 'next/font/google'
 import { headers } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
@@ -24,15 +23,13 @@ const inter = Inter({
   adjustFontFallback: true,
 })
 
-// Korean web font — subset Korean glyphs so the ko locale doesn't fall back to
-// system fonts and trigger CLS. FOLIO-22.
-const notoSansKR = Noto_Sans_KR({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-noto-kr',
-  display: 'swap',
-  preload: true,
-})
+// Noto Sans KR is gone. It was added (FOLIO-22) as *the* Korean face, before
+// the Builder's Ledger redesign put Pretendard ahead of it in the stack. Once
+// Pretendard covers Korean, Noto is a second Korean webfont racing the first:
+// it was pulling 236KB across six files, 76KB of it preloaded onto the
+// critical path next to the LCP image. Korean now falls back to the system
+// faces already named in --font-sans (Apple SD Gothic Neo, Malgun Gothic) for
+// the moment before a Pretendard subset lands.
 
 // Builder's Ledger redesign type system: Bricolage Grotesque (editorial
 // display), Space Mono (ledger labels), Pretendard (Korean + body). Pretendard
@@ -50,12 +47,11 @@ const spaceMono = Space_Mono({
   display: 'swap',
 })
 
-const pretendard = localFont({
-  src: '../../../public/fonts/PretendardVariable.woff2',
-  variable: '--font-pretendard',
-  display: 'swap',
-  weight: '100 900',
-})
+// Pretendard is no longer a next/font local face. The single 2.0MB variable
+// file was preloaded on every route and was the site's LCP bottleneck, so it
+// is now declared as ~90 unicode-range subsets in src/app/pretendard.css and
+// the browser fetches only the ranges a page paints. --font-pretendard moved
+// to :root in globals.css to replace the class next/font used to generate.
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -139,7 +135,7 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${notoSansKR.variable} ${bricolage.variable} ${spaceMono.variable} ${pretendard.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}>
+      <body className={`${inter.variable} ${bricolage.variable} ${spaceMono.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}>
         <NextIntlClientProvider messages={messages}>
           {immersive ? (
             children
