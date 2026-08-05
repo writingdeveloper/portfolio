@@ -14,6 +14,7 @@ import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAdSense } from '@/components/analytics/GoogleAdSense'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
+import { OutboundTracker } from '@/components/analytics/OutboundTracker'
 import '../globals.css'
 
 const inter = Inter({
@@ -164,6 +165,9 @@ export default async function LocaleLayout({
         {/* Third-party analytics/ads load after hydration (next/script
             afterInteractive) so they stay off the critical render path. */}
         <GoogleAnalytics nonce={nonce} />
+        {/* One delegated listener turns departures (demo, code, store, mail)
+            into named GA4 events, without making any card a client component. */}
+        <OutboundTracker />
         <GoogleAdSense nonce={nonce} />
         <Analytics />
         <SpeedInsights />
