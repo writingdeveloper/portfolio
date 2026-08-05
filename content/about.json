@@ -29,6 +29,14 @@
       "category": "frontend"
     },
     {
+      "name": "WebAssembly",
+      "category": "frontend"
+    },
+    {
+      "name": "Unreal Engine",
+      "category": "frontend"
+    },
+    {
       "name": "NestJS",
       "category": "backend"
     },
@@ -54,6 +62,14 @@
     },
     {
       "name": "Prisma",
+      "category": "backend"
+    },
+    {
+      "name": "Drizzle ORM",
+      "category": "backend"
+    },
+    {
+      "name": "pgvector",
       "category": "backend"
     },
     {
@@ -86,6 +102,10 @@
     },
     {
       "name": "Claude API",
+      "category": "tools"
+    },
+    {
+      "name": "Model Context Protocol",
       "category": "tools"
     },
     {
@@ -131,8 +151,16 @@
       "date": "2026",
       "titleKo": "오픈소스·시빅테크로 확장",
       "titleEn": "Expanding into open source & civic tech",
-      "descriptionKo": "RentRights(LA 세입자 임대료 규제 추정기), DevDeck(Claude Code 프로젝트 관제 데스크톱 앱), TransitLA(차 없이 대중교통으로 가는 LA 탐색) 등 공개 데이터·개발 도구 프로젝트를 공개.",
-      "descriptionEn": "Released public-data and developer-tool projects — RentRights (LA rent-control estimator for tenants), DevDeck (a command-deck desktop app for Claude Code projects), and TransitLA (car-free LA discovery on public transit).",
+      "descriptionKo": "RentRights(LA 세입자 임대료 규제 추정기), DevDeck(Claude Code·Codex·Antigravity 프로젝트 관제 데스크톱 앱), citefirst(인용을 검증하고 검색 품질을 측정하는 RAG), TransitLA(차 없이 대중교통으로 가는 LA 탐색) 등 공개 데이터·개발 도구 프로젝트를 공개.",
+      "descriptionEn": "Released public-data and developer-tool projects — RentRights (LA rent-control estimator for tenants), DevDeck (a command deck for Claude Code, Codex and Antigravity projects), citefirst (a RAG system that verifies its citations and measures its retrieval), and TransitLA (car-free LA discovery on public transit).",
+      "type": "project"
+    },
+    {
+      "date": "2026",
+      "titleKo": "생성 스튜디오 구축: 5모달리티 개인 생성 팩토리",
+      "titleEn": "Building the studios — a five-modality generation factory",
+      "descriptionKo": "이미지·영상·3D·음성·음악을 Claude가 MCP 툴로 생성하고, 기계 게이트와 직접 검수를 거쳐 재시도하는 개인 생성 파이프라인을 구축. 여섯 개 레포를 히스토리 보존 subtree 병합으로 단일 모노레포에 통합하고, 자연어로 지휘하면 로컬 LLM이 툴을 직접 불러 생성부터 검수까지 밟는 에이전트 하네스를 붙임. 이 사이트의 블로그 히어로 이미지도 여기서 나왔다.",
+      "descriptionEn": "Built a personal generation pipeline where Claude drives image, video, 3D, voice, and music through MCP tools — generate, pass a machine gate, inspect the result directly, retry. Six repositories were consolidated into a single monorepo through history-preserving subtree merges, and an agent harness now lets a local LLM call those tools itself from a natural-language brief. The hero images on this site's blog came out of it.",
       "type": "project"
     },
     {

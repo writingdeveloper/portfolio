@@ -20,11 +20,11 @@ const BORDER = 'var(--l-border)'
 
 const STACK = ['TypeScript', 'Next.js', 'React', 'Three.js', 'NestJS', 'Electron', 'Python']
 
-// ALL WORK grouping — implies the 32-project scale without listing everything.
+// ALL WORK grouping — implies the 39-project scale without listing everything.
 const CATEGORY: Record<'products' | 'games' | 'tools', string[]> = {
-  products: ['soursea', 'healframe', 'drymora', 'fitcheck', 'rentrights', 'receipt-tracker', 'zodiacly', 'transit-la', 'kindling', 'growgle', 'argus-fusion', 'observer-of-lines'],
-  games: ['hoverslam', 'normandy-cliff-defense', 'mini-games', 'tantrum-tower', 'unclog-la', 'youtube-rhythm-game', 'liminal-bestiary', 'studio-apartment'],
-  tools: ['devdeck', 'sitedeck', 'marketdeck', 'notro', 'kl125-controller', 'studios', 'ai-4080-ops', 'nag-coach', 'piano-scribe', 'comfyui-web', 'shipwright', 'dont-touch'],
+  products: ['soursea', 'healframe', 'drymora', 'fitcheck', 'rentrights', 'receipt-tracker', 'zodiacly', 'transit-la', 'kindling', 'growgle', 'argus-fusion', 'observer-of-lines', 'toolsmith'],
+  games: ['hoverslam', 'normandy-cliff-defense', 'mini-games', 'tantrum-tower', 'unclog-la', 'youtube-rhythm-game', 'liminal-bestiary', 'studio-apartment', 'coinrace', 'wishing-stones'],
+  tools: ['devdeck', 'sitedeck', 'marketdeck', 'notro', 'kl125-controller', 'studios', 'ai-4080-ops', 'nag-coach', 'piano-scribe', 'comfyui-web', 'shipwright', 'dont-touch', 'citefirst', 'unitwise', 'amazon-chat-archiver', 'sitesmith'],
 }
 
 // YAML frontmatter dates (`publishedAt: 2026-06-10`) parse to a Date at runtime

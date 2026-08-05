@@ -57,7 +57,9 @@ function ProjectsContent() {
   const APP_CATEGORY: Record<string, string> = {
     drymora: 'HealthApplication',
     healframe: 'HealthApplication',
+    kindling: 'HealthApplication',
     'receipt-tracker': 'FinanceApplication',
+    coinrace: 'GameApplication',
   }
   const allProjects = sortProjectsFeaturedFirst(projectsData.projects as Project[])
   const projectListJsonLd = generateProjectListJsonLd(

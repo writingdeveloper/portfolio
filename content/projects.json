@@ -1,6 +1,144 @@
 {
   "projects": [
     {
+      "name": "citefirst",
+      "slug": "citefirst",
+      "descriptionKo": "문서 기반 질의응답(RAG)에서 인용을 화면에 내보내기 전에 검색된 청크와 대조해 검증하고, 검색 품질을 주장이 아니라 측정으로 답하는 시스템. pg_dump와 pg_dumpall, 다섯 종류의 work_mem 설정처럼 거의 똑같아 보이는 문단이 가득한 PostgreSQL 17 공식 매뉴얼 약 3,000쪽을 코퍼스로 골라, 순진한 벡터 검색이 조용히 엉뚱한 문단을 돌려주는 지점을 드러냈습니다. 46개 질문 평가에서 크로스 인코더 재순위화를 켜면 recall@5 0.978, MRR@10 0.834로 평문 벡터 검색의 0.652를 크게 웃돌고, 인용 유효성은 1.000으로 168건 중 환각 인용이 0건입니다. 임베딩과 재순위화가 로컬 ONNX로 돌아 색인 단계에는 외부 호출이 전혀 없습니다.",
+      "descriptionEn": "A RAG system that verifies every citation against the retrieved chunks before it ever reaches the screen, and answers the question of retrieval quality by measuring it rather than asserting it. The corpus is ~3,000 pages of the PostgreSQL 17 manual — full of passages that look nearly identical (pg_dump vs pg_dumpall, five different work_mem settings), exactly where naive vector search quietly returns the wrong paragraph. Across 46 evaluation questions, cross-encoder reranking scores recall@5 0.978 and MRR@10 0.834 against 0.652 for plain vector search, with citation validity at 1.000 and zero hallucinated citations out of 168. Embeddings and reranking run locally through ONNX, so ingestion makes no outbound calls at all.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "PostgreSQL",
+        "pgvector",
+        "Transformers.js",
+        "ONNX Runtime",
+        "Anthropic API"
+      ],
+      "status": "active",
+      "github": "https://github.com/writingdeveloper/citefirst",
+      "private": false,
+      "featured": true
+    },
+    {
+      "name": "toolsmith",
+      "slug": "toolsmith",
+      "descriptionKo": "업로드 없이 브라우저 안에서 끝나는 파일 변환 도구 모음. 무료층 연산을 100% 클라이언트로 옮겨 서버 원가를 0으로 만들고, 파일이 서버로 가지 않는다는 점 자체를 경쟁 사이트가 구조상 포기할 수 없는 차별점으로 삼았습니다. 이미지·PDF·영상·오디오 변환을 Web Worker와 WASM(pdf-lib, pdf.js, libheif, mp4box, tesseract.js, DuckDB-WASM)으로 처리하고, 한 도구의 결과를 다른 도구로 그대로 넘기는 흐름과 설명 글·Lab을 함께 운영합니다. 서버 연산이 0이라 백엔드가 아예 없습니다.",
+      "descriptionEn": "A set of file-conversion tools that run entirely inside the browser, with no upload. Moving all free-tier computation to the client drops the marginal server cost to zero and turns \"your file never leaves the machine\" into a differentiator incumbents structurally cannot match — for them, server-side processing is the ad inventory. Image, PDF, video and audio conversion run on Web Workers and WASM (pdf-lib, pdf.js, libheif, mp4box, tesseract.js, DuckDB-WASM), results hand off directly from one tool into the next, and the site also ships explainer articles and a Lab. There is no backend at all.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "Tailwind CSS",
+        "Web Workers",
+        "WebAssembly",
+        "pdf-lib",
+        "tesseract.js",
+        "DuckDB-WASM",
+        "Playwright"
+      ],
+      "status": "active",
+      "website": "https://toolsmith.writingdeveloper.blog",
+      "private": true,
+      "featured": false,
+      "screenshot": "/images/projects/toolsmith.webp",
+      "screenshotAltKo": "toolsmith 홈 화면. 상단 바에 'No upload · everything runs in your browser' 배지와 테마·언어 선택 드롭다운이 있고, 그 아래 큰 제목과 검색창이 놓여 있다. IMAGES 섹션에 이미지 변환·압축·크기 조정·배경 제거·업스케일·클릭 잘라내기 카드 여섯 개가 2열로 늘어서 있고, 이어지는 DOCUMENTS 섹션에 PDF 병합과 분할 카드가 보인다.",
+      "screenshotAltEn": "The toolsmith home page. Its header carries a \"No upload · everything runs in your browser\" badge beside theme and language dropdowns, and a large heading sits above a search field. An IMAGES section lays out six cards in two columns — image converter, compress, resize and crop, background remover, upscaler and click-to-cut-out — followed by a DOCUMENTS section with merge and split PDF."
+    },
+    {
+      "name": "CoinRace",
+      "slug": "coinrace",
+      "descriptionKo": "여러 MVP를 빠르게 출시하려고 직접 조립한 Next.js·Turborepo 모노레포와, 그 위에서 실제로 출시한 암호화폐 경마 게임. 인증·결제·DB·SEO·관측·보안·분석을 워크스페이스 패키지로 뽑아 두고 앱이 필요한 것만 골라 쓰게 했으며, 패키지는 미리 설계한 것이 아니라 실제 사용에서 추출했습니다. 키를 넣지 않은 연동은 조용히 비활성화돼 앱과 테스트가 그대로 돕니다. 게임은 PWA로 만든 뒤 TWA로 감싸 Google Play에 올렸습니다.",
+      "descriptionEn": "A Next.js + Turborepo monorepo I assembled to ship many MVPs quickly, and the crypto horse-racing game actually shipped on top of it. Auth, billing, database, SEO, observability, security and analytics live as workspace packages each app opts into, and those packages were extracted from real usage rather than pre-invented — every integration gracefully no-ops until you add its key, so the app and its tests run without one. The game ships as a PWA wrapped in a TWA on Google Play.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "React",
+        "Turborepo",
+        "Drizzle ORM",
+        "better-auth",
+        "Stripe",
+        "next-intl",
+        "shadcn/ui",
+        "Docker"
+      ],
+      "status": "launched",
+      "website": "https://race.writingdeveloper.blog",
+      "playStore": "https://play.google.com/store/apps/details?id=com.soursea.coinrace",
+      "private": true,
+      "featured": false,
+      "screenshot": "/images/projects/coinrace.webp",
+      "screenshotAltKo": "CoinRace 웹 게임 화면. 상단 바에 라운드 번호와 '베팅 00:17' 카운트다운이 있고 그 아래 무료 칩 안내 배너가 놓여 있다. '출발 대기' 패널에는 ONDO·SOL·BTC·ETH·DOGE·XRP·XLM·BONK 여덟 코인이 네온 말 아이콘과 함께 줄지어 있고, 각 행에 베팅 분포 막대와 24시간 등락률이 붙어 있다. 아래쪽에는 레이서 이름 입력란과 코인별 배당 배수를 보여주는 카드 격자가 있다.",
+      "screenshotAltEn": "The CoinRace web game. A top bar shows the round number and a betting countdown at 00:17, with a free-chips banner underneath. A starting-gate panel lists eight coins — ONDO, SOL, BTC, ETH, DOGE, XRP, XLM and BONK — each with a neon horse icon, a bar showing how the bets are distributed, and its 24-hour change. Below sit an optional racer-name field and a grid of per-coin payout multipliers."
+    },
+    {
+      "name": "Wishing Stones",
+      "slug": "wishing-stones",
+      "descriptionKo": "Unreal Engine 5.8로 만들고 있는 Android 게임. 소원을 비는 돌탑을 소재로 밤 앰비언스와 종소리, 라운드로빈 노크 사운드를 쌓아 분위기를 만들었습니다. 특징은 개발 루프 자체를 자동화한 것으로, MCP 플러그인이 언리얼 에디터를 조작하고 매 사이클 화면을 캡처해 픽셀로 재는 검사와 오디오 검사, 폰 없이 빌드된 APK를 열어 확인하는 릴리스 게이트를 파이썬으로 붙였습니다. 게임 코드는 블루프린트로만 작성했습니다.",
+      "descriptionEn": "An Android game I am building in Unreal Engine 5.8, built around a cairn of wishing stones with night ambience, a kept bell, and round-robin knock sounds. What distinguishes it is that the development loop is itself automated: an MCP plugin drives the Unreal editor, a Python screen audit captures and measures pixels every cycle, an audio audit checks the sound, and a release gate reads the built APK without needing a phone. The game logic is all Blueprint, with no C++ module.",
+      "techStack": [
+        "Unreal Engine 5",
+        "Blueprint",
+        "Python",
+        "Model Context Protocol",
+        "Android"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false
+    },
+    {
+      "name": "unitwise",
+      "slug": "unitwise",
+      "descriptionKo": "Amazon·Weee·Target 상품 페이지에 정규화된 단위가격(온스·플루이드온스·개당)을 바로 얹어 주는 Chrome 확장. 포장 단위가 제각각이라 눈으로 환산해야 했던 비교를 페이지 위에서 끝냅니다. 백엔드 의존 0이 설계 제약이라 추론이 전부 인브라우저 WebGPU(transformers.js)에서 돌고, 없으면 WASM, 그것도 없으면 정규식만으로 폴백합니다. 스토어가 이미 인쇄해 둔 단위가격이 있으면 다시 계산하지 않고 그대로 채택하며, 최저가 표시가 매장 할인가를 가리지 않도록 배치했습니다.",
+      "descriptionEn": "A Chrome extension that overlays normalized unit prices ($/oz, $/fl oz, $/ct) directly onto Amazon, Weee and Target product pages, so comparing across mismatched package sizes stops being mental arithmetic. Zero backend dependency is a hard design constraint: inference runs in-browser on WebGPU via transformers.js, falling back to WASM and then to regex-only. Where the store already prints a unit price the extension adopts it instead of recomputing, and the best-value mark is placed so it never covers the store's own deal price.",
+      "techStack": [
+        "TypeScript",
+        "WXT",
+        "Chrome Extension MV3",
+        "WebGPU",
+        "Transformers.js",
+        "Vitest"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false
+    },
+    {
+      "name": "Amazon Chat Archiver",
+      "slug": "amazon-chat-archiver",
+      "descriptionKo": "Amazon 고객지원 채팅을 로컬에서만 기록해 읽기 좋은 PDF와 검증 가능한 증거 ZIP으로 내보내는 Chrome 확장(MV3). ZIP에는 보존용 HTML, 스키마 버전이 붙은 JSON, 평문 텍스트, URL·현지 시각·누락 경고가 담긴 메타데이터, 그리고 네 파일과 PDF를 모두 덮는 SHA-256 해시가 함께 들어갑니다. 계정·서버·텔레메트리·광고 SDK가 없고 개발자도 내용을 볼 수 없으며, 내보내기가 끝나면 임시 기록을 지울지 팝업이 묻습니다. Amazon과 무관한 사용자 생성 기록이라는 점을 제품 안에 명시했습니다.",
+      "descriptionEn": "A Chrome Manifest V3 extension that records Amazon desktop customer-support chats locally and exports a readable PDF plus a verifiable evidence ZIP. The ZIP carries a self-contained preservation HTML, a schema-versioned JSON, a plain-text copy, metadata (URL, local times, counts, completeness warnings), and SHA-256 hashes covering all four files and the PDF. There is no account, server, telemetry, or ad SDK, and no developer access to the contents; after a successful export the popup offers to delete the temporary recording. The product states plainly that its files are user-created records, not official Amazon transcripts.",
+      "techStack": [
+        "TypeScript",
+        "Chrome Extension MV3",
+        "pdf-lib",
+        "fflate",
+        "esbuild",
+        "Vitest"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false
+    },
+    {
+      "name": "sitesmith",
+      "slug": "sitesmith",
+      "descriptionKo": "지역 업체를 발굴해 정적 사이트를 미리 만들어 두고 콜드 아웃리치로 제안하는 파이프라인. 리드 수집부터 시안 생성, 검수, 발송까지를 파이썬 스크립트로 엮었고, 업종별 템플릿(침술원·베이커리·세탁·살롱)에서 시안을 찍어냅니다. 한 번 쓰고 버리던 검수를 상시 게이트로 바꿔 발송 전에 구조적 결함을 잡도록 했고, 실제 클라이언트 시안 일곱 곳을 만들어 배포했습니다.",
+      "descriptionEn": "A pipeline for finding local businesses, building them a static site up front, and pitching it through cold outreach. Lead collection, draft generation, review and sending are wired together in Python, with per-vertical templates (acupuncture, bakery, cleaners, salon) stamping out each draft. The review step was rewritten from a one-off script into a permanent gate that catches structural defects before anything goes out, and seven real client drafts have been built and deployed.",
+      "techStack": [
+        "Python",
+        "Playwright",
+        "pytest",
+        "HTML",
+        "CSS",
+        "Vercel"
+      ],
+      "status": "active",
+      "private": true,
+      "featured": false
+    },
+    {
       "name": "Drymora",
       "slug": "drymora",
       "descriptionKo": "근거 기반으로 설계한 이중언어(영/스페인어) 금주 PWA이자 Android 앱. Better Auth·Drizzle·Postgres 위에 web-push 알림과 오프라인(IndexedDB) 지원을 얹고, PWA를 TWA로 감싸 Google Play에 출시했습니다. 의료기기가 아닌 일반 웰니스 도구로 포지셔닝했습니다.",
@@ -198,8 +336,8 @@
     {
       "name": "Kindling",
       "slug": "kindling",
-      "descriptionKo": "감정을 익명으로 쏟아내는 PWA(Minddump의 후속). shipwright 스타터 위에 Better Auth·오프라인 PWA·파일 업로드를 얹어 만들었고, 'Kindling: Vent Anonymously'로 Google Play 출시를 준비 중입니다.",
-      "descriptionEn": "An anonymous venting PWA — the successor to Minddump. Built on the shipwright starter with Better Auth, an offline PWA shell, and file upload, with a Google Play release ('Kindling: Vent Anonymously') in preparation.",
+      "descriptionKo": "감정을 익명으로 쏟아내는 PWA(Minddump의 후속). shipwright 스타터 위에 Better Auth·오프라인 PWA·파일 업로드를 얹어 만들었고, PWA를 TWA로 감싸 'Kindling: Vent Anonymously'로 Google Play에 출시했습니다. Android 16을 타깃하고 화면 가장자리까지 그리는 edge-to-edge 표시에 대응했습니다.",
+      "descriptionEn": "An anonymous venting PWA — the successor to Minddump. Built on the shipwright starter with Better Auth, an offline PWA shell, and file upload, then wrapped as a TWA and published to Google Play as 'Kindling: Vent Anonymously'. It targets Android 16 and opts into edge-to-edge display with safe-area padding.",
       "techStack": [
         "TypeScript",
         "Next.js",
@@ -208,8 +346,9 @@
         "better-auth",
         "PWA"
       ],
-      "status": "building",
+      "status": "launched",
       "website": "https://kindling.writingdeveloper.blog",
+      "playStore": "https://play.google.com/store/apps/details?id=com.soursea.kindling",
       "succeeds": "minddump",
       "private": true,
       "featured": false,
@@ -220,16 +359,18 @@
     {
       "name": "studios",
       "slug": "studios",
-      "descriptionKo": "이미지·영상·3D·음성·음악을 Claude가 MCP 툴로 생성→기계 게이트→썸네일 직접 검수→재시도하는 5모달리티 개인 생성 팩토리. 공유 커널(GPU 중재·SQLite 자산 스토어·썸네일)과 모달리티별 MCP 서버, FastAPI+React 갤러리를 히스토리 보존 subtree 병합으로 단일 모노레포에 통합하고, 생성 GPU·데이터·프론트를 RTX 4080 노트북 한 대로 일원화했습니다. 자산 계보와 검수 판정을 DB로 관리해 에이전트의 판단이 라이브러리로 흐르게 했고 300개 이상 테스트로 고정했습니다. Studio Apartment의 에셋을 공급하던 3d-asset-studio를 흡수·계승했습니다.",
-      "descriptionEn": "A five-modality personal generation factory where Claude drives image, video, 3D, voice, and music through MCP tools — generate → machine gate → inspect the thumbnail directly → retry. I consolidated a shared kernel (GPU arbitration, a SQLite asset store, thumbnails), per-modality MCP servers, and a FastAPI + React gallery into a single monorepo via history-preserving subtree merges, centralizing the generation GPU, data, and frontend on one RTX 4080 laptop. Asset lineage and review verdicts live in the DB so an agent's judgment flows back into the library, locked by 300+ tests. It absorbs and succeeds 3d-asset-studio, which supplied the assets for Studio Apartment.",
+      "descriptionKo": "이미지·영상·3D·음성·음악을 Claude가 MCP 툴로 생성→기계 게이트→썸네일 직접 검수→재시도하는 5모달리티 개인 생성 팩토리. 공유 커널(GPU 중재·SQLite 자산 스토어·썸네일·서버 공통 골격)과 모달리티별 MCP 서버, FastAPI+React 갤러리를 히스토리 보존 subtree 병합으로 단일 모노레포에 통합하고, 생성 GPU·데이터·프론트를 RTX 4080 노트북 한 대로 일원화했습니다. 갤러리에는 자연어로 지휘하면 로컬 LLM이 직접 툴을 불러 생성부터 검수까지 밟는 '조수' 하네스를 붙였고, 캐릭터를 보존하는 편집과 다중 홉 계보 트리·컬렉션 필터·태그 자동완성으로 라이브러리를 탐색하게 했습니다. 자산 계보와 검수 판정을 DB로 관리해 에이전트의 판단이 라이브러리로 흐르게 했고 320개가 넘는 테스트로 고정했습니다. 두 대의 머신에서 개발하면서 머신마다 달라지는 값은 프로파일로 분리하고, 코드·파이썬·ComfyUI·모델·런타임·머신 여섯 층을 지문으로 비교해 '지금 같은 상태인가'에 기계가 답하게 했습니다. Studio Apartment의 에셋을 공급하던 3d-asset-studio를 흡수·계승했습니다.",
+      "descriptionEn": "A five-modality personal generation factory where Claude drives image, video, 3D, voice, and music through MCP tools — generate → machine gate → inspect the thumbnail directly → retry. I consolidated a shared kernel (GPU arbitration, a SQLite asset store, thumbnails, a common server skeleton), per-modality MCP servers, and a FastAPI + React gallery into a single monorepo via history-preserving subtree merges, centralizing the generation GPU, data, and frontend on one RTX 4080 laptop. The gallery now carries an agent harness: describe what you want in natural language and a local LLM calls the tools itself, walking generation through review. Character-preserving edits, a multi-hop lineage tree, collection filters and tag autocomplete make the library browsable. Asset lineage and review verdicts live in the DB so an agent's judgment flows back into the library, locked by 320+ tests. Development runs across two machines, with machine-specific values isolated into profiles and a six-layer fingerprint (code, Python, ComfyUI, models, runtime, machine) answering whether they are actually in the same state. It absorbs and succeeds 3d-asset-studio, which supplied the assets for Studio Apartment.",
       "techStack": [
         "Python",
         "Model Context Protocol",
         "ComfyUI",
         "Hunyuan3D",
+        "GPT-SoVITS",
         "FastAPI",
         "React",
-        "SQLite"
+        "SQLite",
+        "pytest"
       ],
       "status": "active",
       "succeeds": "3d-asset-studio",
@@ -385,8 +526,8 @@
     {
       "name": "DevDeck",
       "slug": "devdeck",
-      "descriptionKo": "여러 프로젝트를 Claude Code로 관리하는 개발자를 위한 Electron 관제 데스크톱 앱. 설정한 폴더의 git 레포를 스캔해 git·세션 상태, 방치 배지, 토큰 비용 추정을 카드로 보여주고 'Open'으로 `claude -r <세션>`을 띄웁니다. contextIsolation·sandbox·argv 인젝션 방어 등 Electron 보안을 1급 관심사로 설계하고 132개 테스트와 Playwright+axe e2e 게이트로 검증했습니다.",
-      "descriptionEn": "An Electron command-deck desktop app for developers who manage many projects with Claude Code. It scans git repos under configured folders and surfaces git/session state, staleness badges, and token-cost estimates as cards; 'Open' spawns `claude -r <session>`. I treated Electron security as a first-class concern (contextIsolation, sandbox, argv-not-string-interpolation against command injection) and backed it with 132 tests and a Playwright + axe e2e gate.",
+      "descriptionKo": "여러 프로젝트를 Claude Code·Codex·Antigravity로 굴리는 개발자를 위한 Electron 관제 데스크톱 앱. 설정한 폴더의 git 레포를 스캔해 git 상태와 방치 기간, 에이전트별 세션 이력을 카드로 보여주고 클릭 한 번으로 마지막 세션을 이어 갑니다. Windows에서는 외부 터미널이 우르르 뜨는 대신 앱 안에 터미널을 여는 조종석을 제공해, 세션마다 모델과 작업 시간, 한계에 가까워질수록 색이 짙어지는 컨텍스트 퍼센트, 그리고 그 세션이 지금 무엇을 하고 있는지 한 줄 요약을 함께 보여주고 급한 순서로 묶어 정렬합니다. 요약을 AI로 다듬을 때는 그 세션을 연 에이전트의 CLI가 직접 처리해 한쪽 벤더의 사용량이 다른 쪽 작업에 쓰이지 않게 했습니다. contextIsolation·sandbox·argv 인젝션 방어 등 Electron 보안을 1급 관심사로 설계하고 465개 테스트와 Playwright+axe e2e 게이트로 검증했습니다.",
+      "descriptionEn": "An Electron command deck for developers juggling a pile of Claude Code, Codex and Antigravity projects. It scans git repos under configured folders and surfaces git state, how long each has been neglected, and per-agent session history as cards, resuming your last session in one click. On Windows a Cockpit replaces the wall of external terminals with in-app ones: each session shows its model, active working time, a context percentage that colors up as it nears the limit, and a one-line summary of what it is actually working on — grouped by urgency, so you can see who is waiting on you. When AI refinement is on, each summary is condensed by that session's own agent CLI, so one vendor's quota is never spent on another's work. I treated Electron security as a first-class concern (contextIsolation, sandbox, argv-not-string-interpolation against command injection) and backed it with 465 tests and a Playwright + axe e2e gate.",
       "techStack": [
         "TypeScript",
         "Electron",
@@ -404,8 +545,8 @@
     {
       "name": "Zodiacly",
       "slug": "zodiacly",
-      "descriptionKo": "미국·중남미 시장을 겨냥한 운세 콘텐츠 웹 플랫폼. astronomy-engine으로 실제 행성 위치를 계산하는 출생 차트 계산기를 만들고, 별자리·궁합·점성술 학습 페이지를 영어·스페인어·포르투갈어 3개 언어 SEO 구조로 정적 생성해 오가닉 검색 트래픽을 노리도록 설계했습니다.",
-      "descriptionEn": "A horoscope content platform aimed at the US and Latin American markets. I built a birth-chart calculator on real planetary positions (astronomy-engine) and statically generate zodiac, compatibility, and astrology-learning pages across a three-language (EN/ES/PT) SEO architecture designed to capture organic search traffic.",
+      "descriptionKo": "미국·중남미 시장을 겨냥한 운세 콘텐츠 웹 플랫폼이자 Android 앱. astronomy-engine으로 실제 행성 위치를 계산하는 출생 차트 계산기를 만들고, 별자리·궁합·점성술 학습 페이지를 영어·스페인어·포르투갈어 3개 언어 SEO 구조로 정적 생성해 오가닉 검색 트래픽을 노리도록 설계했습니다. PWA를 TWA로 감싸 'Zodiacly: Zodiac Compatibility'로 Google Play에 출시했고, 사이트맵과 schema.org dateModified가 빌드 시각을 따라가며 매번 갱신되던 문제를 잡았습니다.",
+      "descriptionEn": "A horoscope content platform aimed at the US and Latin American markets, now also an Android app. I built a birth-chart calculator on real planetary positions (astronomy-engine) and statically generate zodiac, compatibility, and astrology-learning pages across a three-language (EN/ES/PT) SEO architecture designed to capture organic search traffic. The PWA is wrapped as a TWA and published to Google Play as 'Zodiacly: Zodiac Compatibility', and I fixed the sitemap and schema.org dateModified silently tracking build time on every deploy.",
       "techStack": [
         "TypeScript",
         "Next.js",
@@ -416,6 +557,7 @@
       ],
       "status": "launched",
       "website": "https://zodiacly.writingdeveloper.blog",
+      "playStore": "https://play.google.com/store/apps/details?id=com.soursea.zodiacly",
       "private": true,
       "featured": false,
       "screenshot": "/images/projects/zodiacly.webp",
