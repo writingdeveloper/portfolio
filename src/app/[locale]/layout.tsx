@@ -94,10 +94,14 @@ export async function generateMetadata({
         'x-default': SITE_URL,
       },
     },
-    robots: {
-      index: true,
-      follow: true,
-    },
+    // No explicit `robots` here. Declaring index/follow only restates the
+    // default, and because this layout wraps every route it also emitted a
+    // second, contradictory tag on not-found responses: notFound() injects
+    // `noindex`, so those pages went out carrying both `index, follow` and
+    // `noindex`. Crawlers resolve that to the most restrictive value, so the
+    // outcome was already right — but shipping two opposing directives is a
+    // trap for whoever reads the HTML next. Omitting it leaves real pages
+    // indexable by default and lets notFound()'s `noindex` stand alone.
   }
 }
 

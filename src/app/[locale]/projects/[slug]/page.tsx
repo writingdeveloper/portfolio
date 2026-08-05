@@ -92,14 +92,29 @@ export default async function ProjectDetailPage({
   const { locale, slug } = await params
   setRequestLocale(locale)
 
-  // Renders the not-found screen for an unknown slug. Note the response still
-  // carries HTTP 200 — a soft 404. That is pre-existing and site-wide (the blog
-  // post route behaves identically): the [locale] layout reads headers() for
-  // the CSP nonce, which forces dynamic rendering, so the response has already
-  // begun streaming before this throws and the status line is gone. Neither
-  // `dynamicParams = false` nor calling notFound() from generateMetadata fixes
-  // it — both were tried. A real fix has to change how the nonce reaches the
-  // layout, which is a bigger change than this route.
+  // Renders the not-found screen for an unknown slug. The response still
+  // carries HTTP 200 — a soft 404, site-wide (the blog post route behaves
+  // identically). This is an ACCEPTED TRADE-OFF, not an unfixed bug; the
+  // reasoning is worth keeping because the fix looks cheap and isn't:
+  //
+  // The [locale] layout reads headers() for the CSP nonce, which makes every
+  // route render on demand. `notFound()` on a dynamically rendered route
+  // cannot set the status line. Measured: `dynamicParams = false` alone is
+  // inert while the route is dynamic, but drop the headers() call and the same
+  // flag produces a real 404 — so the only fix is to prerender these routes.
+  //
+  // Prerendering is what we cannot have. Measured on a static build: Next
+  // emits its inline bootstrap scripts — including the per-page __next_f RSC
+  // payload — with NO nonce, because a build has no per-request value to put
+  // there. script-src here has no 'unsafe-inline', so every one of them would
+  // be blocked and hydration would die. The RSC payload differs per page and
+  // per edit, so CSP hashes can't cover it either. Fixing the status code
+  // means adding 'unsafe-inline' to script-src.
+  //
+  // That trade is not worth it: notFound() already injects `noindex`, so these
+  // URLs stay out of the index regardless of the status code. We would be
+  // giving up the site's main XSS defence to change a number on pages that do
+  // not exist. Revisit only if the nonce CSP goes away for other reasons.
   const project = findProject(slug)
   if (!project) notFound()
 
