@@ -24,7 +24,7 @@ Private 레포는 **핵심 로직이 아닌 구현·기능 중심**으로 기술
 | argus-fusion.vercel.app | LIVE(피드 간헐적) | 사용 |
 | zodiacly.vercel.app | LIVE | 사용 |
 | minddump-seven.vercel.app | LIVE | 사용 |
-| transitla.devmanage.duckdns.org | LIVE | 사용 |
+| transit-la 자체 호스팅 도메인 (동적 DNS) | LIVE | 사용 |
 | itembox.ai / itembox-frontend.vercel.app | 연결거부 / 404 | **링크 없음** |
 
 ## 최종 프로젝트 데이터 (12)
@@ -59,7 +59,7 @@ Private 레포는 **핵심 로직이 아닌 구현·기능 중심**으로 기술
 - EN: An AI horoscope platform I built for the US and Latin American market. It computes real planetary positions with astronomy-engine and statically generates zodiac, compatibility, and weekly/monthly horoscope pages in a six-language SEO architecture designed to capture organic traffic.
 - tech: TypeScript, Next.js, React, Tailwind CSS, Supabase, astronomy-engine, Claude API, next-intl
 
-**7. transit-la** — `private: true`, `status: launched`, `website: https://transitla.devmanage.duckdns.org`
+**7. transit-la** — `private: true`, `status: launched`, `website:` 자체 호스팅 동적 DNS 도메인 *(이후 `https://transitla.writingdeveloper.blog`로 이전)*
 - KO: 차 없이 대중교통으로 갈 수 있는 LA의 장소(해변·하이킹·데이트 코스)를 탐색하는 웹앱. LA Metro GTFS 데이터를 직접 파이프라인으로 가공해 PostGIS 도달성 스코어링을 구현하고, 자체 호스팅한 OpenTripPlanner 2로 실시간 환승 경로를 제공하며 GitHub Actions CI/CD와 Docker로 배포했습니다.
 - EN: A web app for discovering places across Greater LA — beaches, hikes, date courses — reachable without a car. I built the full data pipeline (GTFS ingestion, OSM scraping, PostGIS reachability scoring) and ran a self-hosted OpenTripPlanner 2 instance for live multimodal routing, deployed through a GitHub Actions CI/CD pipeline on Docker.
 - tech: TypeScript, Next.js, React, PostgreSQL, PostGIS, Drizzle ORM, MapLibre GL, OpenTripPlanner 2, Docker, Playwright
