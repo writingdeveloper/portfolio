@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import matter from 'gray-matter'
 import readingTime from 'reading-time'
+import { parseFrontmatter } from './frontmatter'
 import categoriesData from '../../content/categories.json'
 
 const contentDirectory = path.join(process.cwd(), 'content', 'posts')
@@ -89,28 +89,42 @@ function loadLocaleMap(locale: string): PostMap {
 
     try {
       const fileContent = fs.readFileSync(filePath, 'utf-8')
-      const { data, content } = matter(fileContent)
+      const { data, content } = parseFrontmatter(fileContent)
       const stats = readingTime(content)
 
-      // Unquoted YAML dates arrive as Date objects from gray-matter;
+      // Unquoted YAML dates arrive as Date objects from the frontmatter parser;
       // normalize to YYYY-MM-DD strings so consumers can rely on one shape.
       const toDateString = (v: unknown): string =>
         v instanceof Date ? v.toISOString().slice(0, 10) : v ? String(v) : ''
 
+      // These frontmatter fields are genuinely strings at runtime, so narrow
+      // with a type guard instead of asserting — a future non-string value
+      // here becomes a type error at the call site rather than a silently
+      // accepted lie.
+      const str = (v: unknown): string => (typeof v === 'string' ? v : '')
+
+      // `publishedAt` is the one field PostMeta types as `string` that can
+      // legitimately hold something else at runtime: a post that leaves the
+      // date unquoted in YAML gets a `Date` back from js-yaml, not a string.
+      // That mismatch predates this dependency swap and getAllPosts sorts on
+      // the Date surviving intact, so the escape hatch stays scoped to just
+      // this field rather than fixed here.
+      const publishedAtVerbatim = (v: unknown): string => (v || '') as string
+
       map.set(slug, {
         meta: {
           slug,
-          title: data.title || '',
-          excerpt: data.excerpt || '',
-          publishedAt: data.publishedAt || '',
+          title: str(data.title),
+          excerpt: str(data.excerpt),
+          publishedAt: publishedAtVerbatim(data.publishedAt),
           updatedAt: toDateString(data.updatedAt),
-          author: data.author || '',
-          category: data.category || '',
+          author: str(data.author),
+          category: str(data.category),
           tags: Array.isArray(data.tags) ? data.tags : [],
           language: locale,
-          coverImage: data.coverImage || '',
-          coverImageAlt: data.coverImageAlt || '',
-          project: data.project || '',
+          coverImage: str(data.coverImage),
+          coverImageAlt: str(data.coverImageAlt),
+          project: str(data.project),
           readingTime: stats.text,
           readingTimeMinutes: Math.ceil(stats.minutes),
           hasTranslation: false, // populated after cross-locale pass
