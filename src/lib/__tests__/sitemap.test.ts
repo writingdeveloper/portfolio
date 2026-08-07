@@ -35,4 +35,17 @@ describe('sitemap', () => {
     expect(home).not.toHaveProperty('images')
     expect(graveyard).not.toHaveProperty('images')
   })
+
+  it('lists the hire page in both locales with hreflang alternates', async () => {
+    const entries = await sitemap()
+    const ko = entries.find((e) => e.url === `${SITE_URL}/hire`)
+    const en = entries.find((e) => e.url === `${SITE_URL}/en/hire`)
+
+    expect(ko, 'ko /hire missing from the sitemap').toBeDefined()
+    expect(en, 'en /hire missing from the sitemap').toBeDefined()
+    expect(ko?.alternates?.languages).toMatchObject({
+      ko: `${SITE_URL}/hire`,
+      en: `${SITE_URL}/en/hire`,
+    })
+  })
 })
