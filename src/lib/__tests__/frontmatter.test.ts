@@ -81,6 +81,19 @@ describe('parseFrontmatter', () => {
     expect(parseFrontmatter('---\n---\nBody.').content).toBe('Body.')
   })
 
+  it('yields an empty object when the block parses to a bare scalar', () => {
+    const { data, content } = parseFrontmatter('---\nhello\n---\nBody.')
+    expect(data).toEqual({})
+    expect(content).toBe('Body.')
+  })
+
+  it('yields an empty object when the block parses to a top-level array', () => {
+    const doc = ['---', '- alpha', '- beta', '---', 'Body.'].join('\n')
+    const { data, content } = parseFrontmatter(doc)
+    expect(data).toEqual({})
+    expect(content).toBe('Body.')
+  })
+
   it('treats an unterminated block as a document without frontmatter', () => {
     const doc = '---\ntitle: Sample\nno closing fence here\n'
     const { data, content } = parseFrontmatter(doc)
