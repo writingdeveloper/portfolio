@@ -2,13 +2,13 @@ import { useTranslations, useLocale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { Link } from '@/i18n/navigation'
 import { PageTransition } from '@/components/ui/PageTransition'
+import { SkillGrid } from '@/components/ui/SkillGrid'
 import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
 import { SITE_URL } from '@/lib/constants'
 import aboutData from '../../../../content/about.json'
 import projectsData from '../../../../content/projects.json'
 import type { Skill, TimelineItem } from '@/types/content'
-import { skillCategories } from '@/types/content'
 import { generatePersonJsonLd, generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 
 // Revalidate every hour — about page is static content.
@@ -67,12 +67,6 @@ function AboutContent() {
 
   const skills = aboutData.skills as Skill[]
   const timelineItems = aboutData.timeline as TimelineItem[]
-  const groupedSkills = {
-    frontend: skills.filter((s) => s.category === 'frontend'),
-    backend: skills.filter((s) => s.category === 'backend'),
-    tools: skills.filter((s) => s.category === 'tools'),
-    infra: skills.filter((s) => s.category === 'infra'),
-  }
 
   return (
     <PageTransition>
@@ -97,25 +91,7 @@ function AboutContent() {
         {/* Skills */}
         <section className="mb-16">
           <h2 className="text-xl font-bold mb-6">{t('skills')}</h2>
-          <div className="space-y-6">
-            {(Object.keys(groupedSkills) as Array<keyof typeof groupedSkills>).map((category) => (
-              <div key={category}>
-                <h3 className="text-sm font-medium text-[var(--text-secondary)] mb-3">
-                  {skillCategories[category][locale as 'ko' | 'en']}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {groupedSkills[category].map((skill: Skill) => (
-                    <span
-                      key={skill.name}
-                      className="px-3 py-1.5 rounded-lg bg-[var(--bg-elevated)] text-sm text-[var(--text-primary)] border border-[var(--border-hover)]"
-                    >
-                      {skill.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          <SkillGrid skills={skills} />
         </section>
 
         {/* Timeline */}
