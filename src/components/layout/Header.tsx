@@ -11,6 +11,7 @@ const navLinks = [
   { href: '/', key: 'home' },
   { href: '/blog', key: 'blog' },
   { href: '/projects', key: 'projects' },
+  { href: '/hire', key: 'hire' },
   { href: '/graveyard', key: 'graveyard' },
   { href: '/about', key: 'about' },
   { href: '/play', key: 'play' },
@@ -70,15 +71,22 @@ export function Header() {
         </Link>
 
         <nav aria-label="Main navigation" className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.key}
-              href={link.href}
-              className="ledger-mono text-xs tracking-[0.18em] uppercase text-[var(--text-secondary)] hover:text-[var(--accent-text)] transition-colors"
-            >
-              {t(link.key)}
-            </Link>
-          ))}
+          {/* /graveyard is dropped from the desktop row: seven links at the md
+              (768px) breakpoint overflow the space between the wordmark and the
+              toggles, and the Korean labels (no word-break: keep-all) wrap
+              mid-character instead of staying on one line. It still ships in
+              the mobile nav below. */}
+          {navLinks
+            .filter((link) => link.key !== 'graveyard')
+            .map((link) => (
+              <Link
+                key={link.key}
+                href={link.href}
+                className="ledger-mono text-xs tracking-[0.18em] uppercase text-[var(--text-secondary)] hover:text-[var(--accent-text)] transition-colors"
+              >
+                {t(link.key)}
+              </Link>
+            ))}
         </nav>
 
         <div className="flex items-center gap-1">
