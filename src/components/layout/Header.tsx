@@ -70,30 +70,30 @@ export function Header() {
           <span className="ledger-cursor" aria-hidden="true" />
         </Link>
 
-        <nav aria-label="Main navigation" className="hidden md:flex items-center gap-6">
-          {/* /graveyard is dropped from the desktop row: seven links at the md
-              (768px) breakpoint overflow the space between the wordmark and the
-              toggles, and the Korean labels (no word-break: keep-all) wrap
-              mid-character instead of staying on one line. It still ships in
-              the mobile nav below. */}
-          {navLinks
-            .filter((link) => link.key !== 'graveyard')
-            .map((link) => (
-              <Link
-                key={link.key}
-                href={link.href}
-                className="ledger-mono text-xs tracking-[0.18em] uppercase text-[var(--text-secondary)] hover:text-[var(--accent-text)] transition-colors"
-              >
-                {t(link.key)}
-              </Link>
-            ))}
+        {/* The desktop row waits until lg (1024px): seven links, including the
+            two-word "Work with me" / multi-syllable 함께 일하기, overflow and
+            wrap between md (768px) and ~888px in English (verified in a real
+            browser). The mobile menu is already focus-trapped and full-featured,
+            so letting it cover 768-1024px costs nothing, while a wrapping
+            desktop row is a visible defect that would recur the moment a label
+            gets longer. */}
+        <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-6">
+          {navLinks.map((link) => (
+            <Link
+              key={link.key}
+              href={link.href}
+              className="ledger-mono text-xs tracking-[0.18em] uppercase text-[var(--text-secondary)] hover:text-[var(--accent-text)] transition-colors"
+            >
+              {t(link.key)}
+            </Link>
+          ))}
         </nav>
 
         <div className="flex items-center gap-1">
           <LanguageToggle />
           <ThemeToggle />
           <button
-            className="md:hidden p-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors"
+            className="lg:hidden p-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={ta('toggleMenu')}
             aria-expanded={mobileOpen}
@@ -106,7 +106,7 @@ export function Header() {
       <nav
         aria-label="Mobile navigation"
         data-open={mobileOpen}
-        className="md:hidden border-t border-[var(--border-subtle)] mobile-menu"
+        className="lg:hidden border-t border-[var(--border-subtle)] mobile-menu"
         aria-hidden={!mobileOpen}
       >
         <div className="mobile-menu-inner">
