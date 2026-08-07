@@ -93,6 +93,7 @@ describe('getHireStats', () => {
   // it reads. Forging a whole Project here would be noise.
   const sample = [
     { website: 'https://a.example.com' },
+    { website: 'https://d.example.com' },
     { playStore: 'https://play.google.com/store/apps/details?id=b' },
     { website: 'https://c.example.com', playStore: 'https://play.google.com/store/apps/details?id=c' },
     {},
@@ -100,10 +101,12 @@ describe('getHireStats', () => {
   ]
 
   it('counts only what a visitor can open right now', () => {
-    // The last two rows stand for real work with no public destination — a
+    // Two rows carry only a website, one carries only a Play Store listing, and
+    // one carries both — four distinct rows with a public destination. The
+    // last two rows stand for real work with no public destination — a
     // private build, or one that only has a repo. Nothing on them can be
     // clicked, so they must not be claimed as shipped product.
-    expect(getHireStats(sample).shipped).toBe(3)
+    expect(getHireStats(sample).shipped).toBe(4)
   })
 
   it('counts store listings separately', () => {
@@ -111,7 +114,7 @@ describe('getHireStats', () => {
   })
 
   it('reports the whole ledger as the total', () => {
-    expect(getHireStats(sample).total).toBe(5)
+    expect(getHireStats(sample).total).toBe(6)
   })
 
   it('never claims more shipped than the ledger holds', () => {
