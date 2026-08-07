@@ -97,26 +97,34 @@ function loadLocaleMap(locale: string): PostMap {
       const toDateString = (v: unknown): string =>
         v instanceof Date ? v.toISOString().slice(0, 10) : v ? String(v) : ''
 
-      // Frontmatter values are `unknown`, but these fields have always been
-      // handed through verbatim. Coercing them here would be a behaviour
-      // change: posts that leave `publishedAt` unquoted hold a Date, and
-      // getAllPosts sorts on it.
-      const verbatim = (v: unknown): string => (v || '') as string
+      // These frontmatter fields are genuinely strings at runtime, so narrow
+      // with a type guard instead of asserting — a future non-string value
+      // here becomes a type error at the call site rather than a silently
+      // accepted lie.
+      const str = (v: unknown): string => (typeof v === 'string' ? v : '')
+
+      // `publishedAt` is the one field PostMeta types as `string` that can
+      // legitimately hold something else at runtime: a post that leaves the
+      // date unquoted in YAML gets a `Date` back from js-yaml, not a string.
+      // That mismatch predates this dependency swap and getAllPosts sorts on
+      // the Date surviving intact, so the escape hatch stays scoped to just
+      // this field rather than fixed here.
+      const publishedAtVerbatim = (v: unknown): string => (v || '') as string
 
       map.set(slug, {
         meta: {
           slug,
-          title: verbatim(data.title),
-          excerpt: verbatim(data.excerpt),
-          publishedAt: verbatim(data.publishedAt),
+          title: str(data.title),
+          excerpt: str(data.excerpt),
+          publishedAt: publishedAtVerbatim(data.publishedAt),
           updatedAt: toDateString(data.updatedAt),
-          author: verbatim(data.author),
-          category: verbatim(data.category),
+          author: str(data.author),
+          category: str(data.category),
           tags: Array.isArray(data.tags) ? data.tags : [],
           language: locale,
-          coverImage: verbatim(data.coverImage),
-          coverImageAlt: verbatim(data.coverImageAlt),
-          project: verbatim(data.project),
+          coverImage: str(data.coverImage),
+          coverImageAlt: str(data.coverImageAlt),
+          project: str(data.project),
           readingTime: stats.text,
           readingTimeMinutes: Math.ceil(stats.minutes),
           hasTranslation: false, // populated after cross-locale pass
