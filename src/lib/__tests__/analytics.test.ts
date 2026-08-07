@@ -77,4 +77,25 @@ describe('classifyOutboundLink', () => {
     const b = classifyOutboundLink('https://kindling.writingdeveloper.blog', SITE)
     expect(a?.params.link_url).not.toBe(b?.params.link_url)
   })
+
+  // Regression: LinkedIn fell through to demo_click, so every footer click on
+  // it inflated the demo metric. On a hire page it is a contact action.
+  it('classifies LinkedIn as a contact click, not a demo click', () => {
+    const hit = classifyOutboundLink('https://www.linkedin.com/in/sihyeonglee/', SITE)
+    expect(hit?.name).toBe('contact_click')
+    expect(hit?.params.link_domain).toBe('linkedin.com')
+  })
+
+  it('classifies LinkedIn without the www subdomain too', () => {
+    expect(classifyOutboundLink('https://linkedin.com/in/sihyeonglee/', SITE)?.name).toBe(
+      'contact_click',
+    )
+  })
+
+  it('keeps mailto and LinkedIn separable by domain', () => {
+    const mail = classifyOutboundLink('mailto:someone@example.com', SITE)
+    const linked = classifyOutboundLink('https://www.linkedin.com/in/sihyeonglee/', SITE)
+    expect(mail?.name).toBe(linked?.name)
+    expect(mail?.params.link_domain).not.toBe(linked?.params.link_domain)
+  })
 })
