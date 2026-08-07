@@ -50,3 +50,40 @@ export function hasIndexablePage(
     project.screenshot || project.website || project.playStore || codeLink || hasRelatedPost,
   )
 }
+
+export interface HireStats {
+  /** Products with a destination a visitor can open right now. */
+  shipped: number
+  /** Android apps with a Play Store listing. */
+  playStore: number
+  /** Everything in the ledger, shipped or not. */
+  total: number
+}
+
+/**
+ * The counts the hire page claims.
+ *
+ * `shipped` deliberately counts a public destination rather than the `launched`
+ * and `active` statuses, which together are a larger and more flattering
+ * number. A hire page invites "show me", and only a row with a website or a
+ * store listing survives that. Deriving these from the ledger — the way the
+ * about page derives its project count — means the page cannot drift out of
+ * date behind the data.
+ */
+export function getHireStats(
+  projects: Pick<Project, 'website' | 'playStore'>[],
+): HireStats {
+  return {
+    shipped: projects.filter((p) => p.website || p.playStore).length,
+    playStore: projects.filter((p) => p.playStore).length,
+    total: projects.length,
+  }
+}
+
+/**
+ * Three projects that prove three different things: public-data GIS with an
+ * open repo, an AI safety pipeline shipped to web and Android, and real-time
+ * multi-feed aggregation. Chosen for spread, not for being the biggest.
+ * A slug that stops resolving fails the test suite rather than the page.
+ */
+export const HIRE_CASE_STUDIES = ['rentrights', 'healframe', 'argus-fusion'] as const

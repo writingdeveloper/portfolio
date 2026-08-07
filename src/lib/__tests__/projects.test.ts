@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
-import { hasIndexablePage, projectHref, sortProjectsFeaturedFirst } from '../projects'
+import { getHireStats, hasIndexablePage, HIRE_CASE_STUDIES, projectHref, sortProjectsFeaturedFirst } from '../projects'
 import type { Project } from '@/types/content'
+import projectsData from '../../../content/projects.json'
 
 const p = (name: string, featured: boolean): Project => ({
   name,
@@ -84,5 +85,55 @@ describe('projectHref', () => {
   it('leaves Korean unprefixed and prefixes every other locale', () => {
     expect(projectHref('drymora', 'ko')).toBe('/projects/drymora')
     expect(projectHref('drymora', 'en')).toBe('/en/projects/drymora')
+  })
+})
+
+describe('getHireStats', () => {
+  // No cast: getHireStats takes a Pick, so a fixture needs only the two fields
+  // it reads. Forging a whole Project here would be noise.
+  const sample = [
+    { website: 'https://a.example.com' },
+    { playStore: 'https://play.google.com/store/apps/details?id=b' },
+    { website: 'https://c.example.com', playStore: 'https://play.google.com/store/apps/details?id=c' },
+    {},
+    {},
+  ]
+
+  it('counts only what a visitor can open right now', () => {
+    // The last two rows stand for real work with no public destination — a
+    // private build, or one that only has a repo. Nothing on them can be
+    // clicked, so they must not be claimed as shipped product.
+    expect(getHireStats(sample).shipped).toBe(3)
+  })
+
+  it('counts store listings separately', () => {
+    expect(getHireStats(sample).playStore).toBe(2)
+  })
+
+  it('reports the whole ledger as the total', () => {
+    expect(getHireStats(sample).total).toBe(5)
+  })
+
+  it('never claims more shipped than the ledger holds', () => {
+    const stats = getHireStats(projectsData.projects as Project[])
+    expect(stats.shipped).toBeLessThanOrEqual(stats.total)
+    expect(stats.playStore).toBeLessThanOrEqual(stats.shipped)
+    expect(stats.shipped).toBeGreaterThan(0)
+  })
+})
+
+describe('HIRE_CASE_STUDIES', () => {
+  // The page renders these by slug. If a project is renamed or dropped, fail
+  // here rather than shipping a hire page with a hole in it.
+  it.each(HIRE_CASE_STUDIES)('%s exists in projects.json', (slug) => {
+    const found = (projectsData.projects as Project[]).find((p) => p.slug === slug)
+    expect(found, `${slug} is missing from projects.json`).toBeDefined()
+  })
+
+  it('each case study has something to link to', () => {
+    for (const slug of HIRE_CASE_STUDIES) {
+      const p = (projectsData.projects as Project[]).find((x) => x.slug === slug)!
+      expect(Boolean(p.website || p.playStore)).toBe(true)
+    }
   })
 })
