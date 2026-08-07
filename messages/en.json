@@ -9,7 +9,8 @@
     "projects": "Projects",
     "graveyard": "Graveyard",
     "about": "About",
-    "play": "Explore"
+    "play": "Explore",
+    "hire": "Work with me"
   },
   "home": {
     "hero": {
@@ -111,6 +112,41 @@
     "body": "As a developer and entrepreneur, I solve problems with technology. I build projects like Soursea and Don't Touch — each born from a real problem I faced — and share what I learn through this blog. I don't stop at building, either: my generative pipelines and internal tools run on self-hosted infrastructure I operate myself — a home GPU workstation and a cloud VM tied together over a Tailscale mesh.",
     "skills": "Tech Stack",
     "timeline": "Timeline"
+  },
+  "hire": {
+    "title": "Work with me",
+    "description": "Open to full-time roles and to project work.",
+    "metaTitle": "Work with me — Si Hyeong Lee, full-stack & AI integration",
+    "metaDescription": "Open to full-time roles and to project work. Remote-first, worldwide, available now. {shipped} products with a public demo or store listing, {playStore} on Google Play.",
+    "badgeRemote": "Remote-first · worldwide",
+    "badgeNow": "Available now",
+    "fulltime": {
+      "heading": "Full-time",
+      "rolesLabel": "Roles",
+      "roles": "CTO · senior full-stack · AI integration engineer",
+      "modeLabel": "Working style",
+      "mode": "Remote-first, worldwide",
+      "bringLabel": "What I bring",
+      "bring": "5+ years as a CTO, and a solo founder's habit of owning everything from architecture through payments to infrastructure."
+    },
+    "contract": {
+      "heading": "Project work",
+      "workLabel": "What I take on",
+      "work": "Claude API pipelines · custom MCP servers · RAG systems · Next.js / NestJS / Python products",
+      "modeLabel": "Shape",
+      "mode": "Remote-first, worldwide. Short cycles measured in days, not months.",
+      "startLabel": "How to start",
+      "start": "Email me one paragraph describing the problem. I'll reply with whether I can help and how I'd approach it."
+    },
+    "evidence": {
+      "heading": "Evidence",
+      "shipped": "products with a public demo or store listing",
+      "playStore": "apps on Google Play",
+      "total": "builds in the ledger",
+      "caseHeading": "Selected work"
+    },
+    "stack": "Tech Stack",
+    "contactHeading": "Get in touch"
   },
   "accessibility": {
     "toggleMenu": "Toggle menu",

@@ -15,3 +15,9 @@ export const ADSENSE_CLIENT =
 // Public value (it appears in the page source), so it defaults inline; override
 // per-env via NEXT_PUBLIC_GA_ID if ever needed.
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? 'G-77H1KB1H05'
+
+// ── Contact ───────────────────────────────────────────────────────────────
+/** The only address the site publishes. Centralised so the hire page, the
+ *  ledger footer and the site footer cannot drift apart. */
+export const CONTACT_EMAIL = 'sihyeongdev@gmail.com'
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/sihyeonglee/'
