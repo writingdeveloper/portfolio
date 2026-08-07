@@ -17,7 +17,8 @@ export const ADSENSE_CLIENT =
 export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID ?? 'G-77H1KB1H05'
 
 // ── Contact ───────────────────────────────────────────────────────────────
-/** The only address the site publishes. Centralised so the hire page, the
- *  ledger footer and the site footer cannot drift apart. */
+/** The address and profile URL the hire page publishes. The ledger footer and
+ *  the site footer still carry their own copies of these same values —
+ *  unifying all three onto this constant is a separate cleanup, not done here. */
 export const CONTACT_EMAIL = 'sihyeongdev@gmail.com'
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/sihyeonglee/'
