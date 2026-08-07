@@ -29,6 +29,10 @@ export interface OutboundEvent {
 
 const PLAY_STORE_HOSTS = new Set(['play.google.com'])
 const CODE_HOSTS = new Set(['github.com', 'gitlab.com', 'bitbucket.org'])
+/** Profiles that are a way to reach a person, not a product to try. Without
+ *  this they fall through to demo_click and quietly inflate that metric —
+ *  which they did for as long as the footer has linked LinkedIn. */
+const CONTACT_HOSTS = new Set(['linkedin.com'])
 
 /** `www.` is presentation, not identity — two hosts that differ only by it are
  *  the same destination, and GA4 reports read better without the split. */
@@ -82,5 +86,6 @@ export function classifyOutboundLink(href: string, siteHost: string): OutboundEv
 
   if (PLAY_STORE_HOSTS.has(host)) return { name: 'play_store_click', params }
   if (CODE_HOSTS.has(host)) return { name: 'code_click', params }
+  if (CONTACT_HOSTS.has(host)) return { name: 'contact_click', params }
   return { name: 'demo_click', params }
 }
