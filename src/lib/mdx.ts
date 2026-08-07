@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
-import matter from 'gray-matter'
 import readingTime from 'reading-time'
+import { parseFrontmatter } from './frontmatter'
 import categoriesData from '../../content/categories.json'
 
 const contentDirectory = path.join(process.cwd(), 'content', 'posts')
@@ -89,28 +89,34 @@ function loadLocaleMap(locale: string): PostMap {
 
     try {
       const fileContent = fs.readFileSync(filePath, 'utf-8')
-      const { data, content } = matter(fileContent)
+      const { data, content } = parseFrontmatter(fileContent)
       const stats = readingTime(content)
 
-      // Unquoted YAML dates arrive as Date objects from gray-matter;
+      // Unquoted YAML dates arrive as Date objects from the frontmatter parser;
       // normalize to YYYY-MM-DD strings so consumers can rely on one shape.
       const toDateString = (v: unknown): string =>
         v instanceof Date ? v.toISOString().slice(0, 10) : v ? String(v) : ''
 
+      // Frontmatter values are `unknown`, but these fields have always been
+      // handed through verbatim. Coercing them here would be a behaviour
+      // change: posts that leave `publishedAt` unquoted hold a Date, and
+      // getAllPosts sorts on it.
+      const verbatim = (v: unknown): string => (v || '') as string
+
       map.set(slug, {
         meta: {
           slug,
-          title: data.title || '',
-          excerpt: data.excerpt || '',
-          publishedAt: data.publishedAt || '',
+          title: verbatim(data.title),
+          excerpt: verbatim(data.excerpt),
+          publishedAt: verbatim(data.publishedAt),
           updatedAt: toDateString(data.updatedAt),
-          author: data.author || '',
-          category: data.category || '',
+          author: verbatim(data.author),
+          category: verbatim(data.category),
           tags: Array.isArray(data.tags) ? data.tags : [],
           language: locale,
-          coverImage: data.coverImage || '',
-          coverImageAlt: data.coverImageAlt || '',
-          project: data.project || '',
+          coverImage: verbatim(data.coverImage),
+          coverImageAlt: verbatim(data.coverImageAlt),
+          project: verbatim(data.project),
           readingTime: stats.text,
           readingTimeMinutes: Math.ceil(stats.minutes),
           hasTranslation: false, // populated after cross-locale pass
