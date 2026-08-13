@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest'
-import { getHireStats, hasIndexablePage, HIRE_CASE_STUDIES, projectHref, sortProjectsFeaturedFirst } from '../projects'
+import {
+  getHireStats,
+  hasIndexablePage,
+  HIRE_CASE_STUDIES,
+  PROJECT_SHOWCASE,
+  projectHref,
+  sortProjectsFeaturedFirst,
+} from '../projects'
 import type { Project } from '@/types/content'
 import projectsData from '../../../content/projects.json'
 
@@ -31,7 +38,11 @@ describe('sortProjectsFeaturedFirst', () => {
   })
 })
 
+// Deliberately a slug with no PROJECT_SHOWCASE entry, so "bare" stays bare.
+// Reach for a real slug here and the negative cases start passing for the
+// wrong reason.
 const bare = {
+  slug: 'a-project-with-no-showcase',
   screenshot: undefined,
   website: undefined,
   github: undefined,
@@ -78,6 +89,30 @@ describe('hasIndexablePage', () => {
         website: 'https://demo.example.com',
       }),
     ).toBe(true)
+  })
+
+  // The case this rule exists for: private work with no public surface at all,
+  // which therefore cannot qualify any other way. A showcase page is somewhere
+  // to go, and "nowhere to go" is the whole test.
+  it('accepts a private project whose page links to a showcase', () => {
+    for (const slug of Object.keys(PROJECT_SHOWCASE)) {
+      expect(
+        hasIndexablePage({
+          ...bare,
+          slug,
+          private: true,
+          github: 'https://github.com/writingdeveloper/secret',
+        }),
+        `${slug} has a showcase page but was filtered out as thin`,
+      ).toBe(true)
+    }
+  })
+
+  it('keeps every showcase entry pointing at a slug that exists', () => {
+    const slugs = new Set((projectsData.projects as Project[]).map((p) => p.slug))
+    for (const slug of Object.keys(PROJECT_SHOWCASE)) {
+      expect(slugs.has(slug), `PROJECT_SHOWCASE names "${slug}", which is not a project`).toBe(true)
+    }
   })
 })
 

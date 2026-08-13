@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
-import { ArrowLeft, BookOpen, ExternalLink, Github, Lock } from 'lucide-react'
+import { ArrowLeft, BookOpen, ExternalLink, Github, Lock, Sparkles } from 'lucide-react'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import projectsData from '../../../../../content/projects.json'
 import type { Project } from '@/types/content'
 import { SITE_URL } from '@/lib/constants'
-import { APP_CATEGORY } from '@/lib/projects'
+import { APP_CATEGORY, PROJECT_SHOWCASE } from '@/lib/projects'
 import { predecessorOf } from '@/lib/lineage'
 import { getAllPosts } from '@/lib/mdx'
 import { buildProjectPostMap } from '@/lib/post-project-links'
@@ -214,6 +214,16 @@ export default async function ProjectDetailPage({
         )}
 
         <div className="flex flex-wrap items-center gap-4 mb-8">
+          {/* Sits first: for a private project with no website this is the
+              only place on the page that goes anywhere at all. */}
+          {PROJECT_SHOWCASE[project.slug] && (
+            <a
+              href={`${localePath}${PROJECT_SHOWCASE[project.slug]}`}
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--accent-text)] hover:text-[var(--accent-text-hover)] transition-colors"
+            >
+              <Sparkles size={15} /> {t('viewShowcase')}
+            </a>
+          )}
           {project.website && (
             <a href={project.website} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
