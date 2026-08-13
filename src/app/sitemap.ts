@@ -15,7 +15,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const koPosts = getAllPosts('ko')
   const enPosts = getAllPosts('en')
 
-  const staticPages = ['', '/blog', '/projects', '/hire', '/graveyard', '/about', '/play']
+  const staticPages = ['', '/blog', '/projects', '/hire', '/studio', '/graveyard', '/about', '/play']
 
   // 프로젝트 스크린샷을 /projects 엔트리에 붙여 이미지 사이트맵에 노출한다.
   const projectImages = (projectsData.projects as Project[])
@@ -30,7 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ? 1
         : page === '/blog'
         ? 0.9
-        : page === '/projects' || page === '/hire'
+        : page === '/projects' || page === '/hire' || page === '/studio'
         ? 0.7
         : page === '/play'
         ? 0.6

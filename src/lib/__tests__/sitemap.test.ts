@@ -48,4 +48,21 @@ describe('sitemap', () => {
       en: `${SITE_URL}/en/hire`,
     })
   })
+
+  it('lists the studio page in both locales at the same priority as /projects', async () => {
+    const entries = await sitemap()
+    const ko = entries.find((e) => e.url === `${SITE_URL}/studio`)
+    const en = entries.find((e) => e.url === `${SITE_URL}/en/studio`)
+    const projects = entries.find((e) => e.url === `${SITE_URL}/projects`)
+
+    expect(ko, 'ko /studio missing from the sitemap').toBeDefined()
+    expect(en, 'en /studio missing from the sitemap').toBeDefined()
+    // Not the 0.5 floor: /studio is a substantial page, and dropping to the
+    // floor is the silent failure mode when the priority ladder is edited.
+    expect(ko?.priority).toBe(projects?.priority)
+    expect(ko?.alternates?.languages).toMatchObject({
+      ko: `${SITE_URL}/studio`,
+      en: `${SITE_URL}/en/studio`,
+    })
+  })
 })
