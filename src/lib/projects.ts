@@ -27,6 +27,22 @@ export function projectHref(slug: string, locale: string): string {
 }
 
 /**
+ * Projects that have a page on this site showing the work itself.
+ *
+ * A private project publishes no repo link, and some have no website either,
+ * which leaves the detail page as a description with nowhere to go — exactly
+ * the shape `hasIndexablePage` filters out of the sitemap. Where a showcase
+ * page exists on this site, this points the detail page at it.
+ *
+ * Locale-relative, so callers join it to their own locale prefix. Kept here
+ * rather than as a slug check inside the page for the same reason
+ * APP_CATEGORY lives here: one map beats a conditional copied per call site.
+ */
+export const PROJECT_SHOWCASE: Record<string, string> = {
+  studios: '/studio',
+}
+
+/**
  * Is there anything on this project's page beyond the blurb?
  *
  * Every project gets a page, but a handful are a name, two lines of
@@ -40,14 +56,24 @@ export function projectHref(slug: string, locale: string): string {
  * just aren't advertised as pages worth ranking. Note the code link follows
  * the Private rule: a private repo's URL is withheld from the page, so it
  * cannot count as something the page offers.
+ *
+ * A showcase page counts too, and for the same reason the rest of this list
+ * does: "nowhere to go" stops being true the moment the page carries a link
+ * to a substantial page of its own. This is what un-thins `studios`, whose
+ * work is private and therefore had no other way to qualify.
  */
 export function hasIndexablePage(
-  project: Pick<Project, 'screenshot' | 'website' | 'github' | 'playStore' | 'private'>,
+  project: Pick<Project, 'slug' | 'screenshot' | 'website' | 'github' | 'playStore' | 'private'>,
   hasRelatedPost = false,
 ): boolean {
   const codeLink = project.private ? undefined : project.github
   return Boolean(
-    project.screenshot || project.website || project.playStore || codeLink || hasRelatedPost,
+    project.screenshot ||
+      project.website ||
+      project.playStore ||
+      codeLink ||
+      PROJECT_SHOWCASE[project.slug] ||
+      hasRelatedPost,
   )
 }
 
