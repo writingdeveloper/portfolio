@@ -3,6 +3,7 @@ import {
   getHireStats,
   hasIndexablePage,
   HIRE_CASE_STUDIES,
+  HOME_GROUPS,
   PROJECT_SHOWCASE,
   projectHref,
   sortProjectsFeaturedFirst,
@@ -173,5 +174,33 @@ describe('HIRE_CASE_STUDIES', () => {
       const p = (projectsData.projects as Project[]).find((x) => x.slug === slug)!
       expect(Boolean(p.website || p.playStore)).toBe(true)
     }
+  })
+})
+
+describe('HOME_GROUPS', () => {
+  // The home page resolves these slugs against the ledger and drops whatever
+  // does not match, so both kinds of drift are silent: a slug that no longer
+  // exists just disappears, and a project nobody listed never renders at all.
+  // Neither shows up as an error, a warning, or a visibly broken page — which
+  // is exactly why it has to fail here.
+  const grouped = Object.values(HOME_GROUPS).flat()
+  const ledger = (projectsData.projects as Project[]).map((p) => p.slug)
+
+  it('lists every project in the ledger', () => {
+    const listed = new Set(grouped)
+    const missing = ledger.filter((slug) => !listed.has(slug))
+    expect(missing, `not shown on the home page: ${missing.join(', ')}`).toEqual([])
+  })
+
+  it('names no project the ledger does not have', () => {
+    const known = new Set(ledger)
+    const ghosts = grouped.filter((slug) => !known.has(slug))
+    expect(ghosts, `named on the home page but not a project: ${ghosts.join(', ')}`).toEqual([])
+  })
+
+  it('puts each project in exactly one group', () => {
+    const seen = new Set<string>()
+    const dupes = grouped.filter((slug) => (seen.has(slug) ? true : (seen.add(slug), false)))
+    expect(dupes, `listed more than once: ${dupes.join(', ')}`).toEqual([])
   })
 })

@@ -379,6 +379,42 @@
       "featured": false
     },
     {
+      "name": "til-shorts",
+      "slug": "til-shorts",
+      "descriptionKo": "기록에 난관과 해결이 남아 있는 대상을 골라 영어권 유튜브 숏츠로 만드는 제작 파이프라인. 영상과 음성 자산은 전부 로컬 생성 팩토리(studios)에서 나오고, 이 레포는 자산을 복제하지 않고 id로만 참조하면서 지금 어느 단계인지, 무엇이 왜 탈락했는지라는 상태만 파일로 관리합니다. 후보에서 게시까지 7단계를 두고 단계마다 게이트를 걸었습니다. 출처 두 개 이상과 나레이션 문장 수만큼의 사실 대조표, 그리고 쓰지 않기로 한 숫자까지 적어야 사실 대조가 끝나고, 컷 평균 3초 이하와 라우드니스 -14 LUFS를 통과해야 검토로 넘어가며, 제작 승인만은 자동화하지 않고 사람이 누릅니다. 조립·컷·오버레이·자막·색보정·효과음·업로드를 Node 도구 사슬로 묶고, 공개 뒤에는 YouTube Data API로 실적을 스냅샷으로 받아 다음 편 설계의 근거로 씁니다. 첫 측정에서 조회의 98.8%가 숏츠 피드에서 오고 검색은 0.4%였다는 것, 그리고 더 많이 본 편이 오히려 첫 몇 초에서 시청자를 더 많이 잃었다는 부정 결과를 그대로 기록했습니다. 처음엔 r/todayilearned 소재로 시작했지만 고정 4막(대상, 난관, 발상 전환, 탄생)이 성립하려면 소재 자체에 난관과 해결이 있어야 한다는 걸 확인하고 소재 조건을 다시 정의했습니다.",
+      "descriptionEn": "A production pipeline that turns subjects whose engineering setbacks and fixes survive in the record into English-language YouTube Shorts. Every video and voice asset comes out of my local generation factory (studios); this repo never copies an asset, referencing them by id only, and owns just the state — what stage an episode is at, and what was rejected and why. Seven stages run from candidate to published, each behind a gate. Fact-checking is not done until there are two or more sources, a check table with a row per narration sentence, and a written list of the numbers I decided not to use; an episode reaches review only after clearing a three-second average cut length and -14 LUFS; and production approval is the one step never automated — a human presses it. Assembly, cuts, overlays, subtitles, grading, sound effects and upload are chained through Node tooling, and after publishing the YouTube Data API snapshots performance so the next episode is designed on evidence. The first measurement is recorded as it came: 98.8% of views arrived from the Shorts feed against 0.4% from search, and — a negative result kept rather than buried — the episode that won on views actually lost more viewers in its opening seconds. It started on r/todayilearned material, then redefined what qualifies once it was clear the fixed four acts (subject, setback, reframe, birth) only hold when the subject itself contains a setback and a fix.",
+      "techStack": [
+        "JavaScript",
+        "Node.js",
+        "FFmpeg",
+        "YouTube Data API",
+        "Model Context Protocol"
+      ],
+      "status": "active",
+      "private": true,
+      "featured": false
+    },
+    {
+      "name": "mv-analyzer",
+      "slug": "mv-analyzer",
+      "descriptionKo": "유튜브 뮤직비디오가 왜 묻히고 왜 퍼지는지를 100% 로컬로 정량 분석하는 개인 연구 프로젝트. 구독자 대비 조회수의 상위 25편과 하위 25편을 비교하는 극단군 설계로 보컬로이드 50편을 분석하고 K-pop 50편으로 재현했습니다. 분당 컷 수(23.9 대 5.5), 중앙 샷 길이(1.5초 대 6.2초), 썸네일 텍스트 유무(9/25 대 24/25) 같은 지표에서 효과크기를 Cliff's δ로 냈고, 가사 주제·감정·곡 길이·업로드 시각처럼 갈리지 않는 항목은 장르 관습으로 따로 적었습니다. 수집은 yt-dlp, 장면 경계는 PySceneDetect, 오디오는 librosa, 장면 의미 태깅과 하드섭 OCR은 로컬 VLM(Ollama qwen2.5-vl), 가사 받아쓰기는 demucs와 faster-whisper로 처리하고 16GB VRAM 안에서 GPU 단계가 겹치지 않도록 직렬화했습니다. 1차 결과 중 프리미어 공개가 유리하다는 항목은 같은 채널 안에서 55쌍을 짝지어 다시 분석하자 효과가 사라져서(Wilcoxon p=0.46), 채널 수준 교란으로 판정하고 자기 결과를 뒤집은 기록을 그대로 남겼습니다. IMRaD 논문 초안까지 나왔고 데이터 신뢰성 검증이 끝나면 공개할 예정입니다.",
+      "descriptionEn": "A personal research project that quantitatively analyzes why some YouTube music videos travel and others are buried, running 100% locally. An extreme-group design compares the top 25 and bottom 25 by views-per-subscriber across 50 Vocaloid MVs, replicated on 50 K-pop MVs. Effect sizes are reported as Cliff's δ for cuts per minute (23.9 vs 5.5), median shot length (1.5s vs 6.2s) and whether the thumbnail carries text (9/25 vs 24/25) — and the signals that do not separate the groups (lyric themes, sentiment, song length, upload time) are written up separately as genre convention rather than quietly dropped. Collection runs on yt-dlp, scene boundaries on PySceneDetect, audio on librosa, scene tagging and hard-sub OCR on a local VLM (Ollama qwen2.5-vl), and lyric transcription on demucs plus faster-whisper, with GPU stages serialized so they never overlap inside 16 GB of VRAM. One cycle-one finding — that a premiere release helps — vanished under a within-channel matched reanalysis of 55 pairs (Wilcoxon p=0.46), so it is recorded as channel-level confounding and the project publishes the reversal of its own result. An IMRaD paper draft is complete; the code opens once data reliability is further validated.",
+      "techStack": [
+        "Python",
+        "yt-dlp",
+        "PySceneDetect",
+        "OpenCV",
+        "librosa",
+        "Ollama",
+        "faster-whisper",
+        "demucs",
+        "FFmpeg"
+      ],
+      "status": "active",
+      "private": true,
+      "featured": false
+    },
+    {
       "name": "ai-4080-ops",
       "slug": "ai-4080-ops",
       "descriptionKo": "4080 AI 서버(Tailscale)에 SSH로 접속해 작업을 처리하는 운영 툴킷. PowerShell 코드를 EncodedCommand로 안전하게 원격 전송하는 래퍼, ssh 별칭 멱등 설치, GPU·포트·Funnel·Caddy 상태 점검 스크립트를 갖췄고 Claude Code 세션에서 바로 4080을 다루도록 설계했습니다. 내부용.",
