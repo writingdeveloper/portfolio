@@ -113,3 +113,25 @@ export function getHireStats(
  * A slug that stops resolving fails the test suite rather than the page.
  */
 export const HIRE_CASE_STUDIES = ['rentrights', 'healframe', 'argus-fusion'] as const
+
+/**
+ * How the home page's ALL WORK section groups the ledger, in render order.
+ *
+ * Only the first six of each list render (the rest collapse into "+N more"), so
+ * order is editorial, not incidental: appending new work to the end would have
+ * hidden the newest and strongest entries behind older ones. Each group leads
+ * with what a first-time reader should see — a shipped store game and the only
+ * Unreal title, the newest live product, the one public repo with measured
+ * results — and trails off into the long tail.
+ *
+ * It lives here rather than in the page for the reason APP_CATEGORY does, plus
+ * one the page could not offer: the home page silently drops a slug it cannot
+ * resolve and silently omits a project nobody listed, so the only thing that
+ * catches a drifted list is a test, and a test needs this importable without
+ * pulling in React.
+ */
+export const HOME_GROUPS: Record<'products' | 'games' | 'tools', string[]> = {
+  products: ['soursea', 'healframe', 'drymora', 'toolsmith', 'rentrights', 'receipt-tracker', 'fitcheck', 'zodiacly', 'transit-la', 'kindling', 'growgle', 'argus-fusion', 'observer-of-lines'],
+  games: ['coinrace', 'wishing-stones', 'hoverslam', 'normandy-cliff-defense', 'tantrum-tower', 'mini-games', 'unclog-la', 'youtube-rhythm-game', 'liminal-bestiary', 'studio-apartment'],
+  tools: ['citefirst', 'devdeck', 'studios', 'til-shorts', 'mv-analyzer', 'sitedeck', 'marketdeck', 'notro', 'unitwise', 'amazon-chat-archiver', 'sitesmith', 'kl125-controller', 'ai-4080-ops', 'nag-coach', 'piano-scribe', 'comfyui-web', 'shipwright', 'dont-touch'],
+}
