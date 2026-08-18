@@ -25,7 +25,6 @@
       "retroKo": "React Three Fiber와 Blender 파이프라인으로 burn 연출까지 만들고 Play Store 리스팅도 올렸지만 결국 삭제했습니다. 익명 감정 배출이라는 핵심만 남겨 shipwright 기반의 Kindling으로 다시 시작했습니다.",
       "retroEn": "I built the burn effect with React Three Fiber and a Blender pipeline and even put up a Play Store listing, but ultimately took it down. I kept only the core — anonymous emotional release — and restarted as Kindling on the shipwright starter.",
       "techStack": ["TypeScript", "Turborepo", "Next.js", "Expo", "Three.js", "React Three Fiber"],
-      "website": "https://minddump-seven.vercel.app",
       "supersededBy": "kindling",
       "private": true
     },
