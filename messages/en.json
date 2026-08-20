@@ -221,6 +221,45 @@
       "hire": "Work with me"
     }
   },
+  "privacy": {
+    "title": "Privacy Policy",
+    "description": "What this site collects, who collects it, and how to switch it off.",
+    "metaTitle": "Privacy Policy",
+    "metaDescription": "How writingdeveloper.blog handles analytics, advertising and comment data through Google Analytics, Google AdSense and giscus, and how to opt out.",
+    "updatedLabel": "LAST UPDATED",
+    "updated": "20 August 2026",
+    "intro": "This site has no accounts, no sign-up and no contact form, so it asks you for nothing directly. Everything described below is collected by third-party services the site loads.",
+    "direct": {
+      "heading": "What I collect directly",
+      "body": "Nothing. There is no login, no newsletter, no form and no database of visitors. I never see your name, email address or postal address through this site."
+    },
+    "analytics": {
+      "heading": "Analytics",
+      "body": "Google Analytics 4 uses cookies to record page views, referrers, approximate location at country level, and which outbound links get clicked. Vercel Analytics and Speed Insights record loading performance without cookies and without identifying you.",
+      "idLabel": "MEASUREMENT ID"
+    },
+    "ads": {
+      "heading": "Advertising",
+      "body": "This site participates in Google AdSense. Third-party vendors, including Google, use cookies to serve ads based on your prior visits to this site or other sites. Google's use of advertising cookies enables it and its partners to serve ads to you based on your visit to this site and/or other sites on the internet. You can opt out of personalised advertising in <ads>Google Ads Settings</ads>, or opt out of third-party vendors' use of cookies at <aboutads>aboutads.info</aboutads>.",
+      "idLabel": "PUBLISHER ID"
+    },
+    "comments": {
+      "heading": "Comments",
+      "body": "Blog posts carry a comment box powered by <giscus>giscus</giscus>. Comments are stored as GitHub Discussions in the public repository writingdeveloper/portfolio. Leaving one requires signing in to GitHub and is handled entirely by GitHub under <policy>their privacy policy</policy>. Reading a page never requires an account."
+    },
+    "hosting": {
+      "heading": "Hosting",
+      "body": "The site runs on Vercel, which keeps standard server logs including IP addresses for security and abuse prevention."
+    },
+    "choices": {
+      "heading": "Your choices",
+      "body": "Blocking cookies in your browser, or using any content blocker, stops the analytics and advertising scripts entirely. Nothing on this site breaks if you do."
+    },
+    "contact": {
+      "heading": "Questions",
+      "body": "Email me and I will answer."
+    }
+  },
   "accessibility": {
     "toggleMenu": "Toggle menu",
     "toggleTheme": "Toggle theme",
@@ -248,7 +287,8 @@
     "tags": "Tags"
   },
   "footer": {
-    "copyright": "All rights reserved."
+    "copyright": "All rights reserved.",
+    "privacy": "Privacy"
   },
   "play": {
     "title": "Explore",

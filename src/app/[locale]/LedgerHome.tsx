@@ -309,9 +309,18 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
           </div>
           <div className="mt-8 flex flex-col gap-2 border-t pt-6 sm:flex-row sm:items-center sm:justify-between" style={{ borderColor: BORDER }}>
             <span className="ledger-mono text-xs" style={{ color: DIM }}>© 2026 WRITINGDEVELOPER · LEDGER NO. 001</span>
-            <Link href="/play" className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80" style={{ color: MUTED }}>
-              EXPLORE 3D →
-            </Link>
+            {/* The immersive home renders without the site Footer, so the
+                policy link has to be repeated here — AdSense requires it to
+                be reachable from every page, and this is the likeliest
+                landing page of the lot. */}
+            <div className="flex items-center gap-5">
+              <Link href="/privacy" className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80" style={{ color: MUTED }}>
+                PRIVACY
+              </Link>
+              <Link href="/play" className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80" style={{ color: MUTED }}>
+                EXPLORE 3D →
+              </Link>
+            </div>
           </div>
         </div>
       </footer>
