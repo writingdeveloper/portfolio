@@ -188,11 +188,11 @@
       "type": "project"
     },
     {
-      "date": "2024 - 2026",
-      "titleKo": "ItemBox — 이커머스 SaaS 개발",
-      "titleEn": "ItemBox — E-commerce SaaS",
-      "descriptionKo": "이커머스 셀러용 멀티서비스 SaaS 개발에 참여. React 프론트엔드와 NestJS 백엔드, Shopify·Cafe24 마켓 연동, 구독 결제, OCR·AI 이미지 도구를 구현.",
-      "descriptionEn": "Contributed to a multi-service e-commerce SaaS for online sellers — React frontend and NestJS backend, Shopify/Cafe24 marketplace integration, subscription billing, and OCR/AI image tooling.",
+      "date": "2021 - 2026",
+      "titleKo": "ItemBox CTO · 이커머스 SaaS",
+      "titleEn": "ItemBox — CTO, E-commerce SaaS",
+      "descriptionKo": "5년 2개월간 CTO로 AI 기반 이커머스·드롭시핑 플랫폼의 기술 전반을 책임졌습니다. API 모듈 18개 이상의 NestJS 백엔드와 React 프론트엔드를 올리고, 상품 콘텐츠 자동 생성에 OpenAI와 Replicate를, 구독 결제에 Stripe를 붙였습니다. Shopify·Cafe24·Amazon·Taobao·AliExpress 멀티마켓 재고 동기화와 대리구매 인프라를 구축했고, 아키텍처부터 배포까지 소유하며 개발 워크플로와 기술 방향을 이끌었습니다.",
+      "descriptionEn": "As CTO for five years and two months, I owned the full technical operation of an AI-powered e-commerce and dropshipping platform. I built a NestJS backend of 18+ API modules behind a React frontend, integrated OpenAI and Replicate for automated product-content generation and Stripe for subscription billing, and shipped multi-marketplace inventory sync across Shopify, Cafe24, Amazon, Taobao and AliExpress plus proxy-purchasing infrastructure — owning architecture through deployment while leading developer workflows and technical direction.",
       "type": "work"
     }
   ]
