@@ -43,3 +43,6 @@ next-env.d.ts
 # worktrees
 .worktrees/
 .superpowers/
+
+# local agent permissions/state
+.claude/settings.local.json

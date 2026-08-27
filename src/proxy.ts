@@ -46,7 +46,7 @@ export default function proxy(request: NextRequest) {
   // Speed Insights inject same-origin /_vercel/*/script.js tags at runtime
   // without nonces, which strict-dynamic would block. 'self' + nonce still
   // blocks any inline / cross-origin script injection we care about.
-  // Google AdSense (account super2451894) + Google Analytics gtag.js.
+  // Google AdSense + Google Analytics gtag.js.
   // AdSense dynamically injects further ad scripts at runtime from these Google
   // ad origins; because we deliberately avoid 'strict-dynamic' (see below), each
   // origin a script can load from must be allowlisted explicitly. This is a

@@ -2,7 +2,7 @@ import Script from 'next/script'
 import { ADSENSE_CLIENT } from '@/lib/constants'
 
 /**
- * Google AdSense loader (account: super2451894@gmail.com).
+ * Google AdSense loader for the configured publisher client.
  *
  * Loaded with next/script `afterInteractive` so the heavy adsbygoogle.js tag
  * is fetched/executed AFTER hydration instead of competing for the main thread

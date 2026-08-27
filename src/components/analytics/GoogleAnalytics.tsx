@@ -14,7 +14,7 @@ import { GA_MEASUREMENT_ID } from '@/lib/constants'
  * allowlisted in proxy.ts, so the external script loads with or without a nonce.
  *
  * Renders nothing until GA_MEASUREMENT_ID is set (NEXT_PUBLIC_GA_ID), so the
- * site ships safely before the GA4 property (sihyeongdev@gmail.com) exists.
+ * site ships safely when no GA4 property is configured.
  */
 export function GoogleAnalytics({ nonce }: { nonce?: string }) {
   if (!GA_MEASUREMENT_ID) return null
