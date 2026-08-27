@@ -40,14 +40,17 @@ export async function GET(
     return new NextResponse('Not found', { status: 404 })
   }
 
+  // The route's content files are explicitly bundled by outputFileTracingIncludes
+  // in next.config.ts, so Turbopack must not trace this validated runtime path
+  // back to the repository root. Keep the ignore paired with that config.
   // Size guard + access->read race handling
   let fileBuffer: Buffer
   try {
-    const stats = await fs.stat(filePath)
+    const stats = await fs.stat(/* turbopackIgnore: true */ filePath)
     if (stats.size > MAX_BYTES) {
       return new NextResponse('Payload too large', { status: 413 })
     }
-    fileBuffer = await fs.readFile(filePath)
+    fileBuffer = await fs.readFile(/* turbopackIgnore: true */ filePath)
   } catch {
     return new NextResponse('Not found', { status: 404 })
   }

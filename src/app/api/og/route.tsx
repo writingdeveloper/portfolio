@@ -1,7 +1,6 @@
 import { ImageResponse } from 'next/og'
 import type { NextRequest } from 'next/server'
 
-export const runtime = 'edge'
 
 // Clamp untrusted query input before it reaches ImageResponse: caps the work
 // the renderer does (no multi-MB strings) and strips control chars / bidi
