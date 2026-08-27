@@ -32,8 +32,8 @@
     "next": "^16.2.6",
     "next-intl": "^4.9.2",
     "next-mdx-remote": "^6.0.0",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "reading-time": "^1.5.0",
     "shiki": "^3.22.0",
     "three": "^0.183.2"
