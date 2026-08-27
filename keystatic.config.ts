@@ -118,6 +118,34 @@ export default config({
             }),
             website: fields.text({ label: '웹사이트 URL' }),
             github: fields.text({ label: 'GitHub URL' }),
+            playStore: fields.text({ label: 'Google Play URL' }),
+            succeeds: fields.text({
+              label: '이어받은 묘비 슬러그',
+              description: 'graveyard의 이전 프로젝트 slug. 없으면 비워 두세요.',
+            }),
+            screenshot: fields.text({
+              label: '실제 제품 스크린샷 경로',
+              description: '예: /images/projects/juicebar.webp. 생성 이미지가 아닌 실제 UI만 사용합니다.',
+            }),
+            screenshotAltKo: fields.text({ label: '스크린샷 대체 텍스트 (한국어)', multiline: true }),
+            screenshotAltEn: fields.text({ label: '스크린샷 대체 텍스트 (English)', multiline: true }),
+            updatedAt: fields.date({ label: '최근 확인일 (선택)' }),
+            caseStudy: fields.object(
+              {
+                problemKo: fields.text({ label: '문제 (한국어)', multiline: true }),
+                problemEn: fields.text({ label: 'Problem (English)', multiline: true }),
+                decisionKo: fields.text({ label: '결정 (한국어)', multiline: true }),
+                decisionEn: fields.text({ label: 'Decision (English)', multiline: true }),
+                evidenceKo: fields.text({ label: '근거 (한국어)', multiline: true }),
+                evidenceEn: fields.text({ label: 'Evidence (English)', multiline: true }),
+                resultKo: fields.text({ label: '결과 (한국어)', multiline: true }),
+                resultEn: fields.text({ label: 'Result (English)', multiline: true }),
+              },
+              {
+                label: '케이스 스터디',
+                description: '대표 작업의 문제 → 결정 → 근거 → 결과. 사용하지 않는 프로젝트는 비워 둡니다.',
+              }
+            ),
             private: fields.checkbox({ label: '비공개 (Private)' }),
             featured: fields.checkbox({ label: '메인 페이지 노출' }),
           }),
@@ -164,6 +192,10 @@ export default config({
             }),
             website: fields.text({ label: '웹사이트 URL (선택)' }),
             github: fields.text({ label: 'GitHub URL (선택)' }),
+            supersededBy: fields.text({
+              label: '이어진 현재 프로젝트 슬러그',
+              description: '이 묘비가 현재 어떤 프로젝트로 이어졌는지 기록합니다.',
+            }),
             private: fields.checkbox({ label: '비공개 (Private)' }),
           }),
           {
