@@ -67,7 +67,7 @@ Add a bilingual JuiceBar build note to the blog if it can be sourced entirely fr
 
 ## 8. Build, formatting, and CI health
 
-- Fix the Windows `format:check` failure without mass-reformatting unrelated files. The root cause is CRLF checkout behavior (`core.autocrlf=true`) combined with Prettier's default LF expectation; make the check platform-tolerant.
+- Fix the Windows `format:check` failure at its actual root cause. Verification showed CRLF was not sufficient to explain the failures: a representative file still failed with `--end-of-line auto` because the stored TypeScript/TSX was genuinely outside the current Prettier rules. Normalize `src/**/*.{ts,tsx}` once in a dedicated mechanical commit, then set `endOfLine: auto` so both LF CI checkouts and Windows CRLF checkouts stay valid.
 - Add `format:check` and `untranslated` to CI after the format check is reliable.
 - Update stale CI commentary that claims 119 tests.
 - Remove Next.js 16.3's deprecated Edge Runtime warning from the OG route by using the supported Node runtime, verifying OG behavior still builds.
@@ -92,3 +92,8 @@ Refresh `README.md` to reflect the current site: Builder's Ledger, projects, gra
 - `format:check`, `untranslated`, lint, typecheck, tests, hero verification, audit, and production build all pass.
 - Production build no longer emits the Edge Runtime deprecation or whole-project dynamic filesystem tracing warnings targeted by this change.
 - README describes the current product surface.
+
+
+## Verification correction (2026-08-27)
+
+The initial CRLF-only hypothesis was falsified before implementation: `src/lib/constants.ts` still failed Prettier with `--end-of-line auto`, and its diff showed a real line-wrapping mismatch. The repository was therefore normalized once with the configured formatter. A synthetic CRLF copy of the normalized file then passed with `endOfLine: auto`. Separately, the first post-change build exposed a Next.js 16.3.0 `Expected workStore to be initialized` invariant; the same code built successfully on 16.3.3, so the fix is the in-range patch update rather than an application workaround.

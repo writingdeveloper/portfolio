@@ -25,11 +25,11 @@
 
 **Produces:** `getPortfolioStats(projects)`, `SELECTED_WORK`, optional `Project.caseStudy`, optional `Project.updatedAt`.
 
-- [ ] Add failing tests for truthful total/public/Play counts, selected-work uniqueness, five exact selected slugs, and locale-aware case-study extraction.
-- [ ] Run `npm test -- src/lib/__tests__/projects.test.ts`; confirm failure is caused by missing interfaces.
-- [ ] Implement minimal helpers/constants/types.
-- [ ] Re-run focused tests; confirm pass.
-- [ ] Commit.
+- [x] Add failing tests for truthful total/public/Play counts, selected-work uniqueness, five exact selected slugs, and locale-aware case-study extraction.
+- [x] Run `npm test -- src/lib/__tests__/projects.test.ts`; confirm failure is caused by missing interfaces.
+- [x] Implement minimal helpers/constants/types.
+- [x] Re-run focused tests; confirm pass.
+- [x] Commit.
 
 ### Task 2: JuiceBar and selected evidence
 
@@ -37,11 +37,11 @@
 
 **Produces:** exactly one new ledger row (`juicebar`) plus real screenshots/evidence for selected work where available.
 
-- [ ] Add a failing integrity test expecting project count 42, `juicebar`, public GitHub/screenshot/case-study fields, and no unexpected new slug.
-- [ ] Run the focused test; confirm it fails on missing JuiceBar.
-- [ ] Copy real local screenshots only; add bilingual JuiceBar data and selected-work evidence from repository documentation.
-- [ ] Add trustworthy `updatedAt` values only where local Git dates resolve confidently.
-- [ ] Re-run focused tests and commit.
+- [x] Add a failing integrity test expecting project count 42, `juicebar`, public GitHub/screenshot/case-study fields, and no unexpected new slug.
+- [x] Run the focused test; confirm it fails on missing JuiceBar.
+- [x] Copy real local screenshots only; add bilingual JuiceBar data and selected-work evidence from repository documentation.
+- [x] Add trustworthy `updatedAt` values only where local Git dates resolve confidently.
+- [x] Re-run focused tests and commit.
 
 ### Task 3: Homepage, project IA, and hire alignment
 
@@ -49,20 +49,20 @@
 
 **Consumes:** `getPortfolioStats`, `SELECTED_WORK`, `HIRE_CASE_STUDIES`.
 
-- [ ] Add failing tests for `HIRE_CASE_STUDIES = ['citefirst','studios','soursea']` and selected/full-ledger partitioning.
-- [ ] Run focused tests; confirm failure.
-- [ ] Make homepage stats truthful (`BUILDS`, public/live destinations, Play, Featured), derive hero count, and add `/hire` to primary nav.
-- [ ] Render `/projects` as Selected Work first, then all remaining projects as Full Ledger without deleting entries.
-- [ ] Update bilingual labels, run focused tests + typecheck, and commit.
+- [x] Add failing tests for `HIRE_CASE_STUDIES = ['citefirst','studios','soursea']` and selected/full-ledger partitioning.
+- [x] Run focused tests; confirm failure.
+- [x] Make homepage stats truthful (`BUILDS`, public/live destinations, Play, Featured), derive hero count, and add `/hire` to primary nav.
+- [x] Render `/projects` as Selected Work first, then all remaining projects as Full Ledger without deleting entries.
+- [x] Update bilingual labels, run focused tests + typecheck, and commit.
 
 ### Task 4: Evidence sections on project details
 
 **Files:** `src/app/[locale]/projects/[slug]/page.tsx`, `src/lib/projects.ts`, `messages/ko.json`, `messages/en.json`, focused tests.
 
-- [ ] Add a failing test proving four case-study sections are returned in Problem/Decision/Evidence/Result order and absent for ordinary projects.
-- [ ] Run focused test; confirm failure.
-- [ ] Implement a locale-aware helper and render the four sections only when `caseStudy` exists.
-- [ ] Run focused tests + typecheck and commit.
+- [x] Add a failing test proving four case-study sections are returned in Problem/Decision/Evidence/Result order and absent for ordinary projects.
+- [x] Run focused test; confirm failure.
+- [x] Implement a locale-aware helper and render the four sections only when `caseStudy` exists.
+- [x] Run focused tests + typecheck and commit.
 
 ### Task 5: Newsletter honesty and JuiceBar build note
 
@@ -70,28 +70,28 @@
 
 **Produces:** no fake email capture and a bilingual post linked with `project: juicebar`.
 
-- [ ] Remove the newsletter import/render path; delete the component if unused.
-- [ ] Add Korean and English JuiceBar build notes using only repository-documented facts and existing MDX conventions.
-- [ ] Run `npm run untranslated` plus MDX/post-link tests; resolve schema errors without inventing facts.
-- [ ] Confirm `grep -R "Newsletter" src/app` returns no public route usage and commit.
+- [x] Remove the newsletter import/render path; delete the component if unused.
+- [x] Add Korean and English JuiceBar build notes using only repository-documented facts and existing MDX conventions.
+- [x] Run `npm run untranslated` plus MDX/post-link tests; resolve schema errors without inventing facts.
+- [x] Confirm `grep -R "Newsletter" src/app` returns no public route usage and commit.
 
 ### Task 6: Format/build warning root causes
 
 **Files:** `.prettierrc`, `src/app/api/og/route.tsx`, `src/app/api/content-image/[...path]/route.ts`, `src/lib/content-image-path.ts` if needed, `src/lib/__tests__/content-image-path.test.ts`.
 
-- [ ] Reproduce Windows `format:check` failure and the Edge Runtime / dynamic filesystem tracing build warnings.
-- [ ] Verify CRLF is the format-check root cause on a representative file; configure platform-tolerant EOL checking without mass reformat.
-- [ ] If content-path contract changes, write a failing regression test first; then statically scope filesystem access under `content/posts` while preserving traversal/MIME guards.
-- [ ] Switch OG route from deprecated Edge runtime to supported Node runtime.
-- [ ] Run format check, focused content-image tests, and build; verify both targeted warning classes are absent; commit.
+- [x] Reproduce Windows `format:check` failure and the Edge Runtime / dynamic filesystem tracing build warnings.
+- [x] Test the CRLF hypothesis on a representative file. It was falsified: genuine Prettier differences remained. Normalize the checked source once and configure `endOfLine: auto`; verify a synthetic CRLF copy also passes.
+- [x] Preserve the content-path contract and tests; use the existing `outputFileTracingIncludes` plus a Turbopack trace-ignore on the already validated runtime path.
+- [x] Switch OG route from deprecated Edge runtime to supported Node runtime.
+- [x] Run format check, focused content-image tests, and build; verify both targeted warning classes are absent. Next 16.3.0 exposed an unrelated framework invariant; verify it disappears on the in-range 16.3.3 patch.
 
 ### Task 7: CI, safe dependency refresh, README
 
 **Files:** `.github/workflows/ci.yml`, `package-lock.json`/package metadata within declared ranges, `README.md`.
 
-- [ ] Add `format:check` and `untranslated` CI steps and remove stale hard-coded test-count commentary.
-- [ ] Run `npm update` without force/major migrations; run `npm audit` and keep zero vulnerabilities.
-- [ ] Refresh README for Builder's Ledger, projects/graveyard/blog/hire/studio/play, Keystatic, SEO/LLM endpoints, analytics, and full verification commands.
+- [x] Add `format:check` and `untranslated` CI steps and remove stale hard-coded test-count commentary.
+- [x] Run `npm update` without force/major migrations; run `npm audit` and keep zero vulnerabilities.
+- [x] Refresh README for Builder's Ledger, projects/graveyard/blog/hire/studio/play, Keystatic, SEO/LLM endpoints, analytics, and full verification commands.
 - [ ] Run typecheck, lint, tests, hero verification, untranslated, format check, audit, and build; commit.
 
 ### Task 8: Final scope and regression audit
