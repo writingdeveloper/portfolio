@@ -164,7 +164,6 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
               href={project.playStore}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={t('viewOnPlayStore')}
               className="inline-flex items-center gap-2 rounded-lg bg-black px-3 py-1.5 text-white border border-white/15 hover:bg-neutral-800 transition-colors"
             >
               <GooglePlayIcon size={16} />

@@ -37,7 +37,7 @@ export async function PlaySemanticFallback({ projects, skills, timeline, posts, 
   }
 
   return (
-    <div className="relative h-screen w-full overflow-y-auto bg-[#06060f] text-[#e6e6f0]">
+    <main className="relative h-screen w-full overflow-y-auto bg-[#06060f] text-[#e6e6f0]">
       <div className="mx-auto max-w-3xl px-6 py-16 sm:py-20">
         <Link
           href="/"
@@ -137,6 +137,6 @@ export async function PlaySemanticFallback({ projects, skills, timeline, posts, 
           </ul>
         </section>
       </div>
-    </div>
+    </main>
   )
 }

@@ -31,7 +31,7 @@
   --bg-elevated-hover: #26262b;
   --text-primary: #f2f0e9;
   --text-secondary: #a3a399;
-  --text-muted: #6f6f66;
+  --text-muted: #7e7e76;
   --text-emphasis: #ffffff;
   --border-default: #26262b;
   --border-hover: #383840;
@@ -73,7 +73,7 @@
   --bg-elevated-hover: #e1dfd2;
   --text-primary: #17170f;
   --text-secondary: #55554a;
-  --text-muted: #7a7a6d;
+  --text-muted: #6d6d65;
   --text-emphasis: #0a0a0b;
   --border-default: #ddd9cb;
   --border-hover: #c9c5b4;
@@ -249,7 +249,7 @@ html {
   --l-bg: #0a0a0b;
   --l-ink: #f2f0e9;
   --l-muted: #8c8c82;
-  --l-dim: #5a5a54;
+  --l-dim: #7e7e76;
   --l-accent: #c6f24e;
   --l-card: #121214;
   --l-elev: #1a1a1d;

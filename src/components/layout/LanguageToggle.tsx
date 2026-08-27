@@ -20,7 +20,7 @@ export function LanguageToggle() {
     <button
       onClick={toggle}
       className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors text-sm"
-      aria-label={ta('switchLanguage')}
+      aria-label={`${ta('switchLanguage')} ${locale.toUpperCase()}`}
     >
       <Globe size={16} aria-hidden="true" />
       <span className="uppercase font-medium">{locale}</span>

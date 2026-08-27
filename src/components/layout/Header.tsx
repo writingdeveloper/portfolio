@@ -22,6 +22,7 @@ export function Header() {
   const ta = useTranslations('accessibility')
   const [mobileOpen, setMobileOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
 
   const closeMobile = useCallback(() => setMobileOpen(false), [])
 
@@ -29,6 +30,7 @@ export function Header() {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape' && mobileOpen) {
         closeMobile()
+        menuButtonRef.current?.focus()
       }
     }
     document.addEventListener('keydown', handleKeyDown)
@@ -97,6 +99,7 @@ export function Header() {
           <LanguageToggle />
           <ThemeToggle />
           <button
+            ref={menuButtonRef}
             className="lg:hidden p-2.5 rounded-lg hover:bg-[var(--bg-elevated)] transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={ta('toggleMenu')}
