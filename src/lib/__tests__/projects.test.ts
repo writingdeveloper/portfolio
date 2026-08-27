@@ -1,10 +1,12 @@
 import { describe, it, expect } from 'vitest'
 import {
   getHireStats,
+  getPortfolioStats,
   hasIndexablePage,
   HIRE_CASE_STUDIES,
   HOME_GROUPS,
   PROJECT_SHOWCASE,
+  SELECTED_WORK,
   projectHref,
   sortProjectsFeaturedFirst,
 } from '../projects'
@@ -202,5 +204,23 @@ describe('HOME_GROUPS', () => {
     const seen = new Set<string>()
     const dupes = grouped.filter((slug) => (seen.has(slug) ? true : (seen.add(slug), false)))
     expect(dupes, `listed more than once: ${dupes.join(', ')}`).toEqual([])
+  })
+})
+
+
+describe('portfolio selection and truthful stats', () => {
+  it('counts builds, public destinations, Play Store listings, and featured work separately', () => {
+    const sample = [
+      { website: 'https://a.example.com', playStore: undefined, featured: true },
+      { website: undefined, playStore: 'https://play.google.com/store/apps/details?id=b', featured: false },
+      { website: 'https://c.example.com', playStore: 'https://play.google.com/store/apps/details?id=c', featured: true },
+      { website: undefined, playStore: undefined, featured: false },
+    ]
+    expect(getPortfolioStats(sample)).toEqual({ builds: 4, public: 3, playStore: 2, featured: 2 })
+  })
+
+  it('keeps selected work to five complementary projects in editorial order', () => {
+    expect(SELECTED_WORK).toEqual(['soursea', 'citefirst', 'juicebar', 'devdeck', 'unclog-la'])
+    expect(new Set(SELECTED_WORK).size).toBe(5)
   })
 })

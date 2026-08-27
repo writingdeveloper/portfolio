@@ -1,5 +1,25 @@
 import type { Project } from '@/types/content'
 
+export const SELECTED_WORK = ['soursea', 'citefirst', 'juicebar', 'devdeck', 'unclog-la'] as const
+
+export interface PortfolioStats {
+  builds: number
+  public: number
+  playStore: number
+  featured: number
+}
+
+export function getPortfolioStats(
+  projects: Pick<Project, 'website' | 'playStore' | 'featured'>[],
+): PortfolioStats {
+  return {
+    builds: projects.length,
+    public: projects.filter((project) => project.website || project.playStore).length,
+    playStore: projects.filter((project) => project.playStore).length,
+    featured: projects.filter((project) => project.featured).length,
+  }
+}
+
 /** featured 프로젝트를 앞으로 정렬한다. 그룹 내 원래 순서는 보존(안정 정렬). */
 export function sortProjectsFeaturedFirst(projects: Project[]): Project[] {
   return [...projects].sort((a, b) => Number(b.featured) - Number(a.featured))

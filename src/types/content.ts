@@ -1,3 +1,14 @@
+export interface ProjectCaseStudy {
+  problemKo: string
+  problemEn: string
+  decisionKo: string
+  decisionEn: string
+  evidenceKo: string
+  evidenceEn: string
+  resultKo: string
+  resultEn: string
+}
+
 export interface Project {
   name: string
   slug: string
@@ -16,6 +27,10 @@ export interface Project {
   screenshotAltKo?: string
   screenshotAltEn?: string
   private?: boolean
+  /** Last verified project activity date (YYYY-MM-DD) when known. */
+  updatedAt?: string
+  /** Optional evidence-oriented detail copy for selected work. */
+  caseStudy?: ProjectCaseStudy
   featured: boolean
 }
 
