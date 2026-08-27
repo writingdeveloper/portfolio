@@ -162,7 +162,7 @@
   },
   "studio": {
     "title": "The Studio",
-    "description": "A personal generation factory for image, 3D, video, voice and music, running on one laptop. Claude calls the MCP tools itself, a machine gate screens the output, and an agent looks at the thumbnail and rules on it.",
+    "description": "A personal generation factory for image, 3D, video, voice, and music, with generation running on one RTX 4080 machine. Claude calls the MCP tools itself, a machine gate screens the output, and an agent looks at the thumbnail and rules on it. Development and control can happen from multiple machines; the generation runtime stays on the GPU host.",
     "metaTitle": "The Studio — a five-modality generation factory on local GPU",
     "metaDescription": "A personal generation factory for image, 3D, video, voice and music on a single RTX 4080. One generation run, with the machine's own record — gate metrics, seeds, and approve/reject verdicts — published exactly as it was written.",
     "badgeModalities": "5 modalities",
