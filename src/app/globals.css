@@ -9,8 +9,7 @@
 @theme inline {
   /* Builder's Ledger type system, applied site-wide: Pretendard (body/Korean),
      Bricolage Grotesque (display), Space Mono (ledger labels). */
-  --font-sans: var(--font-pretendard), var(--font-inter),
-    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+  --font-sans: var(--font-pretendard), ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
     'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
   --font-display: var(--font-bricolage), var(--font-pretendard), 'Bricolage Grotesque', sans-serif;
   --font-mono: var(--font-space-mono), ui-monospace, 'SFMono-Regular', Menlo, monospace;

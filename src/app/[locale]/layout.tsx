@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Inter, Bricolage_Grotesque, Space_Mono } from 'next/font/google'
+import { Bricolage_Grotesque, Space_Mono } from 'next/font/google'
 import { headers } from 'next/headers'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server'
@@ -15,13 +15,6 @@ import { GoogleAdSense } from '@/components/analytics/GoogleAdSense'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import { OutboundTracker } from '@/components/analytics/OutboundTracker'
 import '../globals.css'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-  adjustFontFallback: true,
-})
 
 // Noto Sans KR is gone. It was added (FOLIO-22) as *the* Korean face, before
 // the Builder's Ledger redesign put Pretendard ahead of it in the stack. Once
@@ -136,7 +129,7 @@ export default async function LocaleLayout({
         />
       </head>
       <body
-        className={`${inter.variable} ${bricolage.variable} ${spaceMono.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}
+        className={`${bricolage.variable} ${spaceMono.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}
       >
         <NextIntlClientProvider messages={messages}>
           {immersive ? (
