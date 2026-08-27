@@ -11,7 +11,6 @@ import { generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 import { Globe } from 'lucide-react'
 import { SearchBar } from '@/components/blog/SearchBar'
 import { Pagination } from '@/components/blog/Pagination'
-import { Newsletter } from '@/components/blog/Newsletter'
 import { Link } from '@/i18n/navigation'
 
 // Revalidate every hour — the blog list reads from module-level MDX cache
@@ -141,7 +140,6 @@ function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, c
           basePath="/blog"
           queryString={activeCategory ? `?category=${activeCategory}` : activeTag ? `?tag=${activeTag}` : ''}
         />
-        <Newsletter />
       </div>
     </PageTransition>
   )
