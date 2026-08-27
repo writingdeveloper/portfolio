@@ -144,9 +144,7 @@ describe('generateBreadcrumbJsonLd', () => {
 
 describe('generateFaqJsonLd', () => {
   it('wraps each FAQ as Question/Answer', () => {
-    const result = generateFaqJsonLd([
-      { question: 'Why?', answer: 'Because.' },
-    ])
+    const result = generateFaqJsonLd([{ question: 'Why?', answer: 'Because.' }])
     expect(result['@type']).toBe('FAQPage')
     expect(result.mainEntity[0]['@type']).toBe('Question')
     expect(result.mainEntity[0].acceptedAnswer.text).toBe('Because.')
@@ -160,7 +158,7 @@ describe('generateProjectListJsonLd', () => {
         { name: 'Alpha', description: 'First', url: 'https://alpha.dev', techStack: ['TypeScript', 'Next.js'] },
         { name: 'Beta', description: 'Second' },
       ],
-      'en',
+      'en'
     )
     expect(result['@type']).toBe('ItemList')
     expect(result.numberOfItems).toBe(2)
@@ -192,7 +190,7 @@ describe('generateProjectListJsonLd', () => {
           techStack: ['Next.js'],
         },
       ],
-      'en',
+      'en'
     )
     // The item is a MobileApplication|CreativeWork union; widen to read app fields.
     const item = result.itemListElement[0].item as Record<string, unknown>
@@ -207,7 +205,7 @@ describe('generateProjectListJsonLd', () => {
   it('defaults applicationCategory to LifestyleApplication', () => {
     const result = generateProjectListJsonLd(
       [{ name: 'X', description: 'Y', playStore: 'https://play.google.com/store/apps/details?id=x' }],
-      'en',
+      'en'
     )
     const item = result.itemListElement[0].item as Record<string, unknown>
     expect(item.applicationCategory).toBe('LifestyleApplication')
@@ -221,7 +219,7 @@ describe('generateProjectListJsonLd', () => {
   it('includes an absolute image url on the item when one is supplied', () => {
     const jsonLd = generateProjectListJsonLd(
       [{ name: 'A', description: 'd', image: 'https://example.com/images/projects/a.webp' }],
-      'ko',
+      'ko'
     )
     const item = (jsonLd.itemListElement[0] as { item: Record<string, unknown> }).item
     expect(item.image).toBe('https://example.com/images/projects/a.webp')
@@ -235,13 +233,15 @@ describe('generateProjectListJsonLd', () => {
 
   it('exposes the image as a screenshot on mobile app items', () => {
     const jsonLd = generateProjectListJsonLd(
-      [{
-        name: 'A',
-        description: 'd',
-        playStore: 'https://play.google.com/store/apps/details?id=x',
-        image: 'https://example.com/images/projects/a.webp',
-      }],
-      'ko',
+      [
+        {
+          name: 'A',
+          description: 'd',
+          playStore: 'https://play.google.com/store/apps/details?id=x',
+          image: 'https://example.com/images/projects/a.webp',
+        },
+      ],
+      'ko'
     )
     const item = (jsonLd.itemListElement[0] as { item: Record<string, unknown> }).item
     expect(item['@type']).toBe('MobileApplication')

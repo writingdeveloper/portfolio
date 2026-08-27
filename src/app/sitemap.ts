@@ -24,17 +24,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // 한국어 + 영어 정적 페이지 모두 등록
   const staticUrls = staticPages.flatMap((page) => {
-    const changeFrequency = page === '' || page === '/blog' ? 'daily' as const : 'monthly' as const
+    const changeFrequency = page === '' || page === '/blog' ? ('daily' as const) : ('monthly' as const)
     const priority =
       page === ''
         ? 1
         : page === '/blog'
-        ? 0.9
-        : page === '/projects' || page === '/hire' || page === '/studio'
-        ? 0.7
-        : page === '/play'
-        ? 0.6
-        : 0.5
+          ? 0.9
+          : page === '/projects' || page === '/hire' || page === '/studio'
+            ? 0.7
+            : page === '/play'
+              ? 0.6
+              : 0.5
     const alternates = {
       languages: {
         ko: `${SITE_URL}${page}`,
@@ -118,7 +118,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const allProjects = projectsData.projects as Project[]
   const postMap = buildProjectPostMap(
     [...koPosts, ...enPosts],
-    allProjects.map((p) => p.slug),
+    allProjects.map((p) => p.slug)
   )
   const projectUrls = allProjects
     .filter((project) => hasIndexablePage(project, postMap.has(project.slug)))

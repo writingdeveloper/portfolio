@@ -12,11 +12,7 @@
 
 /** Event names are sent to GA4 verbatim; they are what gets marked as a key
  *  event in the console, so they must stay stable once data starts landing. */
-export type OutboundEventName =
-  | 'demo_click'
-  | 'code_click'
-  | 'play_store_click'
-  | 'contact_click'
+export type OutboundEventName = 'demo_click' | 'code_click' | 'play_store_click' | 'contact_click'
 
 export interface OutboundEvent {
   name: OutboundEventName

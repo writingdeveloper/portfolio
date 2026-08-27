@@ -79,13 +79,7 @@ export function IntroSection({ name, role, scrollHint }: IntroSectionProps) {
       <OrbitalRings />
 
       <Float speed={1} rotationIntensity={0.05} floatIntensity={0.2}>
-        <Text
-          position={[0, 0.8, 0]}
-          fontSize={0.8}
-          color="#d4cce0"
-          anchorX="center"
-          anchorY="middle"
-        >
+        <Text position={[0, 0.8, 0]} fontSize={0.8} color="#d4cce0" anchorX="center" anchorY="middle">
           {name}
         </Text>
 
@@ -103,14 +97,7 @@ export function IntroSection({ name, role, scrollHint }: IntroSectionProps) {
 
       {/* Scroll hint - pulsing opacity */}
       <group>
-        <Text
-          ref={hintRef}
-          position={[0, -3, 0]}
-          fontSize={0.14}
-          color="#5a556b"
-          anchorX="center"
-          anchorY="middle"
-        >
+        <Text ref={hintRef} position={[0, -3, 0]} fontSize={0.14} color="#5a556b" anchorX="center" anchorY="middle">
           {scrollHint}
         </Text>
       </group>
@@ -122,10 +109,16 @@ export function IntroSection({ name, role, scrollHint }: IntroSectionProps) {
       </mesh>
 
       {/* Decorative dots — scattered around text */}
-      {([
-        [-3.5, 1.5, 0.01], [3.8, 0.5, 0.01], [-2.5, -1.2, 0.01], [4.2, -0.8, 0.01],
-        [-4.0, -0.3, 0.01], [2.8, 1.8, 0.01],
-      ] as [number, number, number][]).map(([x, y, z], i) => (
+      {(
+        [
+          [-3.5, 1.5, 0.01],
+          [3.8, 0.5, 0.01],
+          [-2.5, -1.2, 0.01],
+          [4.2, -0.8, 0.01],
+          [-4.0, -0.3, 0.01],
+          [2.8, 1.8, 0.01],
+        ] as [number, number, number][]
+      ).map(([x, y, z], i) => (
         <mesh key={`dot-${i}`} position={[x, y, z]}>
           <circleGeometry args={[0.015, 16]} />
           <meshBasicMaterial color="#4a4560" transparent opacity={0.4} />
@@ -149,13 +142,7 @@ export function IntroSection({ name, role, scrollHint }: IntroSectionProps) {
       </mesh>
 
       {/* Name glow (behind main text) */}
-      <Text
-        position={[0, 0.8, -0.02]}
-        fontSize={0.85}
-        color="#7b6f99"
-        anchorX="center"
-        anchorY="middle"
-      >
+      <Text position={[0, 0.8, -0.02]} fontSize={0.85} color="#7b6f99" anchorX="center" anchorY="middle">
         {name}
       </Text>
     </group>

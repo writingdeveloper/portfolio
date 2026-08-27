@@ -165,9 +165,7 @@ export function getAllPosts(locale: string = 'ko'): PostMeta[] {
   const map = getOrLoadPosts(locale)
   return Array.from(map.values())
     .map((p) => p.meta)
-    .sort(
-      (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-    )
+    .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
 }
 
 export function getPostMeta(slug: string, locale: string = 'ko'): PostMeta | null {
@@ -181,8 +179,7 @@ export function getPost(slug: string, locale: string = 'ko'): Post | null {
   // Rewrite relative image paths to the content-image API route
   const rewrittenContent = cached.content.replace(
     /!\[([^\]]*)\]\((?!https?:\/\/|\/)([\w\-. ]+\.(png|jpg|jpeg|gif|webp|avif))\)/gi,
-    (_, alt, filename) =>
-      `![${alt}](/api/content-image/${locale}/${slug}/${encodeURIComponent(filename)})`
+    (_, alt, filename) => `![${alt}](/api/content-image/${locale}/${slug}/${encodeURIComponent(filename)})`
   )
 
   return {
@@ -248,18 +245,12 @@ export function extractHeadings(content: string): TocItem[] {
 }
 
 export function getCategoryLabel(value: string, locale: string = 'en'): string {
-  const found = (categoriesData.categories as CategoryData[]).find(
-    (c) => c.value === value
-  )
+  const found = (categoriesData.categories as CategoryData[]).find((c) => c.value === value)
   if (!found) return value
   return locale === 'ko' ? found.labelKo || found.label : found.label
 }
 
-export function getRelatedPosts(
-  slug: string,
-  locale: string,
-  limit: number = 3
-): PostMeta[] {
+export function getRelatedPosts(slug: string, locale: string, limit: number = 3): PostMeta[] {
   const map = getOrLoadPosts(locale)
   const current = map.get(slug)?.meta
   if (!current) return []

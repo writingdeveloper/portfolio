@@ -37,7 +37,9 @@ export function Header() {
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [mobileOpen])
 
   useEffect(() => {
@@ -65,7 +67,9 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-[var(--border-subtle)] bg-[var(--header-bg)] backdrop-blur-md transition-colors duration-200">
       <div className="max-w-[1400px] mx-auto px-6 sm:px-10 h-16 flex items-center justify-between">
         <Link href="/" className="ledger-mono text-sm font-bold tracking-[0.15em] flex items-center gap-1.5">
-          <span className="text-[var(--accent-text)]" aria-hidden="true">▪</span>
+          <span className="text-[var(--accent-text)]" aria-hidden="true">
+            ▪
+          </span>
           WRITINGDEVELOPER
           <span className="ledger-cursor" aria-hidden="true" />
         </Link>

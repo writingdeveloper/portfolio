@@ -39,9 +39,7 @@ export function PostCard({ post, categoryLabel, priority = false }: PostCardProp
         <div className="p-4 sm:p-5">
           <div className="flex items-center justify-between mb-2">
             {post.category && (
-              <span className="text-xs text-[var(--accent-text)] font-medium">
-                {categoryLabel || post.category}
-              </span>
+              <span className="text-xs text-[var(--accent-text)] font-medium">{categoryLabel || post.category}</span>
             )}
             {post.hasTranslation && (
               <span className="flex items-center gap-1 text-[10px] px-1.5 py-0.5 rounded-full bg-[var(--accent-bg)] text-[var(--accent-text)] border border-[var(--accent-border)]">
@@ -53,12 +51,12 @@ export function PostCard({ post, categoryLabel, priority = false }: PostCardProp
           <h3 className="font-semibold text-lg mb-2 group-hover:text-[var(--accent-text)] transition-colors">
             {post.title}
           </h3>
-          {post.excerpt && (
-            <p className="text-sm text-[var(--text-secondary)] line-clamp-2">{post.excerpt}</p>
-          )}
+          {post.excerpt && <p className="text-sm text-[var(--text-secondary)] line-clamp-2">{post.excerpt}</p>}
           <div className="flex items-center gap-3 mt-3 text-xs text-[var(--text-muted)]">
             <time dateTime={post.publishedAt}>
-              {isNaN(new Date(post.publishedAt).getTime()) ? post.publishedAt : new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}
+              {isNaN(new Date(post.publishedAt).getTime())
+                ? post.publishedAt
+                : new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}
             </time>
             <span>{t('minRead', { minutes: post.readingTimeMinutes })}</span>
           </div>

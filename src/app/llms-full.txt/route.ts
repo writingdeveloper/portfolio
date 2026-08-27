@@ -16,14 +16,9 @@ export async function GET() {
     for (const meta of posts) {
       const post = getPost(meta.slug, locale)
       if (!post) continue
-      const url =
-        locale === 'ko'
-          ? `${SITE_URL}/blog/${meta.slug}`
-          : `${SITE_URL}/en/blog/${meta.slug}`
+      const url = locale === 'ko' ? `${SITE_URL}/blog/${meta.slug}` : `${SITE_URL}/en/blog/${meta.slug}`
       const dates = `Published: ${meta.publishedAt}${meta.updatedAt ? ` | Updated: ${meta.updatedAt}` : ''}`
-      sections.push(
-        `## ${post.title}\n\nURL: ${url}\n${dates}\nAuthor: ${post.author}\n\n${post.content.trim()}`
-      )
+      sections.push(`## ${post.title}\n\nURL: ${url}\n${dates}\nAuthor: ${post.author}\n\n${post.content.trim()}`)
     }
   }
 

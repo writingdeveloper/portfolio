@@ -6,10 +6,7 @@ import { validateContentImageRequest } from '@/lib/content-image-path'
 const CONTENT_DIR = path.join(process.cwd(), 'content', 'posts')
 const MAX_BYTES = 20 * 1024 * 1024
 
-export async function GET(
-  _request: NextRequest,
-  { params }: { params: Promise<{ path: string[] }> }
-) {
+export async function GET(_request: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const segments = (await params).path
   const validation = validateContentImageRequest(segments, CONTENT_DIR)
   if (!validation.ok) {

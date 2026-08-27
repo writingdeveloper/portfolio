@@ -8,8 +8,9 @@ import type { NextRequest } from 'next/server'
 export const revalidate = 3600
 
 function escapeXml(s: string): string {
-  return s.replace(/[&<>"']/g, (c) =>
-    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[c] ?? c
+  return s.replace(
+    /[&<>"']/g,
+    (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' })[c] ?? c
   )
 }
 
@@ -57,9 +58,8 @@ function coverImageXml(coverImage: string, coverImageAlt: string): string {
 
   const url = `${SITE_URL}${coverImage}`
   const bytes = publicAssetBytes(coverImage)
-  const enclosure = bytes === null
-    ? ''
-    : `\n      <enclosure url="${escapeXml(url)}" length="${bytes}" type="${type}"/>`
+  const enclosure =
+    bytes === null ? '' : `\n      <enclosure url="${escapeXml(url)}" length="${bytes}" type="${type}"/>`
 
   return `${enclosure}
       <media:content url="${escapeXml(url)}" medium="image" type="${type}">
@@ -70,9 +70,7 @@ function coverImageXml(coverImage: string, coverImageAlt: string): string {
 function generateRss(posts: ReturnType<typeof getAllPosts>, lang?: string) {
   const items = posts
     .map((post) => {
-      const link = post.language === 'ko'
-        ? `${SITE_URL}/blog/${post.slug}`
-        : `${SITE_URL}/en/blog/${post.slug}`
+      const link = post.language === 'ko' ? `${SITE_URL}/blog/${post.slug}` : `${SITE_URL}/en/blog/${post.slug}`
       return `
     <item>
       <title><![CDATA[${escapeCdata(post.title)}]]></title>

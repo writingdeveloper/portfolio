@@ -42,10 +42,7 @@ function GooglePlayIcon({ size = 16 }: { size?: number }) {
           <stop offset="1" stopColor="#FF3D5A" />
         </linearGradient>
       </defs>
-      <path
-        fill="url(#gp-grad)"
-        d="M4 2.5v19a1 1 0 0 0 1.5.87l16.5-9.5a1 1 0 0 0 0-1.74L5.5 1.63A1 1 0 0 0 4 2.5Z"
-      />
+      <path fill="url(#gp-grad)" d="M4 2.5v19a1 1 0 0 0 1.5.87l16.5-9.5a1 1 0 0 0 0-1.74L5.5 1.63A1 1 0 0 0 4 2.5Z" />
     </svg>
   )
 }
@@ -57,8 +54,7 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
   const graveyardHref = locale === 'ko' ? '/graveyard' : `/${locale}/graveyard`
   const postHref = locale === 'ko' ? `/blog/${relatedPost?.slug}` : `/${locale}/blog/${relatedPost?.slug}`
   const detailHref = projectHref(project.slug, locale)
-  const screenshotAlt =
-    (locale === 'en' ? project.screenshotAltEn : project.screenshotAltKo) ?? ''
+  const screenshotAlt = (locale === 'en' ? project.screenshotAltEn : project.screenshotAltKo) ?? ''
 
   return (
     // id + scroll-mt make /projects#<slug> a usable target: a post links back
@@ -80,84 +76,105 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
         </div>
       )}
       <div className="p-4 sm:p-6">
-      <div className="flex items-start gap-4 mb-4">
-        <div className="flex-1">
-          <div className="flex items-center gap-2">
-            {/* The name is the route into the project's own page — every card
+        <div className="flex items-start gap-4 mb-4">
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              {/* The name is the route into the project's own page — every card
                 needs one inbound link or those pages are orphans. */}
-            <h3 className="font-semibold text-lg">
-              <a href={detailHref} className="hover:text-[var(--text-emphasis)] transition-colors">
-                {project.name}
-              </a>
-            </h3>
-            {project.status && (
-              <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[project.status] || statusColors.archived}`}>
-                {t(`status.${project.status}`)}
-              </span>
-            )}
-            {project.private && (
-              <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-default)]">
-                <Lock size={11} /> {t('private')}
-              </span>
+              <h3 className="font-semibold text-lg">
+                <a href={detailHref} className="hover:text-[var(--text-emphasis)] transition-colors">
+                  {project.name}
+                </a>
+              </h3>
+              {project.status && (
+                <span
+                  className={`text-xs px-2 py-0.5 rounded-full ${statusColors[project.status] || statusColors.archived}`}
+                >
+                  {t(`status.${project.status}`)}
+                </span>
+              )}
+              {project.private && (
+                <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-[var(--bg-elevated)] text-[var(--text-secondary)] border border-[var(--border-default)]">
+                  <Lock size={11} /> {t('private')}
+                </span>
+              )}
+            </div>
+            {project.descriptionKo && (
+              <p className="text-sm text-[var(--text-secondary)] mt-1">
+                {locale === 'en' ? project.descriptionEn || project.descriptionKo : project.descriptionKo}
+              </p>
             )}
           </div>
-          {project.descriptionKo && (
-            <p className="text-sm text-[var(--text-secondary)] mt-1">
-              {locale === 'en' ? (project.descriptionEn || project.descriptionKo) : project.descriptionKo}
-            </p>
+        </div>
+
+        {project.techStack?.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {project.techStack.map((tech) => (
+              <span
+                key={tech}
+                className="text-xs px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {predecessor && (
+          <a
+            href={graveyardHref}
+            className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors mb-3"
+          >
+            <ArrowLeft size={12} /> {t('continuedFrom', { name: predecessor.name })}
+          </a>
+        )}
+
+        {relatedPost && (
+          <a
+            href={postHref}
+            className="flex items-start gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors mb-3"
+          >
+            <BookOpen size={12} className="mt-0.5 shrink-0" /> {t('readTheBuildLog', { title: relatedPost.title })}
+          </a>
+        )}
+
+        <div className="flex flex-wrap items-center gap-3">
+          {project.website && (
+            <a
+              href={project.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors"
+            >
+              <ExternalLink size={14} /> {t('viewProject')}
+            </a>
+          )}
+          {project.github && !project.private && (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors"
+            >
+              <Github size={14} /> {t('viewCode')}
+            </a>
+          )}
+          {project.playStore && (
+            <a
+              href={project.playStore}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={t('viewOnPlayStore')}
+              className="inline-flex items-center gap-2 rounded-lg bg-black px-3 py-1.5 text-white border border-white/15 hover:bg-neutral-800 transition-colors"
+            >
+              <GooglePlayIcon size={16} />
+              <span className="flex flex-col leading-none text-left">
+                <span className="text-[9px] uppercase tracking-wide opacity-80">{t('getItOn')}</span>
+                <span className="text-sm font-semibold">Google Play</span>
+              </span>
+            </a>
           )}
         </div>
-      </div>
-
-      {project.techStack?.length > 0 && (
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {project.techStack.map((tech) => (
-            <span key={tech} className="text-xs px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]">
-              {tech}
-            </span>
-          ))}
-        </div>
-      )}
-
-      {predecessor && (
-        <a href={graveyardHref}
-          className="inline-flex items-center gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors mb-3">
-          <ArrowLeft size={12} /> {t('continuedFrom', { name: predecessor.name })}
-        </a>
-      )}
-
-      {relatedPost && (
-        <a href={postHref}
-          className="flex items-start gap-1.5 text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors mb-3">
-          <BookOpen size={12} className="mt-0.5 shrink-0" /> {t('readTheBuildLog', { title: relatedPost.title })}
-        </a>
-      )}
-
-      <div className="flex flex-wrap items-center gap-3">
-        {project.website && (
-          <a href={project.website} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
-            <ExternalLink size={14} /> {t('viewProject')}
-          </a>
-        )}
-        {project.github && !project.private && (
-          <a href={project.github} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
-            <Github size={14} /> {t('viewCode')}
-          </a>
-        )}
-        {project.playStore && (
-          <a href={project.playStore} target="_blank" rel="noopener noreferrer"
-            aria-label={t('viewOnPlayStore')}
-            className="inline-flex items-center gap-2 rounded-lg bg-black px-3 py-1.5 text-white border border-white/15 hover:bg-neutral-800 transition-colors">
-            <GooglePlayIcon size={16} />
-            <span className="flex flex-col leading-none text-left">
-              <span className="text-[9px] uppercase tracking-wide opacity-80">{t('getItOn')}</span>
-              <span className="text-sm font-semibold">Google Play</span>
-            </span>
-          </a>
-        )}
-      </div>
       </div>
     </div>
   )

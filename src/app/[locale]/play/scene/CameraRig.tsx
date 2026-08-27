@@ -27,27 +27,16 @@ export function CameraRig({ onSectionChange, scrollRef }: CameraRigProps) {
     const targetY = -offset * TOTAL_DISTANCE
 
     // Smooth camera Y movement
-    state.camera.position.y = MathUtils.lerp(
-      state.camera.position.y,
-      targetY,
-      0.05
-    )
+    state.camera.position.y = MathUtils.lerp(state.camera.position.y, targetY, 0.05)
 
     // Subtle mouse parallax
     const mouseX = state.pointer.x * 0.3
     const mouseY = state.pointer.y * 0.2
-    state.camera.position.x = MathUtils.lerp(
-      state.camera.position.x,
-      mouseX,
-      0.05
-    )
+    state.camera.position.x = MathUtils.lerp(state.camera.position.x, mouseX, 0.05)
     state.camera.lookAt(mouseX * 0.5, state.camera.position.y + mouseY, 0)
 
     // Track active section
-    const sectionIndex = Math.min(
-      Math.round(offset * (SECTION_COUNT - 1)),
-      SECTION_COUNT - 1
-    )
+    const sectionIndex = Math.min(Math.round(offset * (SECTION_COUNT - 1)), SECTION_COUNT - 1)
     if (sectionIndex !== lastSection.current) {
       lastSection.current = sectionIndex
       onSectionChange?.(sectionIndex)

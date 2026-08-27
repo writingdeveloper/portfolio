@@ -9,7 +9,13 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { createMdxComponents } from '@/components/mdx/MdxComponents'
 import { ShareButtons } from '@/components/blog/ShareButtons'
 import { TableOfContents } from '@/components/blog/TableOfContents'
-import { generateArticleJsonLd, generateBreadcrumbJsonLd, generateFaqJsonLd, safeJsonLd, toAbsoluteUrl } from '@/lib/seo'
+import {
+  generateArticleJsonLd,
+  generateBreadcrumbJsonLd,
+  generateFaqJsonLd,
+  safeJsonLd,
+  toAbsoluteUrl,
+} from '@/lib/seo'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { SITE_URL, SITE_NAME } from '@/lib/constants'
 import { Globe } from 'lucide-react'
@@ -25,7 +31,7 @@ function getOgImageUrl(post: { coverImage: string; title: string; excerpt: strin
     return toAbsoluteUrl(post.coverImage)
   }
   const title = post.title.length > 60 ? post.title.slice(0, 57) + '...' : post.title
-  const desc = (post.excerpt || '').length > 100 ? (post.excerpt || '').slice(0, 97) + '...' : (post.excerpt || '')
+  const desc = (post.excerpt || '').length > 100 ? (post.excerpt || '').slice(0, 97) + '...' : post.excerpt || ''
   return `${SITE_URL}/api/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(desc)}`
 }
 
@@ -92,11 +98,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: Promise<{ locale: string; slug: string }>
-}) {
+export default async function BlogPostPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params
   setRequestLocale(locale)
   const t = await getTranslations({ locale, namespace: 'blog' })
@@ -138,14 +140,8 @@ export default async function BlogPostPage({
       <ReadingProgress />
       <div className="max-w-5xl mx-auto lg:grid lg:grid-cols-[1fr_200px] lg:gap-8">
         <article>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
-          />
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
-          />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
+          <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
           {post.faqs.length > 0 && (
             <script
               type="application/ld+json"
@@ -161,7 +157,9 @@ export default async function BlogPostPage({
             <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-4">{post.title}</h1>
             <div className="flex items-center gap-4 text-sm text-[var(--text-secondary)]">
               <span>{post.author}</span>
-              <time dateTime={post.publishedAt}>{new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}</time>
+              <time dateTime={post.publishedAt}>
+                {new Date(post.publishedAt).toLocaleDateString(locale === 'ko' ? 'ko-KR' : 'en-US')}
+              </time>
               <span>{post.readingTime}</span>
             </div>
             {post.hasTranslation && (
@@ -230,10 +228,7 @@ export default async function BlogPostPage({
             </a>
           )}
 
-          <ShareButtons
-            url={postUrl}
-            title={post.title}
-          />
+          <ShareButtons url={postUrl} title={post.title} />
 
           <RelatedPosts posts={getRelatedPosts(slug, locale)} />
           <Comments />

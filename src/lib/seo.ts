@@ -100,13 +100,17 @@ export function generatePersonJsonLd(locale: string) {
           ? '개발자이자 창업가로서 기술로 문제를 해결하고 있습니다.'
           : 'As a developer and entrepreneur, I solve problems with technology.',
       knowsAbout: [
-        'React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Electron',
-        'NestJS', 'Node.js', 'Supabase', 'PostgreSQL',
+        'React',
+        'Next.js',
+        'TypeScript',
+        'Tailwind CSS',
+        'Electron',
+        'NestJS',
+        'Node.js',
+        'Supabase',
+        'PostgreSQL',
       ],
-      sameAs: [
-        'https://github.com/writingdeveloper',
-        'https://www.linkedin.com/in/sihyeonglee/',
-      ],
+      sameAs: ['https://github.com/writingdeveloper', 'https://www.linkedin.com/in/sihyeonglee/'],
     },
   }
 }
@@ -139,7 +143,7 @@ export function generateProjectListJsonLd(
     /** Absolute URL of a real screenshot of the project. */
     image?: string
   }[],
-  locale: string,
+  locale: string
 ) {
   const authorName = locale === 'ko' ? '이시형' : 'Si Hyeong Lee'
   const author = { '@type': 'Person', name: authorName, url: `${SITE_URL}/about` }
@@ -203,7 +207,7 @@ export function generateProjectJsonLd(
     /** Absolute URL of a real screenshot. Never a generated image. */
     image?: string
   },
-  locale: string,
+  locale: string
 ) {
   const authorName = locale === 'ko' ? '이시형' : 'Si Hyeong Lee'
   const sameAs = [project.website, project.github, project.playStore].filter(Boolean) as string[]

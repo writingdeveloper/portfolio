@@ -17,11 +17,7 @@ import { Link } from '@/i18n/navigation'
 // and doesn't depend on per-request data.
 export const revalidate = 3600
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'blog' })
   const localePath = locale === 'ko' ? '' : `/${locale}`
@@ -36,7 +32,14 @@ export async function generateMetadata({
       locale: locale === 'ko' ? 'ko_KR' : 'en_US',
       alternateLocale: locale === 'ko' ? ['en_US'] : ['ko_KR'],
       type: 'website',
-      images: [{ url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`, width: 1200, height: 630, alt: t('title') }],
+      images: [
+        {
+          url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`,
+          width: 1200,
+          height: 630,
+          alt: t('title'),
+        },
+      ],
     },
     alternates: {
       canonical: pageUrl,
@@ -59,23 +62,45 @@ export default async function BlogPage({
   const allPosts = getAllPosts(locale)
   const categories = getCategories(locale)
   const validCategory = category && categories.some((c) => c.value === category) ? category : null
-  const posts = validCategory
-    ? allPosts.filter((p) => p.category === validCategory)
-    : allPosts
+  const posts = validCategory ? allPosts.filter((p) => p.category === validCategory) : allPosts
 
-  const filteredPosts = tag
-    ? posts.filter((p) => p.tags.includes(tag))
-    : posts
+  const filteredPosts = tag ? posts.filter((p) => p.tags.includes(tag)) : posts
 
   const POSTS_PER_PAGE = 9
   const currentPage = Math.max(1, parseInt(pageStr || '1', 10) || 1)
   const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
   const paginatedPosts = filteredPosts.slice((currentPage - 1) * POSTS_PER_PAGE, currentPage * POSTS_PER_PAGE)
 
-  return <BlogContent posts={paginatedPosts} allPosts={allPosts} categories={categories} activeCategory={validCategory} activeTag={tag || null} currentPage={currentPage} totalPages={totalPages} />
+  return (
+    <BlogContent
+      posts={paginatedPosts}
+      allPosts={allPosts}
+      categories={categories}
+      activeCategory={validCategory}
+      activeTag={tag || null}
+      currentPage={currentPage}
+      totalPages={totalPages}
+    />
+  )
 }
 
-function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, currentPage, totalPages }: { posts: PostMeta[]; allPosts: PostMeta[]; categories: CategoryItem[]; activeCategory: string | null; activeTag: string | null; currentPage: number; totalPages: number }) {
+function BlogContent({
+  posts,
+  allPosts,
+  categories,
+  activeCategory,
+  activeTag,
+  currentPage,
+  totalPages,
+}: {
+  posts: PostMeta[]
+  allPosts: PostMeta[]
+  categories: CategoryItem[]
+  activeCategory: string | null
+  activeTag: string | null
+  currentPage: number
+  totalPages: number
+}) {
   const t = useTranslations('blog')
   const locale = useLocale()
   const categoryMap = Object.fromEntries(categories.map((c) => [c.value, c.label]))
@@ -86,10 +111,7 @@ function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, c
 
   return (
     <PageTransition>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
       <div>
         <header className="mb-12">
           <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-2">{t('title')}</h1>
@@ -108,9 +130,7 @@ function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, c
 
         <SearchBar posts={allPosts} />
 
-        {categories.length > 0 && (
-          <CategoryFilter categories={categories} activeCategory={activeCategory} />
-        )}
+        {categories.length > 0 && <CategoryFilter categories={categories} activeCategory={activeCategory} />}
 
         {activeTag && (
           <div className="flex items-center gap-2 mb-6">
@@ -118,7 +138,10 @@ function BlogContent({ posts, allPosts, categories, activeCategory, activeTag, c
             <span className="text-sm px-2.5 py-1 rounded-full bg-[var(--accent-bg-active)] text-[var(--accent-text)]">
               #{activeTag}
             </span>
-            <Link href={activeCategory ? `/blog?category=${activeCategory}` : '/blog'} className="text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors">
+            <Link
+              href={activeCategory ? `/blog?category=${activeCategory}` : '/blog'}
+              className="text-xs text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors"
+            >
               ✕ {t('clearFilter')}
             </Link>
           </div>

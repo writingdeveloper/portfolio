@@ -52,9 +52,7 @@ export function parseFrontmatter(source: string): ParsedFrontmatter {
   // An empty or comment-only block yields undefined and a bare scalar yields a
   // non-object; callers index straight into `data`, so neither may escape.
   const data =
-    typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed)
-      ? (parsed as Record<string, unknown>)
-      : {}
+    typeof parsed === 'object' && parsed !== null && !Array.isArray(parsed) ? (parsed as Record<string, unknown>) : {}
 
   return { data, content }
 }

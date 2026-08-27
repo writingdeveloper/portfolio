@@ -13,16 +13,15 @@ function lookup(root: unknown, path: string): unknown {
   return path
     .split('.')
     .reduce<unknown>(
-      (node, key) =>
-        node && typeof node === 'object' ? (node as Record<string, unknown>)[key] : undefined,
-      root,
+      (node, key) => (node && typeof node === 'object' ? (node as Record<string, unknown>)[key] : undefined),
+      root
     )
 }
 
 function flatten(root: unknown, prefix = ''): string[] {
   if (!root || typeof root !== 'object') return [prefix]
   return Object.entries(root as Record<string, unknown>).flatMap(([key, value]) =>
-    flatten(value, prefix ? `${prefix}.${key}` : key),
+    flatten(value, prefix ? `${prefix}.${key}` : key)
   )
 }
 
@@ -37,7 +36,7 @@ describe('studio walk data', () => {
         for (const row of hop.record) {
           expect(
             lookup(messages, `record.${row.key}`),
-            `${locale}: studio.record.${row.key} is missing, used by hop "${hop.key}"`,
+            `${locale}: studio.record.${row.key} is missing, used by hop "${hop.key}"`
           ).toBeTypeOf('string')
         }
       }
@@ -50,7 +49,7 @@ describe('studio walk data', () => {
         for (const field of ['heading', 'body', 'alt']) {
           expect(
             lookup(messages, `hops.${hop.key}.${field}`),
-            `${locale}: studio.hops.${hop.key}.${field} is missing`,
+            `${locale}: studio.hops.${hop.key}.${field} is missing`
           ).toBeTypeOf('string')
         }
       }
@@ -62,11 +61,11 @@ describe('studio walk data', () => {
       for (const reject of WALK_REJECTS) {
         expect(
           lookup(messages, `rejects.${reject.noteKey}`),
-          `${locale}: studio.rejects.${reject.noteKey} is missing`,
+          `${locale}: studio.rejects.${reject.noteKey} is missing`
         ).toBeTypeOf('string')
         expect(
           lookup(messages, `rejects.${reject.noteKey}Alt`),
-          `${locale}: studio.rejects.${reject.noteKey}Alt is missing`,
+          `${locale}: studio.rejects.${reject.noteKey}Alt is missing`
         ).toBeTypeOf('string')
       }
     }
@@ -81,10 +80,7 @@ describe('studio walk data', () => {
 
     for (const src of assets) {
       expect(src.startsWith('/'), `${src} must be a root-relative public path`).toBe(true)
-      expect(
-        existsSync(join(process.cwd(), 'public', src)),
-        `public${src} is referenced but not committed`,
-      ).toBe(true)
+      expect(existsSync(join(process.cwd(), 'public', src)), `public${src} is referenced but not committed`).toBe(true)
     }
   })
 
@@ -92,7 +88,13 @@ describe('studio walk data', () => {
     const koKeys = flatten(ko.studio).sort()
     const enKeys = flatten(en.studio).sort()
 
-    expect(koKeys.filter((k) => !enKeys.includes(k)), 'keys present only in ko').toEqual([])
-    expect(enKeys.filter((k) => !koKeys.includes(k)), 'keys present only in en').toEqual([])
+    expect(
+      koKeys.filter((k) => !enKeys.includes(k)),
+      'keys present only in ko'
+    ).toEqual([])
+    expect(
+      enKeys.filter((k) => !koKeys.includes(k)),
+      'keys present only in en'
+    ).toEqual([])
   })
 })

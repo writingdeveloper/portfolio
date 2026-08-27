@@ -30,7 +30,7 @@ export interface LinkedPost {
  */
 export function buildProjectPostMap(
   posts: Pick<PostMeta, 'slug' | 'title' | 'project' | 'publishedAt'>[],
-  knownProjectSlugs: Iterable<string>,
+  knownProjectSlugs: Iterable<string>
 ): Map<string, LinkedPost> {
   const known = new Set(knownProjectSlugs)
   const chosen = new Map<string, { post: LinkedPost; publishedAt: string }>()

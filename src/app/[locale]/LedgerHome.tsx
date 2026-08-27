@@ -36,8 +36,12 @@ function SectionLabel({ index, title, aside }: { index: string; title: string; a
   return (
     <div className="flex items-end justify-between gap-4 mb-8">
       <div className="flex items-baseline gap-3">
-        <span className="ledger-mono text-xs" style={{ color: ACCENT }}>{index}</span>
-        <h2 className="ledger-mono text-sm tracking-[0.25em]" style={{ color: INK }}>{title}</h2>
+        <span className="ledger-mono text-xs" style={{ color: ACCENT }}>
+          {index}
+        </span>
+        <h2 className="ledger-mono text-sm tracking-[0.25em]" style={{ color: INK }}>
+          {title}
+        </h2>
       </div>
       {aside}
     </div>
@@ -46,14 +50,21 @@ function SectionLabel({ index, title, aside }: { index: string; title: string; a
 
 function GooglePlayBadge({ href }: { href: string }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" aria-label="Google Play"
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Google Play"
       className="inline-flex items-center gap-2 rounded-md px-3 py-1.5 transition-opacity hover:opacity-85"
-      style={{ background: '#000', border: '1px solid rgba(255,255,255,0.16)' }}>
+      style={{ background: '#000', border: '1px solid rgba(255,255,255,0.16)' }}
+    >
       <svg width="15" height="17" viewBox="0 0 24 24" aria-hidden>
         <defs>
           <linearGradient id="lg-gp" x1="4" y1="2.5" x2="20" y2="21.5" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#00c3ff" /><stop offset="0.35" stopColor="#00e0a8" />
-            <stop offset="0.7" stopColor="#ffce00" /><stop offset="1" stopColor="#ff3d5a" />
+            <stop offset="0" stopColor="#00c3ff" />
+            <stop offset="0.35" stopColor="#00e0a8" />
+            <stop offset="0.7" stopColor="#ffce00" />
+            <stop offset="1" stopColor="#ff3d5a" />
           </linearGradient>
         </defs>
         <path fill="url(#lg-gp)" d="M4 2.5v19a1 1 0 0 0 1.5.87l16.5-9.5a1 1 0 0 0 0-1.74L5.5 1.63A1 1 0 0 0 4 2.5Z" />
@@ -75,35 +86,73 @@ function FeaturedCard({ project, locale }: { project: Project; locale: string })
   const desc = locale === 'ko' ? project.descriptionKo : project.descriptionEn
   const predecessor = predecessorOf(project)
   return (
-    <article className="flex flex-col gap-5 rounded-2xl p-7 sm:p-8" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
+    <article
+      className="flex flex-col gap-5 rounded-2xl p-7 sm:p-8"
+      style={{ background: CARD, border: `1px solid ${BORDER}` }}
+    >
       <div className="flex flex-wrap items-center gap-3">
-        <h3 className="ledger-display text-2xl font-bold" style={{ color: INK }}>{project.name}</h3>
-        <span className="ledger-mono text-[10px] tracking-widest px-2 py-1 rounded" style={{ color: statusColor(project.status), border: `1px solid ${statusColor(project.status)}` }}>
+        <h3 className="ledger-display text-2xl font-bold" style={{ color: INK }}>
+          {project.name}
+        </h3>
+        <span
+          className="ledger-mono text-[10px] tracking-widest px-2 py-1 rounded"
+          style={{ color: statusColor(project.status), border: `1px solid ${statusColor(project.status)}` }}
+        >
           {project.status.toUpperCase()}
         </span>
         {project.private && (
-          <span className="ledger-mono text-[10px] tracking-widest px-2 py-1 rounded" style={{ color: MUTED, border: `1px solid ${BORDER}` }}>PRIVATE</span>
+          <span
+            className="ledger-mono text-[10px] tracking-widest px-2 py-1 rounded"
+            style={{ color: MUTED, border: `1px solid ${BORDER}` }}
+          >
+            PRIVATE
+          </span>
         )}
       </div>
-      <p className="text-[0.95rem] leading-relaxed" style={{ color: MUTED }}>{desc}</p>
+      <p className="text-[0.95rem] leading-relaxed" style={{ color: MUTED }}>
+        {desc}
+      </p>
       <div className="flex flex-wrap gap-2">
         {project.techStack.slice(0, 6).map((t) => (
-          <span key={t} className="ledger-mono text-[11px] px-2 py-1 rounded" style={{ background: ELEV, color: MUTED }}>{t}</span>
+          <span
+            key={t}
+            className="ledger-mono text-[11px] px-2 py-1 rounded"
+            style={{ background: ELEV, color: MUTED }}
+          >
+            {t}
+          </span>
         ))}
       </div>
       {predecessor && (
-        <Link href="/graveyard" className="ledger-mono text-[11px] transition-colors hover:opacity-80" style={{ color: DIM }}>
-          ← {predecessor.name}{locale === 'ko' ? '에서 이어받음' : ' rebuilt'}
+        <Link
+          href="/graveyard"
+          className="ledger-mono text-[11px] transition-colors hover:opacity-80"
+          style={{ color: DIM }}
+        >
+          ← {predecessor.name}
+          {locale === 'ko' ? '에서 이어받음' : ' rebuilt'}
         </Link>
       )}
       <div className="mt-auto flex flex-wrap items-center gap-4 pt-1">
         {project.website && (
-          <a href={project.website} target="_blank" rel="noopener noreferrer" className="ledger-mono text-sm transition-colors hover:opacity-80" style={{ color: INK }}>
+          <a
+            href={project.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ledger-mono text-sm transition-colors hover:opacity-80"
+            style={{ color: INK }}
+          >
             {locale === 'ko' ? '프로젝트 보기' : 'View project'} →
           </a>
         )}
         {project.github && !project.private && (
-          <a href={project.github} target="_blank" rel="noopener noreferrer" className="ledger-mono text-sm transition-colors hover:opacity-80" style={{ color: MUTED }}>
+          <a
+            href={project.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="ledger-mono text-sm transition-colors hover:opacity-80"
+            style={{ color: MUTED }}
+          >
             Code →
           </a>
         )}
@@ -113,7 +162,12 @@ function FeaturedCard({ project, locale }: { project: Project; locale: string })
   )
 }
 
-export function LedgerHome({ projects, tombstones, posts, locale }: {
+export function LedgerHome({
+  projects,
+  tombstones,
+  posts,
+  locale,
+}: {
   projects: Project[]
   tombstones: Tombstone[]
   posts: PostMeta[]
@@ -146,14 +200,26 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
   return (
     <div className="ledger ledger-grain">
       {/* Header */}
-      <header className="sticky top-0 z-50 backdrop-blur" style={{ background: 'rgba(10,10,11,0.72)', borderBottom: `1px solid ${BORDER}` }}>
+      <header
+        className="sticky top-0 z-50 backdrop-blur"
+        style={{ background: 'rgba(10,10,11,0.72)', borderBottom: `1px solid ${BORDER}` }}
+      >
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 sm:px-10">
-          <Link href="/" className="ledger-mono text-sm font-bold tracking-widest flex items-center gap-1.5" style={{ color: INK }}>
+          <Link
+            href="/"
+            className="ledger-mono text-sm font-bold tracking-widest flex items-center gap-1.5"
+            style={{ color: INK }}
+          >
             <span style={{ color: ACCENT }}>▪</span> WRITINGDEVELOPER <span className="ledger-cursor" />
           </Link>
           <nav className="hidden items-center gap-7 sm:flex">
             {nav.map((n) => (
-              <Link key={n.href} href={n.href} className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80" style={{ color: MUTED }}>
+              <Link
+                key={n.href}
+                href={n.href}
+                className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80"
+                style={{ color: MUTED }}
+              >
                 <span style={{ color: ACCENT }}>{n.i}</span> {n.label}
               </Link>
             ))}
@@ -164,16 +230,34 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
       <main className="mx-auto max-w-[1400px] px-6 sm:px-10">
         {/* Hero */}
         <section className="pt-16 pb-14 sm:pt-24 sm:pb-20">
-          <div className="mb-10 flex flex-col gap-2 border-b pb-6 sm:flex-row sm:items-center sm:justify-between" style={{ borderColor: BORDER }}>
-            <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>이시형 · SI HYEONG LEE</span>
-            <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>SOLO FULL-STACK BUILDER</span>
-            <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>LEDGER NO. <span style={{ color: ACCENT }}>001</span></span>
+          <div
+            className="mb-10 flex flex-col gap-2 border-b pb-6 sm:flex-row sm:items-center sm:justify-between"
+            style={{ borderColor: BORDER }}
+          >
+            <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>
+              이시형 · SI HYEONG LEE
+            </span>
+            <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>
+              SOLO FULL-STACK BUILDER
+            </span>
+            <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>
+              LEDGER NO. <span style={{ color: ACCENT }}>001</span>
+            </span>
           </div>
-          <h1 className="ledger-display font-extrabold leading-[0.9] text-[clamp(2.75rem,11vw,8.5rem)]" style={{ color: INK }}>
-            <span className="block">I build<span style={{ color: ACCENT }}>.</span></span>
-            <span className="block">I ship<span style={{ color: ACCENT }}>.</span></span>
+          <h1
+            className="ledger-display font-extrabold leading-[0.9] text-[clamp(2.75rem,11vw,8.5rem)]"
+            style={{ color: INK }}
+          >
+            <span className="block">
+              I build<span style={{ color: ACCENT }}>.</span>
+            </span>
+            <span className="block">
+              I ship<span style={{ color: ACCENT }}>.</span>
+            </span>
             <span className="block">I bury the</span>
-            <span className="block" style={{ color: DIM }}>dead<span style={{ color: ACCENT }}>.</span></span>
+            <span className="block" style={{ color: DIM }}>
+              dead<span style={{ color: ACCENT }}>.</span>
+            </span>
           </h1>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed" style={{ color: MUTED }}>
             {locale === 'ko'
@@ -186,21 +270,38 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
         <section className="grid grid-cols-2 gap-y-8 border-t py-10 sm:grid-cols-4" style={{ borderColor: BORDER }}>
           {stats.map((s) => (
             <div key={s.label} className="flex flex-col gap-1">
-              <span className="ledger-display text-5xl font-extrabold sm:text-6xl" style={{ color: s.hot ? ACCENT : INK }}>{s.n}</span>
-              <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>{s.label}</span>
+              <span
+                className="ledger-display text-5xl font-extrabold sm:text-6xl"
+                style={{ color: s.hot ? ACCENT : INK }}
+              >
+                {s.n}
+              </span>
+              <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>
+                {s.label}
+              </span>
             </div>
           ))}
         </section>
 
         {/* Featured */}
         <section className="py-16 sm:py-20">
-          <SectionLabel index="§01" title="FEATURED WORK" aside={
-            <Link href="/projects" className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80" style={{ color: MUTED }}>
-              ALL {projects.length} →
-            </Link>
-          } />
+          <SectionLabel
+            index="§01"
+            title="FEATURED WORK"
+            aside={
+              <Link
+                href="/projects"
+                className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80"
+                style={{ color: MUTED }}
+              >
+                ALL {projects.length} →
+              </Link>
+            }
+          />
           <div className="grid gap-6 lg:grid-cols-2">
-            {featured.map((p) => <FeaturedCard key={p.slug} project={p} locale={locale} />)}
+            {featured.map((p) => (
+              <FeaturedCard key={p.slug} project={p} locale={locale} />
+            ))}
           </div>
         </section>
 
@@ -211,15 +312,23 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
             {groups.map(({ key, items }) => (
               <div key={key} className="flex flex-col gap-4">
                 <div className="flex items-center justify-between border-b pb-3" style={{ borderColor: ACCENT }}>
-                  <span className="ledger-mono text-xs tracking-[0.2em]" style={{ color: INK }}>{key.toUpperCase()}</span>
-                  <span className="ledger-mono text-xs" style={{ color: ACCENT }}>{String(items.length).padStart(2, '0')}</span>
+                  <span className="ledger-mono text-xs tracking-[0.2em]" style={{ color: INK }}>
+                    {key.toUpperCase()}
+                  </span>
+                  <span className="ledger-mono text-xs" style={{ color: ACCENT }}>
+                    {String(items.length).padStart(2, '0')}
+                  </span>
                 </div>
                 <ul className="flex flex-col gap-2">
                   {items.slice(0, 6).map((p) => (
-                    <li key={p.slug} className="text-sm" style={{ color: MUTED }}>{p.name}</li>
+                    <li key={p.slug} className="text-sm" style={{ color: MUTED }}>
+                      {p.name}
+                    </li>
                   ))}
                   {items.length > 6 && (
-                    <li className="ledger-mono text-xs" style={{ color: DIM }}>+{items.length - 6} more</li>
+                    <li className="ledger-mono text-xs" style={{ color: DIM }}>
+                      +{items.length - 6} more
+                    </li>
                   )}
                 </ul>
               </div>
@@ -229,23 +338,45 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
 
         {/* Graveyard teaser */}
         <section className="py-16 sm:py-20">
-          <SectionLabel index="§03" title="THE GRAVEYARD" aside={
-            <Link href="/graveyard" className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80" style={{ color: MUTED }}>
-              {locale === 'ko' ? '실패에서 배운 기록' : 'What I learned'} →
-            </Link>
-          } />
+          <SectionLabel
+            index="§03"
+            title="THE GRAVEYARD"
+            aside={
+              <Link
+                href="/graveyard"
+                className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80"
+                style={{ color: MUTED }}
+              >
+                {locale === 'ko' ? '실패에서 배운 기록' : 'What I learned'} →
+              </Link>
+            }
+          />
           <div className="grid gap-6 sm:grid-cols-3">
             {tombstones.map((t) => {
               const successor = t.supersededBy ? bySlug.get(t.supersededBy) : undefined
               const epitaph = locale === 'ko' ? t.epitaphKo : t.epitaphEn
               return (
-                <div key={t.slug} className="flex flex-col items-center gap-3 rounded-b-xl rounded-t-[2.5rem] p-6 text-center" style={{ background: CARD, border: `1px solid ${BORDER}` }}>
-                  <span className="ledger-mono text-[10px] tracking-[0.35em]" style={{ color: DIM }}>R.I.P</span>
-                  <span className="ledger-display text-lg font-bold" style={{ color: INK }}>{t.name}</span>
-                  <span className="ledger-mono text-xs" style={{ color: MUTED }}>{t.bornAt}</span>
-                  <p className="text-sm italic leading-relaxed" style={{ color: MUTED }}>&ldquo;{epitaph}&rdquo;</p>
+                <div
+                  key={t.slug}
+                  className="flex flex-col items-center gap-3 rounded-b-xl rounded-t-[2.5rem] p-6 text-center"
+                  style={{ background: CARD, border: `1px solid ${BORDER}` }}
+                >
+                  <span className="ledger-mono text-[10px] tracking-[0.35em]" style={{ color: DIM }}>
+                    R.I.P
+                  </span>
+                  <span className="ledger-display text-lg font-bold" style={{ color: INK }}>
+                    {t.name}
+                  </span>
+                  <span className="ledger-mono text-xs" style={{ color: MUTED }}>
+                    {t.bornAt}
+                  </span>
+                  <p className="text-sm italic leading-relaxed" style={{ color: MUTED }}>
+                    &ldquo;{epitaph}&rdquo;
+                  </p>
                   {successor && (
-                    <span className="ledger-mono text-xs font-semibold" style={{ color: ACCENT }}>→ {successor.name}</span>
+                    <span className="ledger-mono text-xs font-semibold" style={{ color: ACCENT }}>
+                      → {successor.name}
+                    </span>
                   )}
                 </div>
               )
@@ -256,17 +387,36 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
         {/* From the log */}
         {posts.length > 0 && (
           <section className="py-16 sm:py-20">
-            <SectionLabel index="§04" title="FROM THE LOG" aside={
-              <Link href="/blog" className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80" style={{ color: MUTED }}>
-                {locale === 'ko' ? '모든 글' : 'All posts'} →
-              </Link>
-            } />
+            <SectionLabel
+              index="§04"
+              title="FROM THE LOG"
+              aside={
+                <Link
+                  href="/blog"
+                  className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80"
+                  style={{ color: MUTED }}
+                >
+                  {locale === 'ko' ? '모든 글' : 'All posts'} →
+                </Link>
+              }
+            />
             <div className="flex flex-col">
               {posts.map((post) => (
-                <Link key={post.slug} href={`/blog/${post.slug}`}
-                  className="group flex flex-col gap-1 border-t py-6 transition-colors sm:flex-row sm:items-baseline sm:justify-between sm:gap-8" style={{ borderColor: BORDER }}>
-                  <span className="ledger-display text-lg font-semibold transition-colors group-hover:opacity-80" style={{ color: INK }}>{post.title}</span>
-                  <span className="ledger-mono shrink-0 text-xs" style={{ color: DIM }}>{fmtDate(post.publishedAt)}</span>
+                <Link
+                  key={post.slug}
+                  href={`/blog/${post.slug}`}
+                  className="group flex flex-col gap-1 border-t py-6 transition-colors sm:flex-row sm:items-baseline sm:justify-between sm:gap-8"
+                  style={{ borderColor: BORDER }}
+                >
+                  <span
+                    className="ledger-display text-lg font-semibold transition-colors group-hover:opacity-80"
+                    style={{ color: INK }}
+                  >
+                    {post.title}
+                  </span>
+                  <span className="ledger-mono shrink-0 text-xs" style={{ color: DIM }}>
+                    {fmtDate(post.publishedAt)}
+                  </span>
                 </Link>
               ))}
             </div>
@@ -283,7 +433,13 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {STACK.map((s) => (
-              <span key={s} className="ledger-mono text-xs px-3 py-1.5 rounded" style={{ background: ELEV, color: MUTED }}>{s}</span>
+              <span
+                key={s}
+                className="ledger-mono text-xs px-3 py-1.5 rounded"
+                style={{ background: ELEV, color: MUTED }}
+              >
+                {s}
+              </span>
             ))}
           </div>
         </section>
@@ -301,24 +457,47 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
               { k: 'GITHUB', v: 'github.com/writingdeveloper', href: 'https://github.com/writingdeveloper' },
               { k: 'LINKEDIN', v: 'in/sihyeonglee', href: 'https://www.linkedin.com/in/sihyeonglee/' },
             ].map((row) => (
-              <a key={row.k} href={row.href} target={row.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer"
-                className="flex flex-col gap-1 p-5 transition-colors hover:opacity-90" style={{ background: CARD }}>
-                <span className="ledger-mono text-[10px] tracking-[0.25em]" style={{ color: DIM }}>{row.k}</span>
-                <span className="ledger-mono text-sm" style={{ color: INK }}>{row.v}</span>
+              <a
+                key={row.k}
+                href={row.href}
+                target={row.href.startsWith('http') ? '_blank' : undefined}
+                rel="noopener noreferrer"
+                className="flex flex-col gap-1 p-5 transition-colors hover:opacity-90"
+                style={{ background: CARD }}
+              >
+                <span className="ledger-mono text-[10px] tracking-[0.25em]" style={{ color: DIM }}>
+                  {row.k}
+                </span>
+                <span className="ledger-mono text-sm" style={{ color: INK }}>
+                  {row.v}
+                </span>
               </a>
             ))}
           </div>
-          <div className="mt-8 flex flex-col gap-2 border-t pt-6 sm:flex-row sm:items-center sm:justify-between" style={{ borderColor: BORDER }}>
-            <span className="ledger-mono text-xs" style={{ color: DIM }}>© 2026 WRITINGDEVELOPER · LEDGER NO. 001</span>
+          <div
+            className="mt-8 flex flex-col gap-2 border-t pt-6 sm:flex-row sm:items-center sm:justify-between"
+            style={{ borderColor: BORDER }}
+          >
+            <span className="ledger-mono text-xs" style={{ color: DIM }}>
+              © 2026 WRITINGDEVELOPER · LEDGER NO. 001
+            </span>
             {/* The immersive home renders without the site Footer, so the
                 policy link has to be repeated here — AdSense requires it to
                 be reachable from every page, and this is the likeliest
                 landing page of the lot. */}
             <div className="flex items-center gap-5">
-              <Link href="/privacy" className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80" style={{ color: MUTED }}>
+              <Link
+                href="/privacy"
+                className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80"
+                style={{ color: MUTED }}
+              >
                 PRIVACY
               </Link>
-              <Link href="/play" className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80" style={{ color: MUTED }}>
+              <Link
+                href="/play"
+                className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80"
+                style={{ color: MUTED }}
+              >
                 EXPLORE 3D →
               </Link>
             </div>

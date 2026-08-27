@@ -1,11 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import {
-  rgbToHsl,
-  classifyPixel,
-  summarizePixels,
-  evaluatePalette,
-  type PaletteStats,
-} from '../hero-palette'
+import { rgbToHsl, classifyPixel, summarizePixels, evaluatePalette, type PaletteStats } from '../hero-palette'
 
 describe('rgbToHsl', () => {
   it('converts the brand accent #c6f24e to hue ~76', () => {
@@ -95,7 +89,11 @@ describe('evaluatePalette', () => {
 
   it('fails an empty image rather than dividing by zero', () => {
     const verdict = evaluatePalette({
-      background: 0, accent: 0, stray: 0, neutral: 0, total: 0,
+      background: 0,
+      accent: 0,
+      stray: 0,
+      neutral: 0,
+      total: 0,
     })
     expect(verdict.ok).toBe(false)
   })

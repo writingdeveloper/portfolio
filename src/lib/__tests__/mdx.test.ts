@@ -6,9 +6,9 @@ describe('getAllPosts', () => {
     const posts = getAllPosts('ko')
     expect(Array.isArray(posts)).toBe(true)
     for (let i = 1; i < posts.length; i++) {
-      expect(
-        new Date(posts[i - 1].publishedAt).getTime()
-      ).toBeGreaterThanOrEqual(new Date(posts[i].publishedAt).getTime())
+      expect(new Date(posts[i - 1].publishedAt).getTime()).toBeGreaterThanOrEqual(
+        new Date(posts[i].publishedAt).getTime()
+      )
     }
   })
 

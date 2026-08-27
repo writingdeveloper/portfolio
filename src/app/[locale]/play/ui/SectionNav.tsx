@@ -30,9 +30,7 @@ export function SectionNav({ labels, activeIndex, onNavigate }: SectionNavProps)
           <span
             aria-hidden="true"
             className={`hidden sm:inline text-xs tracking-widest uppercase transition-all duration-500 ${
-              i === activeIndex
-                ? 'text-[#e8d5a3] opacity-100'
-                : 'text-[#a78bfa] opacity-0 group-hover:opacity-60'
+              i === activeIndex ? 'text-[#e8d5a3] opacity-100' : 'text-[#a78bfa] opacity-0 group-hover:opacity-60'
             }`}
           >
             {labels[section] ?? section}

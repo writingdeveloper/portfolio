@@ -9,11 +9,7 @@ import { Tombstone } from '@/components/graveyard/Tombstone'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'graveyard' })
   const localePath = locale === 'ko' ? '' : `/${locale}`
@@ -25,7 +21,14 @@ export async function generateMetadata({
       url: pageUrl,
       title: t('title'),
       description: t('metaDescription'),
-      images: [{ url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`, width: 1200, height: 630, alt: t('title') }],
+      images: [
+        {
+          url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`,
+          width: 1200,
+          height: 630,
+          alt: t('title'),
+        },
+      ],
     },
     alternates: {
       canonical: pageUrl,
@@ -34,11 +37,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function GraveyardPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+export default async function GraveyardPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
 
@@ -56,10 +55,7 @@ function GraveyardContent() {
 
   return (
     <PageTransition>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
       <div className="relative">
         <div
           aria-hidden="true"

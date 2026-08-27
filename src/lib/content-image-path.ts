@@ -11,15 +11,10 @@ export const MIME_TYPES: Record<string, string> = {
   '.avif': 'image/avif',
 }
 
-export type ValidationError =
-  | 'not-found'
-  | 'forbidden-locale'
-  | 'path-traversal'
-  | 'unsupported-mime'
+export type ValidationError = 'not-found' | 'forbidden-locale' | 'path-traversal' | 'unsupported-mime'
 
 export type ValidationResult =
-  | { ok: true; candidates: string[]; contentType: string }
-  | { ok: false; error: ValidationError }
+  { ok: true; candidates: string[]; contentType: string } | { ok: false; error: ValidationError }
 
 /**
  * Validates a /api/content-image/{locale}/{slug}/{filename} request.
@@ -29,10 +24,7 @@ export type ValidationResult =
  * mitigations are applied here so tests can exercise them without touching
  * the filesystem.
  */
-export function validateContentImageRequest(
-  segments: string[],
-  contentDir: string
-): ValidationResult {
+export function validateContentImageRequest(segments: string[], contentDir: string): ValidationResult {
   if (segments.length !== 3) {
     return { ok: false, error: 'not-found' }
   }
@@ -43,11 +35,7 @@ export function validateContentImageRequest(
     return { ok: false, error: 'forbidden-locale' }
   }
 
-  if (
-    locale.includes('..') ||
-    slug.includes('..') ||
-    filename.includes('..')
-  ) {
+  if (locale.includes('..') || slug.includes('..') || filename.includes('..')) {
     return { ok: false, error: 'path-traversal' }
   }
 
@@ -66,16 +54,10 @@ export function validateContentImageRequest(
   const resolvedSubdir = path.resolve(subdirCandidate)
   const contentRoot = path.resolve(contentDir)
 
-  if (
-    !resolvedDirect.startsWith(contentRoot + path.sep) &&
-    resolvedDirect !== contentRoot
-  ) {
+  if (!resolvedDirect.startsWith(contentRoot + path.sep) && resolvedDirect !== contentRoot) {
     return { ok: false, error: 'path-traversal' }
   }
-  if (
-    !resolvedSubdir.startsWith(contentRoot + path.sep) &&
-    resolvedSubdir !== contentRoot
-  ) {
+  if (!resolvedSubdir.startsWith(contentRoot + path.sep) && resolvedSubdir !== contentRoot) {
     return { ok: false, error: 'path-traversal' }
   }
 

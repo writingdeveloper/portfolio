@@ -154,7 +154,14 @@ export function FloatingCard({
         )}
 
         {/* Corner decorations — thin L-shaped lines at each corner */}
-        {([[-1, 1], [1, 1], [1, -1], [-1, -1]] as [number, number][]).map(([cx, cy], i) => (
+        {(
+          [
+            [-1, 1],
+            [1, 1],
+            [1, -1],
+            [-1, -1],
+          ] as [number, number][]
+        ).map(([cx, cy], i) => (
           <group key={i} position={[cx * (width / 2 - 0.05), cy * (height / 2 - 0.05), 0.03]}>
             <mesh position={[cx * 0.12, 0, 0]}>
               <planeGeometry args={[0.25, 0.003]} />

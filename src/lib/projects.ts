@@ -28,9 +28,7 @@ export interface PortfolioStats {
   featured: number
 }
 
-export function getPortfolioStats(
-  projects: Pick<Project, 'website' | 'playStore' | 'featured'>[],
-): PortfolioStats {
+export function getPortfolioStats(projects: Pick<Project, 'website' | 'playStore' | 'featured'>[]): PortfolioStats {
   return {
     builds: projects.length,
     public: projects.filter((project) => project.website || project.playStore).length,
@@ -46,7 +44,9 @@ export function sortProjectsFeaturedFirst(projects: Project[]): Project[] {
 
 export function partitionProjects(projects: Project[]): { selected: Project[]; rest: Project[] } {
   const bySlug = new Map(projects.map((project) => [project.slug, project]))
-  const selected = SELECTED_WORK.map((slug) => bySlug.get(slug)).filter((project): project is Project => Boolean(project))
+  const selected = SELECTED_WORK.map((slug) => bySlug.get(slug)).filter((project): project is Project =>
+    Boolean(project)
+  )
   const selectedSlugs = new Set(selected.map((project) => project.slug))
   return { selected, rest: projects.filter((project) => !selectedSlugs.has(project.slug)) }
 }
@@ -110,16 +110,16 @@ export const PROJECT_SHOWCASE: Record<string, string> = {
  */
 export function hasIndexablePage(
   project: Pick<Project, 'slug' | 'screenshot' | 'website' | 'github' | 'playStore' | 'private'>,
-  hasRelatedPost = false,
+  hasRelatedPost = false
 ): boolean {
   const codeLink = project.private ? undefined : project.github
   return Boolean(
     project.screenshot ||
-      project.website ||
-      project.playStore ||
-      codeLink ||
-      PROJECT_SHOWCASE[project.slug] ||
-      hasRelatedPost,
+    project.website ||
+    project.playStore ||
+    codeLink ||
+    PROJECT_SHOWCASE[project.slug] ||
+    hasRelatedPost
   )
 }
 
@@ -142,9 +142,7 @@ export interface HireStats {
  * about page derives its project count — means the page cannot drift out of
  * date behind the data.
  */
-export function getHireStats(
-  projects: Pick<Project, 'website' | 'playStore'>[],
-): HireStats {
+export function getHireStats(projects: Pick<Project, 'website' | 'playStore'>[]): HireStats {
   return {
     shipped: projects.filter((p) => p.website || p.playStore).length,
     playStore: projects.filter((p) => p.playStore).length,
@@ -177,7 +175,52 @@ export const HIRE_CASE_STUDIES = ['citefirst', 'studios', 'soursea'] as const
  * pulling in React.
  */
 export const HOME_GROUPS: Record<'products' | 'games' | 'tools', string[]> = {
-  products: ['soursea', 'healframe', 'drymora', 'toolsmith', 'rentrights', 'receipt-tracker', 'fitcheck', 'zodiacly', 'transit-la', 'kindling', 'growgle', 'argus-fusion', 'observer-of-lines'],
-  games: ['coinrace', 'wishing-stones', 'hoverslam', 'normandy-cliff-defense', 'tantrum-tower', 'mini-games', 'unclog-la', 'youtube-rhythm-game', 'liminal-bestiary', 'studio-apartment'],
-  tools: ['citefirst', 'juicebar', 'devdeck', 'studios', 'til-shorts', 'mv-analyzer', 'sitedeck', 'marketdeck', 'notro', 'unitwise', 'amazon-chat-archiver', 'sitesmith', 'kl125-controller', 'ai-4080-ops', 'nag-coach', 'piano-scribe', 'comfyui-web', 'shipwright', 'dont-touch'],
+  products: [
+    'soursea',
+    'healframe',
+    'drymora',
+    'toolsmith',
+    'rentrights',
+    'receipt-tracker',
+    'fitcheck',
+    'zodiacly',
+    'transit-la',
+    'kindling',
+    'growgle',
+    'argus-fusion',
+    'observer-of-lines',
+  ],
+  games: [
+    'coinrace',
+    'wishing-stones',
+    'hoverslam',
+    'normandy-cliff-defense',
+    'tantrum-tower',
+    'mini-games',
+    'unclog-la',
+    'youtube-rhythm-game',
+    'liminal-bestiary',
+    'studio-apartment',
+  ],
+  tools: [
+    'citefirst',
+    'juicebar',
+    'devdeck',
+    'studios',
+    'til-shorts',
+    'mv-analyzer',
+    'sitedeck',
+    'marketdeck',
+    'notro',
+    'unitwise',
+    'amazon-chat-archiver',
+    'sitesmith',
+    'kl125-controller',
+    'ai-4080-ops',
+    'nag-coach',
+    'piano-scribe',
+    'comfyui-web',
+    'shipwright',
+    'dont-touch',
+  ],
 }

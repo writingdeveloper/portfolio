@@ -37,7 +37,7 @@ describe('buildProjectPostMap', () => {
   it('keeps the most recent post when two claim the same project', () => {
     const map = buildProjectPostMap(
       [post('older', 'drymora', '2025-03-01'), post('newer', 'drymora', '2026-07-01')],
-      KNOWN,
+      KNOWN
     )
     expect(map.get('drymora')?.slug).toBe('newer')
   })
@@ -45,16 +45,13 @@ describe('buildProjectPostMap', () => {
   it('is order-independent when picking the most recent', () => {
     const map = buildProjectPostMap(
       [post('newer', 'drymora', '2026-07-01'), post('older', 'drymora', '2025-03-01')],
-      KNOWN,
+      KNOWN
     )
     expect(map.get('drymora')?.slug).toBe('newer')
   })
 
   it('handles several projects at once', () => {
-    const map = buildProjectPostMap(
-      [post('a', 'drymora'), post('b', 'healframe'), post('c', 'rentrights')],
-      KNOWN,
-    )
+    const map = buildProjectPostMap([post('a', 'drymora'), post('b', 'healframe'), post('c', 'rentrights')], KNOWN)
     expect([...map.keys()].sort()).toEqual(['drymora', 'healframe', 'rentrights'])
   })
 

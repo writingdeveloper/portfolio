@@ -16,19 +16,22 @@ function TranslationBanner() {
   const extra = untranslated.length > 3 ? ` 외 ${untranslated.length - 3}건` : ''
 
   return (
-    <div style={{
-      padding: '10px 16px',
-      backgroundColor: 'var(--warning-bg, #fef3c7)',
-      color: 'var(--warning-text, #92400e)',
-      fontSize: '14px',
-      borderBottom: '1px solid var(--warning-border, #fcd34d)',
-      display: 'flex',
-      alignItems: 'center',
-      gap: '8px',
-    }}>
+    <div
+      style={{
+        padding: '10px 16px',
+        backgroundColor: 'var(--warning-bg, #fef3c7)',
+        color: 'var(--warning-text, #92400e)',
+        fontSize: '14px',
+        borderBottom: '1px solid var(--warning-border, #fcd34d)',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '8px',
+      }}
+    >
       <span style={{ fontSize: '16px' }}>&#9888;</span>
       <span>
-        <strong>번역 필요:</strong> {names}{extra} ({untranslated.length}건)
+        <strong>번역 필요:</strong> {names}
+        {extra} ({untranslated.length}건)
       </span>
     </div>
   )

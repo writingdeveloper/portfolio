@@ -12,12 +12,7 @@ import { predecessorOf } from '@/lib/lineage'
 import { getAllPosts } from '@/lib/mdx'
 import { buildProjectPostMap } from '@/lib/post-project-links'
 import { PageTransition } from '@/components/ui/PageTransition'
-import {
-  generateBreadcrumbJsonLd,
-  generateProjectJsonLd,
-  safeJsonLd,
-  toAbsoluteUrl,
-} from '@/lib/seo'
+import { generateBreadcrumbJsonLd, generateProjectJsonLd, safeJsonLd, toAbsoluteUrl } from '@/lib/seo'
 
 const PROJECTS = projectsData.projects as Project[]
 
@@ -27,11 +22,8 @@ function findProject(slug: string): Project | undefined {
 
 /** Every project in every locale — the complete set of valid slugs. */
 export function generateStaticParams() {
-  return routing.locales.flatMap((locale) =>
-    PROJECTS.map((project) => ({ locale, slug: project.slug })),
-  )
+  return routing.locales.flatMap((locale) => PROJECTS.map((project) => ({ locale, slug: project.slug })))
 }
-
 
 export async function generateMetadata({
   params,
@@ -84,11 +76,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function ProjectDetailPage({
-  params,
-}: {
-  params: Promise<{ locale: string; slug: string }>
-}) {
+export default async function ProjectDetailPage({ params }: { params: Promise<{ locale: string; slug: string }> }) {
   const { locale, slug } = await params
   setRequestLocale(locale)
 
@@ -127,7 +115,7 @@ export default async function ProjectDetailPage({
   const predecessor = predecessorOf(project)
   const relatedPost = buildProjectPostMap(
     getAllPosts(locale),
-    PROJECTS.map((p) => p.slug),
+    PROJECTS.map((p) => p.slug)
   ).get(project.slug)
 
   const pageUrl = `${SITE_URL}${localePath}/projects/${slug}`
@@ -145,7 +133,7 @@ export default async function ProjectDetailPage({
       appCategory: APP_CATEGORY[project.slug],
       ...(project.screenshot ? { image: toAbsoluteUrl(project.screenshot) } : {}),
     },
-    locale,
+    locale
   )
   const breadcrumbJsonLd = generateBreadcrumbJsonLd([
     { name: isKo ? '홈' : 'Home', url: `${SITE_URL}${localePath}` },
@@ -177,7 +165,9 @@ export default async function ProjectDetailPage({
           <div className="flex flex-wrap items-center gap-2 mb-3">
             <h1 className="text-3xl font-bold ledger-display">{project.name}</h1>
             {project.status && (
-              <span className={`text-xs px-2 py-0.5 rounded-full ${statusColors[project.status] ?? statusColors.archived}`}>
+              <span
+                className={`text-xs px-2 py-0.5 rounded-full ${statusColors[project.status] ?? statusColors.archived}`}
+              >
                 {t(`status.${project.status}`)}
               </span>
             )}
@@ -207,7 +197,10 @@ export default async function ProjectDetailPage({
         {project.techStack?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-8">
             {project.techStack.map((tech) => (
-              <span key={tech} className="text-xs px-2 py-1 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]">
+              <span
+                key={tech}
+                className="text-xs px-2 py-1 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]"
+              >
                 {tech}
               </span>
             ))}
@@ -242,20 +235,32 @@ export default async function ProjectDetailPage({
             </a>
           )}
           {project.website && (
-            <a href={project.website} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
+            <a
+              href={project.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors"
+            >
               <ExternalLink size={15} /> {t('viewProject')}
             </a>
           )}
           {project.github && !project.private && (
-            <a href={project.github} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors"
+            >
               <Github size={15} /> {t('viewCode')}
             </a>
           )}
           {project.playStore && (
-            <a href={project.playStore} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
+            <a
+              href={project.playStore}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors"
+            >
               <ExternalLink size={15} /> {t('viewOnPlayStore')}
             </a>
           )}
@@ -264,14 +269,18 @@ export default async function ProjectDetailPage({
         {(relatedPost || predecessor) && (
           <div className="flex flex-col gap-3 border-t border-[var(--border-default)] pt-6">
             {relatedPost && (
-              <a href={`${localePath}/blog/${relatedPost.slug}`}
-                className="flex items-start gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors">
+              <a
+                href={`${localePath}/blog/${relatedPost.slug}`}
+                className="flex items-start gap-2 text-sm text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors"
+              >
                 <BookOpen size={14} className="mt-0.5 shrink-0" /> {t('readTheBuildLog', { title: relatedPost.title })}
               </a>
             )}
             {predecessor && (
-              <a href={`${localePath}/graveyard`}
-                className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors">
+              <a
+                href={`${localePath}/graveyard`}
+                className="inline-flex items-center gap-1.5 text-sm text-[var(--text-muted)] hover:text-[var(--text-emphasis)] transition-colors"
+              >
                 <ArrowLeft size={14} /> {t('continuedFrom', { name: predecessor.name })}
               </a>
             )}

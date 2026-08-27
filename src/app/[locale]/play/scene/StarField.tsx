@@ -20,24 +20,14 @@ function AccentStars({ count }: { count: number }) {
 
   useEffect(() => {
     if (geometryRef.current) {
-      geometryRef.current.setAttribute(
-        'position',
-        new BufferAttribute(positionsRef.current, 3)
-      )
+      geometryRef.current.setAttribute('position', new BufferAttribute(positionsRef.current, 3))
     }
   }, [])
 
   return (
     <points>
       <bufferGeometry ref={geometryRef} />
-      <pointsMaterial
-        size={0.12}
-        color="#b8b0cc"
-        transparent
-        opacity={0.5}
-        sizeAttenuation
-        depthWrite={false}
-      />
+      <pointsMaterial size={0.12} color="#b8b0cc" transparent opacity={0.5} sizeAttenuation depthWrite={false} />
     </points>
   )
 }
@@ -62,14 +52,8 @@ export function StarField({ count = 3000 }: { count?: number }) {
   useEffect(() => {
     if (geometryRef.current) {
       const [positions, sizes] = dataRef.current
-      geometryRef.current.setAttribute(
-        'position',
-        new BufferAttribute(positions, 3)
-      )
-      geometryRef.current.setAttribute(
-        'size',
-        new BufferAttribute(sizes, 1)
-      )
+      geometryRef.current.setAttribute('position', new BufferAttribute(positions, 3))
+      geometryRef.current.setAttribute('size', new BufferAttribute(sizes, 1))
     }
   }, [])
 
@@ -77,14 +61,7 @@ export function StarField({ count = 3000 }: { count?: number }) {
     <>
       <points ref={pointsRef}>
         <bufferGeometry ref={geometryRef} />
-        <pointsMaterial
-          size={0.04}
-          color="#8b8bab"
-          transparent
-          opacity={0.35}
-          sizeAttenuation
-          depthWrite={false}
-        />
+        <pointsMaterial size={0.04} color="#8b8bab" transparent opacity={0.35} sizeAttenuation depthWrite={false} />
       </points>
       <AccentStars count={Math.floor(count * 0.05)} />
     </>

@@ -5,8 +5,7 @@ import { useTranslations } from 'next-intl'
 import { X, ExternalLink, Github } from 'lucide-react'
 import type { Project, TimelineItem } from '@/types/content'
 
-const FOCUSABLE_SELECTOR =
-  'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
 type DetailItem =
   | { type: 'project'; data: Project }
@@ -43,9 +42,7 @@ export function DetailOverlay({ item, locale, onClose }: DetailOverlayProps) {
       }
       if (e.key !== 'Tab') return
 
-      const focusable = Array.from(
-        dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
-      )
+      const focusable = Array.from(dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR))
       if (focusable.length === 0) {
         e.preventDefault()
         dialog.focus()
@@ -79,7 +76,9 @@ export function DetailOverlay({ item, locale, onClose }: DetailOverlayProps) {
     item.type === 'project'
       ? item.data.name
       : item.type === 'timeline'
-        ? (locale === 'ko' ? item.data.titleKo : item.data.titleEn)
+        ? locale === 'ko'
+          ? item.data.titleKo
+          : item.data.titleEn
         : item.type === 'post'
           ? item.data.title
           : t('clickToView')
@@ -120,10 +119,7 @@ function ProjectDetail({ project, locale }: { project: Project; locale: string }
       <p className="text-[#a78bfa]/80 text-sm leading-relaxed">{desc}</p>
       <div className="flex flex-wrap gap-2">
         {project.techStack.map((tech) => (
-          <span
-            key={tech}
-            className="px-2 py-1 text-xs rounded-full border border-[#7c6cf0]/30 text-[#a78bfa]"
-          >
+          <span key={tech} className="px-2 py-1 text-xs rounded-full border border-[#7c6cf0]/30 text-[#a78bfa]">
             {tech}
           </span>
         ))}

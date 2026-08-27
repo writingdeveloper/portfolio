@@ -8,11 +8,7 @@ import type { Project, Skill, TimelineItem } from '@/types/content'
 import { PlayLoader } from './PlayLoader'
 import { PlaySemanticFallback } from './PlaySemanticFallback'
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'play' })
   const localePath = locale === 'ko' ? '' : `/${locale}`
@@ -45,11 +41,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function PlayPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+export default async function PlayPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
 
@@ -68,20 +60,8 @@ export default async function PlayPage({
 
   return (
     <>
-      <PlaySemanticFallback
-        projects={projects}
-        skills={skills}
-        timeline={timeline}
-        posts={posts}
-        locale={locale}
-      />
-      <PlayLoader
-        projects={projects}
-        skills={skills}
-        timeline={timeline}
-        posts={posts}
-        locale={locale}
-      />
+      <PlaySemanticFallback projects={projects} skills={skills} timeline={timeline} posts={posts} locale={locale} />
+      <PlayLoader projects={projects} skills={skills} timeline={timeline} posts={posts} locale={locale} />
     </>
   )
 }

@@ -57,11 +57,7 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const messages = await getMessages({ locale })
   const meta = (messages as Record<string, Record<string, string>>).metadata
@@ -139,7 +135,9 @@ export default async function LocaleLayout({
           }}
         />
       </head>
-      <body className={`${inter.variable} ${bricolage.variable} ${spaceMono.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}>
+      <body
+        className={`${inter.variable} ${bricolage.variable} ${spaceMono.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}
+      >
         <NextIntlClientProvider messages={messages}>
           {immersive ? (
             children
@@ -152,10 +150,7 @@ export default async function LocaleLayout({
                 {ta('skipToContent')}
               </a>
               <Header />
-              <main
-                id="main-content"
-                className="max-w-[1400px] mx-auto px-6 sm:px-10 py-8"
-              >
+              <main id="main-content" className="max-w-[1400px] mx-auto px-6 sm:px-10 py-8">
                 {children}
               </main>
               <Footer />

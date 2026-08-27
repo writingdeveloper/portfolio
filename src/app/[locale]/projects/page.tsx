@@ -12,11 +12,7 @@ import { getAllPosts } from '@/lib/mdx'
 import { buildProjectPostMap, type LinkedPost } from '@/lib/post-project-links'
 import { useLocale } from 'next-intl'
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'projects' })
   const localePath = locale === 'ko' ? '' : `/${locale}`
@@ -32,7 +28,14 @@ export async function generateMetadata({
       url: pageUrl,
       title: t('metaTitle', { count }),
       description: t('metaDescription', { count }),
-      images: [{ url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`, width: 1200, height: 630, alt: t('title') }],
+      images: [
+        {
+          url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`,
+          width: 1200,
+          height: 630,
+          alt: t('title'),
+        },
+      ],
     },
     alternates: {
       canonical: pageUrl,
@@ -41,11 +44,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function ProjectsPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+export default async function ProjectsPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
 
@@ -53,7 +52,7 @@ export default async function ProjectsPage({
   // down rather than inside ProjectsContent.
   const projectPosts = buildProjectPostMap(
     getAllPosts(locale),
-    (projectsData.projects as Project[]).map((p) => p.slug),
+    (projectsData.projects as Project[]).map((p) => p.slug)
   )
 
   return <ProjectsContent projectPosts={projectPosts} />
@@ -77,19 +76,13 @@ function ProjectsContent({ projectPosts }: { projectPosts: Map<string, LinkedPos
       ...(project.screenshot ? { image: toAbsoluteUrl(project.screenshot) } : {}),
       ...(project.playStore ? { playStore: project.playStore, appCategory: APP_CATEGORY[project.slug] } : {}),
     })),
-    locale,
+    locale
   )
 
   return (
     <PageTransition>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(projectListJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(projectListJsonLd) }} />
       <div>
         <header className="mb-12">
           <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-2">{t('title')}</h1>
@@ -103,7 +96,12 @@ function ProjectsContent({ projectPosts }: { projectPosts: Map<string, LinkedPos
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
             {selected.map((project, index) => (
-              <ProjectCard key={project.slug} project={project} priority={index < 2} relatedPost={projectPosts.get(project.slug)} />
+              <ProjectCard
+                key={project.slug}
+                project={project}
+                priority={index < 2}
+                relatedPost={projectPosts.get(project.slug)}
+              />
             ))}
           </div>
         </section>

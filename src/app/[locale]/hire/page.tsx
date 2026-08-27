@@ -16,11 +16,7 @@ import type { Project, Skill } from '@/types/content'
 // projects.json does.
 export const revalidate = 3600
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'hire' })
   const localePath = locale === 'ko' ? '' : `/${locale}`
@@ -58,11 +54,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function HirePage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+export default async function HirePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
   return <HireContent />
@@ -72,9 +64,7 @@ export default async function HirePage({
 function OfferRow({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <dt className="ledger-mono text-[10px] tracking-[0.25em] uppercase text-[var(--text-muted)]">
-        {label}
-      </dt>
+      <dt className="ledger-mono text-[10px] tracking-[0.25em] uppercase text-[var(--text-muted)]">{label}</dt>
       <dd className="mt-1.5 text-sm text-[var(--text-secondary)]">{children}</dd>
     </div>
   )
@@ -87,9 +77,9 @@ function HireContent() {
   const stats = getHireStats(projects)
   const skills = aboutData.skills as Skill[]
 
-  const caseStudies = HIRE_CASE_STUDIES.map((slug) =>
-    projects.find((p) => p.slug === slug),
-  ).filter((p): p is Project => Boolean(p))
+  const caseStudies = HIRE_CASE_STUDIES.map((slug) => projects.find((p) => p.slug === slug)).filter((p): p is Project =>
+    Boolean(p)
+  )
 
   const personJsonLd = generatePersonJsonLd(locale)
   const breadcrumbJsonLd = generateBreadcrumbJsonLd([
@@ -110,9 +100,7 @@ function HireContent() {
 
       <div className="max-w-4xl mx-auto">
         <header className="mb-12">
-          <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
-            {t('title')}
-          </h1>
+          <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">{t('title')}</h1>
           <p className="text-lg text-[var(--text-secondary)]">{t('description')}</p>
           <div className="mt-5 flex flex-wrap gap-2">
             {[t('badgeRemote'), t('badgeNow')].map((badge) => (
@@ -153,10 +141,7 @@ function HireContent() {
           <h2 className="text-xl font-bold mb-6">{t('evidence.heading')}</h2>
           <div className="grid gap-4 sm:grid-cols-3">
             {figures.map((f) => (
-              <div
-                key={f.label}
-                className="rounded-lg border border-[var(--border-default)] p-5"
-              >
+              <div key={f.label} className="rounded-lg border border-[var(--border-default)] p-5">
                 <span className="ledger-display block text-3xl font-extrabold text-[var(--accent-text)]">
                   {f.value}
                 </span>
@@ -165,9 +150,7 @@ function HireContent() {
             ))}
           </div>
 
-          <h3 className="text-sm font-medium text-[var(--text-secondary)] mt-10 mb-4">
-            {t('evidence.caseHeading')}
-          </h3>
+          <h3 className="text-sm font-medium text-[var(--text-secondary)] mt-10 mb-4">{t('evidence.caseHeading')}</h3>
           <div className="grid gap-6 sm:grid-cols-2">
             {caseStudies.map((project, i) => (
               <ProjectCard key={project.slug} project={project} priority={i < 2} />

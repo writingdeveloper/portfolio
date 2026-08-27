@@ -1,7 +1,3 @@
 export function PageTransition({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="animate-fade-slide-in">
-      {children}
-    </div>
-  )
+  return <div className="animate-fade-slide-in">{children}</div>
 }

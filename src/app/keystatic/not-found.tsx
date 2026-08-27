@@ -19,9 +19,7 @@ export default function KeystaticNotFound() {
       }}
     >
       <h1 style={{ fontSize: '20px', fontWeight: 600, margin: 0 }}>404 — Not Found</h1>
-      <p style={{ fontSize: '14px', color: '#6b7280', margin: 0 }}>
-        This page could not be found.
-      </p>
+      <p style={{ fontSize: '14px', color: '#6b7280', margin: 0 }}>This page could not be found.</p>
     </main>
   )
 }

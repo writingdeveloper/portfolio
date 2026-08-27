@@ -3,12 +3,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
 import type { Metadata } from 'next'
 import { PageTransition } from '@/components/ui/PageTransition'
-import {
-  SITE_URL,
-  CONTACT_EMAIL,
-  ADSENSE_CLIENT,
-  GA_MEASUREMENT_ID,
-} from '@/lib/constants'
+import { SITE_URL, CONTACT_EMAIL, ADSENSE_CLIENT, GA_MEASUREMENT_ID } from '@/lib/constants'
 import { generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 
 // The copy is static: it only moves when the set of third-party scripts moves,
@@ -25,14 +20,9 @@ export const revalidate = 3600
 const ADS_SETTINGS_URL = 'https://myadcenter.google.com/'
 const ABOUT_ADS_URL = 'https://www.aboutads.info/choices/'
 const GISCUS_URL = 'https://giscus.app'
-const GITHUB_PRIVACY_URL =
-  'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement'
+const GITHUB_PRIVACY_URL = 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement'
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'privacy' })
   const localePath = locale === 'ko' ? '' : `/${locale}`
@@ -68,11 +58,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function PrivacyPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+export default async function PrivacyPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
   return <PrivacyContent />
@@ -132,16 +118,11 @@ function PrivacyContent() {
 
   return (
     <PageTransition>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
 
       <div className="max-w-3xl mx-auto">
         <header className="mb-10">
-          <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
-            {t('title')}
-          </h1>
+          <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">{t('title')}</h1>
           <p className="text-lg text-[var(--text-secondary)]">{t('description')}</p>
           <p className="mt-4 ledger-mono text-[10px] tracking-[0.25em] uppercase text-[var(--text-muted)]">
             {t('updatedLabel')} · {t('updated')}
@@ -153,20 +134,12 @@ function PrivacyContent() {
         <div className="space-y-8">
           <Section heading={t('direct.heading')}>{t('direct.body')}</Section>
 
-          <Section
-            heading={t('analytics.heading')}
-            idLabel={t('analytics.idLabel')}
-            idValue={GA_MEASUREMENT_ID}
-          >
+          <Section heading={t('analytics.heading')} idLabel={t('analytics.idLabel')} idValue={GA_MEASUREMENT_ID}>
             {t('analytics.body')}
           </Section>
 
           {/* The two opt-out links are what AdSense actually requires here. */}
-          <Section
-            heading={t('ads.heading')}
-            idLabel={t('ads.idLabel')}
-            idValue={ADSENSE_CLIENT}
-          >
+          <Section heading={t('ads.heading')} idLabel={t('ads.idLabel')} idValue={ADSENSE_CLIENT}>
             {t.rich('ads.body', {
               ads: (chunks) => <Ext href={ADS_SETTINGS_URL}>{chunks}</Ext>,
               aboutads: (chunks) => <Ext href={ABOUT_ADS_URL}>{chunks}</Ext>,

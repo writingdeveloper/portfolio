@@ -56,64 +56,81 @@ async function CodeBlock(props: ComponentPropsWithoutRef<'pre'>) {
 export function createMdxComponents() {
   const uniqueSlug = createSlugCounter()
   return {
-  h1: (props: ComponentPropsWithoutRef<'h1'>) => (
-    <h2 id={uniqueSlug(generateSlug(props.children))} className="text-2xl sm:text-3xl font-bold mt-10 mb-4 scroll-mt-20" {...props} />
-  ),
-  h2: (props: ComponentPropsWithoutRef<'h2'>) => (
-    <h2 id={uniqueSlug(generateSlug(props.children))} className="text-xl sm:text-2xl font-bold mt-10 mb-4 scroll-mt-20" {...props} />
-  ),
-  h3: (props: ComponentPropsWithoutRef<'h3'>) => (
-    <h3 id={uniqueSlug(generateSlug(props.children))} className="text-lg sm:text-xl font-semibold mt-8 mb-3 scroll-mt-20" {...props} />
-  ),
-  h4: (props: ComponentPropsWithoutRef<'h4'>) => (
-    <h4 className="text-base sm:text-lg font-semibold mt-6 mb-2" {...props} />
-  ),
-  p: (props: ComponentPropsWithoutRef<'p'>) => <p className="my-4 leading-relaxed" {...props} />,
-  a: (props: ComponentPropsWithoutRef<'a'>) => {
-    const isExternal = props.href?.startsWith('http')
-    return (
-      <a
-        className="text-[var(--accent-text)] hover:text-[var(--accent-text-hover)] underline underline-offset-2"
-        {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+    h1: (props: ComponentPropsWithoutRef<'h1'>) => (
+      <h2
+        id={uniqueSlug(generateSlug(props.children))}
+        className="text-2xl sm:text-3xl font-bold mt-10 mb-4 scroll-mt-20"
         {...props}
       />
-    )
-  },
-  ul: (props: ComponentPropsWithoutRef<'ul'>) => <ul className="list-disc pl-6 my-4 space-y-1" {...props} />,
-  ol: (props: ComponentPropsWithoutRef<'ol'>) => <ol className="list-decimal pl-6 my-4 space-y-1" {...props} />,
-  li: (props: ComponentPropsWithoutRef<'li'>) => <li className="leading-relaxed" {...props} />,
-  blockquote: (props: ComponentPropsWithoutRef<'blockquote'>) => (
-    <blockquote className="border-l-4 border-[var(--accent-text)] pl-4 italic text-[var(--text-secondary)] my-6" {...props} />
-  ),
-  code: (props: ComponentPropsWithoutRef<'code'>) => {
-    if (props.className) {
-      return <code {...props} />
-    }
-    return <code className="bg-[var(--inline-code-bg)] px-1.5 py-0.5 rounded text-sm" {...props} />
-  },
-  pre: CodeBlock,
-  img: (props: ComponentPropsWithoutRef<'img'>) => {
-    // MDX content images don't carry real dimensions, so we use the max
-    // rendered column width as a hint and let CSS scale to fit. next/image
-    // will still serve AVIF/WebP variants via the optimizer.
-    const src = typeof props.src === 'string' ? props.src : ''
-    if (!src) return null
-    const alt = props.alt || ''
-    return (
-      <figure className="my-8">
-        <Image
-          src={src}
-          alt={alt}
-          width={1600}
-          height={900}
-          className="rounded-lg w-full h-auto"
-          sizes="(max-width: 768px) 100vw, 768px"
-          unoptimized={src.startsWith('http')}
+    ),
+    h2: (props: ComponentPropsWithoutRef<'h2'>) => (
+      <h2
+        id={uniqueSlug(generateSlug(props.children))}
+        className="text-xl sm:text-2xl font-bold mt-10 mb-4 scroll-mt-20"
+        {...props}
+      />
+    ),
+    h3: (props: ComponentPropsWithoutRef<'h3'>) => (
+      <h3
+        id={uniqueSlug(generateSlug(props.children))}
+        className="text-lg sm:text-xl font-semibold mt-8 mb-3 scroll-mt-20"
+        {...props}
+      />
+    ),
+    h4: (props: ComponentPropsWithoutRef<'h4'>) => (
+      <h4 className="text-base sm:text-lg font-semibold mt-6 mb-2" {...props} />
+    ),
+    p: (props: ComponentPropsWithoutRef<'p'>) => <p className="my-4 leading-relaxed" {...props} />,
+    a: (props: ComponentPropsWithoutRef<'a'>) => {
+      const isExternal = props.href?.startsWith('http')
+      return (
+        <a
+          className="text-[var(--accent-text)] hover:text-[var(--accent-text-hover)] underline underline-offset-2"
+          {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          {...props}
         />
-      </figure>
-    )
-  },
-  strong: (props: ComponentPropsWithoutRef<'strong'>) => <strong className="font-semibold text-[var(--text-primary)]" {...props} />,
-  hr: () => <hr className="my-8 border-[var(--border-default)]" />,
+      )
+    },
+    ul: (props: ComponentPropsWithoutRef<'ul'>) => <ul className="list-disc pl-6 my-4 space-y-1" {...props} />,
+    ol: (props: ComponentPropsWithoutRef<'ol'>) => <ol className="list-decimal pl-6 my-4 space-y-1" {...props} />,
+    li: (props: ComponentPropsWithoutRef<'li'>) => <li className="leading-relaxed" {...props} />,
+    blockquote: (props: ComponentPropsWithoutRef<'blockquote'>) => (
+      <blockquote
+        className="border-l-4 border-[var(--accent-text)] pl-4 italic text-[var(--text-secondary)] my-6"
+        {...props}
+      />
+    ),
+    code: (props: ComponentPropsWithoutRef<'code'>) => {
+      if (props.className) {
+        return <code {...props} />
+      }
+      return <code className="bg-[var(--inline-code-bg)] px-1.5 py-0.5 rounded text-sm" {...props} />
+    },
+    pre: CodeBlock,
+    img: (props: ComponentPropsWithoutRef<'img'>) => {
+      // MDX content images don't carry real dimensions, so we use the max
+      // rendered column width as a hint and let CSS scale to fit. next/image
+      // will still serve AVIF/WebP variants via the optimizer.
+      const src = typeof props.src === 'string' ? props.src : ''
+      if (!src) return null
+      const alt = props.alt || ''
+      return (
+        <figure className="my-8">
+          <Image
+            src={src}
+            alt={alt}
+            width={1600}
+            height={900}
+            className="rounded-lg w-full h-auto"
+            sizes="(max-width: 768px) 100vw, 768px"
+            unoptimized={src.startsWith('http')}
+          />
+        </figure>
+      )
+    },
+    strong: (props: ComponentPropsWithoutRef<'strong'>) => (
+      <strong className="font-semibold text-[var(--text-primary)]" {...props} />
+    ),
+    hr: () => <hr className="my-8 border-[var(--border-default)]" />,
   }
 }

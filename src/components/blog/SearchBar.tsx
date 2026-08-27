@@ -22,20 +22,12 @@ export function SearchBar({ posts }: SearchBarProps) {
   const inputRef = useRef<HTMLInputElement>(null)
   const listRef = useRef<HTMLDivElement>(null)
 
-  const fuse = useMemo(
-    () => new Fuse(posts, { keys: ['title', 'excerpt', 'tags'], threshold: 0.3 }),
-    [posts]
-  )
+  const fuse = useMemo(() => new Fuse(posts, { keys: ['title', 'excerpt', 'tags'], threshold: 0.3 }), [posts])
 
-  const results = useMemo(
-    () => (query.length >= 2 ? fuse.search(query).map((r) => r.item) : []),
-    [fuse, query]
-  )
+  const results = useMemo(() => (query.length >= 2 ? fuse.search(query).map((r) => r.item) : []), [fuse, query])
   const isExpanded = query.length >= 2
   const activeOptionId =
-    activeIndex >= 0 && results[activeIndex]
-      ? `${listboxId}-option-${results[activeIndex].slug}`
-      : undefined
+    activeIndex >= 0 && results[activeIndex] ? `${listboxId}-option-${results[activeIndex].slug}` : undefined
 
   // Reset highlight whenever the query changes — render-phase state reset
   // (React's "storing information from previous renders" pattern).
@@ -47,9 +39,7 @@ export function SearchBar({ posts }: SearchBarProps) {
   // Keep the active option scrolled into view
   useEffect(() => {
     if (activeIndex < 0 || !listRef.current) return
-    const el = listRef.current.querySelector<HTMLElement>(
-      `[data-option-index="${activeIndex}"]`
-    )
+    const el = listRef.current.querySelector<HTMLElement>(`[data-option-index="${activeIndex}"]`)
     el?.scrollIntoView({ block: 'nearest' })
   }, [activeIndex])
 
@@ -156,16 +146,12 @@ export function SearchBar({ posts }: SearchBarProps) {
                   }`}
                 >
                   <p className="text-sm font-medium">{post.title}</p>
-                  <p className="text-xs text-[var(--text-muted)] line-clamp-1">
-                    {post.excerpt}
-                  </p>
+                  <p className="text-xs text-[var(--text-muted)] line-clamp-1">{post.excerpt}</p>
                 </div>
               )
             })
           ) : (
-            <p className="px-4 py-3 text-sm text-[var(--text-muted)]">
-              {t('noSearchResults')}
-            </p>
+            <p className="px-4 py-3 text-sm text-[var(--text-muted)]">{t('noSearchResults')}</p>
           )}
         </div>
       )}

@@ -25,13 +25,7 @@ interface PlaySemanticFallbackProps {
  *      it never does, this readable content is what remains — never a frozen
  *      black screen. FOLIO-19.
  */
-export async function PlaySemanticFallback({
-  projects,
-  skills,
-  timeline,
-  posts,
-  locale,
-}: PlaySemanticFallbackProps) {
+export async function PlaySemanticFallback({ projects, skills, timeline, posts, locale }: PlaySemanticFallbackProps) {
   const t = await getTranslations({ locale, namespace: 'play' })
   const th = await getTranslations({ locale, namespace: 'home' })
 
@@ -59,24 +53,16 @@ export async function PlaySemanticFallback({
         </header>
 
         <section aria-labelledby="sr-projects" className="mt-14">
-          <h2
-            id="sr-projects"
-            className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c4a35a]"
-          >
+          <h2 id="sr-projects" className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c4a35a]">
             {sectionLabels.projects}
           </h2>
           <ul className="mt-5 space-y-5">
             {projects.map((p) => {
               const description = locale === 'ko' ? p.descriptionKo : p.descriptionEn
               return (
-                <li
-                  key={p.name}
-                  className="rounded-xl border border-white/5 bg-white/[0.02] p-5"
-                >
+                <li key={p.name} className="rounded-xl border border-white/5 bg-white/[0.02] p-5">
                   <strong className="text-[#f4f1ff] font-semibold">{p.name}</strong>
-                  {description ? (
-                    <p className="mt-1.5 text-sm leading-relaxed text-[#b8b8cc]">{description}</p>
-                  ) : null}
+                  {description ? <p className="mt-1.5 text-sm leading-relaxed text-[#b8b8cc]">{description}</p> : null}
                   {p.website ? (
                     <a
                       href={p.website}
@@ -95,10 +81,7 @@ export async function PlaySemanticFallback({
         </section>
 
         <section aria-labelledby="sr-skills" className="mt-14">
-          <h2
-            id="sr-skills"
-            className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c4a35a]"
-          >
+          <h2 id="sr-skills" className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c4a35a]">
             {sectionLabels.skills}
           </h2>
           <ul className="mt-5 flex flex-wrap gap-2">
@@ -115,10 +98,7 @@ export async function PlaySemanticFallback({
         </section>
 
         <section aria-labelledby="sr-timeline" className="mt-14">
-          <h2
-            id="sr-timeline"
-            className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c4a35a]"
-          >
+          <h2 id="sr-timeline" className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c4a35a]">
             {sectionLabels.timeline}
           </h2>
           <ul className="mt-5 space-y-5">
@@ -137,10 +117,7 @@ export async function PlaySemanticFallback({
         </section>
 
         <section aria-labelledby="sr-blog" className="mt-14">
-          <h2
-            id="sr-blog"
-            className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c4a35a]"
-          >
+          <h2 id="sr-blog" className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c4a35a]">
             {sectionLabels.blog}
           </h2>
           <ul className="mt-5 space-y-4">

@@ -14,11 +14,7 @@ import { generatePersonJsonLd, generateBreadcrumbJsonLd, safeJsonLd } from '@/li
 // Revalidate every hour — about page is static content.
 export const revalidate = 3600
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'about' })
   const localePath = locale === 'ko' ? '' : `/${locale}`
@@ -36,7 +32,14 @@ export async function generateMetadata({
       locale: locale === 'ko' ? 'ko_KR' : 'en_US',
       alternateLocale: locale === 'ko' ? ['en_US'] : ['ko_KR'],
       type: 'profile',
-      images: [{ url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`, width: 1200, height: 630, alt: t('title') }],
+      images: [
+        {
+          url: `${SITE_URL}/api/og?title=${encodeURIComponent(t('title'))}&description=${encodeURIComponent(t('description'))}`,
+          width: 1200,
+          height: 630,
+          alt: t('title'),
+        },
+      ],
     },
     alternates: {
       canonical: pageUrl,
@@ -45,11 +48,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function AboutPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
 
@@ -70,14 +69,8 @@ function AboutContent() {
 
   return (
     <PageTransition>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(personJsonLd) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(personJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
       <div className="max-w-3xl mx-auto">
         <header className="mb-12">
           <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-2">{t('title')}</h1>
@@ -108,14 +101,16 @@ function AboutContent() {
                       href={item.href}
                       className="underline decoration-[var(--border-hover)] underline-offset-4 hover:decoration-[var(--text-primary)] transition-colors"
                     >
-                      {locale === 'en' ? (item.titleEn || item.titleKo) : item.titleKo}
+                      {locale === 'en' ? item.titleEn || item.titleKo : item.titleKo}
                     </Link>
+                  ) : locale === 'en' ? (
+                    item.titleEn || item.titleKo
                   ) : (
-                    locale === 'en' ? (item.titleEn || item.titleKo) : item.titleKo
+                    item.titleKo
                   )}
                 </h3>
                 <p className="text-sm text-[var(--text-secondary)] mt-1">
-                  {locale === 'en' ? (item.descriptionEn || item.descriptionKo) : item.descriptionKo}
+                  {locale === 'en' ? item.descriptionEn || item.descriptionKo : item.descriptionKo}
                 </p>
               </div>
             ))}

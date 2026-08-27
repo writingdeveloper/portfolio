@@ -81,7 +81,7 @@ describe('hasIndexablePage', () => {
         ...bare,
         private: true,
         github: 'https://github.com/writingdeveloper/secret',
-      }),
+      })
     ).toBe(false)
   })
 
@@ -92,7 +92,7 @@ describe('hasIndexablePage', () => {
         private: true,
         github: 'https://github.com/writingdeveloper/secret',
         website: 'https://demo.example.com',
-      }),
+      })
     ).toBe(true)
   })
 
@@ -108,7 +108,7 @@ describe('hasIndexablePage', () => {
           private: true,
           github: 'https://github.com/writingdeveloper/secret',
         }),
-        `${slug} has a showcase page but was filtered out as thin`,
+        `${slug} has a showcase page but was filtered out as thin`
       ).toBe(true)
     }
   })
@@ -209,13 +209,16 @@ describe('HOME_GROUPS', () => {
   })
 })
 
-
 describe('portfolio selection and truthful stats', () => {
   it('counts builds, public destinations, Play Store listings, and featured work separately', () => {
     const sample = [
       { website: 'https://a.example.com', playStore: undefined, featured: true },
       { website: undefined, playStore: 'https://play.google.com/store/apps/details?id=b', featured: false },
-      { website: 'https://c.example.com', playStore: 'https://play.google.com/store/apps/details?id=c', featured: true },
+      {
+        website: 'https://c.example.com',
+        playStore: 'https://play.google.com/store/apps/details?id=c',
+        featured: true,
+      },
       { website: undefined, playStore: undefined, featured: false },
     ]
     expect(getPortfolioStats(sample)).toEqual({ builds: 4, public: 3, playStore: 2, featured: 2 })
@@ -226,7 +229,6 @@ describe('portfolio selection and truthful stats', () => {
     expect(new Set(SELECTED_WORK).size).toBe(5)
   })
 })
-
 
 describe('JuiceBar ledger refresh', () => {
   const ledger = projectsData.projects as Project[]
@@ -245,7 +247,6 @@ describe('JuiceBar ledger refresh', () => {
   })
 })
 
-
 describe('portfolio information architecture', () => {
   it('aligns hire case studies with RAG, MCP pipelines, and product ownership', () => {
     expect(HIRE_CASE_STUDIES).toEqual(['citefirst', 'studios', 'soursea'])
@@ -255,11 +256,10 @@ describe('portfolio information architecture', () => {
     const projects = projectsData.projects as Project[]
     const { selected, rest } = partitionProjects(projects)
     expect(selected.map((project) => project.slug)).toEqual([...SELECTED_WORK])
-    expect(rest.some((project) => SELECTED_WORK.includes(project.slug as typeof SELECTED_WORK[number]))).toBe(false)
+    expect(rest.some((project) => SELECTED_WORK.includes(project.slug as (typeof SELECTED_WORK)[number]))).toBe(false)
     expect(selected.length + rest.length).toBe(projects.length)
   })
 })
-
 
 describe('project case-study sections', () => {
   it('returns Problem, Decision, Evidence, Result in order for the requested locale', () => {

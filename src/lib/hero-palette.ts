@@ -132,9 +132,7 @@ export function evaluatePalette(stats: PaletteStats): PaletteVerdict {
   const pct = (n: number) => `${(n * 100).toFixed(2)}%`
 
   if (ratios.background < MIN_BACKGROUND_RATIO) {
-    failures.push(
-      `background ${pct(ratios.background)} is below the ${pct(MIN_BACKGROUND_RATIO)} floor`,
-    )
+    failures.push(`background ${pct(ratios.background)} is below the ${pct(MIN_BACKGROUND_RATIO)} floor`)
   }
   if (ratios.accent < MIN_ACCENT_RATIO) {
     failures.push(`accent ${pct(ratios.accent)} is below the ${pct(MIN_ACCENT_RATIO)} floor`)

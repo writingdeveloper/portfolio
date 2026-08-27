@@ -13,7 +13,7 @@ describe('generateProjectJsonLd', () => {
   it('types a Play Store project as MobileApplication and carries the install URL', () => {
     const ld = generateProjectJsonLd(
       { ...base, playStore: 'https://play.google.com/store/apps/details?id=com.soursea.drymora' },
-      'ko',
+      'ko'
     ) as Record<string, unknown>
 
     expect(ld['@type']).toBe('MobileApplication')
@@ -23,10 +23,10 @@ describe('generateProjectJsonLd', () => {
   })
 
   it('types a live web project as WebApplication, which may carry a screenshot', () => {
-    const ld = generateProjectJsonLd(
-      { ...base, website: 'https://drymora.writingdeveloper.blog' },
-      'en',
-    ) as Record<string, unknown>
+    const ld = generateProjectJsonLd({ ...base, website: 'https://drymora.writingdeveloper.blog' }, 'en') as Record<
+      string,
+      unknown
+    >
 
     expect(ld['@type']).toBe('WebApplication')
     expect(ld.screenshot).toBe(base.image)
@@ -35,10 +35,7 @@ describe('generateProjectJsonLd', () => {
   it('falls back to CreativeWork and claims no screenshot when there is no app', () => {
     // screenshot is a SoftwareApplication property; asserting it on a plain
     // CreativeWork would be invalid structured data.
-    const ld = generateProjectJsonLd({ ...base, github: 'https://github.com/x/y' }, 'ko') as Record<
-      string,
-      unknown
-    >
+    const ld = generateProjectJsonLd({ ...base, github: 'https://github.com/x/y' }, 'ko') as Record<string, unknown>
 
     expect(ld['@type']).toBe('CreativeWork')
     expect(ld.screenshot).toBeUndefined()
@@ -53,7 +50,7 @@ describe('generateProjectJsonLd', () => {
         github: 'https://github.com/x/y',
         playStore: 'https://play.google.com/store/apps/details?id=com.soursea.drymora',
       },
-      'ko',
+      'ko'
     ) as Record<string, unknown>
 
     expect(ld.sameAs).toEqual([
@@ -76,7 +73,7 @@ describe('generateProjectJsonLd', () => {
   it('honours an explicit application category', () => {
     const ld = generateProjectJsonLd(
       { ...base, playStore: 'https://play.google.com/x', appCategory: 'GameApplication' },
-      'ko',
+      'ko'
     ) as Record<string, unknown>
     expect(ld.applicationCategory).toBe('GameApplication')
   })

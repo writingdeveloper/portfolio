@@ -28,9 +28,7 @@ export function Tombstone({ tomb }: TombstoneProps) {
         aria-controls={panelId}
         className="w-full text-center px-4 sm:px-6 pt-8 pb-5 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--border-hover)]"
       >
-        <p className="text-xs tracking-[0.3em] text-[var(--text-muted)] mb-3">
-          {t('restInPeace')}
-        </p>
+        <p className="text-xs tracking-[0.3em] text-[var(--text-muted)] mb-3">{t('restInPeace')}</p>
         <div className="flex items-center justify-center gap-2">
           <h3 className="font-semibold text-lg">{tomb.name}</h3>
           {tomb.private && (
@@ -40,11 +38,7 @@ export function Tombstone({ tomb }: TombstoneProps) {
           )}
         </div>
         <p className="text-sm text-[var(--text-muted)] mt-1 font-mono">{lifespan}</p>
-        {epitaph && (
-          <p className="text-sm text-[var(--text-secondary)] italic mt-3">
-            &ldquo;{epitaph}&rdquo;
-          </p>
-        )}
+        {epitaph && <p className="text-sm text-[var(--text-secondary)] italic mt-3">&ldquo;{epitaph}&rdquo;</p>}
         <ChevronDown
           size={18}
           aria-hidden="true"
@@ -61,16 +55,18 @@ export function Tombstone({ tomb }: TombstoneProps) {
           </div>
 
           {retro && (
-            <p className="text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-line mb-4">
-              {retro}
-            </p>
+            <p className="text-sm text-[var(--text-secondary)] leading-relaxed whitespace-pre-line mb-4">{retro}</p>
           )}
 
           {successor && (
             <p className="mb-4">
               {successor.url ? (
-                <a href={successor.url} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm text-[var(--text-emphasis)] hover:opacity-80 transition-opacity">
+                <a
+                  href={successor.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm text-[var(--text-emphasis)] hover:opacity-80 transition-opacity"
+                >
                   {t('continuedAs', { name: successor.name })} <ArrowRight size={14} />
                 </a>
               ) : (
@@ -84,7 +80,10 @@ export function Tombstone({ tomb }: TombstoneProps) {
           {tomb.techStack?.length > 0 && (
             <div className="flex flex-wrap gap-1.5 mb-4">
               {tomb.techStack.map((tech) => (
-                <span key={tech} className="text-xs px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]">
+                <span
+                  key={tech}
+                  className="text-xs px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]"
+                >
                   {tech}
                 </span>
               ))}
@@ -94,14 +93,22 @@ export function Tombstone({ tomb }: TombstoneProps) {
           {(tomb.website || (tomb.github && !tomb.private)) && (
             <div className="flex gap-3">
               {tomb.website && (
-                <a href={tomb.website} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
+                <a
+                  href={tomb.website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors"
+                >
                   <ExternalLink size={14} /> {t('viewTraces')}
                 </a>
               )}
               {tomb.github && !tomb.private && (
-                <a href={tomb.github} target="_blank" rel="noopener noreferrer"
-                  className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors">
+                <a
+                  href={tomb.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)] hover:text-[var(--text-emphasis)] transition-colors"
+                >
                   <Github size={14} /> {t('viewCode')}
                 </a>
               )}

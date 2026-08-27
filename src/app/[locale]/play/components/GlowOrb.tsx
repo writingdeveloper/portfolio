@@ -22,19 +22,11 @@ export function GlowOrb({ position, label, color, size = 0.3 }: GlowOrbProps) {
   useFrame(() => {
     if (meshRef.current) {
       const mat = meshRef.current.material as MeshPhysicalMaterial
-      mat.emissiveIntensity = MathUtils.lerp(
-        mat.emissiveIntensity,
-        hovered ? 0.4 : 0.1,
-        0.06
-      )
+      mat.emissiveIntensity = MathUtils.lerp(mat.emissiveIntensity, hovered ? 0.4 : 0.1, 0.06)
     }
     if (glowRef.current) {
       const mat = glowRef.current.material as MeshBasicMaterial
-      mat.opacity = MathUtils.lerp(
-        mat.opacity,
-        hovered ? 0.15 : 0.05,
-        0.06
-      )
+      mat.opacity = MathUtils.lerp(mat.opacity, hovered ? 0.15 : 0.05, 0.06)
     }
     if (ringRef.current) {
       ringRef.current.rotation.z += 0.01
@@ -49,18 +41,19 @@ export function GlowOrb({ position, label, color, size = 0.3 }: GlowOrbProps) {
         {/* Outer glow sphere */}
         <mesh ref={glowRef}>
           <sphereGeometry args={[size * 1.6, 24, 24]} />
-          <meshBasicMaterial
-            color={color}
-            transparent
-            opacity={0.05}
-            depthWrite={false}
-          />
+          <meshBasicMaterial color={color} transparent opacity={0.05} depthWrite={false} />
         </mesh>
         {/* Main sphere — frosted glass */}
         <mesh
           ref={meshRef}
-          onPointerOver={() => { setHovered(true); document.body.style.cursor = 'pointer' }}
-          onPointerOut={() => { setHovered(false); document.body.style.cursor = 'default' }}
+          onPointerOver={() => {
+            setHovered(true)
+            document.body.style.cursor = 'pointer'
+          }}
+          onPointerOut={() => {
+            setHovered(false)
+            document.body.style.cursor = 'default'
+          }}
         >
           <sphereGeometry args={[size, 32, 32]} />
           <meshPhysicalMaterial

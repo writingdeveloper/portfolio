@@ -35,10 +35,7 @@ interface PlayClientProps {
 function detectWebGL(): boolean {
   try {
     const canvas = document.createElement('canvas')
-    return Boolean(
-      window.WebGLRenderingContext &&
-        (canvas.getContext('webgl2') || canvas.getContext('webgl')),
-    )
+    return Boolean(window.WebGLRenderingContext && (canvas.getContext('webgl2') || canvas.getContext('webgl')))
   } catch {
     return false
   }
@@ -49,9 +46,7 @@ export function PlayClient({ projects, skills, timeline, posts, locale }: PlayCl
   const th = useTranslations('home')
   const [selectedItem, setSelectedItem] = useState<DetailItem | null>(null)
   const [activeSection, setActiveSection] = useState(0)
-  const [isMobile] = useState(
-    () => typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0
-  )
+  const [isMobile] = useState(() => typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0)
   // Gate the Canvas on real WebGL support so devices without it fall through to
   // the visible PlaySemanticFallback instead of showing a blank/black canvas.
   // Lazy initializer is safe here: PlayClient is loaded with ssr:false, so it

@@ -42,10 +42,7 @@ export function SkillsSection({ skills, locale, sectionLabel }: SkillsSectionPro
         const catX = categoryX(catIdx, Object.keys(grouped).length)
         return (
           <group key={category}>
-            <SectionLabel
-              position={[catX, sectionY + 2.5, 0]}
-              label={categoryLabel(category)}
-            />
+            <SectionLabel position={[catX, sectionY + 2.5, 0]} label={categoryLabel(category)} />
             {items.map((skill, i) => {
               const row = Math.floor(i / 3)
               const col = i % 3

@@ -5,10 +5,7 @@ import type { Tombstone } from '@/types/content'
  * Korean text when an English field is empty, mirroring the ProjectCard rule so
  * a half-translated entry still renders something rather than a blank.
  */
-export function tombstoneCopy(
-  tomb: Tombstone,
-  locale: string,
-): { epitaph: string; retro: string; lifespan: string } {
+export function tombstoneCopy(tomb: Tombstone, locale: string): { epitaph: string; retro: string; lifespan: string } {
   const en = locale === 'en'
   return {
     epitaph: en ? tomb.epitaphEn || tomb.epitaphKo : tomb.epitaphKo,

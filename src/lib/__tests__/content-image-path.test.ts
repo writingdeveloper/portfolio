@@ -6,10 +6,7 @@ const CONTENT_DIR = path.join(process.cwd(), 'content', 'posts')
 
 describe('validateContentImageRequest', () => {
   it('accepts a well-formed request', () => {
-    const result = validateContentImageRequest(
-      ['ko', 'hello', 'image.png'],
-      CONTENT_DIR
-    )
+    const result = validateContentImageRequest(['ko', 'hello', 'image.png'], CONTENT_DIR)
     expect(result.ok).toBe(true)
     if (result.ok) {
       expect(result.contentType).toBe('image/png')
@@ -28,10 +25,7 @@ describe('validateContentImageRequest', () => {
   })
 
   it('rejects unknown locale', () => {
-    const result = validateContentImageRequest(
-      ['fr', 'slug', 'img.png'],
-      CONTENT_DIR
-    )
+    const result = validateContentImageRequest(['fr', 'slug', 'img.png'], CONTENT_DIR)
     expect(result.ok).toBe(false)
     if (!result.ok) expect(result.error).toBe('forbidden-locale')
   })
@@ -54,45 +48,30 @@ describe('validateContentImageRequest', () => {
   })
 
   it('rejects unsupported file types', () => {
-    const result = validateContentImageRequest(
-      ['ko', 'slug', 'script.js'],
-      CONTENT_DIR
-    )
+    const result = validateContentImageRequest(['ko', 'slug', 'script.js'], CONTENT_DIR)
     expect(result.ok).toBe(false)
     if (!result.ok) expect(result.error).toBe('unsupported-mime')
 
-    const txt = validateContentImageRequest(
-      ['ko', 'slug', 'readme.txt'],
-      CONTENT_DIR
-    )
+    const txt = validateContentImageRequest(['ko', 'slug', 'readme.txt'], CONTENT_DIR)
     expect(txt.ok).toBe(false)
     if (!txt.ok) expect(txt.error).toBe('unsupported-mime')
   })
 
   it('accepts all allowlisted image extensions', () => {
     for (const ext of ['png', 'jpg', 'jpeg', 'gif', 'webp', 'avif']) {
-      const result = validateContentImageRequest(
-        ['ko', 'slug', `img.${ext}`],
-        CONTENT_DIR
-      )
+      const result = validateContentImageRequest(['ko', 'slug', `img.${ext}`], CONTENT_DIR)
       expect(result.ok, `Extension ${ext} should be accepted`).toBe(true)
     }
   })
 
   it('case-insensitive extension', () => {
-    const result = validateContentImageRequest(
-      ['ko', 'slug', 'IMG.PNG'],
-      CONTENT_DIR
-    )
+    const result = validateContentImageRequest(['ko', 'slug', 'IMG.PNG'], CONTENT_DIR)
     expect(result.ok).toBe(true)
     if (result.ok) expect(result.contentType).toBe('image/png')
   })
 
   it('produces both direct and subdirectory candidate paths', () => {
-    const result = validateContentImageRequest(
-      ['en', 'my-post', 'cover.webp'],
-      CONTENT_DIR
-    )
+    const result = validateContentImageRequest(['en', 'my-post', 'cover.webp'], CONTENT_DIR)
     expect(result.ok).toBe(true)
     if (result.ok) {
       expect(result.candidates[0]).toContain(path.join('en', 'my-post', 'cover.webp'))

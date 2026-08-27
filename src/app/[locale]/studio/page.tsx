@@ -15,11 +15,7 @@ import type { Project } from '@/types/content'
 // part is the blog cover list, which changes when a post ships.
 export const revalidate = 3600
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: 'studio' })
   const localePath = locale === 'ko' ? '' : `/${locale}`
@@ -55,11 +51,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function StudioPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>
-}) {
+export default async function StudioPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
   return <StudioContent />
@@ -69,9 +61,7 @@ export default async function StudioPage({
 function RecordRow({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex items-baseline justify-between gap-4 border-b border-[var(--border-subtle)] py-2 last:border-b-0">
-      <dt className="ledger-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">
-        {label}
-      </dt>
+      <dt className="ledger-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">{label}</dt>
       <dd className="ledger-mono text-right text-xs text-[var(--text-secondary)]">{value}</dd>
     </div>
   )
@@ -110,16 +100,11 @@ function StudioContent() {
 
   return (
     <PageTransition>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(breadcrumbJsonLd) }} />
 
       <div className="max-w-4xl mx-auto">
         <header className="mb-10">
-          <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">
-            {t('title')}
-          </h1>
+          <h1 className="ledger-display text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">{t('title')}</h1>
           <p className="text-lg text-[var(--text-secondary)]">{t('description')}</p>
           <div className="mt-5 flex flex-wrap gap-2">
             {badges.map((badge) => (
@@ -152,10 +137,7 @@ function StudioContent() {
 
           <div className="space-y-10">
             {WALK_HOPS.map((hop) => (
-              <article
-                key={hop.key}
-                className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] sm:items-start"
-              >
+              <article key={hop.key} className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] sm:items-start">
                 <div className="overflow-hidden rounded-lg border border-[var(--border-default)] bg-[var(--bg-elevated)]">
                   {/* The page's largest image and the first one a reader
                       scrolls to, so it is the LCP candidate here. Left lazy it
@@ -171,12 +153,8 @@ function StudioContent() {
                   />
                 </div>
                 <div>
-                  <h3 className="ledger-display text-lg font-bold mb-2">
-                    {t(`hops.${hop.key}.heading`)}
-                  </h3>
-                  <p className="text-sm text-[var(--text-secondary)] mb-4">
-                    {t(`hops.${hop.key}.body`)}
-                  </p>
+                  <h3 className="ledger-display text-lg font-bold mb-2">{t(`hops.${hop.key}.heading`)}</h3>
+                  <p className="text-sm text-[var(--text-secondary)] mb-4">{t(`hops.${hop.key}.body`)}</p>
                   <dl>
                     {hop.record.map((row) => (
                       <RecordRow key={row.key} label={t(`record.${row.key}`)} value={row.value} />
@@ -212,9 +190,7 @@ function StudioContent() {
                   <span className="ledger-mono block text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">
                     {t('record.seed')} {reject.seed}
                   </span>
-                  <p className="mt-1.5 text-sm text-[var(--text-secondary)]">
-                    {t(`rejects.${reject.noteKey}`)}
-                  </p>
+                  <p className="mt-1.5 text-sm text-[var(--text-secondary)]">{t(`rejects.${reject.noteKey}`)}</p>
                 </figcaption>
               </figure>
             ))}
@@ -300,9 +276,7 @@ function StudioContent() {
               href={hireHref}
               className="flex flex-col gap-1 bg-[var(--bg-elevated)] p-5 transition-opacity hover:opacity-90"
             >
-              <span className="ledger-mono text-[10px] tracking-[0.25em] uppercase text-[var(--text-muted)]">
-                HIRE
-              </span>
+              <span className="ledger-mono text-[10px] tracking-[0.25em] uppercase text-[var(--text-muted)]">HIRE</span>
               <span className="text-sm text-[var(--text-primary)]">{t('links.hire')}</span>
             </Link>
           </div>

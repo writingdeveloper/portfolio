@@ -44,18 +44,13 @@ describe('classifyOutboundLink', () => {
   })
 
   it('classifies a Play Store listing', () => {
-    const hit = classifyOutboundLink(
-      'https://play.google.com/store/apps/details?id=com.soursea.coinrace',
-      SITE,
-    )
+    const hit = classifyOutboundLink('https://play.google.com/store/apps/details?id=com.soursea.coinrace', SITE)
     expect(hit?.name).toBe('play_store_click')
     expect(hit?.params.link_domain).toBe('play.google.com')
   })
 
   it('classifies a source-code host', () => {
-    expect(classifyOutboundLink('https://github.com/writingdeveloper/citefirst', SITE)?.name).toBe(
-      'code_click',
-    )
+    expect(classifyOutboundLink('https://github.com/writingdeveloper/citefirst', SITE)?.name).toBe('code_click')
   })
 
   it('classifies any other external host as a demo click', () => {
@@ -87,9 +82,7 @@ describe('classifyOutboundLink', () => {
   })
 
   it('classifies LinkedIn without the www subdomain too', () => {
-    expect(classifyOutboundLink('https://linkedin.com/in/sihyeonglee/', SITE)?.name).toBe(
-      'contact_click',
-    )
+    expect(classifyOutboundLink('https://linkedin.com/in/sihyeonglee/', SITE)?.name).toBe('contact_click')
   })
 
   it('keeps mailto and LinkedIn separable by domain', () => {
