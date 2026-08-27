@@ -12,6 +12,19 @@ describe('getAllPosts', () => {
     }
   })
 
+  it('normalizes all frontmatter dates to canonical strings', () => {
+    for (const locale of ['ko', 'en']) {
+      for (const post of getAllPosts(locale)) {
+        expect(typeof post.publishedAt).toBe('string')
+        expect(post.publishedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+        if (post.updatedAt) {
+          expect(typeof post.updatedAt).toBe('string')
+          expect(post.updatedAt).toMatch(/^\d{4}-\d{2}-\d{2}$/)
+        }
+      }
+    }
+  })
+
   it('cross-locale hasTranslation flag is populated', () => {
     const ko = getAllPosts('ko')
     const en = getAllPosts('en')

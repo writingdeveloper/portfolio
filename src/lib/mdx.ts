@@ -103,20 +103,12 @@ function loadLocaleMap(locale: string): PostMap {
       // accepted lie.
       const str = (v: unknown): string => (typeof v === 'string' ? v : '')
 
-      // `publishedAt` is the one field PostMeta types as `string` that can
-      // legitimately hold something else at runtime: a post that leaves the
-      // date unquoted in YAML gets a `Date` back from js-yaml, not a string.
-      // That mismatch predates this dependency swap and getAllPosts sorts on
-      // the Date surviving intact, so the escape hatch stays scoped to just
-      // this field rather than fixed here.
-      const publishedAtVerbatim = (v: unknown): string => (v || '') as string
-
       map.set(slug, {
         meta: {
           slug,
           title: str(data.title),
           excerpt: str(data.excerpt),
-          publishedAt: publishedAtVerbatim(data.publishedAt),
+          publishedAt: toDateString(data.publishedAt),
           updatedAt: toDateString(data.updatedAt),
           author: str(data.author),
           category: str(data.category),

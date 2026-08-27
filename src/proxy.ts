@@ -98,6 +98,9 @@ export default function proxy(request: NextRequest) {
     // creatives and the GA collect pixel — no change needed there.
     "img-src 'self' data: https:",
     "font-src 'self'",
+    // Drei/Troika builds SDF text in a blob-backed Web Worker. Keep blob:
+    // scoped to workers only; script-src remains nonce + explicit origins.
+    "worker-src 'self' blob:",
     // GA beacons (google-analytics / analytics.google.com / googletagmanager)
     // and AdSense's runtime XHR/beacon traffic (googlesyndication / doubleclick
     // / adtrafficquality) are added alongside the existing same-origin + giscus
