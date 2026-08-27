@@ -7,7 +7,7 @@ import { SITE_URL } from '@/lib/constants'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { generateBreadcrumbJsonLd, generateProjectListJsonLd, safeJsonLd, toAbsoluteUrl } from '@/lib/seo'
-import { sortProjectsFeaturedFirst, APP_CATEGORY } from '@/lib/projects'
+import { APP_CATEGORY, partitionProjects } from '@/lib/projects'
 import { getAllPosts } from '@/lib/mdx'
 import { buildProjectPostMap, type LinkedPost } from '@/lib/post-project-links'
 import { useLocale } from 'next-intl'
@@ -66,7 +66,8 @@ function ProjectsContent({ projectPosts }: { projectPosts: Map<string, LinkedPos
     { name: locale === 'ko' ? '홈' : 'Home', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}` },
     { name: locale === 'ko' ? '프로젝트' : 'Projects', url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/projects` },
   ])
-  const allProjects = sortProjectsFeaturedFirst(projectsData.projects as Project[])
+  const { selected, rest } = partitionProjects(projectsData.projects as Project[])
+  const allProjects = [...selected, ...rest]
   const projectListJsonLd = generateProjectListJsonLd(
     allProjects.map((project) => ({
       name: project.name,
@@ -95,17 +96,32 @@ function ProjectsContent({ projectPosts }: { projectPosts: Map<string, LinkedPos
           <p className="text-[var(--text-secondary)]">{t('description')}</p>
         </header>
 
-        <div className="grid gap-6 sm:grid-cols-2">
-          {allProjects.map((project, index) => (
-            // The grid is 2-up, so only the first row is above the fold.
-            <ProjectCard
-              key={project.slug}
-              project={project}
-              priority={index < 2}
-              relatedPost={projectPosts.get(project.slug)}
-            />
-          ))}
-        </div>
+        <section className="mb-16">
+          <div className="mb-6">
+            <h2 className="ledger-display text-2xl font-bold">{t('selectedWork')}</h2>
+            <p className="mt-1 text-sm text-[var(--text-secondary)]">{t('selectedWorkDescription')}</p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {selected.map((project, index) => (
+              <ProjectCard key={project.slug} project={project} priority={index < 2} relatedPost={projectPosts.get(project.slug)} />
+            ))}
+          </div>
+        </section>
+
+        <section>
+          <div className="mb-6 border-t border-[var(--border-default)] pt-10">
+            <div className="flex items-baseline justify-between gap-4">
+              <h2 className="ledger-display text-2xl font-bold">{t('fullLedger')}</h2>
+              <span className="ledger-mono text-xs text-[var(--text-muted)]">{rest.length}</span>
+            </div>
+            <p className="mt-1 text-sm text-[var(--text-secondary)]">{t('fullLedgerDescription')}</p>
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2">
+            {rest.map((project) => (
+              <ProjectCard key={project.slug} project={project} relatedPost={projectPosts.get(project.slug)} />
+            ))}
+          </div>
+        </section>
       </div>
     </PageTransition>
   )

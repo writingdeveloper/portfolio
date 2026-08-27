@@ -25,6 +25,13 @@ export function sortProjectsFeaturedFirst(projects: Project[]): Project[] {
   return [...projects].sort((a, b) => Number(b.featured) - Number(a.featured))
 }
 
+export function partitionProjects(projects: Project[]): { selected: Project[]; rest: Project[] } {
+  const bySlug = new Map(projects.map((project) => [project.slug, project]))
+  const selected = SELECTED_WORK.map((slug) => bySlug.get(slug)).filter((project): project is Project => Boolean(project))
+  const selectedSlugs = new Set(selected.map((project) => project.slug))
+  return { selected, rest: projects.filter((project) => !selectedSlugs.has(project.slug)) }
+}
+
 /**
  * schema.org applicationCategory per shipped app.
  *
@@ -132,7 +139,7 @@ export function getHireStats(
  * multi-feed aggregation. Chosen for spread, not for being the biggest.
  * A slug that stops resolving fails the test suite rather than the page.
  */
-export const HIRE_CASE_STUDIES = ['rentrights', 'healframe', 'argus-fusion'] as const
+export const HIRE_CASE_STUDIES = ['citefirst', 'studios', 'soursea'] as const
 
 /**
  * How the home page's ALL WORK section groups the ledger, in render order.

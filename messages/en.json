@@ -79,7 +79,11 @@
       "building": "Building",
       "launched": "Launched",
       "archived": "Archived"
-    }
+    },
+    "selectedWork": "Selected Work",
+    "selectedWorkDescription": "Five projects chosen to show different kinds of engineering decisions.",
+    "fullLedger": "Full Ledger",
+    "fullLedgerDescription": "The rest of the record, including work that is still being built."
   },
   "graveyard": {
     "title": "Project Graveyard",

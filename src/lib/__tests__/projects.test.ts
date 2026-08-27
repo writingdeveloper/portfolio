@@ -7,6 +7,7 @@ import {
   HOME_GROUPS,
   PROJECT_SHOWCASE,
   SELECTED_WORK,
+  partitionProjects,
   projectHref,
   sortProjectsFeaturedFirst,
 } from '../projects'
@@ -171,10 +172,10 @@ describe('HIRE_CASE_STUDIES', () => {
     expect(found, `${slug} is missing from projects.json`).toBeDefined()
   })
 
-  it('each case study has something to link to', () => {
+  it('each case study has enough evidence to justify a detail page', () => {
     for (const slug of HIRE_CASE_STUDIES) {
-      const p = (projectsData.projects as Project[]).find((x) => x.slug === slug)!
-      expect(Boolean(p.website || p.playStore)).toBe(true)
+      const project = (projectsData.projects as Project[]).find((item) => item.slug === slug)!
+      expect(hasIndexablePage(project)).toBe(true)
     }
   })
 })
@@ -240,5 +241,20 @@ describe('JuiceBar ledger refresh', () => {
 
   it('uses the selected-work list as the only featured set', () => {
     expect(ledger.filter((project) => project.featured).map((project) => project.slug)).toEqual([...SELECTED_WORK])
+  })
+})
+
+
+describe('portfolio information architecture', () => {
+  it('aligns hire case studies with RAG, MCP pipelines, and product ownership', () => {
+    expect(HIRE_CASE_STUDIES).toEqual(['citefirst', 'studios', 'soursea'])
+  })
+
+  it('partitions selected work in editorial order without duplicating it in the full ledger', () => {
+    const projects = projectsData.projects as Project[]
+    const { selected, rest } = partitionProjects(projects)
+    expect(selected.map((project) => project.slug)).toEqual([...SELECTED_WORK])
+    expect(rest.some((project) => SELECTED_WORK.includes(project.slug as typeof SELECTED_WORK[number]))).toBe(false)
+    expect(selected.length + rest.length).toBe(projects.length)
   })
 })

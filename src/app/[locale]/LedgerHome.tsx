@@ -3,7 +3,7 @@ import { Link } from '@/i18n/navigation'
 import type { Project, Tombstone } from '@/types/content'
 import type { PostMeta } from '@/lib/mdx'
 import { predecessorOf } from '@/lib/lineage'
-import { HOME_GROUPS } from '@/lib/projects'
+import { getPortfolioStats, HOME_GROUPS } from '@/lib/projects'
 
 // ── Builder's Ledger home ──────────────────────────────────────────────────
 // Immersive, full-bleed redesign generated in Claude Design and ported here:
@@ -121,7 +121,7 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
 }) {
   const featured = projects.filter((p) => p.featured)
   const bySlug = new Map(projects.map((p) => [p.slug, p]))
-  const playCount = projects.filter((p) => p.playStore).length
+  const portfolioStats = getPortfolioStats(projects)
 
   const groups = (Object.keys(HOME_GROUPS) as Array<keyof typeof HOME_GROUPS>).map((key) => {
     const items = HOME_GROUPS[key].map((slug) => bySlug.get(slug)).filter(Boolean) as Project[]
@@ -129,10 +129,10 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
   })
 
   const stats = [
-    { n: String(projects.length).padStart(2, '0'), label: 'SHIPPED', hot: true },
-    { n: String(tombstones.length).padStart(2, '0'), label: 'BURIED', hot: false },
-    { n: String(playCount).padStart(2, '0'), label: 'ON PLAY', hot: false },
-    { n: String(featured.length).padStart(2, '0'), label: 'FEATURED', hot: false },
+    { n: String(portfolioStats.builds).padStart(2, '0'), label: 'BUILDS', hot: true },
+    { n: String(portfolioStats.public).padStart(2, '0'), label: 'LIVE', hot: false },
+    { n: String(portfolioStats.playStore).padStart(2, '0'), label: 'ON PLAY', hot: false },
+    { n: String(portfolioStats.featured).padStart(2, '0'), label: 'FEATURED', hot: false },
   ]
 
   const nav = [
@@ -140,6 +140,7 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
     { i: '02', label: 'GRAVEYARD', href: '/graveyard' as const },
     { i: '03', label: 'BLOG', href: '/blog' as const },
     { i: '04', label: 'ABOUT', href: '/about' as const },
+    { i: '05', label: 'HIRE', href: '/hire' as const },
   ]
 
   return (
@@ -176,8 +177,8 @@ export function LedgerHome({ projects, tombstones, posts, locale }: {
           </h1>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed" style={{ color: MUTED }}>
             {locale === 'ko'
-              ? '30여 개의 웹·모바일·데스크톱·AI·게임 프로젝트를 직접 기획하고 출시합니다. 살아남은 것은 배포하고, 실패한 것은 정직하게 묻습니다.'
-              : 'I design and ship 30+ web, mobile, desktop, AI, and game projects solo. What survives gets shipped; what fails gets an honest burial.'}
+              ? `${projects.length}개의 웹·모바일·데스크톱·AI·게임 프로젝트를 직접 만들고 기록하고 있습니다. 살아남은 것은 배포하고, 실패한 것은 정직하게 묻습니다.`
+              : `I design and build ${projects.length} web, mobile, desktop, AI, and game projects solo. What survives gets shipped; what fails gets an honest burial.`}
           </p>
         </section>
 
