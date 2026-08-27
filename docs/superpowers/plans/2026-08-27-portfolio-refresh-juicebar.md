@@ -92,13 +92,23 @@
 - [x] Add `format:check` and `untranslated` CI steps and remove stale hard-coded test-count commentary.
 - [x] Run `npm update` without force/major migrations; run `npm audit` and keep zero vulnerabilities.
 - [x] Refresh README for Builder's Ledger, projects/graveyard/blog/hire/studio/play, Keystatic, SEO/LLM endpoints, analytics, and full verification commands.
-- [ ] Run typecheck, lint, tests, hero verification, untranslated, format check, audit, and build; commit.
+- [x] Run typecheck, lint, tests, hero verification, untranslated, format check, audit, and build; commit.
 
 ### Task 8: Final scope and regression audit
 
 **Files:** review all changed files.
 
-- [ ] Compare `content/projects.json` slugs with `main`; prove `juicebar` is the only addition.
-- [ ] Run `git diff --check` and inspect the branch diff for secrets, generated junk, unrelated additions, or fabricated evidence.
-- [ ] Re-run the complete verification suite from the final branch state.
-- [ ] Record evidence and prepare branch integration.
+- [x] Compare `content/projects.json` slugs with `main`; prove `juicebar` is the only addition.
+- [x] Run `git diff --check` and inspect the branch diff for secrets, generated junk, unrelated additions, or fabricated evidence.
+- [x] Re-run the complete verification suite from the final branch state.
+- [x] Record evidence and prepare branch integration.
+
+
+## Final QA evidence
+
+- Scope audit: project ledger changed from 41 to 42 entries; `juicebar` is the only added slug and no slug was removed.
+- Automated QA: type-check, ESLint, Prettier, 180/180 Vitest tests, 10/10 bilingual post parity, 8/8 hero verification, `npm audit` with 0 vulnerabilities, and Next.js production build all pass.
+- Build output: 134/134 static generation completed on Next.js 16.3.3, with no deprecated Edge Runtime warning, dynamic filesystem whole-project tracing warning, or `workStore` invariant.
+- Browser user QA: 20 Korean/English desktop/mobile page checks at 1440px and 390px, plus 131 discovered same-origin links. Zero horizontal overflow, broken images, application `pageerror`s, or internal non-vendor HTTP errors.
+- QA-driven fix: the first browser pass showed the homepage Selected Work cards were still text-only. Featured cards now render all five real project screenshots and the second pass reports 5/5 images.
+- Local-only note: Vercel Analytics/Speed Insights endpoints return 404 under plain `next start` outside Vercel; these vendor endpoints were excluded from internal-app HTTP failure criteria because they exist in the Vercel runtime, not the local Next server.

@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
 import type { Project, Tombstone } from '@/types/content'
 import type { PostMeta } from '@/lib/mdx'
@@ -90,6 +91,22 @@ function FeaturedCard({ project, locale }: { project: Project; locale: string })
       className="flex flex-col gap-5 rounded-2xl p-7 sm:p-8"
       style={{ background: CARD, border: `1px solid ${BORDER}` }}
     >
+      {project.screenshot && (
+        <div
+          className="relative -mx-7 -mt-7 aspect-[16/9] overflow-hidden rounded-t-2xl border-b sm:-mx-8 sm:-mt-8"
+          style={{ borderColor: BORDER, background: ELEV }}
+        >
+          <Image
+            src={project.screenshot}
+            alt={
+              locale === 'ko' ? (project.screenshotAltKo ?? project.name) : (project.screenshotAltEn ?? project.name)
+            }
+            fill
+            sizes="(min-width: 1024px) 50vw, 100vw"
+            className="object-cover object-top"
+          />
+        </div>
+      )}
       <div className="flex flex-wrap items-center gap-3">
         <h3 className="ledger-display text-2xl font-bold" style={{ color: INK }}>
           {project.name}
