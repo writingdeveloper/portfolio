@@ -7,7 +7,7 @@ import { routing } from '@/i18n/routing'
 import projectsData from '../../../../../content/projects.json'
 import type { Project } from '@/types/content'
 import { SITE_URL } from '@/lib/constants'
-import { APP_CATEGORY, PROJECT_SHOWCASE } from '@/lib/projects'
+import { APP_CATEGORY, getProjectCaseStudySections, PROJECT_SHOWCASE } from '@/lib/projects'
 import { predecessorOf } from '@/lib/lineage'
 import { getAllPosts } from '@/lib/mdx'
 import { buildProjectPostMap } from '@/lib/post-project-links'
@@ -123,6 +123,7 @@ export default async function ProjectDetailPage({
   const localePath = isKo ? '' : `/${locale}`
   const description = isKo ? project.descriptionKo : project.descriptionEn
   const screenshotAlt = (isKo ? project.screenshotAltKo : project.screenshotAltEn) ?? ''
+  const caseStudySections = getProjectCaseStudySections(project, locale)
   const predecessor = predecessorOf(project)
   const relatedPost = buildProjectPostMap(
     getAllPosts(locale),
@@ -211,6 +212,22 @@ export default async function ProjectDetailPage({
               </span>
             ))}
           </div>
+        )}
+
+        {caseStudySections.length > 0 && (
+          <section className="mb-10 border-y border-[var(--border-default)] py-8">
+            <h2 className="ledger-display text-xl font-bold mb-5">{t('caseStudy.heading')}</h2>
+            <div className="grid gap-5 sm:grid-cols-2">
+              {caseStudySections.map((section) => (
+                <div key={section.key}>
+                  <h3 className="ledger-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent-text)]">
+                    {t(`caseStudy.${section.key}`)}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">{section.text}</p>
+                </div>
+              ))}
+            </div>
+          </section>
         )}
 
         <div className="flex flex-wrap items-center gap-4 mb-8">

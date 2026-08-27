@@ -83,7 +83,14 @@
     "selectedWork": "대표 작업",
     "selectedWorkDescription": "서로 다른 종류의 문제를 어떻게 풀었는지 보여주는 다섯 작업입니다.",
     "fullLedger": "전체 원장",
-    "fullLedgerDescription": "진행 중인 것까지 포함한 나머지 프로젝트 기록입니다."
+    "fullLedgerDescription": "진행 중인 것까지 포함한 나머지 프로젝트 기록입니다.",
+    "caseStudy": {
+      "heading": "어떻게 풀었는가",
+      "problem": "문제",
+      "decision": "결정",
+      "evidence": "증거",
+      "result": "결과"
+    }
   },
   "graveyard": {
     "title": "프로젝트 묘지",

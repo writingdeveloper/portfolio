@@ -83,7 +83,14 @@
     "selectedWork": "Selected Work",
     "selectedWorkDescription": "Five projects chosen to show different kinds of engineering decisions.",
     "fullLedger": "Full Ledger",
-    "fullLedgerDescription": "The rest of the record, including work that is still being built."
+    "fullLedgerDescription": "The rest of the record, including work that is still being built.",
+    "caseStudy": {
+      "heading": "How it was solved",
+      "problem": "Problem",
+      "decision": "Decision",
+      "evidence": "Evidence",
+      "result": "Result"
+    }
   },
   "graveyard": {
     "title": "Project Graveyard",

@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import {
   getHireStats,
   getPortfolioStats,
+  getProjectCaseStudySections,
   hasIndexablePage,
   HIRE_CASE_STUDIES,
   HOME_GROUPS,
@@ -256,5 +257,21 @@ describe('portfolio information architecture', () => {
     expect(selected.map((project) => project.slug)).toEqual([...SELECTED_WORK])
     expect(rest.some((project) => SELECTED_WORK.includes(project.slug as typeof SELECTED_WORK[number]))).toBe(false)
     expect(selected.length + rest.length).toBe(projects.length)
+  })
+})
+
+
+describe('project case-study sections', () => {
+  it('returns Problem, Decision, Evidence, Result in order for the requested locale', () => {
+    const juicebar = (projectsData.projects as Project[]).find((project) => project.slug === 'juicebar')!
+    const sections = getProjectCaseStudySections(juicebar, 'ko')
+    expect(sections.map((section) => section.key)).toEqual(['problem', 'decision', 'evidence', 'result'])
+    expect(sections.every((section) => section.text.length > 0)).toBe(true)
+    expect(sections[0].text).toBe(juicebar.caseStudy?.problemKo)
+  })
+
+  it('returns no sections for a project without case-study evidence', () => {
+    const project = (projectsData.projects as Project[]).find((item) => !item.caseStudy)!
+    expect(getProjectCaseStudySections(project, 'en')).toEqual([])
   })
 })

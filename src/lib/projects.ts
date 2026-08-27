@@ -2,6 +2,25 @@ import type { Project } from '@/types/content'
 
 export const SELECTED_WORK = ['soursea', 'citefirst', 'juicebar', 'devdeck', 'unclog-la'] as const
 
+export type ProjectCaseStudyKey = 'problem' | 'decision' | 'evidence' | 'result'
+
+export interface ProjectCaseStudySection {
+  key: ProjectCaseStudyKey
+  text: string
+}
+
+export function getProjectCaseStudySections(project: Project, locale: string): ProjectCaseStudySection[] {
+  const study = project.caseStudy
+  if (!study) return []
+  const isKo = locale === 'ko'
+  return [
+    { key: 'problem', text: isKo ? study.problemKo : study.problemEn },
+    { key: 'decision', text: isKo ? study.decisionKo : study.decisionEn },
+    { key: 'evidence', text: isKo ? study.evidenceKo : study.evidenceEn },
+    { key: 'result', text: isKo ? study.resultKo : study.resultEn },
+  ]
+}
+
 export interface PortfolioStats {
   builds: number
   public: number
