@@ -153,5 +153,5 @@ export const HIRE_CASE_STUDIES = ['rentrights', 'healframe', 'argus-fusion'] as 
 export const HOME_GROUPS: Record<'products' | 'games' | 'tools', string[]> = {
   products: ['soursea', 'healframe', 'drymora', 'toolsmith', 'rentrights', 'receipt-tracker', 'fitcheck', 'zodiacly', 'transit-la', 'kindling', 'growgle', 'argus-fusion', 'observer-of-lines'],
   games: ['coinrace', 'wishing-stones', 'hoverslam', 'normandy-cliff-defense', 'tantrum-tower', 'mini-games', 'unclog-la', 'youtube-rhythm-game', 'liminal-bestiary', 'studio-apartment'],
-  tools: ['citefirst', 'devdeck', 'studios', 'til-shorts', 'mv-analyzer', 'sitedeck', 'marketdeck', 'notro', 'unitwise', 'amazon-chat-archiver', 'sitesmith', 'kl125-controller', 'ai-4080-ops', 'nag-coach', 'piano-scribe', 'comfyui-web', 'shipwright', 'dont-touch'],
+  tools: ['citefirst', 'juicebar', 'devdeck', 'studios', 'til-shorts', 'mv-analyzer', 'sitedeck', 'marketdeck', 'notro', 'unitwise', 'amazon-chat-archiver', 'sitesmith', 'kl125-controller', 'ai-4080-ops', 'nag-coach', 'piano-scribe', 'comfyui-web', 'shipwright', 'dont-touch'],
 }

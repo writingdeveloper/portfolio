@@ -224,3 +224,21 @@ describe('portfolio selection and truthful stats', () => {
     expect(new Set(SELECTED_WORK).size).toBe(5)
   })
 })
+
+
+describe('JuiceBar ledger refresh', () => {
+  const ledger = projectsData.projects as Project[]
+
+  it('adds exactly one project to the 41-project baseline and that project is JuiceBar', () => {
+    expect(ledger).toHaveLength(42)
+    const juicebar = ledger.find((project) => project.slug === 'juicebar')
+    expect(juicebar).toBeDefined()
+    expect(juicebar?.github).toBe('https://github.com/writingdeveloper/JuiceBar')
+    expect(juicebar?.screenshot).toBe('/images/projects/juicebar.webp')
+    expect(juicebar?.caseStudy?.evidenceEn).toBeTruthy()
+  })
+
+  it('uses the selected-work list as the only featured set', () => {
+    expect(ledger.filter((project) => project.featured).map((project) => project.slug)).toEqual([...SELECTED_WORK])
+  })
+})
