@@ -64,6 +64,12 @@ describe('accessibility regressions', () => {
     expect(source).toContain('</main>')
   })
 
+  it('keeps homepage navigation reachable on mobile', () => {
+    const source = read('src', 'app', '[locale]', 'LedgerHome.tsx')
+    expect(source).toContain('aria-label="Mobile navigation"')
+    expect(source).toContain('sm:hidden')
+  })
+
   it('keeps meaningful muted text at WCAG AA contrast in both themes', () => {
     const css = read('src', 'app', 'globals.css')
     const dark = block(css, '.dark')

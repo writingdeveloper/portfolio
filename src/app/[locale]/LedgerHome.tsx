@@ -242,6 +242,25 @@ export function LedgerHome({
             ))}
           </nav>
         </div>
+        <nav
+          aria-label="Mobile navigation"
+          className="grid grid-cols-5 border-t sm:hidden"
+          style={{ borderColor: BORDER }}
+        >
+          {nav.map((n) => (
+            <Link
+              key={n.href}
+              href={n.href}
+              className="ledger-mono flex min-w-0 flex-col items-center gap-0.5 px-1 py-2.5 text-[9px] tracking-[0.08em] transition-colors hover:opacity-80"
+              style={{ color: MUTED }}
+            >
+              <span className="text-[8px]" style={{ color: ACCENT }}>
+                {n.i}
+              </span>
+              <span className="max-w-full truncate">{n.label}</span>
+            </Link>
+          ))}
+        </nav>
       </header>
 
       <main className="mx-auto max-w-[1400px] px-6 sm:px-10">
