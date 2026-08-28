@@ -4,6 +4,7 @@ import { useState, useRef, useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import { Canvas } from '@react-three/fiber'
 import { ScrollControls, type ScrollControlsState } from '@react-three/drei'
+import { configureTextBuilder } from 'troika-three-text'
 import { ArrowLeft } from 'lucide-react'
 import { Link } from '@/i18n/navigation'
 import type { Project, Skill, TimelineItem, PostSummary } from '@/types/content'
@@ -22,6 +23,14 @@ import { BlogSection } from './sections/BlogSection'
 import { DetailOverlay } from './ui/DetailOverlay'
 import type { DetailItem } from './ui/DetailOverlay'
 import { SectionNav } from './ui/SectionNav'
+
+// Troika's generated worker modules use nested blob: imports that are intentionally
+// blocked by our strict script-src CSP. Troika officially supports restrictive-CSP
+// environments by keeping text layout asynchronous on the main thread instead.
+configureTextBuilder({
+  useWorker: false,
+  unicodeFontsURL: 'https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data',
+})
 
 interface PlayClientProps {
   projects: Project[]

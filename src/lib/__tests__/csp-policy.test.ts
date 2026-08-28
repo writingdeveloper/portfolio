@@ -11,4 +11,15 @@ describe('Content Security Policy', () => {
     expect(scriptDirective).not.toContain('blob:')
     expect(scriptDirective).not.toContain("'unsafe-inline'")
   })
+  it('keeps Troika text on the main thread and pins its resolver under strict CSP', () => {
+    const playSource = fs.readFileSync(path.join(process.cwd(), 'src/app/[locale]/play/PlayClient.tsx'), 'utf8')
+    const resolverBase = 'https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data'
+
+    expect(playSource).toContain('useWorker: false')
+    expect(playSource).toContain(resolverBase)
+    expect(source).toContain(`${resolverBase}/`)
+
+    const scriptDirective = source.match(/const scriptSrc = \[([\s\S]*?)\]\s*\.filter/)?.[1] ?? ''
+    expect(scriptDirective).not.toContain('blob:')
+  })
 })

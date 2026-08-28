@@ -110,7 +110,7 @@ export default function proxy(request: NextRequest) {
     // for Google Signals). A `*.analytics.google.com` wildcard matches only
     // sub-domains, NOT the apex, so both beacons were silently blocked here —
     // listing the apex hosts explicitly is required for hits to reach GA.
-    "connect-src 'self' https://giscus.app https://vitals.vercel-insights.com https://va.vercel-scripts.com https://api.github.com https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google",
+    "connect-src 'self' https://giscus.app https://vitals.vercel-insights.com https://va.vercel-scripts.com https://api.github.com https://cdn.jsdelivr.net/gh/lojjic/unicode-font-resolver@v1.0.1/packages/data/ https://www.googletagmanager.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://pagead2.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google",
     // AdSense renders ad units inside cross-origin iframes from these origins.
     'frame-src https://giscus.app https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google https://www.google.com',
     "frame-ancestors 'none'",
