@@ -18,6 +18,7 @@ describe('Content Security Policy', () => {
     expect(playSource).toContain('useWorker: false')
     expect(playSource).toContain(resolverBase)
     expect(source).toContain(`${resolverBase}/`)
+    expect(source).toContain('https://csi.gstatic.com')
 
     const scriptDirective = source.match(/const scriptSrc = \[([\s\S]*?)\]\s*\.filter/)?.[1] ?? ''
     expect(scriptDirective).not.toContain('blob:')
