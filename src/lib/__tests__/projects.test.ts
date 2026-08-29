@@ -225,7 +225,7 @@ describe('portfolio selection and truthful stats', () => {
   })
 
   it('keeps selected work to five complementary projects in editorial order', () => {
-    expect(SELECTED_WORK).toEqual(['soursea', 'citefirst', 'juicebar', 'devdeck', 'unclog-la'])
+    expect(SELECTED_WORK).toEqual(['devdeck', 'studios', 'rentrights', 'citefirst', 'juicebar'])
     expect(new Set(SELECTED_WORK).size).toBe(5)
   })
 })
@@ -243,13 +243,13 @@ describe('JuiceBar ledger refresh', () => {
   })
 
   it('uses the selected-work list as the only featured set', () => {
-    expect(ledger.filter((project) => project.featured).map((project) => project.slug)).toEqual([...SELECTED_WORK])
+    expect(new Set(ledger.filter((project) => project.featured).map((project) => project.slug))).toEqual(new Set(SELECTED_WORK))
   })
 })
 
 describe('portfolio information architecture', () => {
-  it('aligns hire case studies with RAG, MCP pipelines, and product ownership', () => {
-    expect(HIRE_CASE_STUDIES).toEqual(['citefirst', 'studios', 'soursea'])
+  it('aligns hire case studies with agent tooling, production full-stack, RAG, and MCP infrastructure', () => {
+    expect(HIRE_CASE_STUDIES).toEqual(['devdeck', 'rentrights', 'citefirst', 'studios'])
   })
 
   it('partitions selected work in editorial order without duplicating it in the full ledger', () => {

@@ -21,7 +21,7 @@
       ],
       "status": "active",
       "private": true,
-      "featured": true,
+      "featured": false,
       "updatedAt": "2026-06-15",
       "screenshot": "/images/projects/soursea.webp",
       "screenshotAltKo": "Soursea 데스크톱 운영 보드. 소싱 작업과 브라우저 기반 상품 처리 흐름을 한 화면에서 관리하는 실제 앱 화면.",
@@ -154,7 +154,7 @@
       "website": "https://unclog-la.vercel.app",
       "github": "https://github.com/writingdeveloper/unclog-la",
       "private": true,
-      "featured": true,
+      "featured": false,
       "screenshot": "/images/projects/unclog-la.webp",
       "screenshotAltKo": "Unclog LA 플레이 화면. 가운데 로스앤젤레스 지도 위에 색깔별 메트로 노선이 그려져 있고, 왼쪽 패널에는 노선 건설·정책 토글과 노선 목록이, 오른쪽 패널에는 대중교통 분담률 5.2%와 일일 이용객 342,407명 같은 지표가, 아래쪽에는 2025년에서 2050년까지의 연도 슬라이더와 'Advance Year' 버튼이 있다.",
       "screenshotAltEn": "Unclog LA in play. A dark map of Los Angeles carries colour-coded Metro lines; a left panel holds build-and-policy controls plus the line list, a right panel reports a 5.2% transit mode share, 342,407 daily riders and a $1.28B annual balance, and a 2025-to-2050 timeline with an 'Advance Year' button runs along the bottom.",
@@ -504,7 +504,7 @@
       "status": "active",
       "succeeds": "3d-asset-studio",
       "private": true,
-      "featured": false
+      "featured": true
     },
     {
       "name": "til-shorts",
@@ -660,7 +660,7 @@
       "website": "https://rentrights.writingdeveloper.blog",
       "github": "https://github.com/writingdeveloper/rentrights",
       "private": false,
-      "featured": false,
+      "featured": true,
       "screenshot": "/images/projects/rentrights.webp",
       "screenshotAltKo": "RentRights 랜딩 화면. 'You have rights.' 헤드라인 아래 로스앤젤레스 주소를 넣는 입력창과 Check 버튼이 있고, 공공기록·갱신일·주소 미저장 배지에 이어 3단계 이용 안내와 RSO 관련 FAQ가 보인다.",
       "screenshotAltEn": "RentRights landing page. Under the headline 'You have rights.' sit an address field showing a Los Angeles example and a Check button, followed by badges for public records, the update date and 'free, no address saved', a three-step how-it-works list and an FAQ about LA's Rent Stabilization Ordinance."

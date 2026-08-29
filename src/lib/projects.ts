@@ -1,6 +1,6 @@
 import type { Project } from '@/types/content'
 
-export const SELECTED_WORK = ['soursea', 'citefirst', 'juicebar', 'devdeck', 'unclog-la'] as const
+export const SELECTED_WORK = ['devdeck', 'studios', 'rentrights', 'citefirst', 'juicebar'] as const
 
 export type ProjectCaseStudyKey = 'problem' | 'decision' | 'evidence' | 'result'
 
@@ -151,12 +151,12 @@ export function getHireStats(projects: Pick<Project, 'website' | 'playStore'>[])
 }
 
 /**
- * Three projects that prove three different things: public-data GIS with an
- * open repo, an AI safety pipeline shipped to web and Android, and real-time
- * multi-feed aggregation. Chosen for spread, not for being the biggest.
+ * Four projects that make the employment story legible at a glance: agent
+ * tooling, production full-stack/data work, measured RAG, and MCP/GPU
+ * infrastructure. Chosen for engineering evidence rather than product count.
  * A slug that stops resolving fails the test suite rather than the page.
  */
-export const HIRE_CASE_STUDIES = ['citefirst', 'studios', 'soursea'] as const
+export const HIRE_CASE_STUDIES = ['devdeck', 'rentrights', 'citefirst', 'studios'] as const
 
 /**
  * How the home page's ALL WORK section groups the ledger, in render order.

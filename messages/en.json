@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "WritingDeveloper",
-    "description": "Dev stories, deep-dive build logs, and hands-on tutorials from Si Hyeong Lee — a full-stack developer shipping web, AI, and indie projects."
+    "description": "Build logs and engineering notes from Si Hyeong Lee — an AI-native product engineer shipping developer tools, applied AI systems, and production full-stack products."
   },
   "nav": {
     "home": "Home",
@@ -16,15 +16,15 @@
     "hero": {
       "greeting": "Hello",
       "name": "Si Hyeong Lee",
-      "role": "Developer & Entrepreneur",
-      "description": "I solve problems with code and share my experiences through writing."
+      "role": "AI-Native Product Engineer",
+      "description": "I design, ship, and operate AI-native products and developer infrastructure."
     },
     "latestPosts": "Latest Posts",
     "viewAll": "View All",
     "featuredProjects": "Projects",
     "noPosts": "No posts yet.",
     "explore": "Explore my world",
-    "metaDescription": "Si Hyeong Lee — full-stack developer and indie maker. I ship web, mobile, desktop, AI, and game projects, and write about how each one was built."
+    "metaDescription": "Si Hyeong Lee — AI-native product engineer in Los Angeles. I build and operate developer tools, RAG systems, local-AI/GPU infrastructure, and production full-stack products."
   },
   "blog": {
     "title": "Blog",
@@ -75,7 +75,7 @@
       "archived": "Archived"
     },
     "selectedWork": "Selected Work",
-    "selectedWorkDescription": "Five projects chosen to show different kinds of engineering decisions.",
+    "selectedWorkDescription": "Five projects selected to show agent tooling, AI infrastructure, measured RAG, production full-stack work, and desktop systems engineering.",
     "fullLedger": "Full Ledger",
     "fullLedgerDescription": "The rest of the record, including work that is still being built.",
     "caseStudy": {
@@ -112,28 +112,28 @@
   },
   "about": {
     "title": "About",
-    "description": "My journey as a developer and entrepreneur",
-    "metaTitle": "About — Full-Stack Developer & Indie Maker",
-    "metaDescription": "Si Hyeong Lee — full-stack developer and entrepreneur. The story behind Soursea, HealFrame and {count} other builds, with the stack and timeline.",
-    "body": "As a developer and entrepreneur, I solve problems with technology. I build projects like Soursea and Don't Touch — each born from a real problem I faced — and share what I learn through this blog. I don't stop at building, either: my generative pipelines and internal tools run on self-hosted infrastructure I operate myself — a home GPU workstation and a cloud VM tied together over a Tailscale mesh.",
+    "description": "AI-native product engineering, from architecture to production operations",
+    "metaTitle": "About — AI-Native Product Engineer & Senior Full-Stack",
+    "metaDescription": "Si Hyeong Lee — AI-native product engineer and former CTO in Los Angeles. Developer tooling, applied AI, full-stack products, local GPU infrastructure, and the decisions behind them.",
+    "body": "I am an AI-native product engineer and former CTO who owns the full path from architecture and implementation through testing, deployment, and production operations. I use coding agents heavily, but the engineering decisions stay explicit: constraints, acceptance criteria, failure analysis, and what ships. Recent work spans developer tooling such as DevDeck, measured RAG in citefirst, civic-tech systems such as RentRights, and a self-hosted MCP/GPU generation platform running across my own infrastructure.",
     "skills": "Tech Stack",
     "timeline": "Timeline"
   },
   "hire": {
     "title": "Work with me",
-    "description": "Open to full-time roles and to project work.",
-    "metaTitle": "Work with me — Si Hyeong Lee, full-stack & AI integration",
-    "metaDescription": "Open to full-time roles and to project work. Remote-first, worldwide, available now. {shipped} products with a public demo or store listing, {playStore} on Google Play.",
-    "badgeRemote": "Remote-first · worldwide",
+    "description": "AI-native product engineer open to senior product, applied AI / AI platform, and senior full-stack roles — plus focused project work.",
+    "metaTitle": "Si Hyeong Lee — AI-Native Product Engineer | Senior Full-Stack",
+    "metaDescription": "AI-native product engineer in Los Angeles, open to remote senior product, applied AI / AI platform, and senior full-stack roles. {shipped} shipped products with a public demo or store listing.",
+    "badgeRemote": "Los Angeles · Remote-first",
     "badgeNow": "Available now",
     "fulltime": {
       "heading": "Full-time",
       "rolesLabel": "Roles",
-      "roles": "CTO · senior full-stack · AI integration engineer",
+      "roles": "Senior Product Engineer · Applied AI / AI Platform Engineer · Senior Full-Stack Engineer",
       "modeLabel": "Working style",
-      "mode": "Remote-first, worldwide",
+      "mode": "Los Angeles · remote-first · US",
       "bringLabel": "What I bring",
-      "bring": "5+ years as a CTO, and a solo founder's habit of owning everything from architecture through payments to infrastructure."
+      "bring": "5+ years owning engineering as a CTO, plus hands-on AI-native product work spanning agent tooling, RAG evaluation, full-stack systems, CI/QA, and local GPU infrastructure."
     },
     "contract": {
       "heading": "Project work",

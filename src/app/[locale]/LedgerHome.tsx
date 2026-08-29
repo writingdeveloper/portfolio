@@ -6,7 +6,7 @@ import { PRIMARY_NAV_ITEMS } from '@/components/layout/navigation'
 import type { Project, Tombstone } from '@/types/content'
 import type { PostMeta } from '@/lib/mdx'
 import { predecessorOf } from '@/lib/lineage'
-import { getPortfolioStats, HOME_GROUPS } from '@/lib/projects'
+import { getPortfolioStats, HOME_GROUPS, SELECTED_WORK } from '@/lib/projects'
 
 // ── Builder's Ledger home ──────────────────────────────────────────────────
 // Immersive, full-bleed redesign generated in Claude Design and ported here:
@@ -192,9 +192,9 @@ export function LedgerHome({
   posts: PostMeta[]
   locale: string
 }) {
-  const featured = projects.filter((p) => p.featured)
-  const tNav = useTranslations('nav')
   const bySlug = new Map(projects.map((p) => [p.slug, p]))
+  const featured = SELECTED_WORK.map((slug) => bySlug.get(slug)).filter((project): project is Project => Boolean(project))
+  const tNav = useTranslations('nav')
   const portfolioStats = getPortfolioStats(projects)
 
   const groups = (Object.keys(HOME_GROUPS) as Array<keyof typeof HOME_GROUPS>).map((key) => {
@@ -269,7 +269,7 @@ export function LedgerHome({
               이시형 · SI HYEONG LEE
             </span>
             <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>
-              SOLO FULL-STACK BUILDER
+              AI-NATIVE PRODUCT ENGINEER
             </span>
             <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>
               LEDGER NO. <span style={{ color: ACCENT }}>001</span>
@@ -292,8 +292,8 @@ export function LedgerHome({
           </h1>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed" style={{ color: MUTED }}>
             {locale === 'ko'
-              ? `${projects.length}개의 웹·모바일·데스크톱·AI·게임 프로젝트를 직접 만들고 기록하고 있습니다. 살아남은 것은 배포하고, 실패한 것은 정직하게 묻습니다.`
-              : `I design and build ${projects.length} web, mobile, desktop, AI, and game projects solo. What survives gets shipped; what fails gets an honest burial.`}
+              ? `AI 네이티브 제품과 개발 인프라를 설계·배포·운영합니다. 에이전트 도구, RAG 평가, 로컬 GPU 생성 파이프라인, 프로덕션 풀스택 시스템까지 직접 책임집니다.`
+              : `I design, ship, and operate AI-native products and developer infrastructure — from agent tooling and RAG evaluation to local GPU generation pipelines and production full-stack systems.`}
           </p>
         </section>
 

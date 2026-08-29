@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "WritingDeveloper",
-    "description": "글 쓰는 개발자 이시형의 개발 기록. 웹·AI·인디 프로젝트를 직접 만들며 겪은 이야기와 실전 튜토리얼, 만드는 과정의 깊이 있는 기록을 남깁니다."
+    "description": "AI 네이티브 제품 엔지니어 이시형의 개발 기록. 개발자 도구, Applied AI, 프로덕션 풀스택 제품과 실제 운영 과정을 다룹니다."
   },
   "nav": {
     "home": "홈",
@@ -16,15 +16,15 @@
     "hero": {
       "greeting": "안녕하세요",
       "name": "이시형",
-      "role": "개발자 & 창업가",
-      "description": "코드로 문제를 해결하고, 글로 경험을 나눕니다."
+      "role": "AI 네이티브 제품 엔지니어",
+      "description": "AI 네이티브 제품과 개발 인프라를 설계하고 배포·운영합니다."
     },
     "latestPosts": "최근 글",
     "viewAll": "모두 보기",
     "featuredProjects": "프로젝트",
     "noPosts": "글이 없습니다.",
     "explore": "내 세계를 탐험하기",
-    "metaDescription": "풀스택 개발자이자 인디 메이커 이시형. 웹·모바일·데스크톱·AI·게임을 직접 만들고, 각 프로젝트를 어떻게 만들었는지 글로 남깁니다."
+    "metaDescription": "로스앤젤레스의 AI 네이티브 제품 엔지니어 이시형. 개발자 도구, RAG 시스템, 로컬 AI/GPU 인프라, 프로덕션 풀스택 제품을 직접 구축·운영합니다."
   },
   "blog": {
     "title": "블로그",
@@ -75,7 +75,7 @@
       "archived": "보관됨"
     },
     "selectedWork": "대표 작업",
-    "selectedWorkDescription": "서로 다른 종류의 문제를 어떻게 풀었는지 보여주는 다섯 작업입니다.",
+    "selectedWorkDescription": "에이전트 도구, AI 인프라, 측정 가능한 RAG, 프로덕션 풀스택, 데스크톱 시스템 엔지니어링을 보여주는 대표 프로젝트 5개입니다.",
     "fullLedger": "전체 원장",
     "fullLedgerDescription": "진행 중인 것까지 포함한 나머지 프로젝트 기록입니다.",
     "caseStudy": {
@@ -112,28 +112,28 @@
   },
   "about": {
     "title": "소개",
-    "description": "개발자이자 창업가로서의 여정",
-    "metaTitle": "이시형 · 풀스택 개발자이자 인디 메이커",
-    "metaDescription": "풀스택 개발자이자 창업가 이시형. Soursea·HealFrame 등 프로젝트 {count}개의 배경과 기술 스택, 지나온 길을 정리했습니다.",
-    "body": "개발자이자 창업가로서 기술로 문제를 해결하고 있습니다. Soursea, Don't Touch 등 직접 겪은 문제에서 출발한 프로젝트들을 만들고 있으며, 그 과정에서 배운 것들을 이 블로그를 통해 공유합니다. 만드는 데서 끝내지 않고 운영까지 직접 합니다. 집의 GPU 워크스테이션과 클라우드 VM을 Tailscale 사설망으로 묶은 셀프호스팅 인프라 위에서 생성 파이프라인과 내부 도구들을 돌리고 있습니다.",
+    "description": "아키텍처부터 프로덕션 운영까지 이어지는 AI 네이티브 제품 엔지니어링",
+    "metaTitle": "이시형 · AI 네이티브 제품 엔지니어 & 시니어 풀스택",
+    "metaDescription": "로스앤젤레스의 AI 네이티브 제품 엔지니어이자 전 CTO 이시형. 개발자 도구, Applied AI, 풀스택 제품, 로컬 GPU 인프라와 그 안의 엔지니어링 판단을 기록합니다.",
+    "body": "AI 네이티브 제품 엔지니어이자 전 CTO로서 아키텍처와 구현부터 테스트, 배포, 프로덕션 운영까지 전체 경로를 직접 책임집니다. Claude Code와 Codex 같은 코딩 에이전트를 적극적으로 사용하지만, 제약조건·완료 기준·실패 분석·출시 판단은 명시적으로 소유합니다. 최근에는 DevDeck 같은 개발자 도구, citefirst의 측정형 RAG, RentRights 같은 시빅테크, 직접 운영하는 MCP/GPU 생성 플랫폼을 만들고 운영하고 있습니다.",
     "skills": "기술 스택",
     "timeline": "타임라인"
   },
   "hire": {
     "title": "함께 일하기",
-    "description": "정규직과 프로젝트 단위 의뢰를 모두 받습니다.",
-    "metaTitle": "함께 일하기 — 이시형 · 풀스택 & AI 통합 개발자",
-    "metaDescription": "정규직과 프로젝트 단위 의뢰를 모두 받고 있습니다. 원격 우선, 전 세계, 지금 바로 시작 가능. 공개 데모·스토어가 있는 제품 {shipped}건, Play Store 앱 {playStore}건.",
-    "badgeRemote": "원격 우선 · 전 세계",
+    "description": "시니어 제품·Applied AI / AI 플랫폼·시니어 풀스택 역할과 집중형 프로젝트 의뢰를 받고 있습니다.",
+    "metaTitle": "이시형 — AI 네이티브 제품 엔지니어 | 시니어 풀스택",
+    "metaDescription": "로스앤젤레스의 AI 네이티브 제품 엔지니어. 원격 시니어 제품·Applied AI / AI 플랫폼·시니어 풀스택 역할에 지원 중이며, 공개 데모·스토어가 있는 제품 {shipped}건을 직접 출시했습니다.",
+    "badgeRemote": "로스앤젤레스 · 원격 우선",
     "badgeNow": "지금 바로 시작 가능",
     "fulltime": {
       "heading": "정규직",
       "rolesLabel": "찾는 역할",
-      "roles": "CTO · 시니어 풀스택 · AI 통합 엔지니어",
+      "roles": "시니어 제품 엔지니어 · Applied AI / AI 플랫폼 엔지니어 · 시니어 풀스택 엔지니어",
       "modeLabel": "근무 형태",
-      "mode": "원격 우선 · 전 세계",
+      "mode": "로스앤젤레스 · 미국 원격 우선",
       "bringLabel": "가져오는 것",
-      "bring": "CTO 5년 이상, 그리고 1인 창업자로서 아키텍처부터 결제·인프라까지 직접 소유해 온 경험."
+      "bring": "CTO로 5년 이상 엔지니어링을 책임진 경험과, 에이전트 도구·RAG 평가·풀스택 시스템·CI/QA·로컬 GPU 인프라를 직접 만드는 최근 AI 네이티브 제품 경험."
     },
     "contract": {
       "heading": "프로젝트 의뢰",
