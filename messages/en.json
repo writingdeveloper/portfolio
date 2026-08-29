@@ -6,11 +6,11 @@
   "nav": {
     "home": "Home",
     "blog": "Blog",
-    "projects": "Projects",
+    "projects": "Work",
     "graveyard": "Graveyard",
     "about": "About",
     "play": "Explore",
-    "hire": "Work with me"
+    "hire": "Hire"
   },
   "home": {
     "hero": {

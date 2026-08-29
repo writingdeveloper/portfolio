@@ -7,7 +7,7 @@ import { routing } from '@/i18n/routing'
 import { notFound } from 'next/navigation'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
-import { isImmersiveRoute } from '@/components/layout/layout-chrome-rules'
+import { LayoutChrome } from '@/components/layout/LayoutChrome'
 import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '@/lib/constants'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
@@ -112,11 +112,9 @@ export default async function LocaleLayout({
   const messages = await getMessages()
   const headersList = await headers()
   const nonce = headersList.get('x-nonce') ?? undefined
-  const pathname = headersList.get('x-pathname') ?? ''
-  const immersive = isImmersiveRoute(pathname)
 
   return (
-    <html lang={locale} className="dark" suppressHydrationWarning>
+    <html lang={locale} className="dark" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* Browsers hide the nonce content attribute after parsing, so React's
             hydration diff always mismatches on it — suppress that one warning. */}
@@ -132,23 +130,9 @@ export default async function LocaleLayout({
         className={`${bricolage.variable} ${spaceMono.variable} font-sans antialiased bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen transition-[background-color] duration-200`}
       >
         <NextIntlClientProvider messages={messages}>
-          {immersive ? (
-            children
-          ) : (
-            <>
-              <a
-                href="#main-content"
-                className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--btn-primary-bg)] focus:text-[var(--btn-primary-text)] focus:rounded-lg"
-              >
-                {ta('skipToContent')}
-              </a>
-              <Header />
-              <main id="main-content" className="max-w-[1400px] mx-auto px-6 sm:px-10 py-8">
-                {children}
-              </main>
-              <Footer />
-            </>
-          )}
+          <LayoutChrome header={<Header />} footer={<Footer />} skipToContentLabel={ta('skipToContent')}>
+            {children}
+          </LayoutChrome>
         </NextIntlClientProvider>
         {/* Third-party analytics/ads load after hydration (next/script
             afterInteractive) so they stay off the critical render path. */}

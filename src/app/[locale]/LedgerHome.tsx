@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
+import { PRIMARY_NAV_ITEMS } from '@/components/layout/navigation'
 import type { Project, Tombstone } from '@/types/content'
 import type { PostMeta } from '@/lib/mdx'
 import { predecessorOf } from '@/lib/lineage'
@@ -191,6 +193,7 @@ export function LedgerHome({
   locale: string
 }) {
   const featured = projects.filter((p) => p.featured)
+  const tNav = useTranslations('nav')
   const bySlug = new Map(projects.map((p) => [p.slug, p]))
   const portfolioStats = getPortfolioStats(projects)
 
@@ -204,14 +207,6 @@ export function LedgerHome({
     { n: String(portfolioStats.public).padStart(2, '0'), label: 'LIVE', hot: false },
     { n: String(portfolioStats.playStore).padStart(2, '0'), label: 'ON PLAY', hot: false },
     { n: String(portfolioStats.featured).padStart(2, '0'), label: 'FEATURED', hot: false },
-  ]
-
-  const nav = [
-    { i: '01', label: 'WORK', href: '/projects' as const },
-    { i: '02', label: 'GRAVEYARD', href: '/graveyard' as const },
-    { i: '03', label: 'BLOG', href: '/blog' as const },
-    { i: '04', label: 'ABOUT', href: '/about' as const },
-    { i: '05', label: 'HIRE', href: '/hire' as const },
   ]
 
   return (
@@ -230,34 +225,34 @@ export function LedgerHome({
             <span style={{ color: ACCENT }}>▪</span> WRITINGDEVELOPER <span className="ledger-cursor" />
           </Link>
           <nav className="hidden items-center gap-7 sm:flex">
-            {nav.map((n) => (
+            {PRIMARY_NAV_ITEMS.map((n) => (
               <Link
                 key={n.href}
                 href={n.href}
-                className="ledger-mono text-xs tracking-widest transition-colors hover:opacity-80"
+                className="ledger-mono text-xs tracking-widest uppercase transition-colors hover:opacity-80"
                 style={{ color: MUTED }}
               >
-                <span style={{ color: ACCENT }}>{n.i}</span> {n.label}
+                <span style={{ color: ACCENT }}>{n.index}</span> {tNav(n.key)}
               </Link>
             ))}
           </nav>
         </div>
         <nav
           aria-label="Mobile navigation"
-          className="grid grid-cols-5 border-t sm:hidden"
+          className="grid grid-cols-6 border-t sm:hidden"
           style={{ borderColor: BORDER }}
         >
-          {nav.map((n) => (
+          {PRIMARY_NAV_ITEMS.map((n) => (
             <Link
               key={n.href}
               href={n.href}
-              className="ledger-mono flex min-w-0 flex-col items-center gap-0.5 px-1 py-2.5 text-[9px] tracking-[0.08em] transition-colors hover:opacity-80"
+              className="ledger-mono flex min-w-0 flex-col items-center gap-0.5 px-1 py-2.5 text-[9px] tracking-[0.08em] uppercase transition-colors hover:opacity-80"
               style={{ color: MUTED }}
             >
               <span className="text-[8px]" style={{ color: ACCENT }}>
-                {n.i}
+                {n.index}
               </span>
-              <span className="max-w-full truncate">{n.label}</span>
+              <span className="max-w-full truncate">{tNav(n.key)}</span>
             </Link>
           ))}
         </nav>

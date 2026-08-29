@@ -16,7 +16,8 @@
     "untranslated": "npx tsx scripts/untranslated.ts",
     "verify:hero": "tsx scripts/verify-hero.ts",
     "capture:screenshots": "tsx scripts/capture-screenshots.ts",
-    "fetch:fonts": "tsx scripts/fetch-pretendard-subset.ts"
+    "fetch:fonts": "tsx scripts/fetch-pretendard-subset.ts",
+    "qa:navigation": "tsx scripts/qa-navigation.ts"
   },
   "dependencies": {
     "@keystatic/core": "^0.5.48",

@@ -6,16 +6,7 @@ import { Link } from '@/i18n/navigation'
 import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import { LanguageToggle } from './LanguageToggle'
-
-const navLinks = [
-  { href: '/', key: 'home' },
-  { href: '/blog', key: 'blog' },
-  { href: '/projects', key: 'projects' },
-  { href: '/hire', key: 'hire' },
-  { href: '/graveyard', key: 'graveyard' },
-  { href: '/about', key: 'about' },
-  { href: '/play', key: 'play' },
-] as const
+import { PRIMARY_NAV_ITEMS } from './navigation'
 
 export function Header() {
   const t = useTranslations('nav')
@@ -76,21 +67,17 @@ export function Header() {
           <span className="ledger-cursor" aria-hidden="true" />
         </Link>
 
-        {/* The desktop row waits until lg (1024px): seven links, including the
-            two-word "Work with me" / multi-syllable 함께 일하기, overflow and
-            wrap between md (768px) and ~888px in English (verified in a real
-            browser). The mobile menu is already focus-trapped and full-featured,
-            so letting it cover 768-1024px costs nothing, while a wrapping
-            desktop row is a visible defect that would recur the moment a label
-            gets longer. */}
+        {/* Keep the canonical six-link ledger navigation on one row only when
+            there is enough room. The mobile menu remains the accessible fallback
+            below lg, where translated labels can otherwise wrap. */}
         <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-6">
-          {navLinks.map((link) => (
+          {PRIMARY_NAV_ITEMS.map((link) => (
             <Link
               key={link.key}
               href={link.href}
               className="ledger-mono text-xs tracking-[0.18em] uppercase text-[var(--text-secondary)] hover:text-[var(--accent-text)] transition-colors"
             >
-              {t(link.key)}
+              <span className="text-[var(--accent-text)]">{link.index}</span> {t(link.key)}
             </Link>
           ))}
         </nav>
@@ -118,7 +105,7 @@ export function Header() {
       >
         <div className="mobile-menu-inner">
           <div ref={menuRef} className="px-4 py-4 flex flex-col gap-3">
-            {navLinks.map((link) => (
+            {PRIMARY_NAV_ITEMS.map((link) => (
               <Link
                 key={link.key}
                 href={link.href}
@@ -126,7 +113,7 @@ export function Header() {
                 onClick={closeMobile}
                 tabIndex={mobileOpen ? 0 : -1}
               >
-                {t(link.key)}
+                <span className="text-[var(--accent-text)]">{link.index}</span> {t(link.key)}
               </Link>
             ))}
           </div>
