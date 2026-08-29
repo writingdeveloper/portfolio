@@ -29,6 +29,8 @@ describe('employment positioning', () => {
     expect(ko.about.metaTitle).toContain('AI 네이티브 제품 엔지니어')
     expect(ko.hire.metaTitle).toContain('AI 네이티브 제품 엔지니어')
     expect(ko.hire.badgeRemote).toBe('로스앤젤레스 · 원격 우선')
-    expect(ko.hire.fulltime.roles).toBe('시니어 제품 엔지니어 · Applied AI / AI 플랫폼 엔지니어 · 시니어 풀스택 엔지니어')
+    expect(ko.hire.fulltime.roles).toBe(
+      '시니어 제품 엔지니어 · Applied AI / AI 플랫폼 엔지니어 · 시니어 풀스택 엔지니어'
+    )
   })
 })

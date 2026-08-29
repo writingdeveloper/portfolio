@@ -243,7 +243,9 @@ describe('JuiceBar ledger refresh', () => {
   })
 
   it('uses the selected-work list as the only featured set', () => {
-    expect(new Set(ledger.filter((project) => project.featured).map((project) => project.slug))).toEqual(new Set(SELECTED_WORK))
+    expect(new Set(ledger.filter((project) => project.featured).map((project) => project.slug))).toEqual(
+      new Set(SELECTED_WORK)
+    )
   })
 })
 

@@ -193,7 +193,9 @@ export function LedgerHome({
   locale: string
 }) {
   const bySlug = new Map(projects.map((p) => [p.slug, p]))
-  const featured = SELECTED_WORK.map((slug) => bySlug.get(slug)).filter((project): project is Project => Boolean(project))
+  const featured = SELECTED_WORK.map((slug) => bySlug.get(slug)).filter((project): project is Project =>
+    Boolean(project)
+  )
   const tNav = useTranslations('nav')
   const portfolioStats = getPortfolioStats(projects)
 
