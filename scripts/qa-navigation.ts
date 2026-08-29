@@ -1,16 +1,19 @@
 import { chromium, type Page } from 'playwright'
+import enMessages from '../messages/en.json'
+import koMessages from '../messages/ko.json'
 
 const BASE_URL = (process.env.QA_BASE_URL ?? 'http://127.0.0.1:3100').replace(/\/$/, '')
 const LOCALE = process.env.QA_LOCALE ?? 'en'
 const prefix = LOCALE === 'ko' ? '' : `/${LOCALE}`
+const navMessages = LOCALE === 'ko' ? koMessages.nav : enMessages.nav
 
 const primaryNav = [
-  { index: '01', label: 'WORK', path: '/projects' },
-  { index: '02', label: 'GRAVEYARD', path: '/graveyard' },
-  { index: '03', label: 'BLOG', path: '/blog' },
-  { index: '04', label: 'ABOUT', path: '/about' },
-  { index: '05', label: 'HIRE', path: '/hire' },
-  { index: '06', label: 'EXPLORE', path: '/play' },
+  { index: '01', label: navMessages.projects, path: '/projects' },
+  { index: '02', label: navMessages.graveyard, path: '/graveyard' },
+  { index: '03', label: navMessages.blog, path: '/blog' },
+  { index: '04', label: navMessages.about, path: '/about' },
+  { index: '05', label: navMessages.hire, path: '/hire' },
+  { index: '06', label: navMessages.play, path: '/play' },
 ] as const
 
 const failures: string[] = []
@@ -87,7 +90,7 @@ async function main() {
 
     await check('regular route client navigation to Explore becomes immersive', async () => {
       await gotoSettled(page, url('/projects'))
-      const explore = page.getByRole('link', { name: /(?:06\s+)?EXPLORE/i }).first()
+      const explore = page.getByRole('link', { name: new RegExp(`(?:06\s+)?${primaryNav[5].label}`, 'i') }).first()
       if (!(await explore.isVisible())) throw new Error('Explore link is not visible from a regular route')
       await explore.click()
       await page.waitForURL(`**${prefix}/play`, { timeout: 15_000 })
