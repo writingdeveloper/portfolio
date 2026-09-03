@@ -80,7 +80,7 @@ export function generateWebsiteJsonLd(locale: string) {
     inLanguage: locale === 'ko' ? 'ko-KR' : 'en-US',
     publisher: {
       '@type': 'Person',
-      name: locale === 'ko' ? '이시형' : 'Si Hyeong Lee',
+      name: locale === 'ko' ? '이시형' : 'Sihyeong Lee',
       url: `${SITE_URL}/about`,
     },
   }
@@ -92,7 +92,7 @@ export function generatePersonJsonLd(locale: string) {
     '@type': 'ProfilePage',
     mainEntity: {
       '@type': 'Person',
-      name: locale === 'ko' ? '이시형' : 'Si Hyeong Lee',
+      name: locale === 'ko' ? '이시형' : 'Sihyeong Lee',
       url: `${SITE_URL}${locale === 'ko' ? '' : '/en'}/about`,
       jobTitle: locale === 'ko' ? '개발자 & 창업가' : 'Developer & Entrepreneur',
       description:
@@ -145,7 +145,7 @@ export function generateProjectListJsonLd(
   }[],
   locale: string
 ) {
-  const authorName = locale === 'ko' ? '이시형' : 'Si Hyeong Lee'
+  const authorName = locale === 'ko' ? '이시형' : 'Sihyeong Lee'
   const author = { '@type': 'Person', name: authorName, url: `${SITE_URL}/about` }
   return {
     '@context': 'https://schema.org',
@@ -209,7 +209,7 @@ export function generateProjectJsonLd(
   },
   locale: string
 ) {
-  const authorName = locale === 'ko' ? '이시형' : 'Si Hyeong Lee'
+  const authorName = locale === 'ko' ? '이시형' : 'Sihyeong Lee'
   const sameAs = [project.website, project.github, project.playStore].filter(Boolean) as string[]
 
   const common = {

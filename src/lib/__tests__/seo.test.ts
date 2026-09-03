@@ -166,7 +166,7 @@ describe('generateProjectListJsonLd', () => {
     expect(result.itemListElement[0].item['@type']).toBe('CreativeWork')
     expect(result.itemListElement[0].item.author).toEqual({
       '@type': 'Person',
-      name: 'Si Hyeong Lee',
+      name: 'Sihyeong Lee',
       url: 'https://writingdeveloper.blog/about',
     })
     expect(result.itemListElement[0].item).toHaveProperty('keywords', 'TypeScript, Next.js')

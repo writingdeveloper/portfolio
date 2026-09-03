@@ -17,18 +17,18 @@ describe('employment positioning', () => {
     expect(en.home.metaDescription).toContain('AI-native product engineer')
     expect(en.about.metaTitle).toContain('AI-Native Product Engineer')
     expect(en.hire.metaTitle).toContain('AI-Native Product Engineer')
-    expect(en.hire.badgeRemote).toBe('Los Angeles · Remote-first')
+    expect(en.hire.badgeRemote).toBe('Los Angeles · Fully remote · US permanent resident')
     expect(en.hire.fulltime.roles).toBe(
       'Senior Product Engineer · Applied AI / AI Platform Engineer · Senior Full-Stack Engineer'
     )
-    expect(en.hire.fulltime.bring).toContain('5+ years owning engineering as a CTO')
+    expect(en.hire.fulltime.bring).toContain('Nearly five years owning engineering as a CTO')
   })
 
   it('keeps the Korean positioning aligned with the English profile', () => {
     expect(ko.home.metaDescription).toContain('AI 네이티브 제품 엔지니어')
     expect(ko.about.metaTitle).toContain('AI 네이티브 제품 엔지니어')
     expect(ko.hire.metaTitle).toContain('AI 네이티브 제품 엔지니어')
-    expect(ko.hire.badgeRemote).toBe('로스앤젤레스 · 원격 우선')
+    expect(ko.hire.badgeRemote).toBe('로스앤젤레스 · 전면 원격 · 미국 영주권자')
     expect(ko.hire.fulltime.roles).toBe(
       '시니어 제품 엔지니어 · Applied AI / AI 플랫폼 엔지니어 · 시니어 풀스택 엔지니어'
     )

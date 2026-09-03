@@ -188,11 +188,19 @@
       "type": "project"
     },
     {
-      "date": "2021 - 2026",
-      "titleKo": "ItemBox CTO · 이커머스 SaaS",
-      "titleEn": "ItemBox — CTO, E-commerce SaaS",
-      "descriptionKo": "5년 2개월간 CTO로 AI 기반 이커머스·드롭시핑 플랫폼의 기술 전반을 책임졌습니다. API 모듈 18개 이상의 NestJS 백엔드와 React 프론트엔드를 올리고, 상품 콘텐츠 자동 생성에 OpenAI와 Replicate를, 구독 결제에 Stripe를 붙였습니다. Shopify·Cafe24·Amazon·Taobao·AliExpress 멀티마켓 재고 동기화와 대리구매 인프라를 구축했고, 아키텍처부터 배포까지 소유하며 개발 워크플로와 기술 방향을 이끌었습니다.",
-      "descriptionEn": "As CTO for five years and two months, I owned the full technical operation of an AI-powered e-commerce and dropshipping platform. I built a NestJS backend of 18+ API modules behind a React frontend, integrated OpenAI and Replicate for automated product-content generation and Stripe for subscription billing, and shipped multi-marketplace inventory sync across Shopify, Cafe24, Amazon, Taobao and AliExpress plus proxy-purchasing infrastructure — owning architecture through deployment while leading developer workflows and technical direction.",
+      "date": "2024 - 2025",
+      "titleKo": "ItemBox(㈜빛나라) CTO · AI 이커머스 플랫폼",
+      "titleEn": "ItemBox (Bitnara Inc.) — CTO, AI-assisted e-commerce platform",
+      "descriptionKo": "플랫폼 전체를 소유하면서 한국·베트남에 분산된 9명 규모의 개발팀을 이끌었고, 동시에 최다 기여자였습니다 — 프론트엔드 2,458커밋 중 857건, 백엔드 335건, 프로덕션 배포 11회. 20개 API 모듈의 NestJS/TypeORM 백엔드(REST 엔드포인트 300개·컨트롤러 58개·엔티티 55개·TypeScript 약 7.2만 줄)와 Next.js 프론트엔드를 소유했고, 멀티테넌트 워크스페이스와 5개 범위 권한 제어를 구현했습니다. 수동 API 키 방식을 Shopify OAuth 2.0(HMAC 검증·웹훅 자동 등록)으로 대체하고 Cafe24 관리자 앱 설치 플로우와 다중 통화·교차 환율 서비스를 붙였으며, Stripe 구독 결제를 갱신·실패 웹훅까지, 그리고 해외 주문을 받치는 대리구매·견적 서비스를 구축했습니다. ComfyUI·ModelsLab·Kling 기반 이미지 생성·배경 제거·번역을 판매자 워크플로에 넣었고, FastAPI 마이크로서비스 전환과 OpenAI·Anthropic 통합, Redis/Celery 파이프라인, AWS 운영을 맡았습니다. 2025년 10월 폐업.",
+      "descriptionEn": "Owned the platform end to end and led a distributed team of nine engineers across Korea and Vietnam, while remaining its top individual contributor — 857 of the frontend's 2,458 commits plus 335 on the backend, shipped through 11 production deployments. I owned a 20-module NestJS/TypeORM backend — 300 REST endpoints, 58 controllers, 55 entities, ~72k lines of TypeScript — behind a Next.js frontend, with multi-tenant workspaces and role-based permissions across five scopes. I replaced manual API-key onboarding with a Shopify OAuth 2.0 integration (HMAC validation, automatic webhook registration), shipped the Cafe24 admin-panel install flow, multi-currency stores and a cross-exchange-rate service, and built Stripe subscription billing end to end alongside the proxy-purchase and quoting services behind cross-border orders. AI went into the seller's workflow — image generation, background removal and translation over ComfyUI, ModelsLab and Kling — beside a FastAPI move to microservices, one unified interface over the OpenAI and Anthropic APIs, a Redis/Celery pipeline, and the AWS footprint. The company closed in October 2025.",
+      "type": "work"
+    },
+    {
+      "date": "2021 - 2024",
+      "titleKo": "㈜지오맥 CTO · 사내 시스템·인프라",
+      "titleEn": "GEOMEC Inc. — CTO, internal systems & infrastructure",
+      "descriptionKo": "사내 운영 시스템과 업무용 클라이언트, 그리고 그 아래 인프라 전체를 총괄했습니다 — 양쪽 모두 담당 엔지니어는 저 혼자였습니다. ElectronJS 데스크탑 클라이언트를 설계·배포하고 업데이트·로깅·릴리스를 자동화했으며, NAS 기반 파일 서버에 권한 기반 접근 제어를 세웠습니다. Proxmox VE 가상화로 내부 VM 배포를 자동화하고 스냅샷 백업 체계를 만들었고, 리눅스 서버·방화벽·SSH 키·중앙 로깅을 통합 관리했으며 VPN 서버를 구축해 사내 네트워크 보안을 표준화했습니다. 2023년부터는 미국에서 원격으로 수행했습니다. 회사 파산으로 종료.",
+      "descriptionEn": "Owned the company's internal systems, its business desktop client, and the whole infrastructure underneath them — I was the only engineer on either. I designed and shipped an ElectronJS desktop client with automated release, update and logging pipelines, and built a NAS-backed file server with role-based access control. I stood up Proxmox VE virtualization with automated internal VM provisioning and a snapshot backup regime, ran the Linux server estate end to end (firewalls, SSH key management, centralized logging), and built the VPN server that standardized the company's network security practice. From 2023 I did this remotely from the US. The company ceased operations.",
       "type": "work"
     }
   ]
