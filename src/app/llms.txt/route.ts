@@ -37,7 +37,7 @@ export async function GET() {
 
   const content = `# WritingDeveloper
 
-> Personal blog and portfolio by Si Hyeong Lee (이시형) — a solo full-stack developer and entrepreneur who designs, builds, and ships products end to end.
+> Personal blog and portfolio by Sihyeong Lee (이시형) — a solo full-stack developer and entrepreneur who designs, builds, and ships products end to end.
 > Dev stories, tech tutorials, and the startup journey behind the projects below.
 
 ## About
@@ -59,8 +59,8 @@ ${projectLines}
 
 ## Project Graveyard
 
-- [Project Graveyard (Korean)](${SITE_URL}/graveyard): A memorial to projects Si Hyeong Lee built and then failed or discontinued — each with its cause of death, an honest post-mortem, and lessons learned.
-- [Project Graveyard (English)](${SITE_URL}/en/graveyard): A memorial to projects Si Hyeong Lee built and then failed or discontinued — each with its cause of death, an honest post-mortem, and lessons learned.
+- [Project Graveyard (Korean)](${SITE_URL}/graveyard): A memorial to projects Sihyeong Lee built and then failed or discontinued — each with its cause of death, an honest post-mortem, and lessons learned.
+- [Project Graveyard (English)](${SITE_URL}/en/graveyard): A memorial to projects Sihyeong Lee built and then failed or discontinued — each with its cause of death, an honest post-mortem, and lessons learned.
 
 ## Technical Stack
 

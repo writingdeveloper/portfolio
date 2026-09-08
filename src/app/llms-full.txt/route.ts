@@ -24,7 +24,7 @@ export async function GET() {
 
   const content = `# WritingDeveloper — Full Content
 
-> Full-text version of every blog post by Si Hyeong Lee (이시형). For a compact
+> Full-text version of every blog post by Sihyeong Lee (이시형). For a compact
 > index (posts, projects, links), see ${SITE_URL}/llms.txt
 
 ${sections.join('\n\n---\n\n')}
