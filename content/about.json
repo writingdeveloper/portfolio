@@ -152,15 +152,15 @@
       "titleKo": "오픈소스·시빅테크로 확장",
       "titleEn": "Expanding into open source & civic tech",
       "descriptionKo": "RentRights(LA 세입자 임대료 규제 추정기), DevDeck(Claude Code·Codex·Antigravity 프로젝트 관제 데스크톱 앱), citefirst(인용을 검증하고 검색 품질을 측정하는 RAG), TransitLA(차 없이 대중교통으로 가는 LA 탐색) 등 공개 데이터·개발 도구 프로젝트를 공개.",
-      "descriptionEn": "Released public-data and developer-tool projects — RentRights (LA rent-control estimator for tenants), DevDeck (a command deck for Claude Code, Codex and Antigravity projects), citefirst (a RAG system that verifies its citations and measures its retrieval), and TransitLA (car-free LA discovery on public transit).",
+      "descriptionEn": "Released public-data and developer-tool projects: RentRights (LA rent-control estimator for tenants), DevDeck (a command deck for Claude Code, Codex and Antigravity projects), citefirst (a RAG system that verifies its citations and measures its retrieval), and TransitLA (car-free LA discovery on public transit).",
       "type": "project"
     },
     {
       "date": "2026",
       "titleKo": "생성 스튜디오 구축: 5모달리티 개인 생성 팩토리",
-      "titleEn": "Building the studios — a five-modality generation factory",
+      "titleEn": "Building the studios · a five-modality generation factory",
       "descriptionKo": "이미지·영상·3D·음성·음악을 Claude가 MCP 툴로 생성하고, 기계 게이트와 직접 검수를 거쳐 재시도하는 개인 생성 파이프라인을 구축. 여섯 개 레포를 히스토리 보존 subtree 병합으로 단일 모노레포에 통합하고, 자연어로 지휘하면 로컬 LLM이 툴을 직접 불러 생성부터 검수까지 밟는 에이전트 하네스를 붙임. 이 사이트의 블로그 히어로 이미지도 여기서 나왔다.",
-      "descriptionEn": "Built a personal generation pipeline where Claude drives image, video, 3D, voice, and music through MCP tools — generate, pass a machine gate, inspect the result directly, retry. Six repositories were consolidated into a single monorepo through history-preserving subtree merges, and an agent harness now lets a local LLM call those tools itself from a natural-language brief. The hero images on this site's blog came out of it.",
+      "descriptionEn": "Built a personal generation pipeline where Claude drives image, video, 3D, voice, and music through MCP tools: generate, pass a machine gate, inspect the result directly, retry. Six repositories were consolidated into a single monorepo through history-preserving subtree merges, and an agent harness now lets a local LLM call those tools itself from a natural-language brief. The hero images on this site's blog came out of it.",
       "type": "project"
     },
     {
@@ -168,7 +168,7 @@
       "titleKo": "웹·모바일 제품 연속 출시",
       "titleEn": "Shipping web & mobile products",
       "descriptionKo": "healframe(멘탈헬스), argus-fusion(실시간 OSINT), zodiacly(운세), kindling(감정 케어) 등 웹·모바일 제품을 빠르게 기획·개발·출시.",
-      "descriptionEn": "Rapidly designed, built, and shipped web and mobile products — healframe (mental health), argus-fusion (real-time OSINT), zodiacly (horoscope), and kindling (emotional care).",
+      "descriptionEn": "Rapidly designed, built, and shipped web and mobile products: healframe (mental health), argus-fusion (real-time OSINT), zodiacly (horoscope), and kindling (emotional care).",
       "type": "project"
     },
     {
@@ -190,17 +190,17 @@
     {
       "date": "2024 - 2025",
       "titleKo": "ItemBox(㈜빛나라) CTO · AI 이커머스 플랫폼",
-      "titleEn": "ItemBox (Bitnara Inc.) — CTO, AI-assisted e-commerce platform",
-      "descriptionKo": "플랫폼 전체를 소유하면서 한국·베트남에 분산된 9명 규모의 개발팀을 이끌었고, 동시에 최다 기여자였습니다 — 프론트엔드 2,458커밋 중 857건, 백엔드 335건, 프로덕션 배포 11회. 20개 API 모듈의 NestJS/TypeORM 백엔드(REST 엔드포인트 300개·컨트롤러 58개·엔티티 55개·TypeScript 약 7.2만 줄)와 Next.js 프론트엔드를 소유했고, 멀티테넌트 워크스페이스와 5개 범위 권한 제어를 구현했습니다. 수동 API 키 방식을 Shopify OAuth 2.0(HMAC 검증·웹훅 자동 등록)으로 대체하고 Cafe24 관리자 앱 설치 플로우와 다중 통화·교차 환율 서비스를 붙였으며, Stripe 구독 결제를 갱신·실패 웹훅까지, 그리고 해외 주문을 받치는 대리구매·견적 서비스를 구축했습니다. ComfyUI·ModelsLab·Kling 기반 이미지 생성·배경 제거·번역을 판매자 워크플로에 넣었고, FastAPI 마이크로서비스 전환과 OpenAI·Anthropic 통합, Redis/Celery 파이프라인, AWS 운영을 맡았습니다. 2025년 10월 폐업.",
-      "descriptionEn": "Owned the platform end to end and led a distributed team of nine engineers across Korea and Vietnam, while remaining its top individual contributor — 857 of the frontend's 2,458 commits plus 335 on the backend, shipped through 11 production deployments. I owned a 20-module NestJS/TypeORM backend — 300 REST endpoints, 58 controllers, 55 entities, ~72k lines of TypeScript — behind a Next.js frontend, with multi-tenant workspaces and role-based permissions across five scopes. I replaced manual API-key onboarding with a Shopify OAuth 2.0 integration (HMAC validation, automatic webhook registration), shipped the Cafe24 admin-panel install flow, multi-currency stores and a cross-exchange-rate service, and built Stripe subscription billing end to end alongside the proxy-purchase and quoting services behind cross-border orders. AI went into the seller's workflow — image generation, background removal and translation over ComfyUI, ModelsLab and Kling — beside a FastAPI move to microservices, one unified interface over the OpenAI and Anthropic APIs, a Redis/Celery pipeline, and the AWS footprint. The company closed in October 2025.",
+      "titleEn": "ItemBox (Bitnara Inc.) · CTO, AI-assisted e-commerce platform",
+      "descriptionKo": "플랫폼 전체를 처음부터 끝까지 소유하면서 한국과 베트남에 흩어진 개발자 아홉 명을 이끌었고, 동시에 가장 많이 기여한 사람이었습니다. API 모듈 스무 개짜리 NestJS/TypeORM 백엔드와 Next.js 프론트엔드를 소유했고, 멀티테넌트 워크스페이스와 역할 기반 권한, 그리고 이메일 인증부터 자격 정보 전달까지 이어지는 초대 플로우를 만들었습니다. 수동 API 키 방식은 Shopify OAuth 2.0 연동으로 대체했습니다. 판매자가 클릭 한 번으로 스토어를 연결하면 앱이 HMAC를 검증하고 토큰을 저장하고 웹훅까지 알아서 등록합니다. Cafe24 쪽도 같은 방식으로 만들고 다중 통화 스토어와 교차 환율 서비스를 붙였으며, Stripe 구독 결제를 갱신·결제 실패 웹훅까지, 그리고 해외 주문을 받치는 대리구매·견적 서비스를 함께 만들었습니다. AI는 판매자가 실제로 일하는 자리에 넣었습니다. ComfyUI와 ModelsLab, Kling으로 이미지 생성과 배경 제거, 번역을 붙이고 OCR 서비스와 크롬 확장을 함께 두었습니다. FastAPI 서비스는 마이크로서비스 구조로 옮기면서 OpenAI와 Anthropic API를 하나의 인터페이스로 감쌌고, PostgreSQL과 MongoDB를 함께 운영하고 Redis·Celery 파이프라인을 만들고 AWS를 운영했습니다. 2025년 10월 폐업했습니다.",
+      "descriptionEn": "Owned the platform end to end and led the engineering team, nine people split between Korea and Vietnam, while remaining its most active contributor. I owned a NestJS/TypeORM backend of twenty API modules behind a Next.js frontend, with multi-tenant workspaces, role-based permissions, and an invitation flow that carried a new teammate from email verification through to credential delivery. I replaced manual API-key onboarding with a Shopify OAuth 2.0 integration: a seller connects a store in one click and the app validates HMAC, stores the token and registers its webhooks by itself. I built the Cafe24 equivalent, then multi-currency stores and a cross-exchange-rate service, and shipped Stripe subscription billing with renewal and payment-failure webhooks alongside the proxy-purchase and quoting services behind cross-border orders. AI went where sellers actually work: image generation, background removal and translation through ComfyUI, ModelsLab and Kling, with an OCR service and a Chrome extension alongside. I moved the FastAPI services onto a microservice architecture behind one interface over the OpenAI and Anthropic APIs, ran PostgreSQL and MongoDB together, built the Redis and Celery pipeline, and operated the AWS footprint. The company closed in October 2025.",
       "type": "work"
     },
     {
       "date": "2021 - 2024",
       "titleKo": "㈜지오맥 CTO · 사내 시스템·인프라",
-      "titleEn": "GEOMEC Inc. — CTO, internal systems & infrastructure",
-      "descriptionKo": "사내 운영 시스템과 업무용 클라이언트, 그리고 그 아래 인프라 전체를 총괄했습니다 — 양쪽 모두 담당 엔지니어는 저 혼자였습니다. ElectronJS 데스크탑 클라이언트를 설계·배포하고 업데이트·로깅·릴리스를 자동화했으며, NAS 기반 파일 서버에 권한 기반 접근 제어를 세웠습니다. Proxmox VE 가상화로 내부 VM 배포를 자동화하고 스냅샷 백업 체계를 만들었고, 리눅스 서버·방화벽·SSH 키·중앙 로깅을 통합 관리했으며 VPN 서버를 구축해 사내 네트워크 보안을 표준화했습니다. 2023년부터는 미국에서 원격으로 수행했습니다. 회사 파산으로 종료.",
-      "descriptionEn": "Owned the company's internal systems, its business desktop client, and the whole infrastructure underneath them — I was the only engineer on either. I designed and shipped an ElectronJS desktop client with automated release, update and logging pipelines, and built a NAS-backed file server with role-based access control. I stood up Proxmox VE virtualization with automated internal VM provisioning and a snapshot backup regime, ran the Linux server estate end to end (firewalls, SSH key management, centralized logging), and built the VPN server that standardized the company's network security practice. From 2023 I did this remotely from the US. The company ceased operations.",
+      "titleEn": "GEOMEC Inc. · CTO, internal systems & infrastructure",
+      "descriptionKo": "사내 운영 시스템과 업무용 클라이언트, 그리고 그 아래 인프라 전체를 총괄했습니다. 양쪽 모두 담당 엔지니어는 저 혼자였습니다. ElectronJS 데스크탑 클라이언트를 설계·배포하고 업데이트·로깅·릴리스를 자동화했으며, NAS 기반 파일 서버에 권한 기반 접근 제어를 세웠습니다. Proxmox VE 가상화로 내부 VM 배포를 자동화하고 스냅샷 백업 체계를 만들었고, 리눅스 서버·방화벽·SSH 키·중앙 로깅을 통합 관리했으며 VPN 서버를 구축해 사내 네트워크 보안을 표준화했습니다. 2023년부터는 미국에서 원격으로 수행했습니다. 회사 파산으로 종료.",
+      "descriptionEn": "Owned the company's internal systems, its business desktop client, and the whole infrastructure underneath them. I was the only engineer on either. I designed and shipped an ElectronJS desktop client with automated release, update and logging pipelines, and built a NAS-backed file server with role-based access control. I stood up Proxmox VE virtualization with automated internal VM provisioning and a snapshot backup regime, ran the Linux server estate end to end (firewalls, SSH key management, centralized logging), and built the VPN server that standardized the company's network security practice. From 2023 I did this remotely from the US. The company ceased operations.",
       "type": "work"
     }
   ]
