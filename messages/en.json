@@ -232,8 +232,8 @@
     "metaTitle": "Privacy Policy",
     "metaDescription": "How writingdeveloper.blog handles analytics, advertising and comment data through Google Analytics, Google AdSense and giscus, and how to opt out.",
     "updatedLabel": "LAST UPDATED",
-    "updated": "20 August 2026",
-    "intro": "This site has no accounts, no sign-up and no contact form, so it asks you for nothing directly. Everything described below is collected by third-party services the site loads.",
+    "updated": "14 September 2026",
+    "intro": "This site has no accounts, no sign-up and no contact form, so it asks you for nothing directly. Everything described below is collected by third-party services the site loads, plus the data handled by the YouTube channel tool I operate.",
     "direct": {
       "heading": "What I collect directly",
       "body": "Nothing. There is no login, no newsletter, no form and no database of visitors. I never see your name, email address or postal address through this site."
@@ -255,6 +255,10 @@
     "hosting": {
       "heading": "Hosting",
       "body": "The site runs on Vercel, which keeps standard server logs including IP addresses for security and abuse prevention."
+    },
+    "youtube": {
+      "heading": "YouTube API Services (Load Path Studio Pipeline)",
+      "body": "Load Path Studio Pipeline, the production tool behind my YouTube channel Load Path (@loadpathtv), uses YouTube API Services. It is an internal command-line program that only I, the channel owner, run on my own PC; it is not distributed, sold or offered to anyone else. All it does is upload videos to my channel as private, set their scheduled release, captions, thumbnails and playlists, and read view and audience metrics for my own videos. It does not collect or store personal data of viewers or of any other channel. The channel data it reads is stored only on my PC, is never shared with or sold to third parties, and can be deleted at any time by deleting the files. You can revoke the tool's access to YouTube at any time in your <revoke>Google security settings</revoke>. Because it uses YouTube API Services, the <tos>YouTube Terms of Service</tos> apply, and Google's handling of the data is governed by the <google>Google Privacy Policy</google>."
     },
     "choices": {
       "heading": "Your choices",

@@ -232,8 +232,8 @@
     "metaTitle": "개인정보처리방침",
     "metaDescription": "writingdeveloper.blog가 Google Analytics, Google AdSense, giscus를 통해 다루는 분석·광고·댓글 데이터와 수집을 거부하는 방법을 정리합니다.",
     "updatedLabel": "최종 수정",
-    "updated": "2026년 8월 20일",
-    "intro": "이 사이트에는 계정도, 가입도, 문의 양식도 없습니다. 그래서 방문자에게 직접 요구하는 정보가 없습니다. 아래 내용은 모두 사이트가 불러오는 외부 서비스가 수집하는 것입니다.",
+    "updated": "2026년 9월 14일",
+    "intro": "이 사이트에는 계정도, 가입도, 문의 양식도 없습니다. 그래서 방문자에게 직접 요구하는 정보가 없습니다. 아래 내용은 모두 사이트가 불러오는 외부 서비스가 수집하는 것과, 제가 운영하는 YouTube 채널 도구가 다루는 데이터입니다.",
     "direct": {
       "heading": "직접 수집하는 정보",
       "body": "없습니다. 로그인도, 뉴스레터도, 입력 양식도, 방문자 데이터베이스도 없습니다. 이 사이트를 통해 여러분의 이름이나 이메일, 주소를 보는 일은 없습니다."
@@ -255,6 +255,10 @@
     "hosting": {
       "heading": "호스팅",
       "body": "사이트는 Vercel에서 구동되며, Vercel은 보안과 남용 방지를 위해 IP 주소를 포함한 일반적인 서버 로그를 보관합니다."
+    },
+    "youtube": {
+      "heading": "YouTube API 서비스 (Load Path Studio Pipeline)",
+      "body": "제가 운영하는 YouTube 채널 Load Path(@loadpathtv)의 제작 도구 「Load Path Studio Pipeline」은 YouTube API 서비스를 사용합니다. 이 도구는 채널 소유자인 저 혼자 제 PC에서 쓰는 내부용 명령줄 프로그램이며, 다른 사람에게 배포·판매·제공하지 않습니다. 하는 일은 제 채널에 영상을 비공개로 올리고, 공개 예약·자막·썸네일·재생목록을 설정하고, 제 영상의 조회수·시청 지표를 읽어 오는 것뿐입니다. 시청자나 다른 채널의 개인정보는 수집하지도, 저장하지도 않습니다. 읽어 온 제 채널 데이터는 제 PC에만 보관하고 제3자와 공유하거나 판매하지 않으며, 언제든 파일을 지워 삭제할 수 있습니다. 이 도구의 YouTube 접근 권한은 <revoke>Google 계정 보안 설정</revoke>에서 언제든 철회할 수 있습니다. YouTube API 서비스를 쓰는 만큼 <tos>YouTube 서비스 약관</tos>이 적용되고, Google 이 데이터를 다루는 방식은 <google>Google 개인정보처리방침</google>을 따릅니다."
     },
     "choices": {
       "heading": "선택권",
