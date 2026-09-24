@@ -225,21 +225,31 @@ describe('portfolio selection and truthful stats', () => {
   })
 
   it('keeps selected work to five complementary projects in editorial order', () => {
-    expect(SELECTED_WORK).toEqual(['devdeck', 'studios', 'rentrights', 'citefirst', 'juicebar'])
+    expect(SELECTED_WORK).toEqual(['devdeck', 'studios', 'citefirst', 'brain-vat-siege', 'healframe'])
     expect(new Set(SELECTED_WORK).size).toBe(5)
   })
 })
 
-describe('JuiceBar ledger refresh', () => {
+describe('selected ledger refresh', () => {
   const ledger = projectsData.projects as Project[]
 
-  it('adds exactly one project to the 41-project baseline and that project is JuiceBar', () => {
-    expect(ledger).toHaveLength(42)
+  it('keeps JuiceBar and adds the public BRAIN//VAT case study', () => {
+    expect(ledger).toHaveLength(43)
     const juicebar = ledger.find((project) => project.slug === 'juicebar')
     expect(juicebar).toBeDefined()
     expect(juicebar?.github).toBe('https://github.com/writingdeveloper/JuiceBar')
     expect(juicebar?.screenshot).toBe('/images/projects/juicebar.webp')
     expect(juicebar?.caseStudy?.evidenceEn).toBeTruthy()
+  })
+
+  it('adds BRAIN//VAT as a public demo without exposing a private repo', () => {
+    const bvat = ledger.find((project) => project.slug === 'brain-vat-siege')
+    expect(bvat).toBeDefined()
+    expect(bvat?.website).toBe('https://brain-vat-siege.vercel.app')
+    expect(bvat?.private).toBe(true)
+    expect(bvat?.github).toBeUndefined()
+    expect(bvat?.screenshot).toBe('/images/projects/brain-vat-siege.webp')
+    expect(bvat?.caseStudy?.evidenceEn).toContain('66/90')
   })
 
   it('uses the selected-work list as the only featured set', () => {

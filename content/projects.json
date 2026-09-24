@@ -88,7 +88,7 @@
       "status": "active",
       "github": "https://github.com/writingdeveloper/JuiceBar",
       "private": false,
-      "featured": true,
+      "featured": false,
       "updatedAt": "2026-08-26",
       "screenshot": "/images/projects/juicebar.webp",
       "screenshotAltKo": "JuiceBar 트레이 팝업 실제 화면. 연료 게이지 형태의 진행 표시와 이번 청구 주기 비용, 오늘 사용량, 예상 비용, 최근 추세를 보여준다.",
@@ -593,7 +593,7 @@
       "website": "https://healframe.app",
       "playStore": "https://play.google.com/store/apps/details?id=app.healframe",
       "private": true,
-      "featured": false,
+      "featured": true,
       "screenshot": "/images/projects/healframe.webp",
       "screenshotAltKo": "HealFrame 랜딩 화면. 상단 내비게이션에 Circle·Dashboard·Pricing·Account가 있고, 'Reset your nervous system in 2 minutes' 헤드라인 아래 'Tap to breathe'라고 적힌 원형 호흡 버튼과 초록색 시작 버튼이 놓여 있다.",
       "screenshotAltEn": "HealFrame landing page. The top nav shows Circle, Dashboard, Pricing and Account; below the headline 'Reset your nervous system in 2 minutes' sit a gradient circle labelled 'Tap to breathe' and a green 'Start breathing — it's free' button."
@@ -660,7 +660,7 @@
       "website": "https://rentrights.writingdeveloper.blog",
       "github": "https://github.com/writingdeveloper/rentrights",
       "private": false,
-      "featured": true,
+      "featured": false,
       "screenshot": "/images/projects/rentrights.webp",
       "screenshotAltKo": "RentRights 랜딩 화면. 'You have rights.' 헤드라인 아래 로스앤젤레스 주소를 넣는 입력창과 Check 버튼이 있고, 공공기록·갱신일·주소 미저장 배지에 이어 3단계 이용 안내와 RSO 관련 FAQ가 보인다.",
       "screenshotAltEn": "RentRights landing page. Under the headline 'You have rights.' sit an address field showing a Los Angeles example and a Check button, followed by badges for public records, the update date and 'free, no address saved', a three-step how-it-works list and an FAQ about LA's Rent Stabilization Ordinance."
@@ -914,6 +914,40 @@
       "screenshot": "/images/projects/tantrum-tower.webp",
       "screenshotAltKo": "Tantrum Tower 시작 화면. 어두운 카드 안에 노란 TANTRUM TOWER 로고와 한 줄 소개, '스토리 시작' 버튼과 쉬움·보통·어려움 난이도 선택, '현장 투입' 버튼이 있고, 그 아래 조작키 안내와 현장 이벤트 목록이 정리돼 있다.",
       "screenshotAltEn": "Tantrum Tower start screen. Inside a dark panel, the glowing yellow logo sits above a one-line Korean pitch, a story-start button, easy/normal/hard difficulty buttons and a quick-play button, with a key-binding list and a table of site events underneath."
+    },
+    {
+      "name": "BRAIN//VAT",
+      "slug": "brain-vat-siege",
+      "descriptionKo": "Three.js 보스전과 신경 컨트롤러 연구를 하나의 공개 인터랙티브 케이스 스터디로 만든 프로젝트입니다. 미학습·사전학습·온라인 적응 예측기를 같은 입력에서 비교하고, 플레이로 달라진 102개 가중치 기억을 호환 보스 몸체로 옮길 수 있습니다. 별도 연구 경로에서는 166,700-뉴런 MaleCNS 고정 connectome의 시간 상태에 작은 외부 readout을 붙여 held-out 움직임 이력 분류를 검증했습니다.",
+      "descriptionEn": "A public interactive case study combining a Three.js boss fight with neural-controller research. It compares untrained, pretrained-frozen and online-adaptive predictors on the same committed inputs, and lets a player move a 102-weight learned memory cartridge into a compatible boss chassis. A separate research path keeps the 166,700-neuron MaleCNS connectome fixed and tests small external readouts over its temporal state on a held-out motion-history task.",
+      "techStack": [
+        "JavaScript",
+        "Three.js",
+        "Node.js",
+        "Playwright",
+        "Python",
+        "C++",
+        "WebGL2",
+        "Vercel"
+      ],
+      "status": "active",
+      "website": "https://brain-vat-siege.vercel.app",
+      "private": true,
+      "featured": true,
+      "updatedAt": "2026-09-23",
+      "screenshot": "/images/projects/brain-vat-siege.webp",
+      "screenshotAltKo": "BRAIN//VAT SENTINEL 보스전의 실제 Three.js 화면. 중앙의 발광 기계형 보스가 세 개의 네온 레인을 향해 공격을 준비하고 있다.",
+      "screenshotAltEn": "A real Three.js capture of the BRAIN//VAT SENTINEL boss fight, with a glowing mechanical boss preparing an attack over three neon lanes.",
+      "caseStudy": {
+        "problemKo": "신경망이 동작한다는 그래프만으로는 사용자가 무엇을 할 수 있는지, 그리고 AI의 기억·예측이 실제 플레이를 어떻게 바꾸는지 체감하기 어려웠습니다.",
+        "problemEn": "Neural telemetry alone did not make it obvious what a player could do with the system or how prediction and memory changed an actual interaction.",
+        "decisionKo": "예측을 사용자 입력 전에 잠그는 3레인 보스전을 만들고 미학습·고정 사전학습·온라인 적응 모델을 같은 회피 기록으로 비교했습니다. 이어 플레이로 변한 102개 예측 가중치만 호환 보스 chassis로 옮기는 기억 카트리지와 게임 소유 action budget을 분리했습니다.",
+        "decisionEn": "I built a three-lane boss fight that commits predictions before player input, compares fresh, frozen-pretrained and online-adaptive models on the same dodge trace, and separates game-owned action budgets from a 102-weight predictor memory cartridge that can move only between compatible boss chassis.",
+        "evidenceKo": "공개 production은 `/boss`, `/demo`, `/evaluation`을 외부 AI API 없이 실행합니다. SENTINEL의 실제 Chrome QA는 합법적인 키 입력으로 10회 반격 승리·무조작 패배를 모두 재현했고, 기억 카트리지는 SENTINEL에서 WRAITH로 이동 후 HP·라운드는 초기화되면서 예측 가중치만 유지됐습니다. MaleCNS 별도 평가에서는 최종 프레임만 30/90(33.3%), 36개 calibrated optic cell의 시간 상태+111개 외부 readout 파라미터가 66/90(73.3%)였으며 connectome weight SHA는 전후 동일했습니다.",
+        "evidenceEn": "The public production runs `/boss`, `/demo` and `/evaluation` without an external AI API. Real Chrome QA records a legitimate 10-counter SENTINEL victory and an unattended defeat; a saved memory cartridge moves from SENTINEL to WRAITH while HP and round state reset and only predictor weights persist. In a separate MaleCNS test, final-frame-only scoring is 30/90 (33.3%) while temporal state from 36 calibrated optic cells plus a 111-parameter external readout reaches 66/90 (73.3%); the connectome-weight SHA is unchanged before and after.",
+        "resultKo": "결과는 단순 AI 데모가 아니라 플레이 가능한 3D 시스템, 재현 가능한 평가, 명시적 권한 경계, 기억 이식 실험과 고정 connectome readout 연구를 한 공개 케이스 스터디로 묶은 것입니다.",
+        "resultEn": "The result is a public case study that joins a playable 3D system with reproducible evaluation, explicit action boundaries, compatible memory transfer, and fixed-connectome readout experiments instead of presenting a neural model as a black-box demo."
+      }
     }
   ]
 }

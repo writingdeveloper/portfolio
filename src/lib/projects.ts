@@ -1,6 +1,6 @@
 import type { Project } from '@/types/content'
 
-export const SELECTED_WORK = ['devdeck', 'studios', 'rentrights', 'citefirst', 'juicebar'] as const
+export const SELECTED_WORK = ['devdeck', 'studios', 'citefirst', 'brain-vat-siege', 'healframe'] as const
 
 export type ProjectCaseStudyKey = 'problem' | 'decision' | 'evidence' | 'result'
 
@@ -191,6 +191,7 @@ export const HOME_GROUPS: Record<'products' | 'games' | 'tools', string[]> = {
     'observer-of-lines',
   ],
   games: [
+    'brain-vat-siege',
     'coinrace',
     'wishing-stones',
     'hoverslam',
