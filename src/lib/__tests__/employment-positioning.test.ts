@@ -14,13 +14,13 @@ describe('employment positioning', () => {
     expect(home).toContain('SELECTED_WORK.map')
   })
 
-  it('targets senior product, applied AI, and senior full-stack roles in English', () => {
+  it('keeps the AI-native identity while targeting revenue-facing engineering work in English', () => {
     expect(en.home.metaDescription).toContain('AI-native product engineer')
     expect(en.about.metaTitle).toContain('AI-Native Product Engineer')
-    expect(en.hire.metaTitle).toContain('AI-Native Product Engineer')
+    expect(en.hire.metaTitle).toContain('Browser Automation')
     expect(en.hire.badgeRemote).toBe('Los Angeles · Fully remote · US permanent resident')
     expect(en.hire.fulltime.roles).toBe(
-      'Senior Product Engineer · Applied AI / AI Platform Engineer · Senior Full-Stack Engineer'
+      'Senior Software Engineer · AI Integration / Applied AI Engineer · Senior Full-Stack / Automation Engineer'
     )
     expect(en.hire.fulltime.bring).toContain('Nearly five years owning engineering as a CTO')
   })
@@ -52,10 +52,10 @@ describe('employment positioning', () => {
   it('keeps the Korean positioning aligned with the English profile', () => {
     expect(ko.home.metaDescription).toContain('AI 네이티브 제품 엔지니어')
     expect(ko.about.metaTitle).toContain('AI 네이티브 제품 엔지니어')
-    expect(ko.hire.metaTitle).toContain('AI 네이티브 제품 엔지니어')
+    expect(ko.hire.metaTitle).toContain('브라우저 자동화')
     expect(ko.hire.badgeRemote).toBe('로스앤젤레스 · 전면 원격 · 미국 영주권자')
     expect(ko.hire.fulltime.roles).toBe(
-      '시니어 제품 엔지니어 · Applied AI / AI 플랫폼 엔지니어 · 시니어 풀스택 엔지니어'
+      '시니어 소프트웨어 엔지니어 · AI 통합 / Applied AI 엔지니어 · 시니어 풀스택 / 자동화 엔지니어'
     )
   })
 })

@@ -250,8 +250,8 @@ describe('JuiceBar ledger refresh', () => {
 })
 
 describe('portfolio information architecture', () => {
-  it('aligns hire case studies with agent tooling, production full-stack, RAG, and MCP infrastructure', () => {
-    expect(HIRE_CASE_STUDIES).toEqual(['devdeck', 'rentrights', 'citefirst', 'studios'])
+  it('aligns hire case studies with browser workflows, agent tooling, RAG, and MCP infrastructure', () => {
+    expect(HIRE_CASE_STUDIES).toEqual(['soursea', 'devdeck', 'citefirst', 'studios'])
   })
 
   it('partitions selected work in editorial order without duplicating it in the full ledger', () => {

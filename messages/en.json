@@ -121,35 +121,35 @@
   },
   "hire": {
     "title": "Work with me",
-    "description": "AI-native product engineer open to senior product, applied AI / AI platform, and senior full-stack roles — plus focused project work.",
-    "metaTitle": "Sihyeong Lee — AI-Native Product Engineer | Senior Full-Stack",
-    "metaDescription": "AI-native product engineer in Los Angeles, open to remote senior product, applied AI / AI platform, and senior full-stack roles. {shipped} shipped products with a public demo or store listing.",
+    "description": "Senior product and full-stack engineer for browser automation, AI integration, and production release work — open to full-time roles and focused projects.",
+    "metaTitle": "Sihyeong Lee — Browser Automation, AI Integration & Senior Full-Stack",
+    "metaDescription": "Los Angeles senior software engineer for Playwright/browser automation, AI integration, production Next.js/PostgreSQL systems, and release QA. {shipped} shipped products with a public demo or store listing.",
     "badgeRemote": "Los Angeles · Fully remote · US permanent resident",
     "badgeNow": "Available now",
     "fulltime": {
       "heading": "Full-time",
       "rolesLabel": "Roles",
-      "roles": "Senior Product Engineer · Applied AI / AI Platform Engineer · Senior Full-Stack Engineer",
+      "roles": "Senior Software Engineer · AI Integration / Applied AI Engineer · Senior Full-Stack / Automation Engineer",
       "modeLabel": "Working style",
       "mode": "Fully remote (US, Pacific Time) · US permanent resident — no sponsorship required",
       "bringLabel": "What I bring",
-      "bring": "Nearly five years owning engineering as a CTO across two companies, plus hands-on AI-native product work spanning agent tooling, RAG evaluation, full-stack systems, CI/QA, and local GPU infrastructure."
+      "bring": "Nearly five years owning engineering as a CTO across two companies, plus hands-on work in Playwright automation, AI-enabled products, PostgreSQL/Docker production systems, CI/release gates, RAG, and local GPU infrastructure."
     },
     "contract": {
-      "heading": "Project work",
-      "workLabel": "What I take on",
-      "work": "Claude API pipelines · custom MCP servers · RAG systems · Next.js / NestJS / Python products",
+      "heading": "Focused engineering projects",
+      "workLabel": "Problems I solve",
+      "work": "Playwright/browser automation · AI integration into existing products · Next.js/PostgreSQL release & QA rescue",
       "modeLabel": "Shape",
-      "mode": "Remote-first, worldwide. Short cycles measured in days, not months.",
+      "mode": "Remote-first. Small paid diagnostics and implementation sprints measured in days, with clear acceptance criteria and evidence.",
       "startLabel": "How to start",
-      "start": "Email me one paragraph describing the problem. I'll reply with whether I can help and how I'd approach it."
+      "start": "Send the workflow, integration, or release problem in one paragraph. I can start with a small paid diagnostic before a larger engagement."
     },
     "evidence": {
       "heading": "Evidence",
       "shipped": "products with a public demo or store listing",
       "playStore": "apps on Google Play",
       "total": "builds in the ledger",
-      "caseHeading": "Selected work"
+      "caseHeading": "Relevant case studies"
     },
     "stack": "Tech Stack",
     "contactHeading": "Get in touch"

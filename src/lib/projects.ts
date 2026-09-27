@@ -151,12 +151,12 @@ export function getHireStats(projects: Pick<Project, 'website' | 'playStore'>[])
 }
 
 /**
- * Four projects that make the employment story legible at a glance: agent
- * tooling, production full-stack/data work, measured RAG, and MCP/GPU
- * infrastructure. Chosen for engineering evidence rather than product count.
+ * Four projects that make the revenue story legible at a glance: browser-driven
+ * product workflows, agent tooling, measured RAG, and MCP/GPU infrastructure.
+ * Chosen for engineering evidence that maps directly to contract work.
  * A slug that stops resolving fails the test suite rather than the page.
  */
-export const HIRE_CASE_STUDIES = ['devdeck', 'rentrights', 'citefirst', 'studios'] as const
+export const HIRE_CASE_STUDIES = ['soursea', 'devdeck', 'citefirst', 'studios'] as const
 
 /**
  * How the home page's ALL WORK section groups the ledger, in render order.
