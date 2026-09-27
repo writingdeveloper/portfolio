@@ -549,7 +549,21 @@
       ],
       "status": "active",
       "private": true,
-      "featured": false
+      "featured": false,
+      "updatedAt": "2026-09-27",
+      "screenshot": "/images/projects/til-shorts-ops.png",
+      "screenshotAltKo": "Load Path / Found Nowhere 제작 파이프라인의 실제 운영 대시보드. 영상 검수, QA 지표, 출고 허가, 소재 큐를 한 화면에서 관리합니다.",
+      "screenshotAltEn": "The real Load Path / Found Nowhere production dashboard used for video review, QA metrics, release approval, and topic-queue operations.",
+      "caseStudy": {
+        "problemKo": "AI로 영상·음성 자산을 빨리 만들 수 있어도, 사실 대조·컷 품질·오디오 기준·사람 검수·업로드 상태가 서로 다른 곳에 흩어지면 대량 제작은 쉽게 잘못된 영상을 더 빨리 내보내는 시스템이 됩니다.",
+        "problemEn": "Fast AI asset generation is not a production system. When fact checking, cut quality, audio limits, human review, and upload state live in separate places, scaling simply makes bad releases happen faster.",
+        "decisionKo": "에피소드 상태를 파일 기반 원장으로 두고 dispatch → 생성 → 조립 → QA → 사람 검수 → 업로드 → 성과수집을 Node 도구 체인으로 묶었습니다. 자동 게이트가 통과해도 최종 제작 승인은 사람이 하며, 탈락 이유와 미완료 상태를 성공으로 덮어쓰지 않도록 했습니다.",
+        "decisionEn": "I made episode state the source of truth and chained dispatch, generation, assembly, QA, human review, upload, and performance capture through Node tooling. Automated gates never replace final human approval, and rejected or incomplete work remains visible instead of being coerced into success.",
+        "evidenceKo": "현재 커밋에는 dispatch.js, assemble.js, qa.js, upload-youtube.js, analytics.js와 gates/retry/chain 모듈이 함께 있으며 smoke·recipe·QA·analytics 테스트가 이 경계를 검증합니다. 운영 대시보드도 실제 검수·출고 허가·장비·소재 큐 상태를 같은 원장에서 읽습니다.",
+        "evidenceEn": "The committed pipeline contains dispatch.js, assemble.js, qa.js, upload-youtube.js, analytics.js, plus gates/retry/chain modules, with smoke, recipe, QA, and analytics tests around those boundaries. The operations dashboard reads the same state for review, release approval, machine status, and the topic queue.",
+        "resultKo": "생성 모델 하나에 종속된 데모가 아니라, 실패·재시도·검수·사람 승인·YouTube 성과 피드백을 추적할 수 있는 실제 콘텐츠 운영 파이프라인으로 발전했습니다. 최신 병렬 개발 중인 supervisor/quota 기능은 이 사례의 완료 근거로 선반영하지 않았습니다.",
+        "resultEn": "The result is an operational content pipeline that tracks failure, retry, QA, human approval, publishing, and YouTube performance feedback rather than a demo tied to one generation model. Newer supervisor/quota work still under parallel development is deliberately not claimed as completed evidence here."
+      }
     },
     {
       "name": "mv-analyzer",

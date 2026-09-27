@@ -250,8 +250,8 @@ describe('JuiceBar ledger refresh', () => {
 })
 
 describe('portfolio information architecture', () => {
-  it('aligns hire case studies with browser workflows, release hardening, RAG, and MCP infrastructure', () => {
-    expect(HIRE_CASE_STUDIES).toEqual(['soursea', 'creator-os', 'citefirst', 'studios'])
+  it('aligns hire case studies with browser workflows, release hardening, creator automation, and RAG', () => {
+    expect(HIRE_CASE_STUDIES).toEqual(['soursea', 'creator-os', 'til-shorts', 'citefirst'])
   })
 
   it('partitions selected work in editorial order without duplicating it in the full ledger', () => {
