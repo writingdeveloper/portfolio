@@ -34,6 +34,39 @@
       }
     },
     {
+      "name": "Creator OS",
+      "slug": "creator-os",
+      "descriptionKo": "크리에이터·YouTube 리포팅 SaaS를 실제 고객 환경에 내보내기 전에 실패 폐쇄형 릴리스 게이트로 단단하게 만든 production-hardening 프로젝트. PostgreSQL 워커, Docker 런타임, 백업·복구, Playwright QA와 운영 프리플라이트를 한 릴리스 계약으로 묶었습니다.",
+      "descriptionEn": "A production-hardening project for a creator and YouTube reporting SaaS. Before exposing customer traffic, I tied PostgreSQL workers, Docker runtime, backup/recovery, Playwright QA, and fail-closed operator preflight into one release contract.",
+      "techStack": [
+        "Next.js",
+        "TypeScript",
+        "PostgreSQL",
+        "Docker",
+        "Playwright",
+        "Vitest",
+        "Better Auth",
+        "YouTube API"
+      ],
+      "status": "active",
+      "private": true,
+      "featured": false,
+      "updatedAt": "2026-09-23",
+      "screenshot": "/images/projects/creator-os.png",
+      "screenshotAltKo": "Creator OS 비공개 스테이징의 실제 Today 리포트 화면. 배포 전 QA에서 캡처한 제품 UI.",
+      "screenshotAltEn": "The real Creator OS Today report UI captured during private-staging QA before public launch.",
+      "caseStudy": {
+        "problemKo": "테스트와 빌드가 통과해도 SaaS가 공개 출시 준비가 됐다는 뜻은 아닙니다. DB 마이그레이션, 워커 중복 실행, 잘못된 호스트, 백업 복구, OAuth·이메일·정책 같은 외부 상태가 어긋나면 코드가 정상이어도 고객 데이터를 위험하게 만들 수 있습니다.",
+        "problemEn": "Passing tests and a production build does not mean a SaaS is safe to expose. Database migrations, duplicate workers, wrong-host deployment, recovery state, OAuth, email, and operator policy can all drift while the application code still looks healthy.",
+        "decisionKo": "소스 완료와 공개 출시를 분리했습니다. immutable release manifest, PostgreSQL 전용 워커, Docker/Compose 런타임 검증, 백업·복구와 삭제 ledger, fail-closed operator/preflight 검사, 별도 FINAL-QA를 두고 실제 증거가 없는 게이트는 통과시키지 않았습니다.",
+        "decisionEn": "I separated source completion from launch approval. The release uses immutable manifests, a dedicated PostgreSQL worker, Docker/Compose verification, backup-and-restore plus an independent deletion ledger, fail-closed operator/preflight checks, and a separate FINAL-QA gate. Missing external evidence stays blocked instead of being treated as success.",
+        "evidenceKo": "최근 COS-32/33 최종 QA에서 focused 22/22, 전체 회귀 669건 통과(27건은 DB 미구성으로 skip이며 pass로 세지 않음), typecheck·production build·release verifier가 통과했습니다. 올바른 4080 private-staging host에 대한 29/29 read-only live checks도 통과했습니다.",
+        "evidenceEn": "The latest COS-32/33 final QA passed 22/22 focused checks and 669 regression tests; 27 database-dependent tests were skipped and explicitly not counted as passes. Typecheck, production build, release verifiers, and 29/29 read-only checks against the intended 4080 private-staging host also passed.",
+        "resultKo": "반복 가능한 private-staging 릴리스 증거와 운영 경계를 만들었지만, public launch는 DNS 쓰기 인증·공개 TLS/proxy·실제 Google 동의·정책/지원 정보·이메일 sender·암호화 백업 키 보관 등 외부 게이트가 남아 있어 의도적으로 차단 상태로 유지했습니다.",
+        "resultEn": "The result is a reproducible private-staging release with explicit operational evidence. Public launch remains intentionally blocked on external gates such as authoritative DNS access, public TLS/proxy verification, real Google consent, policy/support approval, email sender identity, and encrypted recovery-key custody."
+      }
+    },
+    {
       "name": "citefirst",
       "slug": "citefirst",
       "descriptionKo": "문서 기반 질의응답(RAG)에서 인용을 화면에 내보내기 전에 검색된 청크와 대조해 검증하고, 검색 품질을 주장이 아니라 측정으로 답하는 시스템. pg_dump와 pg_dumpall, 다섯 종류의 work_mem 설정처럼 거의 똑같아 보이는 문단이 가득한 PostgreSQL 17 공식 매뉴얼 약 3,000쪽을 코퍼스로 골라, 순진한 벡터 검색이 조용히 엉뚱한 문단을 돌려주는 지점을 드러냈습니다. 46개 질문 평가에서 크로스 인코더 재순위화를 켜면 recall@5 0.978, MRR@10 0.834로 평문 벡터 검색의 0.652를 크게 웃돌고, 인용 유효성은 1.000으로 168건 중 환각 인용이 0건입니다. 임베딩과 재순위화가 로컬 ONNX로 돌아 색인 단계에는 외부 호출이 전혀 없습니다.",

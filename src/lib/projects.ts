@@ -156,7 +156,7 @@ export function getHireStats(projects: Pick<Project, 'website' | 'playStore'>[])
  * Chosen for engineering evidence that maps directly to contract work.
  * A slug that stops resolving fails the test suite rather than the page.
  */
-export const HIRE_CASE_STUDIES = ['soursea', 'devdeck', 'citefirst', 'studios'] as const
+export const HIRE_CASE_STUDIES = ['soursea', 'creator-os', 'citefirst', 'studios'] as const
 
 /**
  * How the home page's ALL WORK section groups the ledger, in render order.
@@ -177,6 +177,7 @@ export const HIRE_CASE_STUDIES = ['soursea', 'devdeck', 'citefirst', 'studios'] 
 export const HOME_GROUPS: Record<'products' | 'games' | 'tools', string[]> = {
   products: [
     'soursea',
+    'creator-os',
     'healframe',
     'drymora',
     'toolsmith',

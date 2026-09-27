@@ -233,8 +233,8 @@ describe('portfolio selection and truthful stats', () => {
 describe('JuiceBar ledger refresh', () => {
   const ledger = projectsData.projects as Project[]
 
-  it('adds exactly one project to the 41-project baseline and that project is JuiceBar', () => {
-    expect(ledger).toHaveLength(42)
+  it('keeps JuiceBar in the expanded portfolio ledger', () => {
+    expect(ledger).toHaveLength(43)
     const juicebar = ledger.find((project) => project.slug === 'juicebar')
     expect(juicebar).toBeDefined()
     expect(juicebar?.github).toBe('https://github.com/writingdeveloper/JuiceBar')
@@ -250,8 +250,8 @@ describe('JuiceBar ledger refresh', () => {
 })
 
 describe('portfolio information architecture', () => {
-  it('aligns hire case studies with browser workflows, agent tooling, RAG, and MCP infrastructure', () => {
-    expect(HIRE_CASE_STUDIES).toEqual(['soursea', 'devdeck', 'citefirst', 'studios'])
+  it('aligns hire case studies with browser workflows, release hardening, RAG, and MCP infrastructure', () => {
+    expect(HIRE_CASE_STUDIES).toEqual(['soursea', 'creator-os', 'citefirst', 'studios'])
   })
 
   it('partitions selected work in editorial order without duplicating it in the full ledger', () => {
