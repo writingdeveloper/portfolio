@@ -68,7 +68,11 @@ export function EvidenceSnapshotStrip({ locale }: { locale: string }) {
             </p>
             <div className="mt-auto flex flex-wrap items-center gap-x-5 gap-y-2 pt-2">
               <Link
-                href={record.project === 'devdeck' ? '/projects/devdeck#failure-investigation' : '/projects/citefirst'}
+                href={
+                  record.project === 'devdeck'
+                    ? '/projects/devdeck#failure-investigation'
+                    : '/projects/' + record.project
+                }
                 className="ledger-mono text-xs underline underline-offset-4"
                 style={{ color: 'var(--l-ink)' }}
               >
