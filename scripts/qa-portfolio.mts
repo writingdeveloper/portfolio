@@ -146,6 +146,34 @@ try {
       assert(r?.ok() && (await page.locator('h1').count()) === 1, 'New content failed: ' + route)
       results.push({ route: prefix + route, status: r?.status() })
     }
+  for (const prefix of ['', '/en']) {
+    const incidentCtx = await browser.newContext()
+    const incidentPage = await incidentCtx.newPage()
+    const route = prefix + '/projects/devdeck'
+    const response = await incidentPage.goto(base + route, { waitUntil: 'networkidle', timeout: 30000 })
+    assert(response?.ok(), 'DevDeck failure case route missing: ' + route)
+    const caseStudy = incidentPage.locator('#failure-investigation')
+    assert(await caseStudy.isVisible(), 'Visible failure investigation missing: ' + route)
+    assert((await caseStudy.locator('img').count()) === 2, 'Expected before/after source screenshot crops')
+    assert(
+      (await caseStudy.locator('a[href*="github.com/writingdeveloper/devdeck/"]').count()) === 6,
+      'Need six immutable source and CI links'
+    )
+    const body = await caseStudy.innerText()
+    assert(body.includes('20/20') && body.includes('8/8'), 'Case study test counts missing')
+    assert(
+      body.includes(prefix ? 'What this does not prove' : '검증하지 않은 범위'),
+      'Unverified scope disclaimer missing: ' + route + ' heading=' + (await caseStudy.locator('h2').innerText())
+    )
+    for (const img of await caseStudy.locator('img').all()) {
+      await img.scrollIntoViewIfNeeded()
+      const loaded = await img.evaluate((el) => el instanceof HTMLImageElement && el.complete && el.naturalWidth > 0)
+      assert(loaded, 'QA fixture screenshot failed to load')
+    }
+    results.push({ route, status: response?.status(), imagesLoaded: 2, pinnedLinks: 6, incident: true })
+    console.log('PASS INCIDENT', route, 'before/after images, 6 source links, scope')
+    await incidentCtx.close()
+  }
   for (const file of resumes.files) {
     const r = await ctx.request.get(base + '/resume/' + file.file)
     assert(r.ok() && r.headers()['content-type']?.includes('application/pdf'), 'PDF response invalid')

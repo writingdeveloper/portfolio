@@ -74,7 +74,7 @@ function OfferRow({ label, children }: { label: string; children: ReactNode }) {
 }
 
 const DELIVERY_STAGES = [
-  { key: 'decision', href: '/projects/devdeck' },
+  { key: 'decision', href: '/projects/devdeck#failure-investigation' },
   { key: 'verification', href: '/projects/citefirst' },
   { key: 'release', href: '/projects/creator-os' },
 ] as const
