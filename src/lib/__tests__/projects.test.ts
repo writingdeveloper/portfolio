@@ -234,7 +234,7 @@ describe('2026-09 ledger refresh', () => {
   const ledger = projectsData.projects as Project[]
 
   it('adds Creator Learning OS to the ledger without pretending it has shipped', () => {
-    expect(ledger).toHaveLength(44)
+    expect(ledger).toHaveLength(45)
     const creator = ledger.find((project) => project.slug === 'creator-learning-os')
     expect(creator).toBeDefined()
     expect(creator?.status).toBe('building')
@@ -253,6 +253,15 @@ describe('2026-09 ledger refresh', () => {
     expect(bvat?.caseStudy?.evidenceEn).toContain('66/90')
   })
 
+  it('keeps JuiceBar in the expanded portfolio ledger', () => {
+    expect(ledger).toHaveLength(45)
+    const juicebar = ledger.find((project) => project.slug === 'juicebar')
+    expect(juicebar).toBeDefined()
+    expect(juicebar?.github).toBe('https://github.com/writingdeveloper/JuiceBar')
+    expect(juicebar?.screenshot).toBe('/images/projects/juicebar.webp')
+    expect(juicebar?.caseStudy?.evidenceEn).toBeTruthy()
+  })
+
   it('uses the selected-work list as the only featured set', () => {
     expect(new Set(ledger.filter((project) => project.featured).map((project) => project.slug))).toEqual(
       new Set(SELECTED_WORK)
@@ -261,8 +270,8 @@ describe('2026-09 ledger refresh', () => {
 })
 
 describe('portfolio information architecture', () => {
-  it('aligns hire case studies with agent tooling, MCP infrastructure, RAG, and safety-gated AI product work', () => {
-    expect(HIRE_CASE_STUDIES).toEqual(['devdeck', 'studios', 'citefirst', 'healframe'])
+  it('aligns hire case studies with browser workflows, release hardening, creator automation, and RAG', () => {
+    expect(HIRE_CASE_STUDIES).toEqual(['soursea', 'creator-os', 'til-shorts', 'citefirst'])
   })
 
   it('partitions selected work in editorial order without duplicating it in the full ledger', () => {

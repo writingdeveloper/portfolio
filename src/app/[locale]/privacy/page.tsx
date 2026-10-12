@@ -21,6 +21,15 @@ const ADS_SETTINGS_URL = 'https://myadcenter.google.com/'
 const ABOUT_ADS_URL = 'https://www.aboutads.info/choices/'
 const GISCUS_URL = 'https://giscus.app'
 const GITHUB_PRIVACY_URL = 'https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement'
+/**
+ * YouTube API Services disclosure. The YouTube API Services Terms of Service
+ * (III.A) require an API client's privacy policy to say that it uses YouTube
+ * API Services, link Google's privacy policy, and explain how a user revokes
+ * access — so these three links are compliance surface, like the ad opt-outs.
+ */
+const YOUTUBE_TOS_URL = 'https://www.youtube.com/t/terms'
+const GOOGLE_PRIVACY_URL = 'https://policies.google.com/privacy'
+const GOOGLE_SECURITY_SETTINGS_URL = 'https://myaccount.google.com/permissions'
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params
@@ -154,6 +163,15 @@ function PrivacyContent() {
           </Section>
 
           <Section heading={t('hosting.heading')}>{t('hosting.body')}</Section>
+
+          {/* Load Path Studio Pipeline — the YouTube API client behind the Load Path channel. */}
+          <Section heading={t('youtube.heading')}>
+            {t.rich('youtube.body', {
+              tos: (chunks) => <Ext href={YOUTUBE_TOS_URL}>{chunks}</Ext>,
+              google: (chunks) => <Ext href={GOOGLE_PRIVACY_URL}>{chunks}</Ext>,
+              revoke: (chunks) => <Ext href={GOOGLE_SECURITY_SETTINGS_URL}>{chunks}</Ext>,
+            })}
+          </Section>
 
           <Section heading={t('choices.heading')}>{t('choices.body')}</Section>
 

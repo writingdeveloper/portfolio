@@ -121,35 +121,35 @@
   },
   "hire": {
     "title": "Work with me",
-    "description": "AI-native product engineer open to senior product, AI systems / agent platform, and senior full-stack roles — plus focused project work.",
-    "metaTitle": "Sihyeong Lee — AI-Native Product & Agent Systems Engineer",
-    "metaDescription": "AI-native product and agent-systems engineer in Los Angeles, open to remote-first senior product, AI systems / agent platform, and senior full-stack roles. {shipped} shipped products with a public demo or store listing.",
+    "description": "Senior product and full-stack engineer for browser automation, AI integration, and production release work — open to full-time roles and focused projects.",
+    "metaTitle": "Sihyeong Lee — Browser Automation, AI Integration & Senior Full-Stack",
+    "metaDescription": "Los Angeles senior software engineer for Playwright/browser automation, AI integration, production Next.js/PostgreSQL systems, and release QA. {shipped} shipped products with a public demo or store listing.",
     "badgeRemote": "Los Angeles · Remote-first · LA hybrid/on-site · US permanent resident",
     "badgeNow": "Available now",
     "fulltime": {
       "heading": "Full-time",
       "rolesLabel": "Roles",
-      "roles": "Senior Product Engineer · AI Systems / Agent Platform Engineer · Senior Full-Stack Engineer",
+      "roles": "Senior Software Engineer · AI Integration / Applied AI Engineer · Senior Full-Stack / Automation Engineer",
       "modeLabel": "Working style",
-      "mode": "Remote-first (US, Pacific Time) · open to LA hybrid/on-site and US domestic travel · US permanent resident — no sponsorship required",
+      "mode": "Remote-first (US, Pacific Time) · open to LA hybrid/on-site · US permanent resident — no sponsorship required",
       "bringLabel": "What I bring",
-      "bring": "Nearly five years owning engineering as a CTO across two companies, plus hands-on agent systems, MCP/tool integrations, evals, developer tooling, full-stack products, and production infrastructure."
+      "bring": "Nearly five years owning engineering as a CTO across two companies, plus hands-on work in Playwright automation, AI-enabled products, PostgreSQL/Docker production systems, CI/release gates, RAG, and local GPU infrastructure."
     },
     "contract": {
-      "heading": "Project work",
-      "workLabel": "What I take on",
-      "work": "Claude API pipelines · custom MCP servers · RAG systems · Next.js / NestJS / Python products",
+      "heading": "Focused engineering projects",
+      "workLabel": "Problems I solve",
+      "work": "Playwright/browser automation · AI integration into existing products · Next.js/PostgreSQL release & QA rescue",
       "modeLabel": "Shape",
-      "mode": "Remote-first, worldwide. Short cycles measured in days, not months.",
+      "mode": "Remote-first. Small paid diagnostics and implementation sprints measured in days, with clear acceptance criteria and evidence.",
       "startLabel": "How to start",
-      "start": "Email me one paragraph describing the problem. I'll reply with whether I can help and how I'd approach it."
+      "start": "Send the workflow, integration, or release problem in one paragraph. I can start with a small paid diagnostic before a larger engagement."
     },
     "evidence": {
       "heading": "Evidence",
       "shipped": "products with a public demo or store listing",
       "playStore": "apps on Google Play",
       "total": "builds in the ledger",
-      "caseHeading": "Selected work"
+      "caseHeading": "Relevant case studies"
     },
     "stack": "Tech Stack",
     "contactHeading": "Get in touch",
@@ -258,8 +258,8 @@
     "metaTitle": "Privacy Policy",
     "metaDescription": "How writingdeveloper.blog handles analytics, advertising and comment data through Google Analytics, Google AdSense and giscus, and how to opt out.",
     "updatedLabel": "LAST UPDATED",
-    "updated": "20 August 2026",
-    "intro": "This site has no accounts, no sign-up and no contact form, so it asks you for nothing directly. Everything described below is collected by third-party services the site loads.",
+    "updated": "14 September 2026",
+    "intro": "This site has no accounts, no sign-up and no contact form, so it asks you for nothing directly. Everything described below is collected by third-party services the site loads, plus the data handled by the YouTube channel tool I operate.",
     "direct": {
       "heading": "What I collect directly",
       "body": "Nothing. There is no login, no newsletter, no form and no database of visitors. I never see your name, email address or postal address through this site."
@@ -281,6 +281,10 @@
     "hosting": {
       "heading": "Hosting",
       "body": "The site runs on Vercel, which keeps standard server logs including IP addresses for security and abuse prevention."
+    },
+    "youtube": {
+      "heading": "YouTube API Services (Load Path Uploader)",
+      "body": "Load Path Uploader (internally called Load Path Studio Pipeline), the production tool behind my YouTube channel Load Path (@loadpathtv), uses YouTube API Services. It is an internal command-line program that only I, the channel owner, run on my own PC; it is not distributed, sold or offered to anyone else. All it does is upload videos to my channel as private, set their scheduled release, captions, thumbnails and playlists, and read view and audience metrics for my own videos. It does not collect or store personal data of viewers or of any other channel. The channel data it reads is stored only on my PC, is never shared with or sold to third parties, and can be deleted at any time by deleting the files. You can revoke the tool's access to YouTube at any time in your <revoke>Google security settings</revoke>. Because it uses YouTube API Services, the <tos>YouTube Terms of Service</tos> apply, and Google's handling of the data is governed by the <google>Google Privacy Policy</google>."
     },
     "choices": {
       "heading": "Your choices",
