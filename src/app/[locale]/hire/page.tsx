@@ -114,9 +114,23 @@ function HireContent() {
               </span>
             ))}
           </div>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex min-h-11 items-center rounded-lg bg-[var(--accent-text)] px-5 py-2.5 text-sm font-semibold text-[var(--bg-primary)] transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)]"
+            >
+              {locale === 'ko' ? '이메일로 연락하기' : 'Email me'} →
+            </a>
+            <a
+              href="#resume"
+              className="inline-flex min-h-11 items-center rounded-lg border border-[var(--border-hover)] px-5 py-2.5 text-sm font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--bg-elevated)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)]"
+            >
+              {locale === 'ko' ? '이력서 PDF 보기' : 'View résumé options'} ↓
+            </a>
+          </div>
         </header>
 
-        <section className="mb-12 grid gap-5 lg:grid-cols-[1.1fr_1.9fr]">
+        <section id="resume" className="mb-12 grid scroll-mt-24 gap-5 lg:grid-cols-[1.1fr_1.9fr]">
           <div className="rounded-lg border border-[var(--border-default)] p-6">
             <h2 className="text-xl font-bold mb-4">{t('resume.heading')}</h2>
             <p className="mb-4 text-xs text-[var(--text-muted)]">

@@ -565,6 +565,84 @@
       }
     },
     {
+      "name": "RailForge",
+      "slug": "railforge",
+      "descriptionKo": "철도 건설·운영·운전을 하나의 3D 웹 세계에서 연결하려는 브라우저 게임 프로토타입입니다. 선로 곡선·대차 움직임·연동장치·공유 운전 권한을 독립 실험으로 검증하고 있습니다. 현재 개발·테스트 중인 연구 프로젝트이며 정식 멀티플레이 게임으로 출시하지 않았습니다.",
+      "descriptionEn": "A research-first 3D browser railway prototype combining network construction, dispatch, and direct train driving. Separate experiments probe spline/bogie motion, interlocking, multiplayer authority, and a playable two-town loop. The integrated multiplayer game is not a public release.",
+      "techStack": [
+        "TypeScript",
+        "Three.js",
+        "Vite",
+        "Vitest"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false,
+      "updatedAt": "2026-09-29",
+      "caseStudy": {
+        "problemKo": "철도 시뮬레이션에서 네트워크 설계·운영·운전자 조작을 같은 세계의 일관된 상태로 연결하기 어렵습니다.",
+        "problemEn": "Railway games often separate network planning, dispatch operations, and interactive driving into disconnected experiences.",
+        "decisionKo": "하나의 거대한 게임을 먼저 만들기보다 선형·대차·분기기 연동·공유 권한의 핵심 위험을 작은 독립 실험으로 분해했습니다.",
+        "decisionEn": "Instead of declaring a full game complete, I split core risks into isolated experiments for rail geometry, bogies, interlocking, and shared driving authority.",
+        "evidenceKo": "4080 PC의 RailForge 저장소에 Three.js/Vite 기반 playable-toy, dispatcher, multiplayer 및 spline-bogie 실험 코드와 검사 스크립트가 존재합니다. 일부 작업은 미커밋이며 전체 플레이 경험 검증은 별도입니다.",
+        "evidenceEn": "The MAIN-PC repository contains a Three.js/Vite playable-toy and separate dispatcher, multiplayer, and spline-bogie experiments with verification scripts. Some work remains uncommitted; end-to-end player acceptance is a separate gate.",
+        "resultKo": "연구용 프로토타입과 기술 실험 단계입니다. 안정적인 정식 출시나 만족스러운 전체 게임플레이는 아직 입증하지 않았습니다.",
+        "resultEn": "Prototype and engineering research only. Stable public launch and accepted end-to-end gameplay have not been demonstrated."
+      }
+    },
+    {
+      "name": "Project STRATA",
+      "slug": "project-strata",
+      "descriptionKo": "거대한 폐허 산업 도시를 탐험하며 시설을 복구하는 Unreal Engine 5.8 싱글플레이 게임 기술 스파이크입니다. 차량 MULE과 인프라 퍼즐의 핵심 감각을 검증하고 있으며 30~45분 버티컬 슬라이스 승인 전에는 정식 제작·출시로 주장하지 않습니다.",
+      "descriptionEn": "An Unreal Engine 5.8 technical spike for an atmospheric, vehicle-led exploration game set in a vast abandoned industrial city. MULE traversal and infrastructure-reactivation puzzles remain subject to a 30–45-minute vertical-slice acceptance gate; it is not a shipped game.",
+      "techStack": [
+        "Unreal Engine 5.8",
+        "3D Gameplay",
+        "Prototyping"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false,
+      "updatedAt": "2026-10-06",
+      "caseStudy": {
+        "problemKo": "전투 없이 이동·탐색·시설 복구만으로 몰입도 있는 게임 흐름이 성립하는지 검증해야 했습니다.",
+        "problemEn": "The central question is whether traversal, discovery, and restoring dead infrastructure form a satisfying loop without combat.",
+        "decisionKo": "전면 제작보다 MULE 이동·환경 탐색·복구의 시각적 보상이 연결되는 버티컬 슬라이스를 먼저 설정했습니다.",
+        "decisionEn": "I set a vertical-slice gate for MULE traversal, environmental exploration, and visible world-state changes before committing to full production.",
+        "evidenceKo": "MAIN PC의 project-strata/game/Strata/Strata.uproject와 설계·QA 문서, 2026-10-06 커밋을 확인했습니다. 게임플레이 수용 QA는 미완료입니다.",
+        "evidenceEn": "The MAIN-PC repository contains a Strata.uproject, implementation and QA plans, and a 2026-10-06 committed technical-spike update. Gameplay acceptance remains open.",
+        "resultKo": "Unreal 기술 검증 단계로 플레이 가능성과 재미가 충분히 입증되지 않아 출시작으로 표시하지 않습니다.",
+        "resultEn": "An Unreal feasibility experiment, not a released product. Full gameplay and fun-factor acceptance remain open."
+      }
+    },
+    {
+      "name": "Music / MV Studio",
+      "slug": "music-mv-studio",
+      "descriptionKo": "여러 로컬 생성 모델의 음악 결과물을 원본 이동 없이 프로젝트 단위로 정리하고 비교·선정하며 MV 컷을 계획하는 비공개 제작 도구입니다. Notebook의 WebUI/SQLite와 MAIN PC의 생성 작업을 연결하고 있지만 실제 H3 렌더 제출 연동은 아직 구현 중입니다.",
+      "descriptionEn": "A private project-first control surface for multi-model music and music-video creation. It catalogs immutable generator outputs across Notebook and MAIN, supports A/B listening and approval states, and plans MV shots. H3 render submission remains explicitly unwired.",
+      "techStack": [
+        "Node.js",
+        "SQLite",
+        "Vite",
+        "Python",
+        "ComfyUI"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false,
+      "updatedAt": "2026-10-09",
+      "caseStudy": {
+        "problemKo": "음악 모델마다 산재한 생성 결과를 원본을 훼손하지 않고 비교·선정·영상화하기 어렵습니다.",
+        "problemEn": "Music-model outputs become scattered artifacts, making review, version selection, and MV planning hard without mutating source files.",
+        "decisionKo": "엔진 출력 폴더는 읽기 전용 이력으로 유지하고, 작업 상태·승인·A/B 비교·스토리보드와 작업 큐를 별도 SQLite 카탈로그로 관리합니다.",
+        "decisionEn": "I leave engine output folders immutable while a SQLite catalog manages project state, approvals, synchronized A/B review, MV shot windows, and queued work.",
+        "evidenceKo": "Notebook의 music-mv-studio README와 구현에 WebUI, SQLite 카탈로그, lazy 오디오 캐시, A/B 청취, 검증 스크립트가 있으며 H3 워크플로 바인딩 미완료가 명시되어 있습니다.",
+        "evidenceEn": "The Notebook music-mv-studio README and implementation document its WebUI, SQLite catalog, lazy audio cache, A/B listening, and QA scripts; H3 workflow binding is explicitly incomplete.",
+        "resultKo": "개인 연구·제작 과정에서 사용하는 비공개 도구입니다. 공개 음악 SaaS나 완성된 자동 MV 제작기로 오인하지 않도록 구분합니다.",
+        "resultEn": "A private creative-workflow tool under active development, not a public music SaaS or finished automated MV generator."
+      }
+    },
+    {
       "name": "til-shorts",
       "slug": "til-shorts",
       "descriptionKo": "기록에 난관과 해결이 남아 있는 대상을 골라 영어권 유튜브 숏츠로 만드는 제작 파이프라인. 영상과 음성 자산은 전부 로컬 생성 팩토리(studios)에서 나오고, 이 레포는 자산을 복제하지 않고 id로만 참조하면서 지금 어느 단계인지, 무엇이 왜 탈락했는지라는 상태만 파일로 관리합니다. 후보에서 게시까지 7단계를 두고 단계마다 게이트를 걸었습니다. 출처 두 개 이상과 나레이션 문장 수만큼의 사실 대조표, 그리고 쓰지 않기로 한 숫자까지 적어야 사실 대조가 끝나고, 컷 평균 3초 이하와 라우드니스 -14 LUFS를 통과해야 검토로 넘어가며, 제작 승인만은 자동화하지 않고 사람이 누릅니다. 조립·컷·오버레이·자막·색보정·효과음·업로드를 Node 도구 사슬로 묶고, 공개 뒤에는 YouTube Data API로 실적을 스냅샷으로 받아 다음 편 설계의 근거로 씁니다. 첫 측정에서 조회의 98.8%가 숏츠 피드에서 오고 검색은 0.4%였다는 것, 그리고 더 많이 본 편이 오히려 첫 몇 초에서 시청자를 더 많이 잃었다는 부정 결과를 그대로 기록했습니다. 처음엔 r/todayilearned 소재로 시작했지만 고정 4막(대상, 난관, 발상 전환, 탄생)이 성립하려면 소재 자체에 난관과 해결이 있어야 한다는 걸 확인하고 소재 조건을 다시 정의했습니다.",

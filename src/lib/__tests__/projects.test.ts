@@ -230,11 +230,27 @@ describe('portfolio selection and truthful stats', () => {
   })
 })
 
+describe('2026-10 verified source-backed research entries', () => {
+  const ledger = projectsData.projects as Project[]
+  it('does not conflate unfinished private prototypes with public releases', () => {
+    for (const slug of ['railforge', 'project-strata', 'music-mv-studio']) {
+      const project = ledger.find((item) => item.slug === slug)
+      expect(project).toBeDefined()
+      expect(project?.status).toBe('building')
+      expect(project?.private).toBe(true)
+      expect(project?.website).toBeUndefined()
+      expect(project?.github).toBeUndefined()
+      expect(project?.featured).toBe(false)
+      expect(project?.caseStudy?.resultEn).toBeTruthy()
+    }
+  })
+})
+
 describe('2026-09 ledger refresh', () => {
   const ledger = projectsData.projects as Project[]
 
   it('adds Creator Learning OS to the ledger without pretending it has shipped', () => {
-    expect(ledger).toHaveLength(45)
+    expect(ledger).toHaveLength(48)
     const creator = ledger.find((project) => project.slug === 'creator-learning-os')
     expect(creator).toBeDefined()
     expect(creator?.status).toBe('building')
@@ -254,7 +270,7 @@ describe('2026-09 ledger refresh', () => {
   })
 
   it('keeps JuiceBar in the expanded portfolio ledger', () => {
-    expect(ledger).toHaveLength(45)
+    expect(ledger).toHaveLength(48)
     const juicebar = ledger.find((project) => project.slug === 'juicebar')
     expect(juicebar).toBeDefined()
     expect(juicebar?.github).toBe('https://github.com/writingdeveloper/JuiceBar')

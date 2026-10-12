@@ -193,6 +193,8 @@ export const HOME_GROUPS: Record<'products' | 'games' | 'tools', string[]> = {
   ],
   games: [
     'brain-vat-siege',
+    'railforge',
+    'project-strata',
     'coinrace',
     'wishing-stones',
     'hoverslam',
@@ -207,6 +209,7 @@ export const HOME_GROUPS: Record<'products' | 'games' | 'tools', string[]> = {
   tools: [
     'devdeck',
     'studios',
+    'music-mv-studio',
     'creator-learning-os',
     'citefirst',
     'juicebar',

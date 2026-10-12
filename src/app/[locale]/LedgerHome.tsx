@@ -269,7 +269,7 @@ export function LedgerHome({
 
       <main className="mx-auto max-w-[1400px] px-6 sm:px-10">
         {/* Hero */}
-        <section className="pt-16 pb-14 sm:pt-24 sm:pb-20">
+        <section className="relative pt-10 pb-12 sm:pt-20 sm:pb-16">
           <div
             className="mb-10 flex flex-col gap-2 border-b pb-6 sm:flex-row sm:items-center sm:justify-between"
             style={{ borderColor: BORDER }}
@@ -304,24 +304,30 @@ export function LedgerHome({
               ? `에이전트가 실제 시스템에서 일하도록 만드는 AI 네이티브 제품을 설계·배포·운영합니다. MCP·툴 사용, eval, RAG, 로컬 GPU 파이프라인, 프로덕션 풀스택 인프라까지 직접 책임집니다.`
               : `I build the systems that let AI agents do real work: MCP and tool use, evals, RAG, developer tooling, local GPU pipelines, and production full-stack infrastructure.`}
           </p>
+          <div className="mt-7 flex flex-wrap gap-3 xl:absolute xl:right-0 xl:top-40 xl:mt-0 xl:w-72 xl:flex-col">
+            <Link
+              href="/hire"
+              className="ledger-mono rounded-lg px-4 py-3 text-sm font-bold"
+              style={{ background: ACCENT, color: '#0a0a0b' }}
+            >
+              {locale === 'ko' ? '경력 · 이력서 보기' : 'Experience & résumé'} →
+            </Link>
+            <Link
+              href="/studio"
+              className="ledger-mono rounded-lg border px-4 py-3 text-sm"
+              style={{ borderColor: BORDER, color: INK }}
+            >
+              {locale === 'ko' ? 'AI 파이프라인 사례' : 'Inside the AI pipeline'} →
+            </Link>
+            <Link
+              href="/projects"
+              className="ledger-mono rounded-lg border px-4 py-3 text-sm"
+              style={{ borderColor: BORDER, color: INK }}
+            >
+              {locale === 'ko' ? '검증된 작업 사례 보기' : 'Explore selected work'} →
+            </Link>
+          </div>
         </section>
-
-        <div className="mb-10 flex flex-wrap gap-4">
-          <Link
-            href="/hire"
-            className="ledger-mono rounded-lg px-4 py-3 text-sm font-bold"
-            style={{ background: ACCENT, color: '#0a0a0b' }}
-          >
-            {locale === 'ko' ? '경력 · 이력서 보기' : 'Experience & résumé'} →
-          </Link>
-          <Link
-            href="/studio"
-            className="ledger-mono rounded-lg border px-4 py-3 text-sm"
-            style={{ borderColor: BORDER, color: INK }}
-          >
-            {locale === 'ko' ? 'AI 파이프라인 사례' : 'Inside the AI pipeline'} →
-          </Link>
-        </div>
 
         {/* Stats ribbon */}
         <section className="grid grid-cols-2 gap-y-8 border-t py-10 sm:grid-cols-4" style={{ borderColor: BORDER }}>
