@@ -3,6 +3,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
 import type { Metadata } from 'next'
 import { PageTransition } from '@/components/ui/PageTransition'
+import { Link } from '@/i18n/navigation'
 import { SkillGrid } from '@/components/ui/SkillGrid'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { EvidencePanel } from '@/components/projects/EvidencePanel'
@@ -71,6 +72,12 @@ function OfferRow({ label, children }: { label: string; children: ReactNode }) {
     </div>
   )
 }
+
+const DELIVERY_STAGES = [
+  { key: 'decision', href: '/projects/devdeck' },
+  { key: 'verification', href: '/projects/citefirst' },
+  { key: 'release', href: '/projects/creator-os' },
+] as const
 
 function HireContent() {
   const t = useTranslations('hire')
@@ -202,6 +209,35 @@ function HireContent() {
               <OfferRow label={t('contract.modeLabel')}>{t('contract.mode')}</OfferRow>
               <OfferRow label={t('contract.startLabel')}>{t('contract.start')}</OfferRow>
             </dl>
+          </div>
+        </section>
+
+        <section id="delivery-method" aria-labelledby="delivery-method-title" className="mb-12 scroll-mt-24">
+          <h2 id="delivery-method-title" className="ledger-display mb-3 text-2xl font-bold">
+            {t('approach.heading')}
+          </h2>
+          <p className="mb-6 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)]">{t('approach.intro')}</p>
+          <div className="grid gap-4 md:grid-cols-3">
+            {DELIVERY_STAGES.map((stage, index) => (
+              <article
+                key={stage.key}
+                className="flex min-w-0 flex-col rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-5"
+              >
+                <span className="ledger-mono text-xs text-[var(--accent-text)]">0{index + 1}</span>
+                <h3 className="mt-3 text-base font-semibold text-[var(--text-primary)]">
+                  {t(`approach.${stage.key}.title`)}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                  {t(`approach.${stage.key}.body`)}
+                </p>
+                <Link
+                  href={stage.href}
+                  className="mt-auto inline-block pt-5 text-sm underline underline-offset-4 text-[var(--accent-text)]"
+                >
+                  {t(`approach.${stage.key}.link`)} →
+                </Link>
+              </article>
+            ))}
           </div>
         </section>
 

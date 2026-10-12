@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "WritingDeveloper",
-    "description": "Build logs and engineering notes from Sihyeong Lee — an AI-native product engineer building agent systems, evals, developer tools, and production full-stack products."
+    "description": "Engineering notes and source-backed case studies on browser automation, evaluated retrieval, agent tooling, and production release decisions by Sihyeong Lee."
   },
   "nav": {
     "home": "Home",
@@ -17,14 +17,14 @@
       "greeting": "Hello",
       "name": "Sihyeong Lee",
       "role": "AI-Native Product & Agent Systems Engineer",
-      "description": "I build production AI systems, developer tools, and full-stack products — with agent workflows, evals, and infrastructure designed for reliability."
+      "description": "AI-assisted code is a starting point. I define acceptance criteria, test real workflows, investigate failure modes, and distinguish successful builds from safe releases."
     },
     "latestPosts": "Latest Posts",
     "viewAll": "View All",
     "featuredProjects": "Projects",
     "noPosts": "No posts yet.",
     "explore": "Explore my world",
-    "metaDescription": "Sihyeong Lee — AI-native product and agent-systems engineer in Los Angeles. Agent tooling, MCP, evals, RAG, local GPU infrastructure, and production full-stack systems."
+    "metaDescription": "Sihyeong Lee — AI-native product and agent-systems engineer in Los Angeles. Source-backed automation, measured retrieval, recovery design, and accountable software delivery."
   },
   "blog": {
     "title": "Blog",
@@ -54,9 +54,9 @@
   },
   "projects": {
     "title": "Projects",
-    "description": "Things I'm building",
+    "description": "A documented ledger of released software, active prototypes, and unfinished experiments",
     "metaTitle": "{count} Projects — Web, Games, Dev Tools",
-    "metaDescription": "{count} projects built solo by Sihyeong Lee — SaaS, developer tools, games and AI experiments, each with a live demo or store link.",
+    "metaDescription": "{count} documented software projects, from public products to private prototypes. Live demos, source links and measured claims are shown only where available.",
     "viewProject": "View Project",
     "viewShowcase": "See the work",
     "viewCode": "View Code",
@@ -75,9 +75,9 @@
       "archived": "Archived"
     },
     "selectedWork": "Selected Work",
-    "selectedWorkDescription": "Five projects selected to show agent tooling, AI infrastructure, measured RAG, safety-gated AI product engineering, and production full-stack ownership.",
+    "selectedWorkDescription": "Engineering decisions and verifiable evidence across developer tooling, measured retrieval, recovery, and production release gates.",
     "fullLedger": "Full Ledger",
-    "fullLedgerDescription": "The rest of the record, including work that is still being built.",
+    "fullLedgerDescription": "Research, prototypes, and private work are included. A build count is not a release or customer count.",
     "caseStudy": {
       "heading": "How it was solved",
       "problem": "Problem",
@@ -112,7 +112,7 @@
   },
   "about": {
     "title": "About",
-    "description": "AI-native product and agent-systems engineering, from architecture and evals to production operations",
+    "description": "Engineering judgment across architecture, evaluation, failure recovery, and release decisions",
     "metaTitle": "About — AI-Native Product & Agent Systems Engineer",
     "metaDescription": "Sihyeong Lee — AI-native product and agent-systems engineer and former CTO in Los Angeles. Agent tooling, MCP, evals, applied AI, full-stack systems, and production infrastructure.",
     "body": "I am an AI-native product engineer and former CTO who builds the systems around modern models, not just prompts: agent workflows, MCP/tool integrations, evaluation harnesses, retrieval systems, developer tooling, and the full-stack infrastructure that carries them into production. I use coding agents heavily as execution leverage while retaining ownership of architecture, acceptance criteria, code review, testing, debugging, deployment, and release decisions. Recent work includes DevDeck, a command center for coding agents; studios, a multi-modal MCP/GPU platform with persisted verification; citefirst, a measured RAG system; and production SaaS work with explicit safety and release gates.",
@@ -121,9 +121,9 @@
   },
   "hire": {
     "title": "Work with me",
-    "description": "Senior product and full-stack engineer for browser automation, AI integration, and production release work — open to full-time roles and focused projects.",
+    "description": "AI is part of the toolchain, not the result. I build browser automations, production integrations, and release-ready systems with verifiable acceptance criteria.",
     "metaTitle": "Sihyeong Lee — Browser Automation, AI Integration & Senior Full-Stack",
-    "metaDescription": "Los Angeles senior software engineer for Playwright/browser automation, AI integration, production Next.js/PostgreSQL systems, and release QA. {shipped} shipped products with a public demo or store listing.",
+    "metaDescription": "Los Angeles senior software engineer for browser automation, testable AI integration, and production release QA. {shipped} projects with a public demo or store listing; verification scope is explicit.",
     "badgeRemote": "Los Angeles · Remote-first · LA hybrid/on-site · US permanent resident",
     "badgeNow": "Available now",
     "fulltime": {
@@ -133,12 +133,12 @@
       "modeLabel": "Working style",
       "mode": "Remote-first (US, Pacific Time) · open to LA hybrid/on-site · US permanent resident — no sponsorship required",
       "bringLabel": "What I bring",
-      "bring": "Nearly five years owning engineering as a CTO across two companies, plus hands-on work in Playwright automation, AI-enabled products, PostgreSQL/Docker production systems, CI/release gates, RAG, and local GPU infrastructure."
+      "bring": "Nearly five years owning engineering as a CTO across two companies. I define technical constraints, review AI-assisted implementations, test failure and recovery paths, and separate working code from launch approval."
     },
     "contract": {
       "heading": "Focused engineering projects",
       "workLabel": "Problems I solve",
-      "work": "Playwright/browser automation · AI integration into existing products · Next.js/PostgreSQL release & QA rescue",
+      "work": "Resilient Playwright/browser workflows · AI integration with measurable evals and human review · production release gates, recovery, and QA",
       "modeLabel": "Shape",
       "mode": "Remote-first. Small paid diagnostics and implementation sprints measured in days, with clear acceptance criteria and evidence.",
       "startLabel": "How to start",
@@ -146,7 +146,7 @@
     },
     "evidence": {
       "heading": "Evidence",
-      "shipped": "products with a public demo or store listing",
+      "shipped": "projects with a public demo or store link (not necessarily a commercial launch)",
       "playStore": "apps on Google Play",
       "total": "builds in the ledger",
       "caseHeading": "Relevant case studies"
@@ -177,6 +177,25 @@
       "casefarms": {
         "title": "Case Farms · Quality Assurance · 2023–2024",
         "body": "U.S. manufacturing-floor role; moved from production into quality assurance after five months."
+      }
+    },
+    "approach": {
+      "heading": "Beyond the AI-generated demo",
+      "intro": "AI can accelerate implementation. The differentiator is what survives a failure, a review, and the decision to deploy. Here is how I frame the engineering work, with actual examples below.",
+      "decision": {
+        "title": "Frame the real problem",
+        "body": "Start with workflows, constraints, state ownership, and failure cases. A model or tool is an implementation choice, not a requirements document.",
+        "link": "DevDeck: state & recovery"
+      },
+      "verification": {
+        "title": "Verify the outcome",
+        "body": "Use dated, source-linked test runs and explicit denominators. Passing retrieval metrics are not the same as correct generated answers.",
+        "link": "citefirst: measured retrieval"
+      },
+      "release": {
+        "title": "Ship — or deliberately block",
+        "body": "A successful build does not clear external OAuth, backups, operator decisions, or production rollout. Keep unverified gates visibly open.",
+        "link": "Creator OS: release gates"
       }
     }
   },

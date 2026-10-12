@@ -78,6 +78,12 @@ try {
               assert(rect && rect.y < (width === 390 ? 844 : 1000), 'Contact CTA not visible in initial viewport')
               assert(await page.locator('a[href="#resume"]').isVisible(), 'Résumé shortcut missing')
               assert((await page.locator('#resume').count()) === 1, 'Résumé anchor missing')
+              const approach = page.locator('#delivery-method')
+              assert(await approach.isVisible(), 'Evidence-led delivery method missing')
+              assert(
+                (await approach.locator('a[href*="/projects/"]').count()) === 3,
+                'Delivery examples must link three real case studies'
+              )
               const primary = page.locator('a[href="/resume/Sihyeong-Lee-Resume.pdf"]')
               assert(await primary.isVisible(), 'Primary résumé CTA missing')
               const colors = await primary.evaluate((el) => ({
@@ -102,6 +108,13 @@ try {
                 'AI skill category missing'
               )
             if (!route) {
+              const proof = page.locator('#verified-work')
+              assert(await proof.isVisible(), 'Source-pinned proof section missing')
+              assert((await proof.locator('article').count()) === 2, 'Expected both pinned evidence records')
+              assert(
+                (await proof.locator('a[href*="/blob/"]').count()) === 2,
+                'Evidence links must resolve to pinned Git commits'
+              )
               const link = page.locator('a[href="' + prefix + '/projects/studios"]').first()
               assert((await link.count()) === 1, 'Private studios card has no case-study link')
               await link.click()

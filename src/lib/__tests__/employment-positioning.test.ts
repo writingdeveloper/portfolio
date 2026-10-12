@@ -10,7 +10,7 @@ describe('employment positioning', () => {
     const home = readFileSync(join(process.cwd(), 'src/app/[locale]/LedgerHome.tsx'), 'utf8')
     expect(home).toContain('AI-NATIVE PRODUCT · AGENT SYSTEMS ENGINEER')
     expect(home).not.toContain('SOLO FULL-STACK BUILDER')
-    expect(home).toContain('systems that let AI agents do real work')
+    expect(home).toContain("tHome('hero.description')")
     expect(home).toContain('SELECTED_WORK.map')
   })
 

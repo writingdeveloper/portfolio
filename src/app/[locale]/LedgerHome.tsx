@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { PRIMARY_NAV_ITEMS } from '@/components/layout/navigation'
+import { EvidenceSnapshotStrip } from '@/components/projects/EvidenceSnapshotStrip'
 import type { Project, Tombstone } from '@/types/content'
 import type { PostMeta } from '@/lib/mdx'
 import { predecessorOf } from '@/lib/lineage'
@@ -204,6 +205,7 @@ export function LedgerHome({
     Boolean(project)
   )
   const tNav = useTranslations('nav')
+  const tHome = useTranslations('home')
   const portfolioStats = getPortfolioStats(projects)
 
   const groups = (Object.keys(HOME_GROUPS) as Array<keyof typeof HOME_GROUPS>).map((key) => {
@@ -213,7 +215,7 @@ export function LedgerHome({
 
   const stats = [
     { n: String(portfolioStats.builds).padStart(2, '0'), label: 'BUILDS', hot: true },
-    { n: String(portfolioStats.public).padStart(2, '0'), label: 'LIVE', hot: false },
+    { n: String(portfolioStats.public).padStart(2, '0'), label: 'PUBLIC LINKS', hot: false },
     { n: String(portfolioStats.playStore).padStart(2, '0'), label: 'ON PLAY', hot: false },
     { n: String(portfolioStats.featured).padStart(2, '0'), label: 'FEATURED', hot: false },
   ]
@@ -300,9 +302,7 @@ export function LedgerHome({
             </span>
           </h1>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed" style={{ color: MUTED }}>
-            {locale === 'ko'
-              ? `에이전트가 실제 시스템에서 일하도록 만드는 AI 네이티브 제품을 설계·배포·운영합니다. MCP·툴 사용, eval, RAG, 로컬 GPU 파이프라인, 프로덕션 풀스택 인프라까지 직접 책임집니다.`
-              : `I build the systems that let AI agents do real work: MCP and tool use, evals, RAG, developer tooling, local GPU pipelines, and production full-stack infrastructure.`}
+            {tHome('hero.description')}
           </p>
           <div className="mt-7 flex flex-wrap gap-3 xl:absolute xl:right-0 xl:top-40 xl:mt-0 xl:w-72 xl:flex-col">
             <Link
@@ -346,10 +346,19 @@ export function LedgerHome({
           ))}
         </section>
 
+        <p className="ledger-mono mb-10 max-w-3xl text-[11px] leading-relaxed" style={{ color: MUTED }}>
+          {locale === 'ko'
+            ? '전체 제작 수에는 개발 중인 시제품도 포함됩니다. 공개 링크 수는 상용 출시·실사용자·매출을 의미하지 않습니다.'
+            : 'Builds include unfinished prototypes. Public destinations do not establish a commercial launch, active users, or revenue.'}
+        </p>
+
+        {/* Evidence is pinned to reviewed commits; project counts also include prototypes. */}
+        <EvidenceSnapshotStrip locale={locale} />
+
         {/* Featured */}
         <section className="py-16 sm:py-20">
           <SectionLabel
-            index="§01"
+            index="§02"
             title="FEATURED WORK"
             aside={
               <Link
@@ -370,7 +379,7 @@ export function LedgerHome({
 
         {/* All work */}
         <section className="py-16 sm:py-20">
-          <SectionLabel index="§02" title="ALL WORK" />
+          <SectionLabel index="§03" title="ALL WORK" />
           <div className="grid gap-10 sm:grid-cols-3">
             {groups.map(({ key, items }) => (
               <div key={key} className="flex flex-col gap-4">
@@ -404,7 +413,7 @@ export function LedgerHome({
         {/* Graveyard teaser */}
         <section className="py-16 sm:py-20">
           <SectionLabel
-            index="§03"
+            index="§04"
             title="THE GRAVEYARD"
             aside={
               <Link
