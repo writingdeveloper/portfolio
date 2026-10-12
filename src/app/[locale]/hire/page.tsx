@@ -5,10 +5,12 @@ import type { Metadata } from 'next'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { SkillGrid } from '@/components/ui/SkillGrid'
 import { ProjectCard } from '@/components/projects/ProjectCard'
+import { EvidencePanel } from '@/components/projects/EvidencePanel'
 import { SITE_URL, CONTACT_EMAIL, LINKEDIN_URL } from '@/lib/constants'
 import { getHireStats, HIRE_CASE_STUDIES } from '@/lib/projects'
 import { generatePersonJsonLd, generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 import aboutData from '../../../../content/about.json'
+import resumeManifest from '../../../../content/resume-manifest.json'
 import projectsData from '../../../../content/projects.json'
 import type { Project, Skill } from '@/types/content'
 
@@ -114,6 +116,59 @@ function HireContent() {
           </div>
         </header>
 
+        <section className="mb-12 grid gap-5 lg:grid-cols-[1.1fr_1.9fr]">
+          <div className="rounded-lg border border-[var(--border-default)] p-6">
+            <h2 className="text-xl font-bold mb-4">{t('resume.heading')}</h2>
+            <p className="mb-4 text-xs text-[var(--text-muted)]">
+              {locale === 'ko' ? '영문 PDF · 문서 기준일' : 'English PDF · document snapshot'}:{' '}
+              <time dateTime={resumeManifest.snapshotAt}>{resumeManifest.snapshotAt}</time>
+            </p>
+            <a
+              href="/resume/Sihyeong-Lee-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center rounded-lg bg-[var(--accent-text)] px-4 py-2 text-sm font-semibold text-[var(--bg-primary)] transition-opacity hover:opacity-90"
+            >
+              {t('resume.primary')} ↗
+            </a>
+            <p className="ledger-mono mt-5 text-[10px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
+              {t('resume.specializedLabel')}
+            </p>
+            <div className="mt-2 flex flex-col gap-2 text-sm">
+              <a
+                href="/resume/Sihyeong-Lee-Resume-DevEx.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--accent-text)] hover:underline"
+              >
+                {t('resume.devex')} ↗
+              </a>
+              <a
+                href="/resume/Sihyeong-Lee-Resume-FDE.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--accent-text)] hover:underline"
+              >
+                {t('resume.fde')} ↗
+              </a>
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-[var(--border-default)] p-6">
+            <h2 className="text-xl font-bold mb-5">{t('experience.heading')}</h2>
+            <div className="space-y-5">
+              {(['soursea', 'itembox', 'geomec', 'casefarms'] as const).map((key) => (
+                <div key={key}>
+                  <h3 className="text-sm font-semibold text-[var(--text-primary)]">{t(`experience.${key}.title`)}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {t(`experience.${key}.body`)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Two offers, stated separately. A merged "open to opportunities"
             weakens both — a hiring manager and a client are looking for
             different sentences, so each gets their own column. */}
@@ -136,7 +191,9 @@ function HireContent() {
           </div>
         </section>
 
-        {/* Counts come from the ledger, never from prose. */}
+        <EvidencePanel />
+
+        {/* Counts are a secondary inventory, not proof of quality. */}
         <section className="mb-16">
           <h2 className="text-xl font-bold mb-6">{t('evidence.heading')}</h2>
           <div className="grid gap-4 sm:grid-cols-3">

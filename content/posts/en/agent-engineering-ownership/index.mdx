@@ -1,0 +1,96 @@
+---
+title: "How I Use Coding Agents Without Handing Them Ownership"
+excerpt: "My workflow changed from AI-assisted coding to parallel agent execution. The important part is not how much code the agents write, but how architecture, evidence, gates, and release decisions stay explicit."
+publishedAt: "2026-09-22"
+author: "이시형"
+category: development
+tags: ["ai", "agents", "developer-tools", "evals", "mcp"]
+project: devdeck
+---
+
+I no longer use coding AI mainly as autocomplete. Most of the time I give an agent a bounded job, let it inspect the repository and execute across files, and review the result as a system change.
+
+That sounds like delegating engineering. The distinction I care about is **what gets delegated**.
+
+Implementation can be delegated. Ownership cannot.
+
+## The unit of work got bigger
+
+A year ago, the useful unit was often a function or a file. Now I routinely ask Claude Code or Codex to investigate a failure, trace it across several layers, change the implementation, add regression coverage, and run the relevant gates.
+
+That changes the engineering bottleneck. Typing is less important. The difficult parts become:
+
+- defining the boundary of the task,
+- making the source of truth explicit,
+- deciding what evidence counts as done,
+- separating model mistakes from system mistakes,
+- and preventing a plausible-looking result from becoming a release.
+
+My recent projects are increasingly built around those boundaries.
+
+## DevDeck: parallel agents need state ownership
+
+[DevDeck](/en/projects/devdeck) started as a way to stop losing track of coding sessions across repositories. It grew into a local-first control plane for Claude Code, Codex, and Antigravity sessions.
+
+The interesting problem was not rendering more terminals. It was deciding who owns shared state.
+
+A session title edited from one machine cannot become true merely because one renderer displayed it. The host must own the write, persist it, acknowledge it, and make every observer converge on the same result. Failure, reconnect, stale responses, and restart all have to preserve that rule.
+
+The 1.37.7 review recorded **1,257 passing checks and one skip**. The dated 2026-09-08 maintenance candidate later recorded **1,289 passing checks and one skip**. These are version-scoped historical records, not a live test total. Separate source and packaged-application gates cover the later synchronization work; automated checks are not human or multi-day physical-network acceptance.
+
+The number matters less than what the tests are protecting: ownership rules around agent work.
+
+## studios: generation is not verification
+
+My [studios](/en/studio) platform exposes image, video, 3D, voice, and music generation through MCP tools.
+
+I deliberately split the pipeline into different responsibilities:
+
+1. the tool generates,
+2. a machine gate rejects obvious failures,
+3. the calling agent inspects the returned artifact,
+4. the verdict and reason are persisted with the asset.
+
+The generator does not get to declare its own output good.
+
+That pattern now feels more important than any particular model choice. Models will change. A pipeline that makes quality boundaries inspectable survives the model swap.
+
+## Creator Learning OS: unfinished means blocked
+
+Creator Learning OS is moving toward a commercial SaaS that turns channel data into one concrete next action.
+
+Its release logic is intentionally conservative. Customer OAuth, billing, provider readiness, managed persistence, backup and recovery are not marketing checkboxes. If a production dependency is missing, release readiness should fail closed.
+
+I would rather have the system say **not ready** than let an agent reinterpret an incomplete check as approval.
+
+The same principle applies to AI features: an eval is useful only when failure has a consequence.
+
+## Worktrees before multi-agent orchestration
+
+When several agents work in parallel, I prefer isolated git worktrees over having them share one mutable checkout.
+
+The rule is simple:
+
+- one task, one worktree,
+- explicit acceptance criteria,
+- task-specific tests,
+- inspect the diff,
+- integrate only after the gate passes.
+
+This is not sophisticated multi-agent research. It is mostly ordinary software isolation applied to agents. That is exactly why it works.
+
+## What I still keep human-owned
+
+I use agents heavily, but there are boundaries I do not want to blur:
+
+- architecture and irreversible product decisions,
+- what evidence is sufficient,
+- security and privacy tradeoffs,
+- whether a failed gate can be waived,
+- and the final release decision.
+
+The goal is not to maximize the percentage of code written by AI.
+
+The goal is to increase the amount of useful work I can safely supervise while making the system easier to inspect when something goes wrong.
+
+That is the direction my current work is converging on: **agent systems, tool use, evals, state, observability, and production reliability around the model**.

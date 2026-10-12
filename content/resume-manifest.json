@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "snapshotAt": "2026-09-14",
+  "files": [
+    {
+      "file": "Sihyeong-Lee-Resume.pdf",
+      "sha256": "ab4933e15c7516cf455d0547daf4ba4b766c8d1d06a4fddfd8b4ab50a28b6b64"
+    },
+    {
+      "file": "Sihyeong-Lee-Resume-DevEx.pdf",
+      "sha256": "9850dc45ed639d0e0998876ea2983bd3ee092c6f88ff45d3a62a9f30f3c4449f"
+    },
+    {
+      "file": "Sihyeong-Lee-Resume-FDE.pdf",
+      "sha256": "406ab1da5b66058b831530ad3b99d46a4299586207a586665e7aba5db9919350"
+    }
+  ]
+}

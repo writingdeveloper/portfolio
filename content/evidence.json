@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "reviewAfter": "2026-12-22",
+  "records": [
+    {
+      "id": "devdeck-maintenance",
+      "project": "devdeck",
+      "kind": "source-snapshot",
+      "snapshotAt": "2026-09-08",
+      "reviewedAt": "2026-09-22",
+      "titleEn": "State consistency & recovery",
+      "titleKo": "상태 일관성 · 복구 검증",
+      "value": "1,289 passed · 1 skipped",
+      "scopeEn": "Documented 1.37.8 candidate validation. Not a current test run or proof of release, installer acceptance, or multi-day physical-network testing.",
+      "scopeKo": "1.37.8 후보 버전의 문서화된 검사 결과입니다. 현재 테스트 실행·공개 출시·설치 검수·장기간 실기기 네트워크 검증을 의미하지 않습니다.",
+      "source": {
+        "repository": "writingdeveloper/devdeck",
+        "path": "docs/quality-review-2026-09-08.md",
+        "commit": "b7817547dd2100751ce46229a83810319affe82b",
+        "sha256": "deac81f7234aa62693414ec7fb04da8ef19200a82b0a1955fbc532423980c372"
+      },
+      "measurements": {
+        "passed": 1289,
+        "skipped": 1
+      }
+    },
+    {
+      "id": "citefirst-retrieval",
+      "project": "citefirst",
+      "kind": "source-snapshot",
+      "snapshotAt": "2026-07-29",
+      "reviewedAt": "2026-09-22",
+      "titleEn": "Retrieval measured on one corpus",
+      "titleKo": "명시된 코퍼스에서 측정한 검색 품질",
+      "value": "recall@5 0.978 · MRR@10 0.834",
+      "scopeEn": "46 PostgreSQL 17 manual questions in the committed July configuration. The separate 56-question local experiment is uncommitted and is not published as this baseline. Citation-ID validity is not answer correctness.",
+      "scopeKo": "커밋된 7월 구성으로 PostgreSQL 17 매뉴얼 질문 46개를 평가한 기록입니다. 별도의 56문항 로컬 실험은 미커밋 상태라 이 기준값으로 공개하지 않습니다. 인용 ID 유효성은 답변 정확도와 다릅니다.",
+      "source": {
+        "repository": "writingdeveloper/citefirst",
+        "path": "README.md",
+        "commit": "bf835b6a138b36f1ddfaa5be21702645973d1293",
+        "sha256": "1e597f7044e288800845e2feba3ddf1ed11c7717a511d536404a40ff9b6173df"
+      },
+      "measurements": {
+        "questions": 46,
+        "recall5": 0.978,
+        "mrr10": 0.834
+      }
+    }
+  ]
+}

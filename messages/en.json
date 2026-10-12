@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "WritingDeveloper",
-    "description": "Build logs and engineering notes from Sihyeong Lee — an AI-native product engineer shipping developer tools, applied AI systems, and production full-stack products."
+    "description": "Build logs and engineering notes from Sihyeong Lee — an AI-native product engineer building agent systems, evals, developer tools, and production full-stack products."
   },
   "nav": {
     "home": "Home",
@@ -16,15 +16,15 @@
     "hero": {
       "greeting": "Hello",
       "name": "Sihyeong Lee",
-      "role": "AI-Native Product Engineer",
-      "description": "I design, ship, and operate AI-native products and developer infrastructure."
+      "role": "AI-Native Product & Agent Systems Engineer",
+      "description": "I build production AI systems, developer tools, and full-stack products — with agent workflows, evals, and infrastructure designed for reliability."
     },
     "latestPosts": "Latest Posts",
     "viewAll": "View All",
     "featuredProjects": "Projects",
     "noPosts": "No posts yet.",
     "explore": "Explore my world",
-    "metaDescription": "Sihyeong Lee — AI-native product engineer in Los Angeles. I build and operate developer tools, RAG systems, local-AI/GPU infrastructure, and production full-stack products."
+    "metaDescription": "Sihyeong Lee — AI-native product and agent-systems engineer in Los Angeles. Agent tooling, MCP, evals, RAG, local GPU infrastructure, and production full-stack systems."
   },
   "blog": {
     "title": "Blog",
@@ -75,7 +75,7 @@
       "archived": "Archived"
     },
     "selectedWork": "Selected Work",
-    "selectedWorkDescription": "Five projects selected to show agent tooling, AI infrastructure, measured RAG, production full-stack work, and desktop systems engineering.",
+    "selectedWorkDescription": "Five projects selected to show agent tooling, AI infrastructure, measured RAG, safety-gated AI product engineering, and production full-stack ownership.",
     "fullLedger": "Full Ledger",
     "fullLedgerDescription": "The rest of the record, including work that is still being built.",
     "caseStudy": {
@@ -112,28 +112,28 @@
   },
   "about": {
     "title": "About",
-    "description": "AI-native product engineering, from architecture to production operations",
-    "metaTitle": "About — AI-Native Product Engineer & Senior Full-Stack",
-    "metaDescription": "Sihyeong Lee — AI-native product engineer and former CTO in Los Angeles. Developer tooling, applied AI, full-stack products, local GPU infrastructure, and the decisions behind them.",
-    "body": "I am an AI-native product engineer and former CTO who owns the full path from architecture and implementation through testing, deployment, and production operations. I use coding agents heavily, but the engineering decisions stay explicit: constraints, acceptance criteria, failure analysis, and what ships. Recent work spans developer tooling such as DevDeck, measured RAG in citefirst, civic-tech systems such as RentRights, and a self-hosted MCP/GPU generation platform running across my own infrastructure.",
+    "description": "AI-native product and agent-systems engineering, from architecture and evals to production operations",
+    "metaTitle": "About — AI-Native Product & Agent Systems Engineer",
+    "metaDescription": "Sihyeong Lee — AI-native product and agent-systems engineer and former CTO in Los Angeles. Agent tooling, MCP, evals, applied AI, full-stack systems, and production infrastructure.",
+    "body": "I am an AI-native product engineer and former CTO who builds the systems around modern models, not just prompts: agent workflows, MCP/tool integrations, evaluation harnesses, retrieval systems, developer tooling, and the full-stack infrastructure that carries them into production. I use coding agents heavily as execution leverage while retaining ownership of architecture, acceptance criteria, code review, testing, debugging, deployment, and release decisions. Recent work includes DevDeck, a command center for coding agents; studios, a multi-modal MCP/GPU platform with persisted verification; citefirst, a measured RAG system; and production SaaS work with explicit safety and release gates.",
     "skills": "Tech Stack",
     "timeline": "Timeline"
   },
   "hire": {
     "title": "Work with me",
-    "description": "AI-native product engineer open to senior product, applied AI / AI platform, and senior full-stack roles — plus focused project work.",
-    "metaTitle": "Sihyeong Lee — AI-Native Product Engineer | Senior Full-Stack",
-    "metaDescription": "AI-native product engineer in Los Angeles, open to remote senior product, applied AI / AI platform, and senior full-stack roles. {shipped} shipped products with a public demo or store listing.",
-    "badgeRemote": "Los Angeles · Fully remote · US permanent resident",
+    "description": "AI-native product engineer open to senior product, AI systems / agent platform, and senior full-stack roles — plus focused project work.",
+    "metaTitle": "Sihyeong Lee — AI-Native Product & Agent Systems Engineer",
+    "metaDescription": "AI-native product and agent-systems engineer in Los Angeles, open to remote-first senior product, AI systems / agent platform, and senior full-stack roles. {shipped} shipped products with a public demo or store listing.",
+    "badgeRemote": "Los Angeles · Remote-first · LA hybrid/on-site · US permanent resident",
     "badgeNow": "Available now",
     "fulltime": {
       "heading": "Full-time",
       "rolesLabel": "Roles",
-      "roles": "Senior Product Engineer · Applied AI / AI Platform Engineer · Senior Full-Stack Engineer",
+      "roles": "Senior Product Engineer · AI Systems / Agent Platform Engineer · Senior Full-Stack Engineer",
       "modeLabel": "Working style",
-      "mode": "Fully remote (US, Pacific Time) · US permanent resident — no sponsorship required",
+      "mode": "Remote-first (US, Pacific Time) · open to LA hybrid/on-site and US domestic travel · US permanent resident — no sponsorship required",
       "bringLabel": "What I bring",
-      "bring": "Nearly five years owning engineering as a CTO across two companies, plus hands-on AI-native product work spanning agent tooling, RAG evaluation, full-stack systems, CI/QA, and local GPU infrastructure."
+      "bring": "Nearly five years owning engineering as a CTO across two companies, plus hands-on agent systems, MCP/tool integrations, evals, developer tooling, full-stack products, and production infrastructure."
     },
     "contract": {
       "heading": "Project work",
@@ -152,7 +152,33 @@
       "caseHeading": "Selected work"
     },
     "stack": "Tech Stack",
-    "contactHeading": "Get in touch"
+    "contactHeading": "Get in touch",
+    "resume": {
+      "heading": "Résumé",
+      "primary": "View résumé",
+      "specializedLabel": "Specialized versions",
+      "devex": "Developer Experience / Agent Tooling",
+      "fde": "Forward Deployed / Production Integration"
+    },
+    "experience": {
+      "heading": "Experience snapshot",
+      "soursea": {
+        "title": "Soursea LLC · Founder & Software Engineer · 2025–Present",
+        "body": "Agent systems, MCP servers, eval harnesses, full-stack products, and self-hosted GPU/cloud infrastructure."
+      },
+      "itembox": {
+        "title": "ITEMBOX / Bitnara · CTO · 2024–2025",
+        "body": "Led nine engineers across Korea and Vietnam while owning a 20-module NestJS platform, integrations, billing, AI services, and AWS operations."
+      },
+      "geomec": {
+        "title": "GEOMEC · CTO · 2021–2024",
+        "body": "Sole engineer for desktop software, Linux/network infrastructure, virtualization, access control, and backups."
+      },
+      "casefarms": {
+        "title": "Case Farms · Quality Assurance · 2023–2024",
+        "body": "U.S. manufacturing-floor role; moved from production into quality assurance after five months."
+      }
+    }
   },
   "studio": {
     "title": "The Studio",

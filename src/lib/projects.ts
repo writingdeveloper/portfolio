@@ -156,7 +156,7 @@ export function getHireStats(projects: Pick<Project, 'website' | 'playStore'>[])
  * infrastructure. Chosen for engineering evidence rather than product count.
  * A slug that stops resolving fails the test suite rather than the page.
  */
-export const HIRE_CASE_STUDIES = ['devdeck', 'rentrights', 'citefirst', 'studios'] as const
+export const HIRE_CASE_STUDIES = ['devdeck', 'studios', 'citefirst', 'healframe'] as const
 
 /**
  * How the home page's ALL WORK section groups the ledger, in render order.
@@ -204,10 +204,11 @@ export const HOME_GROUPS: Record<'products' | 'games' | 'tools', string[]> = {
     'studio-apartment',
   ],
   tools: [
-    'citefirst',
-    'juicebar',
     'devdeck',
     'studios',
+    'creator-learning-os',
+    'citefirst',
+    'juicebar',
     'til-shorts',
     'mv-analyzer',
     'sitedeck',

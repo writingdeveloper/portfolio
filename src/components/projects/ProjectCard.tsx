@@ -78,7 +78,7 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
       <div className="p-4 sm:p-6">
         <div className="flex items-start gap-4 mb-4">
           <div className="flex-1">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {/* The name is the route into the project's own page — every card
                 needs one inbound link or those pages are orphans. */}
               <h3 className="font-semibold text-lg">

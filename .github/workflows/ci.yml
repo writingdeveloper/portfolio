@@ -38,6 +38,9 @@ jobs:
       - name: Unit tests
         run: npm test
 
+      - name: Evidence and résumé integrity
+        run: npm run evidence:check
+
       - name: Translation parity
         run: npm run untranslated
 
@@ -46,6 +49,36 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Install browser for release QA
+        run: npx playwright install --with-deps chromium
+
+      - name: Production preview browser QA
+        shell: bash
+        run: |
+          mkdir -p .qa/portfolio
+          npm start -- -p 3100 -H localhost > .qa/portfolio/server.log 2>&1 &
+          PREVIEW_PID=$!
+          trap 'kill "$PREVIEW_PID" 2>/dev/null || true' EXIT
+          ready=0
+          for attempt in $(seq 1 40); do
+            if curl -fsS http://localhost:3100/en/hire > /dev/null; then ready=1; break; fi
+            sleep 1
+          done
+          test "$ready" = 1
+          npm run qa:portfolio
+          npm run qa:navigation
+          QA_LOCALE=ko npm run qa:navigation
+
+      - name: Preserve browser QA evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: portfolio-browser-qa
+          path: .qa/portfolio/
+          include-hidden-files: true
+          retention-days: 14
+          if-no-files-found: warn
 
       - name: Audit dependencies
         run: npm audit --audit-level=high

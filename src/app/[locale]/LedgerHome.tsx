@@ -22,7 +22,7 @@ const CARD = 'var(--l-card)'
 const ELEV = 'var(--l-elev)'
 const BORDER = 'var(--l-border)'
 
-const STACK = ['TypeScript', 'Next.js', 'React', 'Three.js', 'NestJS', 'Electron', 'Python']
+const STACK = ['MCP', 'Agent Evals', 'Claude Code', 'Codex', 'TypeScript', 'Python', 'Next.js', 'PostgreSQL']
 
 // YAML frontmatter dates (`publishedAt: 2026-06-10`) parse to a Date at runtime
 // even though PostMeta types it as string — normalize to a YYYY-MM-DD string so
@@ -153,6 +153,13 @@ function FeaturedCard({ project, locale }: { project: Project; locale: string })
         </Link>
       )}
       <div className="mt-auto flex flex-wrap items-center gap-4 pt-1">
+        <Link
+          href={`/projects/${project.slug}`}
+          className="ledger-mono text-sm underline underline-offset-4"
+          style={{ color: ACCENT }}
+        >
+          {locale === 'ko' ? '사례와 검증 보기' : 'Case study & evidence'} →
+        </Link>
         {project.website && (
           <a
             href={project.website}
@@ -271,7 +278,7 @@ export function LedgerHome({
               이시형 · SI HYEONG LEE
             </span>
             <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>
-              AI-NATIVE PRODUCT ENGINEER
+              AI-NATIVE PRODUCT · AGENT SYSTEMS ENGINEER
             </span>
             <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>
               LEDGER NO. <span style={{ color: ACCENT }}>001</span>
@@ -294,10 +301,27 @@ export function LedgerHome({
           </h1>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed" style={{ color: MUTED }}>
             {locale === 'ko'
-              ? `AI 네이티브 제품과 개발 인프라를 설계·배포·운영합니다. 에이전트 도구, RAG 평가, 로컬 GPU 생성 파이프라인, 프로덕션 풀스택 시스템까지 직접 책임집니다.`
-              : `I design, ship, and operate AI-native products and developer infrastructure — from agent tooling and RAG evaluation to local GPU generation pipelines and production full-stack systems.`}
+              ? `에이전트가 실제 시스템에서 일하도록 만드는 AI 네이티브 제품을 설계·배포·운영합니다. MCP·툴 사용, eval, RAG, 로컬 GPU 파이프라인, 프로덕션 풀스택 인프라까지 직접 책임집니다.`
+              : `I build the systems that let AI agents do real work: MCP and tool use, evals, RAG, developer tooling, local GPU pipelines, and production full-stack infrastructure.`}
           </p>
         </section>
+
+        <div className="mb-10 flex flex-wrap gap-4">
+          <Link
+            href="/hire"
+            className="ledger-mono rounded-lg px-4 py-3 text-sm font-bold"
+            style={{ background: ACCENT, color: '#0a0a0b' }}
+          >
+            {locale === 'ko' ? '경력 · 이력서 보기' : 'Experience & résumé'} →
+          </Link>
+          <Link
+            href="/studio"
+            className="ledger-mono rounded-lg border px-4 py-3 text-sm"
+            style={{ borderColor: BORDER, color: INK }}
+          >
+            {locale === 'ko' ? 'AI 파이프라인 사례' : 'Inside the AI pipeline'} →
+          </Link>
+        </div>
 
         {/* Stats ribbon */}
         <section className="grid grid-cols-2 gap-y-8 border-t py-10 sm:grid-cols-4" style={{ borderColor: BORDER }}>
@@ -355,7 +379,9 @@ export function LedgerHome({
                 <ul className="flex flex-col gap-2">
                   {items.slice(0, 6).map((p) => (
                     <li key={p.slug} className="text-sm" style={{ color: MUTED }}>
-                      {p.name}
+                      <Link href={`/projects/${p.slug}`} className="hover:underline">
+                        {p.name}
+                      </Link>
                     </li>
                   ))}
                   {items.length > 6 && (
@@ -461,8 +487,8 @@ export function LedgerHome({
           <SectionLabel index="§05" title="ABOUT" />
           <p className="max-w-2xl text-lg leading-relaxed" style={{ color: INK }}>
             {locale === 'ko'
-              ? '기술로 문제를 해결하는 개발자이자 창업가입니다. 빠르게 만들고, 배우고, 다시 만듭니다.'
-              : 'A developer and entrepreneur who solves problems with technology. I build fast, learn, and rebuild.'}
+              ? '코딩 에이전트를 실행 레버리지로 사용하되 아키텍처, 검증, 디버깅, 릴리스 결정은 직접 책임지는 제품 엔지니어이자 전 CTO입니다.'
+              : 'A product engineer and former CTO who uses coding agents as execution leverage while keeping architecture, verification, debugging, and release decisions human-owned.'}
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {STACK.map((s) => (

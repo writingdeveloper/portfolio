@@ -1,7 +1,7 @@
 {
   "metadata": {
     "title": "WritingDeveloper",
-    "description": "AI 네이티브 제품 엔지니어 이시형의 개발 기록. 개발자 도구, Applied AI, 프로덕션 풀스택 제품과 실제 운영 과정을 다룹니다."
+    "description": "이시형의 빌드 로그와 엔지니어링 기록 — 에이전트 시스템·평가·개발자 도구·프로덕션 풀스택 제품을 만드는 AI 네이티브 제품 엔지니어."
   },
   "nav": {
     "home": "홈",
@@ -16,15 +16,15 @@
     "hero": {
       "greeting": "안녕하세요",
       "name": "이시형",
-      "role": "AI 네이티브 제품 엔지니어",
-      "description": "AI 네이티브 제품과 개발 인프라를 설계하고 배포·운영합니다."
+      "role": "AI 네이티브 제품 · 에이전트 시스템 엔지니어",
+      "description": "에이전트 워크플로·평가·신뢰성 인프라를 포함한 프로덕션 AI 시스템, 개발자 도구, 풀스택 제품을 만듭니다."
     },
     "latestPosts": "최근 글",
     "viewAll": "모두 보기",
     "featuredProjects": "프로젝트",
     "noPosts": "글이 없습니다.",
     "explore": "내 세계를 탐험하기",
-    "metaDescription": "로스앤젤레스의 AI 네이티브 제품 엔지니어 이시형. 개발자 도구, RAG 시스템, 로컬 AI/GPU 인프라, 프로덕션 풀스택 제품을 직접 구축·운영합니다."
+    "metaDescription": "로스앤젤레스의 AI 네이티브 제품·에이전트 시스템 엔지니어 이시형. 에이전트 도구, MCP, eval, RAG, 로컬 GPU 인프라, 프로덕션 풀스택 시스템을 구축합니다."
   },
   "blog": {
     "title": "블로그",
@@ -75,7 +75,7 @@
       "archived": "보관됨"
     },
     "selectedWork": "대표 작업",
-    "selectedWorkDescription": "에이전트 도구, AI 인프라, 측정 가능한 RAG, 프로덕션 풀스택, 데스크톱 시스템 엔지니어링을 보여주는 대표 프로젝트 5개입니다.",
+    "selectedWorkDescription": "에이전트 도구, AI 인프라, 측정 가능한 RAG, 안전 게이트가 있는 AI 제품, 프로덕션 풀스택 소유권을 보여주는 다섯 프로젝트입니다.",
     "fullLedger": "전체 원장",
     "fullLedgerDescription": "진행 중인 것까지 포함한 나머지 프로젝트 기록입니다.",
     "caseStudy": {
@@ -112,28 +112,28 @@
   },
   "about": {
     "title": "소개",
-    "description": "아키텍처부터 프로덕션 운영까지 이어지는 AI 네이티브 제품 엔지니어링",
-    "metaTitle": "이시형 · AI 네이티브 제품 엔지니어 & 시니어 풀스택",
-    "metaDescription": "로스앤젤레스의 AI 네이티브 제품 엔지니어이자 전 CTO 이시형. 개발자 도구, Applied AI, 풀스택 제품, 로컬 GPU 인프라와 그 안의 엔지니어링 판단을 기록합니다.",
-    "body": "AI 네이티브 제품 엔지니어이자 전 CTO로서 아키텍처와 구현부터 테스트, 배포, 프로덕션 운영까지 전체 경로를 직접 책임집니다. Claude Code와 Codex 같은 코딩 에이전트를 적극적으로 사용하지만, 제약조건·완료 기준·실패 분석·출시 판단은 명시적으로 소유합니다. 최근에는 DevDeck 같은 개발자 도구, citefirst의 측정형 RAG, RentRights 같은 시빅테크, 직접 운영하는 MCP/GPU 생성 플랫폼을 만들고 운영하고 있습니다.",
+    "description": "아키텍처·평가부터 프로덕션 운영까지 책임지는 AI 네이티브 제품·에이전트 시스템 엔지니어링",
+    "metaTitle": "소개 — AI 네이티브 제품 · 에이전트 시스템 엔지니어",
+    "metaDescription": "로스앤젤레스의 AI 네이티브 제품·에이전트 시스템 엔지니어이자 전 CTO 이시형. 에이전트 도구, MCP, eval, Applied AI, 풀스택 시스템, 프로덕션 인프라.",
+    "body": "저는 최신 모델 자체보다 그 모델이 실제 일을 하게 만드는 주변 시스템까지 만드는 AI 네이티브 제품 엔지니어이자 전 CTO입니다. 에이전트 워크플로, MCP·툴 연동, 평가 하니스, 검색 시스템, 개발자 도구, 그리고 이를 프로덕션까지 운반하는 풀스택 인프라를 직접 다룹니다. 코딩 에이전트를 적극적으로 실행 레버리지로 사용하지만 아키텍처, 수용 기준, 코드 리뷰, 테스트, 디버깅, 배포, 릴리스 결정은 제가 책임집니다.",
     "skills": "기술 스택",
     "timeline": "타임라인"
   },
   "hire": {
     "title": "함께 일하기",
-    "description": "시니어 제품·Applied AI / AI 플랫폼·시니어 풀스택 역할과 집중형 프로젝트 의뢰를 받고 있습니다.",
-    "metaTitle": "이시형 — AI 네이티브 제품 엔지니어 | 시니어 풀스택",
-    "metaDescription": "로스앤젤레스의 AI 네이티브 제품 엔지니어. 원격 시니어 제품·Applied AI / AI 플랫폼·시니어 풀스택 역할에 지원 중이며, 공개 데모·스토어가 있는 제품 {shipped}건을 직접 출시했습니다.",
-    "badgeRemote": "로스앤젤레스 · 전면 원격 · 미국 영주권자",
+    "description": "시니어 제품, AI 시스템 / 에이전트 플랫폼, 시니어 풀스택 역할과 집중형 프로젝트 의뢰를 받고 있습니다.",
+    "metaTitle": "이시형 — AI 네이티브 제품 · 에이전트 시스템 엔지니어",
+    "metaDescription": "로스앤젤레스의 AI 네이티브 제품·에이전트 시스템 엔지니어. 원격 우선 시니어 제품·AI 시스템/에이전트 플랫폼·시니어 풀스택 역할에 열려 있으며, 공개 데모·스토어가 있는 제품 {shipped}건을 직접 출시했습니다.",
+    "badgeRemote": "로스앤젤레스 · 원격 우선 · LA 하이브리드/출근 가능 · 미국 영주권자",
     "badgeNow": "지금 바로 시작 가능",
     "fulltime": {
       "heading": "정규직",
       "rolesLabel": "찾는 역할",
-      "roles": "시니어 제품 엔지니어 · Applied AI / AI 플랫폼 엔지니어 · 시니어 풀스택 엔지니어",
+      "roles": "시니어 제품 엔지니어 · AI 시스템 / 에이전트 플랫폼 엔지니어 · 시니어 풀스택 엔지니어",
       "modeLabel": "근무 형태",
-      "mode": "전면 원격(미국, 태평양 표준시) · 영주권자(취업 스폰서 불필요)",
+      "mode": "미국 원격 우선(태평양 시간) · LA 하이브리드/출근 및 미국 국내 출장 가능 · 영주권자(취업 스폰서 불필요)",
       "bringLabel": "가져오는 것",
-      "bring": "두 회사에서 5년 가까이 엔지니어링을 책임진 CTO 경험과, 에이전트 도구·RAG 평가·풀스택 시스템·CI/QA·로컬 GPU 인프라를 직접 만드는 최근 AI 네이티브 제품 경험."
+      "bring": "두 회사에서 5년 가까이 엔지니어링을 책임진 CTO 경험과, 에이전트 시스템·MCP/툴 연동·eval·개발자 도구·풀스택 제품·프로덕션 인프라를 직접 만드는 최근 경험."
     },
     "contract": {
       "heading": "프로젝트 의뢰",
@@ -152,7 +152,33 @@
       "caseHeading": "대표 사례"
     },
     "stack": "기술 스택",
-    "contactHeading": "연락"
+    "contactHeading": "연락",
+    "resume": {
+      "heading": "이력서",
+      "primary": "이력서 보기",
+      "specializedLabel": "직무별 버전",
+      "devex": "Developer Experience / Agent Tooling",
+      "fde": "Forward Deployed / Production Integration"
+    },
+    "experience": {
+      "heading": "경력 요약",
+      "soursea": {
+        "title": "Soursea LLC · Founder & Software Engineer · 2025–현재",
+        "body": "에이전트 시스템, MCP 서버, eval 하니스, 풀스택 제품, 셀프호스트 GPU/클라우드 인프라."
+      },
+      "itembox": {
+        "title": "ITEMBOX / Bitnara · CTO · 2024–2025",
+        "body": "한국·베트남 9인 개발팀을 이끌며 20모듈 NestJS 플랫폼, 외부 연동, 결제, AI 서비스, AWS 운영을 직접 책임."
+      },
+      "geomec": {
+        "title": "GEOMEC · CTO · 2021–2024",
+        "body": "데스크톱 소프트웨어, Linux/네트워크 인프라, 가상화, 접근제어, 백업을 담당한 단독 엔지니어."
+      },
+      "casefarms": {
+        "title": "Case Farms · Quality Assurance · 2023–2024",
+        "body": "미국 제조 현장 근무. 생산라인에서 시작해 5개월 뒤 품질보증으로 이동."
+      }
+    }
   },
   "studio": {
     "title": "스튜디오",

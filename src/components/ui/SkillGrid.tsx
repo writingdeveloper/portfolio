@@ -1,6 +1,7 @@
 import { useLocale } from 'next-intl'
 import type { Skill } from '@/types/content'
 import { skillCategories } from '@/types/content'
+import { groupSkills } from '@/lib/skill-groups'
 
 /**
  * The stack, grouped by category.
@@ -12,12 +13,7 @@ import { skillCategories } from '@/types/content'
  */
 export function SkillGrid({ skills }: { skills: Skill[] }) {
   const locale = useLocale()
-  const grouped = {
-    frontend: skills.filter((s) => s.category === 'frontend'),
-    backend: skills.filter((s) => s.category === 'backend'),
-    tools: skills.filter((s) => s.category === 'tools'),
-    infra: skills.filter((s) => s.category === 'infra'),
-  }
+  const grouped = groupSkills(skills)
 
   return (
     <div className="space-y-6">

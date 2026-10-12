@@ -230,16 +230,17 @@ describe('portfolio selection and truthful stats', () => {
   })
 })
 
-describe('selected ledger refresh', () => {
+describe('2026-09 ledger refresh', () => {
   const ledger = projectsData.projects as Project[]
 
-  it('keeps JuiceBar and adds the public BRAIN//VAT case study', () => {
-    expect(ledger).toHaveLength(43)
-    const juicebar = ledger.find((project) => project.slug === 'juicebar')
-    expect(juicebar).toBeDefined()
-    expect(juicebar?.github).toBe('https://github.com/writingdeveloper/JuiceBar')
-    expect(juicebar?.screenshot).toBe('/images/projects/juicebar.webp')
-    expect(juicebar?.caseStudy?.evidenceEn).toBeTruthy()
+  it('adds Creator Learning OS to the ledger without pretending it has shipped', () => {
+    expect(ledger).toHaveLength(44)
+    const creator = ledger.find((project) => project.slug === 'creator-learning-os')
+    expect(creator).toBeDefined()
+    expect(creator?.status).toBe('building')
+    expect(creator?.private).toBe(true)
+    expect(creator?.website).toBeUndefined()
+    expect(creator?.caseStudy?.evidenceEn).toBeTruthy()
   })
 
   it('adds BRAIN//VAT as a public demo without exposing a private repo', () => {
@@ -260,8 +261,8 @@ describe('selected ledger refresh', () => {
 })
 
 describe('portfolio information architecture', () => {
-  it('aligns hire case studies with agent tooling, production full-stack, RAG, and MCP infrastructure', () => {
-    expect(HIRE_CASE_STUDIES).toEqual(['devdeck', 'rentrights', 'citefirst', 'studios'])
+  it('aligns hire case studies with agent tooling, MCP infrastructure, RAG, and safety-gated AI product work', () => {
+    expect(HIRE_CASE_STUDIES).toEqual(['devdeck', 'studios', 'citefirst', 'healframe'])
   })
 
   it('partitions selected work in editorial order without duplicating it in the full ledger', () => {

@@ -17,7 +17,11 @@
     "verify:hero": "tsx scripts/verify-hero.ts",
     "capture:screenshots": "tsx scripts/capture-screenshots.ts",
     "fetch:fonts": "tsx scripts/fetch-pretendard-subset.ts",
-    "qa:navigation": "tsx scripts/qa-navigation.ts"
+    "qa:navigation": "tsx scripts/qa-navigation.ts",
+    "evidence:check": "tsx scripts/evidence.mts",
+    "evidence:collect": "tsx scripts/evidence.mts --collect",
+    "evidence:verify": "tsx scripts/evidence.mts --verify-local",
+    "qa:portfolio": "tsx scripts/qa-portfolio.mts"
   },
   "dependencies": {
     "@keystatic/core": "^0.5.48",
