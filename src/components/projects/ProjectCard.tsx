@@ -3,7 +3,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import Image from 'next/image'
 import type { Project } from '@/types/content'
 import { predecessorOf } from '@/lib/lineage'
-import { projectHref } from '@/lib/projects'
+import { projectHref, projectExcerpt } from '@/lib/projects'
 
 interface ProjectCardProps {
   project: Project
@@ -101,7 +101,9 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
             </div>
             {project.descriptionKo && (
               <p className="mt-1 line-clamp-3 text-sm leading-relaxed text-[var(--text-secondary)]">
-                {locale === 'en' ? project.descriptionEn || project.descriptionKo : project.descriptionKo}
+                {projectExcerpt(
+                  locale === 'en' ? project.descriptionEn || project.descriptionKo : project.descriptionKo
+                )}
               </p>
             )}
           </div>

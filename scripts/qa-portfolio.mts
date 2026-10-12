@@ -70,6 +70,14 @@ try {
               'Horizontal overflow at ' + route
             )
             if (route === '/hire') {
+              const contact = page
+                .getByRole('link', { name: locale === 'ko' ? /이메일로 연락하기/ : /Email me/ })
+                .first()
+              assert(await contact.isVisible(), 'Above-fold contact CTA missing')
+              const rect = await contact.boundingBox()
+              assert(rect && rect.y < (width === 390 ? 844 : 1000), 'Contact CTA not visible in initial viewport')
+              assert(await page.locator('a[href="#resume"]').isVisible(), 'Résumé shortcut missing')
+              assert((await page.locator('#resume').count()) === 1, 'Résumé anchor missing')
               const primary = page.locator('a[href="/resume/Sihyeong-Lee-Resume.pdf"]')
               assert(await primary.isVisible(), 'Primary résumé CTA missing')
               const colors = await primary.evaluate((el) => ({

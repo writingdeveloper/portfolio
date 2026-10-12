@@ -3,6 +3,7 @@ import {
   getHireStats,
   getPortfolioStats,
   getProjectCaseStudySections,
+  projectExcerpt,
   hasIndexablePage,
   HIRE_CASE_STUDIES,
   HOME_GROUPS,
@@ -23,6 +24,18 @@ const p = (name: string, featured: boolean): Project => ({
   techStack: [],
   status: 'active',
   featured,
+})
+
+describe('projectExcerpt', () => {
+  it('preserves concise text unchanged and trims whitespace', () => {
+    expect(projectExcerpt('  hello world  ')).toBe('hello world')
+  })
+  it('shortens long descriptions without removing the detail page copy', () => {
+    const text = 'Accessible evidence for a shipped product. '.repeat(20)
+    const excerpt = projectExcerpt(text, 110)
+    expect(excerpt.length).toBeLessThanOrEqual(111)
+    expect(excerpt.endsWith('…')).toBe(true)
+  })
 })
 
 describe('sortProjectsFeaturedFirst', () => {

@@ -255,7 +255,7 @@ export function LedgerHome({
             <Link
               key={n.href}
               href={n.href}
-              className="ledger-mono flex min-w-0 flex-col items-center gap-0.5 px-1 py-2.5 text-[9px] tracking-[0.08em] uppercase transition-colors hover:opacity-80"
+              className="ledger-mono flex min-h-12 min-w-0 flex-col items-center gap-0.5 px-1 py-2.5 text-[10px] tracking-[0.04em] uppercase transition-colors hover:opacity-80"
               style={{ color: MUTED }}
             >
               <span className="text-[8px]" style={{ color: ACCENT }}>

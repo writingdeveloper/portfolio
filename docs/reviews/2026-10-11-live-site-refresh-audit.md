@@ -94,3 +94,32 @@ Captured actual Chromium screenshots at 2026-10-11 PT, saved under ignored `.qa/
 5. Projects desktop selected-work cards have very dense multi-paragraph copy and stacks of skill tags; Studio card lacks a visible screenshot compared to DevDeck. Propose concise 2–3-line outcomes plus scannable evidence/roles/status, with expandable case-study detail. Do **not** invent production scale, release status, or adoption.
 
 No full-page/mobile interaction or physical-device acceptance is asserted by this static viewport review. Browser screenshots were taken from **public Vercel production**; local uncommitted visual changes were not used.
+
+## Follow-up implementation — 2026-10-11 21:45 PT
+
+This continued user-approved maintenance pass is staged, **not yet deployed**. Public site remains the earlier Vercel release.
+
+### Live Plane (confirmed via authenticated REST)
+- Read 44 pre-existing FOLIO work items, including FOLIO-34 QA, FOLIO-35 Todo and FOLIO-36 Todo.
+- Created FOLIO-45 urgent/In Progress for the strict security audit and Next release, FOLIO-46 high/Todo for source-backed project curation, FOLIO-47 high/Todo for Hiring UX and FOLIO-48 medium/Todo for measured performance/SEO.
+- Added source QA/release read-back comments to FOLIO-34 and FOLIO-36. Do not mark release Done before production evidence exists.
+
+### Source integration
+- Preserved the original `portfolio` checkout and all 36 modified/untracked paths. Created a separate `portfolio-reconcile-20261011` Git worktree, branch `feat/reconcile-evidence-20261011`.
+- Snapshotted evidence/resume work from WIP and merged current public GitHub main `689354e`. Five content/test conflicts were manually reconciled, preserving the AI/agent engineering identity and the later paid-work-oriented Hire case studies, with remote-first and LA hybrid/on-site eligibility accurately stated.
+- The project ledger now has 48 entries after adding **RailForge, Project STRATA, Music / MV Studio** as `building` / `private` research and development; bilingual evidence sections clearly decline a shipped/public claim. Existing selected-work and project release labels were left intact.
+- Hero positions early résumé/portfolio/AI-pipeline links within the first viewport while retaining the editorial visual identity. The Hire first viewport has contact email and résumé options. Mobile home navigation targets are given a min-height. Project listing card copy and ProjectList JSON-LD use bounded, non-destructive excerpts; full technical details remain on linked case-study pages.
+- Added browser acceptance for visible Hire contact button/anchor in each viewport; added tests for guarded summary behavior and private-prototype classification.
+- Integrated security branch `fix/next-security-lockfile-20261011` (Next.js 16.4.0 + compatible transitive patches) into the candidate, so the final release candidate does not regress to the older vulnerable Next.js.
+
+### Verification (progressively confirmed, do not conflate versions)
+- **Before integrating Next.js 16.4.0**, the reconciled Next 16.3.3 branch passed 226 Vitest tests, TypeScript, ESLint, Prettier, evidence/PDF hashes, translations and production build. Chromium QA passed EN/KO × 1440/390 × dark/light, three versioned PDF byte hashes, and both locale navigation suites. Local candidate /en/projects/railforge, /project-strata and /music-mv-studio returned HTTP 200. Real first-viewport desktop and mobile screenshots were reviewed and CTA placement looked correct. All previews stayed loopback-only.
+- The fresh Next 16.4.0 build, security audit, updated browser acceptance and production recheck are a **separate** final gate. The upstream `braces` high vulnerability is still unresolved; see `2026-10-11-next-braces-dependency-gate.md`.
+## Final localhost candidate QA — 2026-10-11 21:51 PT
+
+- The isolated candidate merged Next.js 16.4.0 and its compatible dependency patches from draft PR #33. Clean npm installation succeeded.
+- Current source: TypeScript, ESLint, Prettier, 228 unit tests (23 suites), evidence/PDF checks and bilingual posts (11/11) PASS. Optimized build PASS (148 prerender tasks).
+- Chromium review on Next.js 16.4.0: all eight EN/KO × 1440/390 × light/dark combinations PASS. All three résumé PDFs have valid MIME type and exact expected SHA-256. New prototype case-study links respond HTTP 200; no unexpected browser errors.
+- Bounded project excerpts are rendered in catalogue cards and summary JSON-LD; full technical copy stays on detail pages.
+- One read-only lab snapshot at `.qa/portfolio/performance-20261011.json`: /en/projects public decoded HTML 509,187 bytes; localhost candidate 484,503 bytes. Public compressed document transfer about 47 KB vs local about 66 KB because origins and compression differ. These are **different content versions and server environments**, not comparable Core Web Vitals, controlled A/B, or proof of deployed speed gains. The lab sampled TTFB/FCP/LCP; tested views had no horizontal overflow.
+- STRICT dependency audit still fails on the unpatched braces advisory. PR #33 remains draft, and Vercel production has not been updated. Preserve release gate FOLIO-36.

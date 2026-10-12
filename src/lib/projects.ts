@@ -1,5 +1,15 @@
 import type { Project } from '@/types/content'
 
+/** Concise catalogue copy; full detail remains on project-specific pages. */
+export function projectExcerpt(description: string, maxLength = 220): string {
+  const text = description.trim().replace(/\s+/g, ' ')
+  if (text.length <= maxLength) return text
+  const limit = text.slice(0, maxLength)
+  const boundary = limit.lastIndexOf(' ')
+  const cut = boundary >= maxLength * 0.6 ? boundary : maxLength
+  return limit.slice(0, cut).trimEnd() + '…'
+}
+
 export const SELECTED_WORK = ['devdeck', 'studios', 'citefirst', 'brain-vat-siege', 'healframe'] as const
 
 export type ProjectCaseStudyKey = 'problem' | 'decision' | 'evidence' | 'result'
