@@ -441,8 +441,8 @@
     {
       "name": "Notro",
       "slug": "notro",
-      "descriptionKo": "디스코드 무료 유저용 트레이 컴패니언. 캡처 이미지가 무료 업로드 한도(10MB)를 넘으면 클립보드에서 자동 압축(WebP→JPEG→축소)하고, v2.0부터는 니트로가 잠근 이모지·스티커·GIF 피커를 핫키 팝업(WebView2, 디스코드 다크테마 재현)으로 대체합니다 — 클라이언트 무수정·계정 자동화 없음(ToS 안전 설계), APNG→GIF 자동 변환, 선택 시 자동 붙여넣기(전송은 사용자 몫). Python·MIT·5개 언어.",
-      "descriptionEn": "A tray companion for Discord free users. It auto-compresses clipboard images that exceed the 10 MB free-upload limit (WebP→JPEG→downscale), and since v2.0 replaces the Nitro-gated emoji/sticker/GIF picker with a hotkey popup (WebView2, Discord-style dark UI) — no client mods, no account automation (ToS-safe by design), with APNG→GIF conversion and auto-paste on select while sending stays manual. Python, MIT, five languages.",
+      "descriptionKo": "Windows용 독립 Discord 트레이 보조 앱. 이미지·게임 클립을 사용자가 정한 첨부파일 용량에 맞게 준비하고(2026년 8월 기준 무료 20MB), 개인 이모지·스티커·GIF를 검색해 첨부파일로 붙여넣습니다. 네이티브 Nitro 이모지가 아니며 Discord 클라이언트를 수정하거나 계정 토큰을 사용하지 않습니다. Python·MIT·5개 언어. 현재 Windows 설치 프로그램은 코드 서명 전입니다.",
+      "descriptionEn": "Independent Windows tray companion for Discord. Prepares copied screenshots and game clips for a configurable upload limit (free tier 20 MB as of August 2026) and provides a searchable personal emoji, sticker and GIF library. Selected items paste as file attachments, not native Nitro emoji. No Discord client modifications or account tokens. Python, MIT, five languages. The current Windows installer is unsigned.",
       "techStack": [
         "Python",
         "Pillow",
