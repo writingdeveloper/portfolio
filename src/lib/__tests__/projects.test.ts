@@ -262,14 +262,15 @@ describe('2026-10 verified source-backed research entries', () => {
 describe('2026-09 ledger refresh', () => {
   const ledger = projectsData.projects as Project[]
 
-  it('adds Creator Learning OS to the ledger without pretending it has shipped', () => {
+  it('shows Creator OS as a restricted external pilot with a public read-only demo, not a paid launch', () => {
     expect(ledger).toHaveLength(48)
     const creator = ledger.find((project) => project.slug === 'creator-learning-os')
     expect(creator).toBeDefined()
     expect(creator?.status).toBe('building')
     expect(creator?.private).toBe(true)
-    expect(creator?.website).toBeUndefined()
-    expect(creator?.caseStudy?.evidenceEn).toBeTruthy()
+    expect(creator?.website).toBe('https://creator.writingdeveloper.blog/demo')
+    expect(creator?.descriptionEn).toContain('Testing-only')
+    expect(creator?.caseStudy?.evidenceEn).toContain('without a provider model call')
   })
 
   it('adds BRAIN//VAT as a public demo without exposing a private repo', () => {

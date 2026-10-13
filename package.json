@@ -21,7 +21,8 @@
     "evidence:check": "tsx scripts/evidence.mts",
     "evidence:collect": "tsx scripts/evidence.mts --collect",
     "evidence:verify": "tsx scripts/evidence.mts --verify-local",
-    "qa:portfolio": "tsx scripts/qa-portfolio.mts"
+    "qa:portfolio": "tsx scripts/qa-portfolio.mts",
+    "audit:public-links": "tsx scripts/audit-public-links.mts"
   },
   "dependencies": {
     "@keystatic/core": "^0.5.48",

@@ -174,6 +174,44 @@ try {
     console.log('PASS INCIDENT', route, 'before/after images, 6 source links, scope')
     await incidentCtx.close()
   }
+  for (const prefix of ['', '/en']) {
+    const freshContext = await browser.newContext()
+    const freshPage = await freshContext.newPage()
+    const npcRoute = prefix + '/projects/brain-vat-siege'
+    const npcResponse = await freshPage.goto(base + npcRoute, { waitUntil: 'networkidle', timeout: 30000 })
+    assert(npcResponse?.ok(), 'BRAIN//VAT project route unavailable')
+    const npcEvidence = freshPage.locator('#verified-demo')
+    assert(await npcEvidence.isVisible(), 'Verified NPC demo missing')
+    const liveNpc = npcEvidence.locator('a[href="https://brain-vat-siege.vercel.app/npc"]')
+    assert((await liveNpc.count()) === 1, 'NPC live demonstration link missing')
+    const npcImage = npcEvidence.locator('img')
+    await npcImage.scrollIntoViewIfNeeded()
+    assert(
+      await npcImage.evaluate((node) => node instanceof HTMLImageElement && node.complete && node.naturalWidth > 0),
+      'Real NPC production screenshot did not load'
+    )
+    const npcText = await npcEvidence.innerText()
+    assert(npcText.includes('200/200'), 'NPC test-count evidence missing')
+    assert(npcText.includes(prefix ? 'no trained policy' : '학습된 정책'), 'Missing NPC limitation at ' + npcRoute)
+    results.push({ route: npcRoute, verifiedDemo: true, screenshotLoaded: true })
+    console.log('PASS VERIFIED DEMO', npcRoute)
+
+    const creatorRoute = prefix + '/projects/creator-learning-os'
+    const creatorResponse = await freshPage.goto(base + creatorRoute, { waitUntil: 'networkidle' })
+    assert(creatorResponse?.ok(), 'Creator OS pilot product detail unavailable')
+    assert(
+      (await freshPage.locator('a[href="https://creator.writingdeveloper.blog/demo"]').count()) >= 1,
+      'Creator OS no-login public demo missing'
+    )
+    const creatorDescription = await freshPage.locator('header').last().innerText()
+    assert(
+      creatorDescription.includes(prefix ? 'Testing-only' : '승인된 테스트 사용자'),
+      'Creator OS pilot access restrictions missing'
+    )
+    results.push({ route: creatorRoute, pilotStatus: 'testing-only', demoLinked: true })
+    console.log('PASS CREATOR PILOT', creatorRoute)
+    await freshContext.close()
+  }
   for (const file of resumes.files) {
     const r = await ctx.request.get(base + '/resume/' + file.file)
     assert(r.ok() && r.headers()['content-type']?.includes('application/pdf'), 'PDF response invalid')

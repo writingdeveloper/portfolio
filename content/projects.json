@@ -1,10 +1,10 @@
 {
   "projects": [
     {
-      "name": "Soursea",
+      "name": "Soursea — Personal Sourcing Workspace",
       "slug": "soursea",
-      "descriptionKo": "한국→미국 셀러용 Electron 소싱 데스크톱 도구. 내장 브라우저에서 공급처 페이지를 구조화된 로컬 상품 데이터로 추출하고, 운영 보드와 MCP를 통해 Claude Code 분석까지 연결합니다.",
-      "descriptionEn": "Electron desktop sourcing workspace for a Korea→US seller. An embedded browser turns supplier pages into structured local product records, then connects that data to an operations board and Claude Code through MCP.",
+      "descriptionKo": "Soursea LLC의 고객용 서비스 목록과 별개인 개인용 Electron 상품 소싱 도구입니다. 내장 브라우저에서 공급처 정보를 정규화해 로컬 SQLite에 저장하고 MCP로 분석 워크플로에 연결하지만, 공개 SaaS로 제공하지 않습니다.",
+      "descriptionEn": "A personal-use Electron sourcing workspace (not the Soursea LLC customer product catalog). An embedded browser normalizes supplier pages into local SQLite records and connects operations data to a local MCP client; it is not offered as a public SaaS.",
       "techStack": [
         "Electron",
         "TypeScript",
@@ -34,10 +34,10 @@
       }
     },
     {
-      "name": "Creator OS",
+      "name": "Creator OS — Release Engineering",
       "slug": "creator-os",
-      "descriptionKo": "크리에이터·YouTube 리포팅 SaaS를 실제 고객 환경에 내보내기 전에 실패 폐쇄형 릴리스 게이트로 단단하게 만든 production-hardening 프로젝트. PostgreSQL 워커, Docker 런타임, 백업·복구, Playwright QA와 운영 프리플라이트를 한 릴리스 계약으로 묶었습니다.",
-      "descriptionEn": "A production-hardening project for a creator and YouTube reporting SaaS. Before exposing customer traffic, I tied PostgreSQL workers, Docker runtime, backup/recovery, Playwright QA, and fail-closed operator preflight into one release contract.",
+      "descriptionKo": "별도 SaaS가 아니라 같은 Creator OS 제품의 출시 엔지니어링 사례입니다. PostgreSQL 워커·Docker 배포 정체성, 암호화 백업·복구 리허설, 운영자 사전 점검과 읽기 전용 파일럿 검증을 통해 빌드 성공과 실제 고객용 출시를 구분합니다.",
+      "descriptionEn": "An engineering case study of the same Creator OS product, not another standalone SaaS. It separates a working build from customer-safe deployment using PostgreSQL worker checks, Docker deployment identity, encrypted backups, restore rehearsals, explicit operator preflights, and read-only pilot verification.",
       "techStack": [
         "Next.js",
         "TypeScript",
@@ -51,7 +51,7 @@
       "status": "active",
       "private": true,
       "featured": false,
-      "updatedAt": "2026-09-23",
+      "updatedAt": "2026-10-08",
       "screenshot": "/images/projects/creator-os.png",
       "screenshotAltKo": "Creator OS 비공개 스테이징의 실제 Today 리포트 화면. 배포 전 QA에서 캡처한 제품 UI.",
       "screenshotAltEn": "The real Creator OS Today report UI captured during private-staging QA before public launch.",
@@ -62,8 +62,8 @@
         "decisionEn": "I separated source completion from launch approval. The release uses immutable manifests, a dedicated PostgreSQL worker, Docker/Compose verification, backup-and-restore plus an independent deletion ledger, fail-closed operator/preflight checks, and a separate FINAL-QA gate. Missing external evidence stays blocked instead of being treated as success.",
         "evidenceKo": "최근 COS-32/33 최종 QA에서 focused 22/22, 전체 회귀 669건 통과(27건은 DB 미구성으로 skip이며 pass로 세지 않음), typecheck·production build·release verifier가 통과했습니다. 올바른 4080 private-staging host에 대한 29/29 read-only live checks도 통과했습니다.",
         "evidenceEn": "The latest COS-32/33 final QA passed 22/22 focused checks and 669 regression tests; 27 database-dependent tests were skipped and explicitly not counted as passes. Typecheck, production build, release verifiers, and 29/29 read-only checks against the intended 4080 private-staging host also passed.",
-        "resultKo": "반복 가능한 private-staging 릴리스 증거와 운영 경계를 만들었지만, public launch는 DNS 쓰기 인증·공개 TLS/proxy·실제 Google 동의·정책/지원 정보·이메일 sender·암호화 백업 키 보관 등 외부 게이트가 남아 있어 의도적으로 차단 상태로 유지했습니다.",
-        "resultEn": "The result is a reproducible private-staging release with explicit operational evidence. Public launch remains intentionally blocked on external gates such as authoritative DNS access, public TLS/proxy verification, real Google consent, policy/support approval, email sender identity, and encrypted recovery-key custody."
+        "resultKo": "10월 6일부터 승인된 Google 테스트 사용자와 읽기 전용 YouTube 동의를 사용하는 제한된 외부 파일럿을 운영했습니다. 누구나 가입하는 공개 출시·결제는 별도이며, 이 항목은 두 번째 제품이 아닌 출시 안전성 엔지니어링 기록입니다.",
+        "resultEn": "A bounded external pilot was activated on October 6 for approved Google test users, with real read-only YouTube consent. Broad public registration and billing are not available; this entry tracks engineering and release safety, not a second product."
       }
     },
     {
@@ -536,10 +536,10 @@
       "featured": true
     },
     {
-      "name": "Creator Learning OS",
+      "name": "Creator OS — Product & External Pilot",
       "slug": "creator-learning-os",
-      "descriptionKo": "YouTube 채널 데이터를 '그래서 지금 무엇을 만들거나 고쳐야 하는가?'라는 하나의 실행 항목으로 바꾸는 evidence-first Creator SaaS. 내부 Load Path 데이터와 고객 CSV 흐름을 같은 모델로 다루고 Today·Video diagnostics·Briefs·Experiments·Playbook을 연결했습니다. SQLite/PostgreSQL 어댑터, tenant 경계, desktop/mobile Playwright QA, fail-closed release readiness와 PostgreSQL backup/recovery tooling까지 구현했으며, 고객 OAuth·billing 등 미완료 요소는 출시로 포장하지 않고 명시적으로 차단합니다. 아직 public/paid SaaS는 출시하지 않았습니다.",
-      "descriptionEn": "An evidence-first creator SaaS built around one question: what should I create or improve now? It turns YouTube/channel evidence into one concrete next task while keeping the supporting detail on demand. The product connects Today, video diagnostics, saved Briefs, Experiments and a channel Playbook across internal reference data and customer CSV flows, with SQLite/PostgreSQL adapters, tenant boundaries, desktop/mobile Playwright QA, fail-closed release readiness, and PostgreSQL backup/recovery tooling. Customer OAuth, billing and other unfinished production requirements stay explicitly blocked rather than being relabeled as shipped. Public/paid SaaS is not released yet.",
+      "descriptionKo": "“지금 무엇을 개선해야 하나?”에 답하도록 설계한 크리에이터·YouTube 의사결정 SaaS입니다. 10월 6일부터 공개 호스트의 외부 파일럿이 운영되지만 Google 로그인은 승인된 테스트 사용자에게만 제공됩니다. 별도 읽기 전용 YouTube 동의, 근거 기반 결정론적 리포트, 비로그인 데모, 백업·복구 및 운영 게이트가 검증됐습니다. 일반 회원가입·유료 출시·실시간 LLM 추론 서비스는 아닙니다.",
+      "descriptionEn": "A creator and YouTube decision-support SaaS for answering “what should I improve now?” October 6 brought an external pilot on a public host, but Google sign-in remains Testing-only for approved users. Separate read-only YouTube consent, evidence-bound deterministic reports, a public no-login demo, backup/restore drills, and operator release gates are verified. This is not unrestricted signup, paid availability, or live LLM inference.",
       "techStack": [
         "TypeScript",
         "Next.js",
@@ -552,17 +552,18 @@
       "status": "building",
       "private": true,
       "featured": false,
-      "updatedAt": "2026-09-22",
+      "updatedAt": "2026-10-08",
       "caseStudy": {
         "problemKo": "크리에이터 분석 도구는 지표를 많이 보여줘도 사용자가 다음에 무엇을 해야 하는지 다시 해석해야 하는 경우가 많습니다.",
         "problemEn": "Creator analytics often expose more metrics while still making the user decide what to do next.",
         "decisionKo": "대시보드의 중심을 점수나 차트가 아니라 '지금 할 한 가지'로 두고, 근거와 진단은 필요할 때만 펼치도록 설계했습니다. 릴리스 준비도는 미완료 의존성이 있으면 fail-closed 처리합니다.",
         "decisionEn": "I centered the product on one concrete next action rather than an opaque score, with evidence and diagnostics available on demand. Release readiness fails closed when production dependencies remain incomplete.",
-        "evidenceKo": "SQLite/PostgreSQL 어댑터, tenant 경계, desktop/Pixel 7 Playwright QA, provider readiness gate, 4080 배포 검증, PostgreSQL backup/recovery bundle이 저장소에 구현되어 있습니다.",
-        "evidenceEn": "The repository includes SQLite/PostgreSQL adapters, tenant boundaries, desktop/Pixel 7 Playwright QA, provider-readiness gates, 4080 deployment verification, and PostgreSQL backup/recovery tooling.",
-        "resultKo": "분석을 읽는 제품에서, 근거를 보존하면서 바로 실행할 작업을 주는 운영 도구로 방향을 좁혔습니다. 아직 미출시 요소는 명시적으로 미출시로 남깁니다.",
-        "resultEn": "The product is converging from a reporting surface into an operating tool that gives one evidence-backed action. Unfinished release requirements remain explicitly unshipped."
-      }
+        "evidenceKo": "10월 6일 공개 호스트 전환 기록에서 Cloudflare TLS·AOP 신뢰 경계와 승인된 테스트 사용자 Google 로그인, 별도 읽기 전용 YouTube 동의를 확인했습니다. 10월 8일에는 한영 약관·지원 화면, 모델 API 호출 없는 근거 중심 결정론적 리포트, 외부 저장소 PostgreSQL 복구 리허설을 검증했습니다. /demo는 비로그인 접근 가능하지만 불특정 사용자 가입이나 실사용자 규모는 확인하지 않았습니다.",
+        "evidenceEn": "An October 6 public-host activation verified Cloudflare TLS, AOP trust boundary and allowed-test-user Google login with separate YouTube read-only consent. The October 8 release record verified bilingual policy/support pages, deterministic grounded reports without a provider model call, and an off-device PostgreSQL backup restore drill. Public /demo is accessible without login; production external-user volume and unrestricted signup were not verified.",
+        "resultKo": "비로그인 데모와 승인된 Google 테스트 사용자 로그인을 갖춘 외부 파일럿 단계입니다. 일반 고객 확대, 결제, 모델 API 추론 및 무제한 셀프서비스는 별도 출시 과제입니다.",
+        "resultEn": "An external pilot with a public read-only demo and a restricted Google test-user login is running. Customer-scale rollout, billing, provider-model inference and unrestricted self-service remain separate unapproved releases."
+      },
+      "website": "https://creator.writingdeveloper.blog/demo"
     },
     {
       "name": "RailForge",
@@ -1068,8 +1069,8 @@
     {
       "name": "BRAIN//VAT",
       "slug": "brain-vat-siege",
-      "descriptionKo": "Three.js 보스전과 신경 컨트롤러 연구를 하나의 공개 인터랙티브 케이스 스터디로 만든 프로젝트입니다. 미학습·사전학습·온라인 적응 예측기를 같은 입력에서 비교하고, 플레이로 달라진 102개 가중치 기억을 호환 보스 몸체로 옮길 수 있습니다. 별도 연구 경로에서는 166,700-뉴런 MaleCNS 고정 connectome의 시간 상태에 작은 외부 readout을 붙여 held-out 움직임 이력 분류를 검증했습니다.",
-      "descriptionEn": "A public interactive case study combining a Three.js boss fight with neural-controller research. It compares untrained, pretrained-frozen and online-adaptive predictors on the same committed inputs, and lets a player move a 102-weight learned memory cartridge into a compatible boss chassis. A separate research path keeps the 166,700-neuron MaleCNS connectome fixed and tests small external readouts over its temporal state on a held-out motion-history task.",
+      "descriptionKo": "Three.js 보스전과 신경 컨트롤러 연구를 하나의 공개 인터랙티브 케이스 스터디로 만든 프로젝트입니다. 미학습·사전학습·온라인 적응 예측기를 같은 입력에서 비교하고, 플레이로 달라진 102개 가중치 기억을 호환 보스 몸체로 옮길 수 있습니다. 별도 연구 경로에서는 166,700-뉴런 MaleCNS 고정 connectome의 시간 상태에 작은 외부 readout을 붙여 held-out 움직임 이력 분류를 검증했습니다. 10월 13일 공개된 별도 /npc 데모에서는 제한된 관측과 목격 이벤트 기억, 세계 상태에 따른 행동 검증을 갖춘 규칙 기반 경비 NPC를 구현했습니다. 학습 모델이나 LLM NPC는 아닙니다.",
+      "descriptionEn": "A public interactive case study combining a Three.js boss fight with neural-controller research. It compares untrained, pretrained-frozen and online-adaptive predictors on the same committed inputs, and lets a player move a 102-weight learned memory cartridge into a compatible boss chassis. A separate research path keeps the 166,700-neuron MaleCNS connectome fixed and tests small external readouts over its temporal state on a held-out motion-history task. On October 13, a separate public /npc demo added a deterministic rule-driven guard with filtered observations, witnessed-event memory, and world-validated actions. It is not an LLM or trained NPC.",
       "techStack": [
         "JavaScript",
         "Three.js",
@@ -1084,19 +1085,19 @@
       "website": "https://brain-vat-siege.vercel.app",
       "private": true,
       "featured": true,
-      "updatedAt": "2026-09-23",
+      "updatedAt": "2026-10-13",
       "screenshot": "/images/projects/brain-vat-siege.webp",
       "screenshotAltKo": "BRAIN//VAT SENTINEL 보스전의 실제 Three.js 화면. 중앙의 발광 기계형 보스가 세 개의 네온 레인을 향해 공격을 준비하고 있다.",
       "screenshotAltEn": "A real Three.js capture of the BRAIN//VAT SENTINEL boss fight, with a glowing mechanical boss preparing an attack over three neon lanes.",
       "caseStudy": {
         "problemKo": "신경망이 동작한다는 그래프만으로는 사용자가 무엇을 할 수 있는지, 그리고 AI의 기억·예측이 실제 플레이를 어떻게 바꾸는지 체감하기 어려웠습니다.",
         "problemEn": "Neural telemetry alone did not make it obvious what a player could do with the system or how prediction and memory changed an actual interaction.",
-        "decisionKo": "예측을 사용자 입력 전에 잠그는 3레인 보스전을 만들고 미학습·고정 사전학습·온라인 적응 모델을 같은 회피 기록으로 비교했습니다. 이어 플레이로 변한 102개 예측 가중치만 호환 보스 chassis로 옮기는 기억 카트리지와 게임 소유 action budget을 분리했습니다.",
-        "decisionEn": "I built a three-lane boss fight that commits predictions before player input, compares fresh, frozen-pretrained and online-adaptive models on the same dodge trace, and separates game-owned action budgets from a 102-weight predictor memory cartridge that can move only between compatible boss chassis.",
-        "evidenceKo": "공개 production은 `/boss`, `/demo`, `/evaluation`을 외부 AI API 없이 실행합니다. SENTINEL의 실제 Chrome QA는 합법적인 키 입력으로 10회 반격 승리·무조작 패배를 모두 재현했고, 기억 카트리지는 SENTINEL에서 WRAITH로 이동 후 HP·라운드는 초기화되면서 예측 가중치만 유지됐습니다. MaleCNS 별도 평가에서는 최종 프레임만 30/90(33.3%), 36개 calibrated optic cell의 시간 상태+111개 외부 readout 파라미터가 66/90(73.3%)였으며 connectome weight SHA는 전후 동일했습니다.",
-        "evidenceEn": "The public production runs `/boss`, `/demo` and `/evaluation` without an external AI API. Real Chrome QA records a legitimate 10-counter SENTINEL victory and an unattended defeat; a saved memory cartridge moves from SENTINEL to WRAITH while HP and round state reset and only predictor weights persist. In a separate MaleCNS test, final-frame-only scoring is 30/90 (33.3%) while temporal state from 36 calibrated optic cells plus a 111-parameter external readout reaches 66/90 (73.3%); the connectome-weight SHA is unchanged before and after.",
-        "resultKo": "결과는 단순 AI 데모가 아니라 플레이 가능한 3D 시스템, 재현 가능한 평가, 명시적 권한 경계, 기억 이식 실험과 고정 connectome readout 연구를 한 공개 케이스 스터디로 묶은 것입니다.",
-        "resultEn": "The result is a public case study that joins a playable 3D system with reproducible evaluation, explicit action boundaries, compatible memory transfer, and fixed-connectome readout experiments instead of presenting a neural model as a black-box demo."
+        "decisionKo": "예측을 사용자 입력 전에 잠그는 3레인 보스전을 만들고 미학습·고정 사전학습·온라인 적응 모델을 같은 회피 기록으로 비교했습니다. 이어 플레이로 변한 102개 예측 가중치만 호환 보스 chassis로 옮기는 기억 카트리지와 게임 소유 action budget을 분리했습니다. 후속 NPC 실험에서는 이동·시야·세계 이벤트·허용된 의도·NPC 위치를 브라우저의 게임 엔진이 결정하게 하고, 규칙 컨트롤러는 제한된 상위 행동만 제안하도록 분리했습니다.",
+        "decisionEn": "I built a three-lane boss fight that commits predictions before player input, compares fresh, frozen-pretrained and online-adaptive models on the same dodge trace, and separates game-owned action budgets from a 102-weight predictor memory cartridge that can move only between compatible boss chassis. A later NPC experiment keeps player movement, sight, world events, permitted intent, and NPC motion inside the authoritative local-browser simulation; the controller only proposes bounded high-level actions.",
+        "evidenceKo": "공개 production은 `/boss`, `/demo`, `/evaluation`을 외부 AI API 없이 실행합니다. SENTINEL의 실제 Chrome QA는 합법적인 키 입력으로 10회 반격 승리·무조작 패배를 모두 재현했고, 기억 카트리지는 SENTINEL에서 WRAITH로 이동 후 HP·라운드는 초기화되면서 예측 가중치만 유지됐습니다. MaleCNS 별도 평가에서는 최종 프레임만 30/90(33.3%), 36개 calibrated optic cell의 시간 상태+111개 외부 readout 파라미터가 66/90(73.3%)였으며 connectome weight SHA는 전후 동일했습니다. 2026-10-13 BVAT-37의 공개 /npc 데모는 소스 테스트 200/200과 로컬·운영 Chromium 데스크톱/모바일 QA를 통과했습니다. 목격된 첫 절도는 경고, 두 번째는 추격으로 이어지는 규칙 동작을 검증했고, 배포 커밋 일치와 브라우저 오류 0건을 기록했습니다.",
+        "evidenceEn": "The public production runs `/boss`, `/demo` and `/evaluation` without an external AI API. Real Chrome QA records a legitimate 10-counter SENTINEL victory and an unattended defeat; a saved memory cartridge moves from SENTINEL to WRAITH while HP and round state reset and only predictor weights persist. In a separate MaleCNS test, final-frame-only scoring is 30/90 (33.3%) while temporal state from 36 calibrated optic cells plus a 111-parameter external readout reaches 66/90 (73.3%); the connectome-weight SHA is unchanged before and after. BVAT-37 on 2026-10-13 adds a verified playable /npc public demo: 200/200 source tests, local and deployed Chromium desktop/mobile checks, and deterministic first-warning / second-pursuit witnessed-theft behavior. Production /npc and its source commit identity were verified; zero JavaScript errors were reported in the dated run.",
+        "resultKo": "결과는 단순 AI 데모가 아니라 플레이 가능한 3D 시스템, 재현 가능한 평가, 명시적 권한 경계, 기억 이식 실험과 고정 connectome readout 연구를 한 공개 케이스 스터디로 묶은 것입니다. NPC 실험은 단일 규칙 기반 브라우저 시뮬레이션으로, 학습된 사회적 기억·LLM 대화·실제 멀티플레이 권한이나 사람의 재미 검증을 뜻하지 않습니다.",
+        "resultEn": "The result is a public case study that joins a playable 3D system with reproducible evaluation, explicit action boundaries, compatible memory transfer, and fixed-connectome readout experiments instead of presenting a neural model as a black-box demo. The NPC experiment is a single rule-based, session-local browser toy—not learned social memory, LLM dialogue, real multiplayer authority, or human-validated game quality."
       }
     }
   ]
