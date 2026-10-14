@@ -7,7 +7,7 @@ import { SITE_URL } from '@/lib/constants'
 import { ProjectCard } from '@/components/projects/ProjectCard'
 import { PageTransition } from '@/components/ui/PageTransition'
 import { generateBreadcrumbJsonLd, generateProjectListJsonLd, safeJsonLd, toAbsoluteUrl } from '@/lib/seo'
-import { APP_CATEGORY, partitionProjects } from '@/lib/projects'
+import { APP_CATEGORY, partitionProjects, projectExcerpt } from '@/lib/projects'
 import { getAllPosts } from '@/lib/mdx'
 import { buildProjectPostMap, type LinkedPost } from '@/lib/post-project-links'
 import { useLocale } from 'next-intl'
@@ -70,7 +70,7 @@ function ProjectsContent({ projectPosts }: { projectPosts: Map<string, LinkedPos
   const projectListJsonLd = generateProjectListJsonLd(
     allProjects.map((project) => ({
       name: project.name,
-      description: locale === 'ko' ? project.descriptionKo : project.descriptionEn,
+      description: projectExcerpt(locale === 'ko' ? project.descriptionKo : project.descriptionEn),
       url: project.website ?? (!project.private && project.github ? project.github : undefined),
       techStack: project.techStack,
       ...(project.screenshot ? { image: toAbsoluteUrl(project.screenshot) } : {}),

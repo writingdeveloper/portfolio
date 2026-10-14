@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "incidents": [
+    {
+      "id": "devdeck-session-title-convergence",
+      "project": "devdeck",
+      "recordedAt": "2026-09-08",
+      "verifiedAt": "2026-10-12",
+      "baselineCommit": "b7817547dd2100751ce46229a83810319affe82b",
+      "candidateCommit": "fa8864833b98e7d81f140e598b1f56d4d2b60c39",
+      "candidateVersion": "1.37.8",
+      "statusEn": "Validated candidate — not a public release",
+      "statusKo": "검증된 후보 버전 · 정식 출시 아님",
+      "titleEn": "The rename reached the host. The host screen stayed wrong.",
+      "titleKo": "이름 변경은 호스트에 도착했지만, 호스트 화면은 그대로였다.",
+      "introEn": "A remote viewer could rename a coding-agent terminal and the host's runtime metadata would change, yet its visible header and sidebar stayed stale. The original check inspected internal state rather than the user-facing window or disk record. A three-app regression made the visible failure reproducible.",
+      "introKo": "원격 뷰어에서 코딩 에이전트 세션 이름을 바꾸면 호스트의 런타임 메타데이터는 바뀌었지만, 실제 제목과 사이드바는 이전 값을 유지했습니다. 기존 검사는 내부 상태만 확인하고 화면이나 디스크 기록의 일치를 검사하지 않았습니다. Electron 앱 3개를 실행하는 회귀 테스트로 사용자가 보던 실패를 재현했습니다.",
+      "before": {
+        "image": "/images/projects/devdeck-sync-qa-before.webp",
+        "altEn": "Real isolated Electron QA fixture: the baseline host header and sidebar still show release-workspace after a remote rename.",
+        "altKo": "실제 격리 Electron QA에서 원격 이름 변경 이후에도 호스트 제목과 사이드바에 release-workspace가 남은 과거 실패 화면.",
+        "titleEn": "Before — host UI still shows the old title",
+        "titleKo": "수정 전 — 호스트 화면에 이전 제목이 남음",
+        "noteEn": "Historical 2026-09-08 failed fixture. The image combines two crops from the same QA screenshot; the terminal pane containing a local path is intentionally excluded.",
+        "noteKo": "2026-09-08 과거 실패 기록입니다. 동일한 QA 화면에서 제목과 사이드바를 잘라 합쳤으며, 로컬 경로가 있는 터미널 영역은 제외했습니다."
+      },
+      "after": {
+        "image": "/images/projects/devdeck-sync-qa-after.webp",
+        "altEn": "Real isolated Electron QA fixture on 2026-10-12: host header and sidebar both show the committed title Converged 5.",
+        "altKo": "2026-10-12 격리된 실제 Electron QA에서 호스트 제목과 사이드바가 모두 Converged 5로 일치하는 화면.",
+        "titleEn": "After — host UI and sidebar agree",
+        "titleKo": "수정 후 — 호스트 제목과 사이드바가 일치",
+        "noteEn": "2026-10-12 fixture after eight convergence scenarios. Crops are taken from the same capture; no production conversations or customer data were used.",
+        "noteKo": "2026-10-12 8개 동기화 시나리오 이후의 가상 데이터 화면입니다. 한 화면의 일부를 추출했으며 실제 사용자 대화·고객 데이터는 사용하지 않았습니다."
+      },
+      "reproduction": {
+        "titleEn": "Reproduce the user's failure",
+        "titleKo": "사용자에게 보인 실패 재현",
+        "stepsEn": [
+          "Launch a disposable Windows Electron host and two paired viewers, each with a separate profile; pair through real loopback TLS with a harmless fixture CLI.",
+          "Rename a running terminal from Viewer A. On the historical baseline, host runtime metadata changed, but the host window still rendered its old header/sidebar title.",
+          "Assert the actual header, sidebar, saved-session list and on-disk state on all three apps—not only the transport response.",
+          "The historical baseline's first UI convergence check timed out. This candidate suite passes the same class of acceptance tests."
+        ],
+        "stepsKo": [
+          "서로 다른 임시 프로필로 Windows Electron 호스트 1개와 뷰어 2개를 실행하고, 가짜 CLI와 실제 루프백 TLS로 연결합니다.",
+          "뷰어 A에서 실행 중인 터미널 이름을 변경합니다. 과거 기준 코드에서는 호스트 런타임 상태가 바뀌어도 제목·사이드바 화면은 이전 값을 표시했습니다.",
+          "전송 응답만 보지 않고 세 앱의 제목·사이드바·저장 목록·디스크 저장 상태까지 확인합니다.",
+          "과거 기준 버전에서는 첫 화면 일치 검사에서 시간이 초과됐고, 수정 후보의 동일 유형 사용자 경험 테스트는 통과했습니다."
+        ]
+      },
+      "rootCause": {
+        "titleEn": "Root cause — a broken source of truth",
+        "titleKo": "원인 — 상태의 소유권이 일관되지 않음",
+        "textEn": "The host renderer's syncAdoptedLabel path excluded LOCAL_MACHINE_ID announcements, treating its own display as outside the update path. Older tests checked host runtime state but never the rendered title. Cached remote labels, unscoped identities, fire-and-forget renames, and stale replies introduced additional ways to display or persist the wrong value.",
+        "textKo": "호스트 렌더러의 syncAdoptedLabel 경로가 LOCAL_MACHINE_ID 변경 알림을 무시해 실제 호스트 화면이 갱신 경로에서 빠졌습니다. 기존 테스트는 호스트의 내부 상태만 검사하고 렌더된 제목을 검증하지 않았습니다. 오래된 캐시, 범위 없는 세션 ID, 응답 없는 변경 요청과 지연 응답도 불일치를 일으킬 수 있었습니다."
+      },
+      "changes": [
+        {
+          "titleEn": "Single host-owned write authority",
+          "titleKo": "호스트가 유일한 쓰기 권한을 보유",
+          "bodyEn": "Validate permissions, machine/project/provider identity, terminal incarnation and expected title revision. Reject stale writers with the owner's current snapshot.",
+          "bodyKo": "권한, 머신·프로젝트·공급자 ID, 터미널 인스턴스, 예상 제목 버전을 검증합니다. 오래된 수정 요청에는 호스트의 최신 스냅샷을 돌려줍니다."
+        },
+        {
+          "titleEn": "Persist, then publish and acknowledge",
+          "titleKo": "저장 성공 후에만 화면 갱신·응답",
+          "bodyEn": "The host writes the disk record before updating runtime metadata, announcing the change or sending success. A disk failure leaves the previous committed title intact.",
+          "bodyKo": "호스트는 디스크 저장이 성공한 뒤 런타임 상태를 갱신하고 변경을 알리며 성공을 응답합니다. 저장 실패 때는 기존 제목을 유지합니다."
+        },
+        {
+          "titleEn": "Keep the user's draft during conflicts",
+          "titleKo": "충돌 시 사용자의 편집 초안 보존",
+          "bodyEn": "A competing rename does not silently overwrite an open draft. Enter/Save explicitly commits; Escape discards. Delayed replies and obsolete cached titles cannot roll back newer state.",
+          "bodyKo": "다른 장치의 변경이 진행 중인 초안을 몰래 덮어쓰지 않습니다. Enter/저장만 확정하며 Escape는 취소합니다. 지연된 응답이나 오래된 캐시로 최신 상태를 되돌리지 못하게 합니다."
+        }
+      ],
+      "verification": {
+        "titleEn": "Verification beyond an API success response",
+        "titleKo": "API 응답을 넘어 실제 화면과 저장 상태 검증",
+        "focusedTests": 20,
+        "electronJourneys": 8,
+        "environmentEn": "Main Windows PC, three isolated Electron processes, real loopback TLS, synthetic terminal CLI, separate temporary profiles.",
+        "environmentKo": "MAIN Windows PC 한 대, 독립 Electron 프로세스 3개, 실제 루프백 TLS, 가짜 터미널 CLI와 별도의 임시 프로필.",
+        "commands": [
+          "npm test -- src/main/sessionLabels.test.ts src/shared/sessionConsistency.test.ts",
+          "npm run qa:session-sync"
+        ],
+        "journeys": [
+          {
+            "en": "Viewer rename updates host and both viewers",
+            "ko": "뷰어의 변경이 호스트·다른 뷰어에 반영"
+          },
+          {
+            "en": "Host rename keeps the terminal mounted",
+            "ko": "호스트 이름 변경 시 터미널 재생성 방지"
+          },
+          {
+            "en": "Stale edits are rejected without losing drafts",
+            "ko": "오래된 수정 차단·사용자 초안 보존"
+          },
+          {
+            "en": "Disk failure avoids false success; retry works",
+            "ko": "디스크 오류 시 성공 오인 방지·재시도"
+          },
+          {
+            "en": "Permission removal blocks unauthorized change",
+            "ko": "권한 제거 시 무단 변경 차단"
+          },
+          {
+            "en": "Disconnect preserves draft; reconnect and retry",
+            "ko": "연결 끊김에도 초안 유지·재연결"
+          },
+          {
+            "en": "Explicit clear survives viewer restart",
+            "ko": "제목 초기화가 뷰어 재시작 후에도 유지"
+          },
+          {
+            "en": "Repeated rename cycles keep all three views aligned",
+            "ko": "반복 수정에도 세 화면이 일치"
+          }
+        ],
+        "limitationsEn": "Not two physical machines. Not long-running VPN/sleep/resume or live agent-provider acceptance. Real installer and updater journeys, human visual review and 1.37.8 public-release approval remain open. The baseline screenshot is historical, while the passing checks were rerun on 2026-10-12.",
+        "limitationsKo": "물리적으로 분리된 두 PC, 장기 VPN·절전 복구, 실제 AI 공급자 작업 부하는 검증하지 않았습니다. 설치 마법사·업데이터·사람의 시각 검수와 1.37.8 정식 출시 승인도 별도입니다. 실패 이미지는 과거 기록이고 통과 검사는 2026-10-12 재실행했습니다."
+      },
+      "sources": [
+        {
+          "kind": "baseline",
+          "labelEn": "Baseline commit",
+          "labelKo": "실패 기준 커밋",
+          "href": "https://github.com/writingdeveloper/devdeck/commit/b7817547dd2100751ce46229a83810319affe82b"
+        },
+        {
+          "kind": "fix",
+          "labelEn": "Fix commit and diff",
+          "labelKo": "수정 커밋·변경 코드",
+          "href": "https://github.com/writingdeveloper/devdeck/commit/fa8864833b98e7d81f140e598b1f56d4d2b60c39"
+        },
+        {
+          "kind": "review",
+          "labelEn": "Incident review",
+          "labelKo": "장애 분석·검증 기록",
+          "href": "https://github.com/writingdeveloper/devdeck/blob/fa8864833b98e7d81f140e598b1f56d4d2b60c39/docs/session-sync-review-2026-09-08.md"
+        },
+        {
+          "kind": "unit",
+          "labelEn": "Focused unit tests",
+          "labelKo": "단위 회귀 테스트",
+          "href": "https://github.com/writingdeveloper/devdeck/blob/fa8864833b98e7d81f140e598b1f56d4d2b60c39/src/main/sessionLabels.test.ts"
+        },
+        {
+          "kind": "harness",
+          "labelEn": "Three-app QA harness",
+          "labelKo": "Electron 3개 앱 QA 코드",
+          "href": "https://github.com/writingdeveloper/devdeck/blob/fa8864833b98e7d81f140e598b1f56d4d2b60c39/qa/session-sync.mjs"
+        },
+        {
+          "kind": "ci",
+          "labelEn": "Same-commit green Windows CI",
+          "labelKo": "동일 커밋 Windows CI 통과",
+          "href": "https://github.com/writingdeveloper/devdeck/actions/runs/34319241204"
+        }
+      ]
+    }
+  ]
+}

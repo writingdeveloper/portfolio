@@ -1,10 +1,10 @@
 {
   "projects": [
     {
-      "name": "Soursea",
+      "name": "Soursea — Personal Sourcing Workspace",
       "slug": "soursea",
-      "descriptionKo": "한국→미국 셀러용 Electron 소싱 데스크톱 도구. 내장 브라우저에서 공급처 페이지를 구조화된 로컬 상품 데이터로 추출하고, 운영 보드와 MCP를 통해 Claude Code 분석까지 연결합니다.",
-      "descriptionEn": "Electron desktop sourcing workspace for a Korea→US seller. An embedded browser turns supplier pages into structured local product records, then connects that data to an operations board and Claude Code through MCP.",
+      "descriptionKo": "Soursea LLC의 고객용 서비스 목록과 별개인 개인용 Electron 상품 소싱 도구입니다. 내장 브라우저에서 공급처 정보를 정규화해 로컬 SQLite에 저장하고 MCP로 분석 워크플로에 연결하지만, 공개 SaaS로 제공하지 않습니다.",
+      "descriptionEn": "A personal-use Electron sourcing workspace (not the Soursea LLC customer product catalog). An embedded browser normalizes supplier pages into local SQLite records and connects operations data to a local MCP client; it is not offered as a public SaaS.",
       "techStack": [
         "Electron",
         "TypeScript",
@@ -34,10 +34,10 @@
       }
     },
     {
-      "name": "Creator OS",
+      "name": "Creator OS — Release Engineering",
       "slug": "creator-os",
-      "descriptionKo": "크리에이터·YouTube 리포팅 SaaS를 실제 고객 환경에 내보내기 전에 실패 폐쇄형 릴리스 게이트로 단단하게 만든 production-hardening 프로젝트. PostgreSQL 워커, Docker 런타임, 백업·복구, Playwright QA와 운영 프리플라이트를 한 릴리스 계약으로 묶었습니다.",
-      "descriptionEn": "A production-hardening project for a creator and YouTube reporting SaaS. Before exposing customer traffic, I tied PostgreSQL workers, Docker runtime, backup/recovery, Playwright QA, and fail-closed operator preflight into one release contract.",
+      "descriptionKo": "별도 SaaS가 아니라 같은 Creator OS 제품의 출시 엔지니어링 사례입니다. PostgreSQL 워커·Docker 배포 정체성, 암호화 백업·복구 리허설, 운영자 사전 점검과 읽기 전용 파일럿 검증을 통해 빌드 성공과 실제 고객용 출시를 구분합니다.",
+      "descriptionEn": "An engineering case study of the same Creator OS product, not another standalone SaaS. It separates a working build from customer-safe deployment using PostgreSQL worker checks, Docker deployment identity, encrypted backups, restore rehearsals, explicit operator preflights, and read-only pilot verification.",
       "techStack": [
         "Next.js",
         "TypeScript",
@@ -51,7 +51,7 @@
       "status": "active",
       "private": true,
       "featured": false,
-      "updatedAt": "2026-09-23",
+      "updatedAt": "2026-10-08",
       "screenshot": "/images/projects/creator-os.png",
       "screenshotAltKo": "Creator OS 비공개 스테이징의 실제 Today 리포트 화면. 배포 전 QA에서 캡처한 제품 UI.",
       "screenshotAltEn": "The real Creator OS Today report UI captured during private-staging QA before public launch.",
@@ -62,15 +62,15 @@
         "decisionEn": "I separated source completion from launch approval. The release uses immutable manifests, a dedicated PostgreSQL worker, Docker/Compose verification, backup-and-restore plus an independent deletion ledger, fail-closed operator/preflight checks, and a separate FINAL-QA gate. Missing external evidence stays blocked instead of being treated as success.",
         "evidenceKo": "최근 COS-32/33 최종 QA에서 focused 22/22, 전체 회귀 669건 통과(27건은 DB 미구성으로 skip이며 pass로 세지 않음), typecheck·production build·release verifier가 통과했습니다. 올바른 4080 private-staging host에 대한 29/29 read-only live checks도 통과했습니다.",
         "evidenceEn": "The latest COS-32/33 final QA passed 22/22 focused checks and 669 regression tests; 27 database-dependent tests were skipped and explicitly not counted as passes. Typecheck, production build, release verifiers, and 29/29 read-only checks against the intended 4080 private-staging host also passed.",
-        "resultKo": "반복 가능한 private-staging 릴리스 증거와 운영 경계를 만들었지만, public launch는 DNS 쓰기 인증·공개 TLS/proxy·실제 Google 동의·정책/지원 정보·이메일 sender·암호화 백업 키 보관 등 외부 게이트가 남아 있어 의도적으로 차단 상태로 유지했습니다.",
-        "resultEn": "The result is a reproducible private-staging release with explicit operational evidence. Public launch remains intentionally blocked on external gates such as authoritative DNS access, public TLS/proxy verification, real Google consent, policy/support approval, email sender identity, and encrypted recovery-key custody."
+        "resultKo": "10월 6일부터 승인된 Google 테스트 사용자와 읽기 전용 YouTube 동의를 사용하는 제한된 외부 파일럿을 운영했습니다. 누구나 가입하는 공개 출시·결제는 별도이며, 이 항목은 두 번째 제품이 아닌 출시 안전성 엔지니어링 기록입니다.",
+        "resultEn": "A bounded external pilot was activated on October 6 for approved Google test users, with real read-only YouTube consent. Broad public registration and billing are not available; this entry tracks engineering and release safety, not a second product."
       }
     },
     {
       "name": "citefirst",
       "slug": "citefirst",
-      "descriptionKo": "문서 기반 질의응답(RAG)에서 인용을 화면에 내보내기 전에 검색된 청크와 대조해 검증하고, 검색 품질을 주장이 아니라 측정으로 답하는 시스템. pg_dump와 pg_dumpall, 다섯 종류의 work_mem 설정처럼 거의 똑같아 보이는 문단이 가득한 PostgreSQL 17 공식 매뉴얼 약 3,000쪽을 코퍼스로 골라, 순진한 벡터 검색이 조용히 엉뚱한 문단을 돌려주는 지점을 드러냈습니다. 46개 질문 평가에서 크로스 인코더 재순위화를 켜면 recall@5 0.978, MRR@10 0.834로 평문 벡터 검색의 0.652를 크게 웃돌고, 인용 유효성은 1.000으로 168건 중 환각 인용이 0건입니다. 임베딩과 재순위화가 로컬 ONNX로 돌아 색인 단계에는 외부 호출이 전혀 없습니다.",
-      "descriptionEn": "A RAG system that verifies every citation against the retrieved chunks before it ever reaches the screen, and answers the question of retrieval quality by measuring it rather than asserting it. The corpus is ~3,000 pages of the PostgreSQL 17 manual — full of passages that look nearly identical (pg_dump vs pg_dumpall, five different work_mem settings), exactly where naive vector search quietly returns the wrong paragraph. Across 46 evaluation questions, cross-encoder reranking scores recall@5 0.978 and MRR@10 0.834 against 0.652 for plain vector search, with citation validity at 1.000 and zero hallucinated citations out of 168. Embeddings and reranking run locally through ONNX, so ingestion makes no outbound calls at all.",
+      "descriptionKo": "PostgreSQL 17 매뉴얼을 대상으로 로컬 임베딩·재순위화, 질의 재작성, 인용 ID 검증을 결합한 RAG 시스템입니다. 커밋된 46개 질문 구성에서 recall@5 0.978·MRR@10 0.834를 기록했습니다. 인용 ID 포함 여부·모델이 판정한 근거성·답변 정확도는 별도 평가이며, 이후 56문항 로컬 실험은 공개 기준값이 아닌 검토 후보로 남겨 두었습니다.",
+      "descriptionEn": "A RAG system over the PostgreSQL 17 manual with locally executed embeddings/reranking, query rewriting and citation-ID validation. The committed 46-question configuration records recall@5 0.978 and MRR@10 0.834. Citation membership, model-judged grounding and answer correctness are evaluated separately. A newer 56-question local experiment remains a review candidate, not a published baseline.",
       "techStack": [
         "TypeScript",
         "Next.js",
@@ -94,8 +94,8 @@
         "problemEn": "A RAG answer having citations does not prove that the citations support it or that retrieval found the right passage.",
         "decisionKo": "PostgreSQL 17 매뉴얼처럼 유사 문단이 많은 코퍼스를 평가셋으로 삼고 로컬 임베딩·크로스 인코더 재순위화·출력 전 인용 검증을 분리해 측정했습니다.",
         "decisionEn": "I used the PostgreSQL 17 manual as a deliberately confusable corpus, then measured local embeddings, cross-encoder reranking, and pre-output citation validation separately.",
-        "evidenceKo": "46개 평가 질문에서 재순위화 구성은 recall@5 0.978, MRR@10 0.834를 기록했고 인용 유효성은 1.000으로 168건 중 환각 인용이 0건이었습니다.",
-        "evidenceEn": "Across 46 evaluation questions, reranking reached recall@5 0.978 and MRR@10 0.834; citation validity was 1.000 with zero hallucinated citations in 168.",
+        "evidenceKo": "고정된 7월 소스에서 PostgreSQL 17 질문 46개, 재순위화 구성 recall@5 0.978·MRR@10 0.834를 기록했습니다. 인용 유효성은 검색 청크에 ID가 있는지 확인하는 것으로 답변의 진실성 보장이 아닙니다. 56문항 작업본 결과는 미커밋 상태이므로 공개 기준값을 자동 대체하지 않습니다.",
+        "evidenceEn": "Pinned July source: 46 PostgreSQL 17 questions, reranking-on recall@5 0.978 and MRR@10 0.834. Citation validity checks membership in retrieved chunks, not truth of the answer. The 56-question worktree experiment has not been committed and must not silently replace this published reference.",
         "resultKo": "검색 품질과 인용 정확도를 반복 가능한 수치로 비교할 수 있는 RAG 평가·검증 시스템이 됐습니다.",
         "resultEn": "Retrieval quality and citation correctness became repeatable measurements instead of qualitative claims."
       }
@@ -117,7 +117,7 @@
       "status": "active",
       "github": "https://github.com/writingdeveloper/JuiceBar",
       "private": false,
-      "featured": true,
+      "featured": false,
       "updatedAt": "2026-08-26",
       "screenshot": "/images/projects/juicebar.webp",
       "screenshotAltKo": "JuiceBar 트레이 팝업 실제 화면. 연료 게이지 형태의 진행 표시와 이번 청구 주기 비용, 오늘 사용량, 예상 비용, 최근 추세를 보여준다.",
@@ -136,8 +136,8 @@
     {
       "name": "DevDeck",
       "slug": "devdeck",
-      "descriptionKo": "여러 프로젝트를 Claude Code·Codex·Antigravity로 굴리는 개발자를 위한 Electron 관제 데스크톱 앱. 설정한 폴더의 git 레포를 스캔해 git 상태와 방치 기간, 에이전트별 세션 이력을 카드로 보여주고 클릭 한 번으로 마지막 세션을 이어 갑니다. Windows에서는 외부 터미널이 우르르 뜨는 대신 앱 안에 터미널을 여는 조종석을 제공해, 세션마다 모델과 작업 시간, 한계에 가까워질수록 색이 짙어지는 컨텍스트 퍼센트, 그리고 그 세션이 지금 무엇을 하고 있는지 한 줄 요약을 함께 보여주고 급한 순서로 묶어 정렬합니다. 요약을 AI로 다듬을 때는 그 세션을 연 에이전트의 CLI가 직접 처리해 한쪽 벤더의 사용량이 다른 쪽 작업에 쓰이지 않게 했습니다. contextIsolation·sandbox·argv 인젝션 방어 등 Electron 보안을 1급 관심사로 설계하고 465개 테스트와 Playwright+axe e2e 게이트로 검증했습니다.",
-      "descriptionEn": "An Electron command deck for developers juggling a pile of Claude Code, Codex and Antigravity projects. It scans git repos under configured folders and surfaces git state, how long each has been neglected, and per-agent session history as cards, resuming your last session in one click. On Windows a Cockpit replaces the wall of external terminals with in-app ones: each session shows its model, active working time, a context percentage that colors up as it nears the limit, and a one-line summary of what it is actually working on — grouped by urgency, so you can see who is waiting on you. When AI refinement is on, each summary is condensed by that session's own agent CLI, so one vendor's quota is never spent on another's work. I treated Electron security as a first-class concern (contextIsolation, sandbox, argv-not-string-interpolation against command injection) and backed it with 465 tests and a Playwright + axe e2e gate.",
+      "descriptionKo": "여러 저장소의 Claude Code·Codex·Antigravity 작업을 모아 보는 local-first Electron 관제 앱입니다. 저장소·세션 상태, 내장 터미널, usage/context 신호를 연결합니다. 문서화된 1.37.8 후보 버전에서는 host-owned 메타데이터·영속 저장·명시적 충돌 복구를 다룹니다. 자동 검증과 실제 출시·설치·물리 네트워크 검수를 구분해 기록합니다.",
+      "descriptionEn": "A local-first Electron command center for Claude Code, Codex and Antigravity work across repositories. It brings repository/session state, embedded terminals and usage/context signals together. A documented 1.37.8 candidate adds host-owned metadata, persisted writes and explicit conflict recovery. The engineering record separates automated checks from release, installer and physical-network acceptance.",
       "techStack": [
         "TypeScript",
         "Electron",
@@ -151,7 +151,7 @@
       "github": "https://github.com/writingdeveloper/devdeck",
       "private": false,
       "featured": true,
-      "updatedAt": "2026-08-26",
+      "updatedAt": "2026-09-08",
       "screenshot": "/images/projects/devdeck.webp",
       "screenshotAltKo": "DevDeck 프로젝트 관제 화면. 여러 Git 프로젝트와 상태, 작업 재개 진입점을 한 화면에 모은 실제 Electron UI.",
       "screenshotAltEn": "The real DevDeck Electron project command center, listing multiple Git projects with status and resume entry points.",
@@ -160,10 +160,10 @@
         "problemEn": "When many projects run across different coding agents, a wall of terminals makes it hard to see which session stalled and which needs a human decision.",
         "decisionKo": "Git 상태·방치 시간·세션 이력을 모으는 Electron 관제판과 앱 내부 Cockpit을 만들고 요약은 각 세션을 연 에이전트 CLI가 담당하도록 분리했습니다.",
         "decisionEn": "I built an Electron command deck over Git state, neglect time, and session history, plus an in-app Cockpit; each session is summarized by the agent CLI that owns it.",
-        "evidenceKo": "공개 저장소에는 프로젝트·Cockpit·사용량 화면의 실제 QA 스크린샷과 Electron 보안 및 Playwright/axe 검증 흐름이 함께 유지됩니다.",
-        "evidenceEn": "The public repository keeps real QA screenshots for projects, Cockpit, and usage alongside Electron-security and Playwright/axe verification paths.",
-        "resultKo": "여러 에이전트 세션을 작업 우선순위와 재개 지점 중심으로 보는 단일 데스크톱 관제면을 만들었습니다.",
-        "resultEn": "The result is one desktop control surface organized around agent-session priority and resumability rather than terminal windows."
+        "evidenceKo": "2026-09-08 유지보수 기록은 1.37.8 후보에서 단위 검사 1,289개 통과·1개 생략과 maintenance/resilience 시나리오를 보고합니다. 이후 동기화 작업은 별도 게이트가 있습니다. 오늘의 실행 결과나 공개 출시 증거가 아닌, 버전과 범위를 한정한 기록입니다.",
+        "evidenceEn": "The 2026-09-08 maintenance record reports 1,289 passed and one skipped unit check for the 1.37.8 candidate, plus maintenance and resilience journeys. Later synchronization work has its own gate. These are historical, version-scoped records, not today's test count or proof of public release.",
+        "resultKo": "여러 머신·실패·재연결·재시작에서도 소유권과 동기화 규칙이 유지되는, 병렬 코딩 에이전트 작업용 검증 가능한 control plane을 만들었습니다.",
+        "resultEn": "The result is an inspectable control plane for parallel coding-agent work, with ownership and synchronization rules that survive multiple machines, failures, reconnects and restarts."
       }
     },
     {
@@ -536,6 +536,114 @@
       "featured": true
     },
     {
+      "name": "Creator OS — Product & External Pilot",
+      "slug": "creator-learning-os",
+      "descriptionKo": "“지금 무엇을 개선해야 하나?”에 답하도록 설계한 크리에이터·YouTube 의사결정 SaaS입니다. 10월 6일부터 공개 호스트의 외부 파일럿이 운영되지만 Google 로그인은 승인된 테스트 사용자에게만 제공됩니다. 별도 읽기 전용 YouTube 동의, 근거 기반 결정론적 리포트, 비로그인 데모, 백업·복구 및 운영 게이트가 검증됐습니다. 일반 회원가입·유료 출시·실시간 LLM 추론 서비스는 아닙니다.",
+      "descriptionEn": "A creator and YouTube decision-support SaaS for answering “what should I improve now?” October 6 brought an external pilot on a public host, but Google sign-in remains Testing-only for approved users. Separate read-only YouTube consent, evidence-bound deterministic reports, a public no-login demo, backup/restore drills, and operator release gates are verified. This is not unrestricted signup, paid availability, or live LLM inference.",
+      "techStack": [
+        "TypeScript",
+        "Next.js",
+        "PostgreSQL",
+        "SQLite",
+        "Playwright",
+        "Vitest",
+        "YouTube Data API"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false,
+      "updatedAt": "2026-10-08",
+      "caseStudy": {
+        "problemKo": "크리에이터 분석 도구는 지표를 많이 보여줘도 사용자가 다음에 무엇을 해야 하는지 다시 해석해야 하는 경우가 많습니다.",
+        "problemEn": "Creator analytics often expose more metrics while still making the user decide what to do next.",
+        "decisionKo": "대시보드의 중심을 점수나 차트가 아니라 '지금 할 한 가지'로 두고, 근거와 진단은 필요할 때만 펼치도록 설계했습니다. 릴리스 준비도는 미완료 의존성이 있으면 fail-closed 처리합니다.",
+        "decisionEn": "I centered the product on one concrete next action rather than an opaque score, with evidence and diagnostics available on demand. Release readiness fails closed when production dependencies remain incomplete.",
+        "evidenceKo": "10월 6일 공개 호스트 전환 기록에서 Cloudflare TLS·AOP 신뢰 경계와 승인된 테스트 사용자 Google 로그인, 별도 읽기 전용 YouTube 동의를 확인했습니다. 10월 8일에는 한영 약관·지원 화면, 모델 API 호출 없는 근거 중심 결정론적 리포트, 외부 저장소 PostgreSQL 복구 리허설을 검증했습니다. /demo는 비로그인 접근 가능하지만 불특정 사용자 가입이나 실사용자 규모는 확인하지 않았습니다.",
+        "evidenceEn": "An October 6 public-host activation verified Cloudflare TLS, AOP trust boundary and allowed-test-user Google login with separate YouTube read-only consent. The October 8 release record verified bilingual policy/support pages, deterministic grounded reports without a provider model call, and an off-device PostgreSQL backup restore drill. Public /demo is accessible without login; production external-user volume and unrestricted signup were not verified.",
+        "resultKo": "비로그인 데모와 승인된 Google 테스트 사용자 로그인을 갖춘 외부 파일럿 단계입니다. 일반 고객 확대, 결제, 모델 API 추론 및 무제한 셀프서비스는 별도 출시 과제입니다.",
+        "resultEn": "An external pilot with a public read-only demo and a restricted Google test-user login is running. Customer-scale rollout, billing, provider-model inference and unrestricted self-service remain separate unapproved releases."
+      },
+      "website": "https://creator.writingdeveloper.blog/demo"
+    },
+    {
+      "name": "RailForge",
+      "slug": "railforge",
+      "descriptionKo": "철도 건설·운영·운전을 하나의 3D 웹 세계에서 연결하려는 브라우저 게임 프로토타입입니다. 선로 곡선·대차 움직임·연동장치·공유 운전 권한을 독립 실험으로 검증하고 있습니다. 현재 개발·테스트 중인 연구 프로젝트이며 정식 멀티플레이 게임으로 출시하지 않았습니다.",
+      "descriptionEn": "A research-first 3D browser railway prototype combining network construction, dispatch, and direct train driving. Separate experiments probe spline/bogie motion, interlocking, multiplayer authority, and a playable two-town loop. The integrated multiplayer game is not a public release.",
+      "techStack": [
+        "TypeScript",
+        "Three.js",
+        "Vite",
+        "Vitest"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false,
+      "updatedAt": "2026-09-29",
+      "caseStudy": {
+        "problemKo": "철도 시뮬레이션에서 네트워크 설계·운영·운전자 조작을 같은 세계의 일관된 상태로 연결하기 어렵습니다.",
+        "problemEn": "Railway games often separate network planning, dispatch operations, and interactive driving into disconnected experiences.",
+        "decisionKo": "하나의 거대한 게임을 먼저 만들기보다 선형·대차·분기기 연동·공유 권한의 핵심 위험을 작은 독립 실험으로 분해했습니다.",
+        "decisionEn": "Instead of declaring a full game complete, I split core risks into isolated experiments for rail geometry, bogies, interlocking, and shared driving authority.",
+        "evidenceKo": "4080 PC의 RailForge 저장소에 Three.js/Vite 기반 playable-toy, dispatcher, multiplayer 및 spline-bogie 실험 코드와 검사 스크립트가 존재합니다. 일부 작업은 미커밋이며 전체 플레이 경험 검증은 별도입니다.",
+        "evidenceEn": "The MAIN-PC repository contains a Three.js/Vite playable-toy and separate dispatcher, multiplayer, and spline-bogie experiments with verification scripts. Some work remains uncommitted; end-to-end player acceptance is a separate gate.",
+        "resultKo": "연구용 프로토타입과 기술 실험 단계입니다. 안정적인 정식 출시나 만족스러운 전체 게임플레이는 아직 입증하지 않았습니다.",
+        "resultEn": "Prototype and engineering research only. Stable public launch and accepted end-to-end gameplay have not been demonstrated."
+      }
+    },
+    {
+      "name": "Project STRATA",
+      "slug": "project-strata",
+      "descriptionKo": "거대한 폐허 산업 도시를 탐험하며 시설을 복구하는 Unreal Engine 5.8 싱글플레이 게임 기술 스파이크입니다. 차량 MULE과 인프라 퍼즐의 핵심 감각을 검증하고 있으며 30~45분 버티컬 슬라이스 승인 전에는 정식 제작·출시로 주장하지 않습니다.",
+      "descriptionEn": "An Unreal Engine 5.8 technical spike for an atmospheric, vehicle-led exploration game set in a vast abandoned industrial city. MULE traversal and infrastructure-reactivation puzzles remain subject to a 30–45-minute vertical-slice acceptance gate; it is not a shipped game.",
+      "techStack": [
+        "Unreal Engine 5.8",
+        "3D Gameplay",
+        "Prototyping"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false,
+      "updatedAt": "2026-10-06",
+      "caseStudy": {
+        "problemKo": "전투 없이 이동·탐색·시설 복구만으로 몰입도 있는 게임 흐름이 성립하는지 검증해야 했습니다.",
+        "problemEn": "The central question is whether traversal, discovery, and restoring dead infrastructure form a satisfying loop without combat.",
+        "decisionKo": "전면 제작보다 MULE 이동·환경 탐색·복구의 시각적 보상이 연결되는 버티컬 슬라이스를 먼저 설정했습니다.",
+        "decisionEn": "I set a vertical-slice gate for MULE traversal, environmental exploration, and visible world-state changes before committing to full production.",
+        "evidenceKo": "MAIN PC의 project-strata/game/Strata/Strata.uproject와 설계·QA 문서, 2026-10-06 커밋을 확인했습니다. 게임플레이 수용 QA는 미완료입니다.",
+        "evidenceEn": "The MAIN-PC repository contains a Strata.uproject, implementation and QA plans, and a 2026-10-06 committed technical-spike update. Gameplay acceptance remains open.",
+        "resultKo": "Unreal 기술 검증 단계로 플레이 가능성과 재미가 충분히 입증되지 않아 출시작으로 표시하지 않습니다.",
+        "resultEn": "An Unreal feasibility experiment, not a released product. Full gameplay and fun-factor acceptance remain open."
+      }
+    },
+    {
+      "name": "Music / MV Studio",
+      "slug": "music-mv-studio",
+      "descriptionKo": "여러 로컬 생성 모델의 음악 결과물을 원본 이동 없이 프로젝트 단위로 정리하고 비교·선정하며 MV 컷을 계획하는 비공개 제작 도구입니다. Notebook의 WebUI/SQLite와 MAIN PC의 생성 작업을 연결하고 있지만 실제 H3 렌더 제출 연동은 아직 구현 중입니다.",
+      "descriptionEn": "A private project-first control surface for multi-model music and music-video creation. It catalogs immutable generator outputs across Notebook and MAIN, supports A/B listening and approval states, and plans MV shots. H3 render submission remains explicitly unwired.",
+      "techStack": [
+        "Node.js",
+        "SQLite",
+        "Vite",
+        "Python",
+        "ComfyUI"
+      ],
+      "status": "building",
+      "private": true,
+      "featured": false,
+      "updatedAt": "2026-10-09",
+      "caseStudy": {
+        "problemKo": "음악 모델마다 산재한 생성 결과를 원본을 훼손하지 않고 비교·선정·영상화하기 어렵습니다.",
+        "problemEn": "Music-model outputs become scattered artifacts, making review, version selection, and MV planning hard without mutating source files.",
+        "decisionKo": "엔진 출력 폴더는 읽기 전용 이력으로 유지하고, 작업 상태·승인·A/B 비교·스토리보드와 작업 큐를 별도 SQLite 카탈로그로 관리합니다.",
+        "decisionEn": "I leave engine output folders immutable while a SQLite catalog manages project state, approvals, synchronized A/B review, MV shot windows, and queued work.",
+        "evidenceKo": "Notebook의 music-mv-studio README와 구현에 WebUI, SQLite 카탈로그, lazy 오디오 캐시, A/B 청취, 검증 스크립트가 있으며 H3 워크플로 바인딩 미완료가 명시되어 있습니다.",
+        "evidenceEn": "The Notebook music-mv-studio README and implementation document its WebUI, SQLite catalog, lazy audio cache, A/B listening, and QA scripts; H3 workflow binding is explicitly incomplete.",
+        "resultKo": "개인 연구·제작 과정에서 사용하는 비공개 도구입니다. 공개 음악 SaaS나 완성된 자동 MV 제작기로 오인하지 않도록 구분합니다.",
+        "resultEn": "A private creative-workflow tool under active development, not a public music SaaS or finished automated MV generator."
+      }
+    },
+    {
       "name": "til-shorts",
       "slug": "til-shorts",
       "descriptionKo": "기록에 난관과 해결이 남아 있는 대상을 골라 영어권 유튜브 숏츠로 만드는 제작 파이프라인. 영상과 음성 자산은 전부 로컬 생성 팩토리(studios)에서 나오고, 이 레포는 자산을 복제하지 않고 id로만 참조하면서 지금 어느 단계인지, 무엇이 왜 탈락했는지라는 상태만 파일로 관리합니다. 후보에서 게시까지 7단계를 두고 단계마다 게이트를 걸었습니다. 출처 두 개 이상과 나레이션 문장 수만큼의 사실 대조표, 그리고 쓰지 않기로 한 숫자까지 적어야 사실 대조가 끝나고, 컷 평균 3초 이하와 라우드니스 -14 LUFS를 통과해야 검토로 넘어가며, 제작 승인만은 자동화하지 않고 사람이 누릅니다. 조립·컷·오버레이·자막·색보정·효과음·업로드를 Node 도구 사슬로 묶고, 공개 뒤에는 YouTube Data API로 실적을 스냅샷으로 받아 다음 편 설계의 근거로 씁니다. 첫 측정에서 조회의 98.8%가 숏츠 피드에서 오고 검색은 0.4%였다는 것, 그리고 더 많이 본 편이 오히려 첫 몇 초에서 시청자를 더 많이 잃었다는 부정 결과를 그대로 기록했습니다. 처음엔 r/todayilearned 소재로 시작했지만 고정 4막(대상, 난관, 발상 전환, 탄생)이 성립하려면 소재 자체에 난관과 해결이 있어야 한다는 걸 확인하고 소재 조건을 다시 정의했습니다.",
@@ -636,7 +744,7 @@
       "website": "https://healframe.app",
       "playStore": "https://play.google.com/store/apps/details?id=app.healframe",
       "private": true,
-      "featured": false,
+      "featured": true,
       "screenshot": "/images/projects/healframe.webp",
       "screenshotAltKo": "HealFrame 랜딩 화면. 상단 내비게이션에 Circle·Dashboard·Pricing·Account가 있고, 'Reset your nervous system in 2 minutes' 헤드라인 아래 'Tap to breathe'라고 적힌 원형 호흡 버튼과 초록색 시작 버튼이 놓여 있다.",
       "screenshotAltEn": "HealFrame landing page. The top nav shows Circle, Dashboard, Pricing and Account; below the headline 'Reset your nervous system in 2 minutes' sit a gradient circle labelled 'Tap to breathe' and a green 'Start breathing — it's free' button."
@@ -703,7 +811,7 @@
       "website": "https://rentrights.writingdeveloper.blog",
       "github": "https://github.com/writingdeveloper/rentrights",
       "private": false,
-      "featured": true,
+      "featured": false,
       "screenshot": "/images/projects/rentrights.webp",
       "screenshotAltKo": "RentRights 랜딩 화면. 'You have rights.' 헤드라인 아래 로스앤젤레스 주소를 넣는 입력창과 Check 버튼이 있고, 공공기록·갱신일·주소 미저장 배지에 이어 3단계 이용 안내와 RSO 관련 FAQ가 보인다.",
       "screenshotAltEn": "RentRights landing page. Under the headline 'You have rights.' sit an address field showing a Los Angeles example and a Check button, followed by badges for public records, the update date and 'free, no address saved', a three-step how-it-works list and an FAQ about LA's Rent Stabilization Ordinance."
@@ -957,6 +1065,40 @@
       "screenshot": "/images/projects/tantrum-tower.webp",
       "screenshotAltKo": "Tantrum Tower 시작 화면. 어두운 카드 안에 노란 TANTRUM TOWER 로고와 한 줄 소개, '스토리 시작' 버튼과 쉬움·보통·어려움 난이도 선택, '현장 투입' 버튼이 있고, 그 아래 조작키 안내와 현장 이벤트 목록이 정리돼 있다.",
       "screenshotAltEn": "Tantrum Tower start screen. Inside a dark panel, the glowing yellow logo sits above a one-line Korean pitch, a story-start button, easy/normal/hard difficulty buttons and a quick-play button, with a key-binding list and a table of site events underneath."
+    },
+    {
+      "name": "BRAIN//VAT",
+      "slug": "brain-vat-siege",
+      "descriptionKo": "Three.js 보스전과 신경 컨트롤러 연구를 하나의 공개 인터랙티브 케이스 스터디로 만든 프로젝트입니다. 미학습·사전학습·온라인 적응 예측기를 같은 입력에서 비교하고, 플레이로 달라진 102개 가중치 기억을 호환 보스 몸체로 옮길 수 있습니다. 별도 연구 경로에서는 166,700-뉴런 MaleCNS 고정 connectome의 시간 상태에 작은 외부 readout을 붙여 held-out 움직임 이력 분류를 검증했습니다. 10월 13일 공개된 별도 /npc 데모에서는 제한된 관측과 목격 이벤트 기억, 세계 상태에 따른 행동 검증을 갖춘 규칙 기반 경비 NPC를 구현했습니다. 학습 모델이나 LLM NPC는 아닙니다.",
+      "descriptionEn": "A public interactive case study combining a Three.js boss fight with neural-controller research. It compares untrained, pretrained-frozen and online-adaptive predictors on the same committed inputs, and lets a player move a 102-weight learned memory cartridge into a compatible boss chassis. A separate research path keeps the 166,700-neuron MaleCNS connectome fixed and tests small external readouts over its temporal state on a held-out motion-history task. On October 13, a separate public /npc demo added a deterministic rule-driven guard with filtered observations, witnessed-event memory, and world-validated actions. It is not an LLM or trained NPC.",
+      "techStack": [
+        "JavaScript",
+        "Three.js",
+        "Node.js",
+        "Playwright",
+        "Python",
+        "C++",
+        "WebGL2",
+        "Vercel"
+      ],
+      "status": "active",
+      "website": "https://brain-vat-siege.vercel.app",
+      "private": true,
+      "featured": true,
+      "updatedAt": "2026-10-13",
+      "screenshot": "/images/projects/brain-vat-siege.webp",
+      "screenshotAltKo": "BRAIN//VAT SENTINEL 보스전의 실제 Three.js 화면. 중앙의 발광 기계형 보스가 세 개의 네온 레인을 향해 공격을 준비하고 있다.",
+      "screenshotAltEn": "A real Three.js capture of the BRAIN//VAT SENTINEL boss fight, with a glowing mechanical boss preparing an attack over three neon lanes.",
+      "caseStudy": {
+        "problemKo": "신경망이 동작한다는 그래프만으로는 사용자가 무엇을 할 수 있는지, 그리고 AI의 기억·예측이 실제 플레이를 어떻게 바꾸는지 체감하기 어려웠습니다.",
+        "problemEn": "Neural telemetry alone did not make it obvious what a player could do with the system or how prediction and memory changed an actual interaction.",
+        "decisionKo": "예측을 사용자 입력 전에 잠그는 3레인 보스전을 만들고 미학습·고정 사전학습·온라인 적응 모델을 같은 회피 기록으로 비교했습니다. 이어 플레이로 변한 102개 예측 가중치만 호환 보스 chassis로 옮기는 기억 카트리지와 게임 소유 action budget을 분리했습니다. 후속 NPC 실험에서는 이동·시야·세계 이벤트·허용된 의도·NPC 위치를 브라우저의 게임 엔진이 결정하게 하고, 규칙 컨트롤러는 제한된 상위 행동만 제안하도록 분리했습니다.",
+        "decisionEn": "I built a three-lane boss fight that commits predictions before player input, compares fresh, frozen-pretrained and online-adaptive models on the same dodge trace, and separates game-owned action budgets from a 102-weight predictor memory cartridge that can move only between compatible boss chassis. A later NPC experiment keeps player movement, sight, world events, permitted intent, and NPC motion inside the authoritative local-browser simulation; the controller only proposes bounded high-level actions.",
+        "evidenceKo": "공개 production은 `/boss`, `/demo`, `/evaluation`을 외부 AI API 없이 실행합니다. SENTINEL의 실제 Chrome QA는 합법적인 키 입력으로 10회 반격 승리·무조작 패배를 모두 재현했고, 기억 카트리지는 SENTINEL에서 WRAITH로 이동 후 HP·라운드는 초기화되면서 예측 가중치만 유지됐습니다. MaleCNS 별도 평가에서는 최종 프레임만 30/90(33.3%), 36개 calibrated optic cell의 시간 상태+111개 외부 readout 파라미터가 66/90(73.3%)였으며 connectome weight SHA는 전후 동일했습니다. 2026-10-13 BVAT-37의 공개 /npc 데모는 소스 테스트 200/200과 로컬·운영 Chromium 데스크톱/모바일 QA를 통과했습니다. 목격된 첫 절도는 경고, 두 번째는 추격으로 이어지는 규칙 동작을 검증했고, 배포 커밋 일치와 브라우저 오류 0건을 기록했습니다.",
+        "evidenceEn": "The public production runs `/boss`, `/demo` and `/evaluation` without an external AI API. Real Chrome QA records a legitimate 10-counter SENTINEL victory and an unattended defeat; a saved memory cartridge moves from SENTINEL to WRAITH while HP and round state reset and only predictor weights persist. In a separate MaleCNS test, final-frame-only scoring is 30/90 (33.3%) while temporal state from 36 calibrated optic cells plus a 111-parameter external readout reaches 66/90 (73.3%); the connectome-weight SHA is unchanged before and after. BVAT-37 on 2026-10-13 adds a verified playable /npc public demo: 200/200 source tests, local and deployed Chromium desktop/mobile checks, and deterministic first-warning / second-pursuit witnessed-theft behavior. Production /npc and its source commit identity were verified; zero JavaScript errors were reported in the dated run.",
+        "resultKo": "결과는 단순 AI 데모가 아니라 플레이 가능한 3D 시스템, 재현 가능한 평가, 명시적 권한 경계, 기억 이식 실험과 고정 connectome readout 연구를 한 공개 케이스 스터디로 묶은 것입니다. NPC 실험은 단일 규칙 기반 브라우저 시뮬레이션으로, 학습된 사회적 기억·LLM 대화·실제 멀티플레이 권한이나 사람의 재미 검증을 뜻하지 않습니다.",
+        "resultEn": "The result is a public case study that joins a playable 3D system with reproducible evaluation, explicit action boundaries, compatible memory transfer, and fixed-connectome readout experiments instead of presenting a neural model as a black-box demo. The NPC experiment is a single rule-based, session-local browser toy—not learned social memory, LLM dialogue, real multiplayer authority, or human-validated game quality."
+      }
     }
   ]
 }

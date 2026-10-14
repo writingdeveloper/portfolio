@@ -3,7 +3,7 @@ import { useTranslations, useLocale } from 'next-intl'
 import Image from 'next/image'
 import type { Project } from '@/types/content'
 import { predecessorOf } from '@/lib/lineage'
-import { projectHref } from '@/lib/projects'
+import { projectHref, projectExcerpt } from '@/lib/projects'
 
 interface ProjectCardProps {
   project: Project
@@ -78,7 +78,7 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
       <div className="p-4 sm:p-6">
         <div className="flex items-start gap-4 mb-4">
           <div className="flex-1">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {/* The name is the route into the project's own page — every card
                 needs one inbound link or those pages are orphans. */}
               <h3 className="font-semibold text-lg">
@@ -100,8 +100,10 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
               )}
             </div>
             {project.descriptionKo && (
-              <p className="text-sm text-[var(--text-secondary)] mt-1">
-                {locale === 'en' ? project.descriptionEn || project.descriptionKo : project.descriptionKo}
+              <p className="mt-1 line-clamp-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                {projectExcerpt(
+                  locale === 'en' ? project.descriptionEn || project.descriptionKo : project.descriptionKo
+                )}
               </p>
             )}
           </div>
@@ -109,7 +111,7 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
 
         {project.techStack?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-4">
-            {project.techStack.map((tech) => (
+            {project.techStack.slice(0, 6).map((tech) => (
               <span
                 key={tech}
                 className="text-xs px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--text-secondary)]"
@@ -117,6 +119,11 @@ export function ProjectCard({ project, priority = false, relatedPost }: ProjectC
                 {tech}
               </span>
             ))}
+            {project.techStack.length > 6 && (
+              <span className="text-xs px-2 py-0.5 rounded bg-[var(--bg-elevated)] text-[var(--text-muted)]">
+                +{project.techStack.length - 6}
+              </span>
+            )}
           </div>
         )}
 

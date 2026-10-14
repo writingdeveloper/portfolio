@@ -65,7 +65,7 @@ export interface Tombstone {
 
 export interface Skill {
   name: string
-  category: 'frontend' | 'backend' | 'tools' | 'infra'
+  category: 'ai' | 'frontend' | 'backend' | 'tools' | 'infra'
 }
 
 export interface TimelineItem {
@@ -88,6 +88,7 @@ export interface PostSummary {
 }
 
 export const skillCategories = {
+  ai: { ko: 'AI / 에이전트 시스템', en: 'AI / Agent Systems' },
   frontend: { ko: '프론트엔드', en: 'Frontend' },
   backend: { ko: '백엔드', en: 'Backend' },
   tools: { ko: '도구', en: 'Tools' },

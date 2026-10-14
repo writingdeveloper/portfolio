@@ -3,12 +3,15 @@ import { useTranslations, useLocale } from 'next-intl'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
 import type { Metadata } from 'next'
 import { PageTransition } from '@/components/ui/PageTransition'
+import { Link } from '@/i18n/navigation'
 import { SkillGrid } from '@/components/ui/SkillGrid'
 import { ProjectCard } from '@/components/projects/ProjectCard'
+import { EvidencePanel } from '@/components/projects/EvidencePanel'
 import { SITE_URL, CONTACT_EMAIL, LINKEDIN_URL } from '@/lib/constants'
 import { getHireStats, HIRE_CASE_STUDIES } from '@/lib/projects'
 import { generatePersonJsonLd, generateBreadcrumbJsonLd, safeJsonLd } from '@/lib/seo'
 import aboutData from '../../../../content/about.json'
+import resumeManifest from '../../../../content/resume-manifest.json'
 import projectsData from '../../../../content/projects.json'
 import type { Project, Skill } from '@/types/content'
 
@@ -70,6 +73,12 @@ function OfferRow({ label, children }: { label: string; children: ReactNode }) {
   )
 }
 
+const DELIVERY_STAGES = [
+  { key: 'decision', href: '/projects/devdeck#failure-investigation' },
+  { key: 'verification', href: '/projects/citefirst' },
+  { key: 'release', href: '/projects/creator-os' },
+] as const
+
 function HireContent() {
   const t = useTranslations('hire')
   const locale = useLocale()
@@ -112,7 +121,74 @@ function HireContent() {
               </span>
             ))}
           </div>
+          <div className="mt-5 flex flex-wrap gap-3">
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex min-h-11 items-center rounded-lg bg-[var(--accent-text)] px-5 py-2.5 text-sm font-semibold text-[var(--bg-primary)] transition-opacity hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)]"
+            >
+              {locale === 'ko' ? '이메일로 연락하기' : 'Email me'} →
+            </a>
+            <a
+              href="#resume"
+              className="inline-flex min-h-11 items-center rounded-lg border border-[var(--border-hover)] px-5 py-2.5 text-sm font-semibold text-[var(--text-primary)] transition-colors hover:bg-[var(--bg-elevated)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)]"
+            >
+              {locale === 'ko' ? '이력서 PDF 보기' : 'View résumé options'} ↓
+            </a>
+          </div>
         </header>
+
+        <section id="resume" className="mb-12 grid scroll-mt-24 gap-5 lg:grid-cols-[1.1fr_1.9fr]">
+          <div className="rounded-lg border border-[var(--border-default)] p-6">
+            <h2 className="text-xl font-bold mb-4">{t('resume.heading')}</h2>
+            <p className="mb-4 text-xs text-[var(--text-muted)]">
+              {locale === 'ko' ? '영문 PDF · 문서 기준일' : 'English PDF · document snapshot'}:{' '}
+              <time dateTime={resumeManifest.snapshotAt}>{resumeManifest.snapshotAt}</time>
+            </p>
+            <a
+              href="/resume/Sihyeong-Lee-Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex min-h-11 items-center rounded-lg bg-[var(--accent-text)] px-4 py-2 text-sm font-semibold text-[var(--bg-primary)] transition-opacity hover:opacity-90"
+            >
+              {t('resume.primary')} ↗
+            </a>
+            <p className="ledger-mono mt-5 text-[10px] tracking-[0.2em] uppercase text-[var(--text-muted)]">
+              {t('resume.specializedLabel')}
+            </p>
+            <div className="mt-2 flex flex-col gap-2 text-sm">
+              <a
+                href="/resume/Sihyeong-Lee-Resume-DevEx.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--accent-text)] hover:underline"
+              >
+                {t('resume.devex')} ↗
+              </a>
+              <a
+                href="/resume/Sihyeong-Lee-Resume-FDE.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[var(--accent-text)] hover:underline"
+              >
+                {t('resume.fde')} ↗
+              </a>
+            </div>
+          </div>
+
+          <div className="rounded-lg border border-[var(--border-default)] p-6">
+            <h2 className="text-xl font-bold mb-5">{t('experience.heading')}</h2>
+            <div className="space-y-5">
+              {(['soursea', 'itembox', 'geomec', 'casefarms'] as const).map((key) => (
+                <div key={key}>
+                  <h3 className="text-sm font-semibold text-[var(--text-primary)]">{t(`experience.${key}.title`)}</h3>
+                  <p className="mt-1 text-sm leading-relaxed text-[var(--text-secondary)]">
+                    {t(`experience.${key}.body`)}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
 
         {/* Two offers, stated separately. A merged "open to opportunities"
             weakens both — a hiring manager and a client are looking for
@@ -136,7 +212,38 @@ function HireContent() {
           </div>
         </section>
 
-        {/* Counts come from the ledger, never from prose. */}
+        <section id="delivery-method" aria-labelledby="delivery-method-title" className="mb-12 scroll-mt-24">
+          <h2 id="delivery-method-title" className="ledger-display mb-3 text-2xl font-bold">
+            {t('approach.heading')}
+          </h2>
+          <p className="mb-6 max-w-3xl text-sm leading-relaxed text-[var(--text-secondary)]">{t('approach.intro')}</p>
+          <div className="grid gap-4 md:grid-cols-3">
+            {DELIVERY_STAGES.map((stage, index) => (
+              <article
+                key={stage.key}
+                className="flex min-w-0 flex-col rounded-xl border border-[var(--border-default)] bg-[var(--bg-elevated)] p-5"
+              >
+                <span className="ledger-mono text-xs text-[var(--accent-text)]">0{index + 1}</span>
+                <h3 className="mt-3 text-base font-semibold text-[var(--text-primary)]">
+                  {t(`approach.${stage.key}.title`)}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                  {t(`approach.${stage.key}.body`)}
+                </p>
+                <Link
+                  href={stage.href}
+                  className="mt-auto inline-block pt-5 text-sm underline underline-offset-4 text-[var(--accent-text)]"
+                >
+                  {t(`approach.${stage.key}.link`)} →
+                </Link>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <EvidencePanel />
+
+        {/* Counts are a secondary inventory, not proof of quality. */}
         <section className="mb-16">
           <h2 className="text-xl font-bold mb-6">{t('evidence.heading')}</h2>
           <div className="grid gap-4 sm:grid-cols-3">
