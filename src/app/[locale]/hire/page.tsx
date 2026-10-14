@@ -70,6 +70,24 @@ function OfferRow({ label, children }: { label: string; children: ReactNode }) {
   )
 }
 
+const RESUME_OPTIONS = [
+  {
+    file: 'Sihyeong-Lee-Resume.pdf',
+    en: 'General / AI product engineering',
+    ko: '일반 · AI 제품 엔지니어링',
+  },
+  {
+    file: 'Sihyeong-Lee-Resume-DevEx.pdf',
+    en: 'Developer experience',
+    ko: '개발자 경험 · DevEx',
+  },
+  {
+    file: 'Sihyeong-Lee-Resume-FDE.pdf',
+    en: 'Forward-deployed engineering',
+    ko: '현장형 · Forward-deployed',
+  },
+] as const
+
 function HireContent() {
   const t = useTranslations('hire')
   const locale = useLocale()
@@ -112,6 +130,25 @@ function HireContent() {
               </span>
             ))}
           </div>
+          <nav
+            className="mt-5 flex flex-wrap items-center gap-2"
+            aria-label={locale === 'ko' ? '이력서 PDF 다운로드' : 'Download résumés'}
+          >
+            {RESUME_OPTIONS.map((option, index) => (
+              <a
+                key={option.file}
+                href={`/resume/${option.file}`}
+                download={option.file}
+                className={`inline-flex min-h-11 items-center rounded-md border px-3.5 py-2.5 text-xs font-medium transition-opacity hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent-text)] ${
+                  index === 0
+                    ? 'border-[var(--accent-text)] bg-[var(--accent-text)] text-[var(--bg-primary)]'
+                    : 'border-[var(--border-hover)] text-[var(--text-primary)]'
+                }`}
+              >
+                {locale === 'ko' ? option.ko : option.en} PDF ↓
+              </a>
+            ))}
+          </nav>
         </header>
 
         {/* Two offers, stated separately. A merged "open to opportunities"
