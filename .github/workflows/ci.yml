@@ -47,5 +47,12 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Always check production independently so a dev-tool advisory cannot
+      # conceal any newly introduced runtime vulnerability.
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=high
+
+      # Keep the original strict all-dependencies gate. No exceptions are
+      # authorized by this change, so known dev-only advisories still fail.
       - name: Audit dependencies
         run: npm audit --audit-level=high
