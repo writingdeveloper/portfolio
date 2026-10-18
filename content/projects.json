@@ -1,6 +1,40 @@
 {
   "projects": [
     {
+      "name": "MingleStage",
+      "slug": "minglestage",
+      "descriptionKo": "친구들이 같은 3D 공간에 모여 영상을 함께 보고 리액션을 나누는 브라우저 기반 워치파티 서비스. 캐릭터·좌석·공개/비공개 방·DJ 재생 제어·다국어 UI를 갖춘 무료 얼리 액세스를 운영 중입니다.",
+      "descriptionEn": "A browser-based 3D watch-party space where friends sit together, watch permitted video and react in real time. Free early access includes avatars, venues, public/private rooms, DJ playback controls and EN/KO/JA UI.",
+      "techStack": [
+        "TypeScript",
+        "React",
+        "Three.js",
+        "Colyseus",
+        "WebSockets",
+        "Docker",
+        "Playwright",
+        "Vite"
+      ],
+      "status": "launched",
+      "website": "https://minglestage.app",
+      "private": true,
+      "featured": true,
+      "updatedAt": "2026-10-17",
+      "screenshot": "/images/projects/minglestage.webp",
+      "screenshotAltKo": "MingleStage의 실제 Black Box 3D 관람 공간. 여러 캐릭터가 좌석에 앉아 스크린을 함께 바라보고 리액션합니다.",
+      "screenshotAltEn": "Actual MingleStage Black Box 3D room with characters seated together, facing a shared screen and reacting.",
+      "caseStudy": {
+        "problemKo": "단순 동시 재생에서는 친구가 곁에 있는 공간감과 모임 운영 흐름이 약했습니다.",
+        "problemEn": "Basic watch synchronization lacks a sense of shared place and an intuitive flow for hosting a small screening.",
+        "decisionKo": "웹 브라우저에 3D 좌석·캐릭터 리액션을 구현하고, 역할별 재생 제어와 방 초대 링크·공개 가입·다국어 안내를 결합했습니다. 운영은 Web/Realtime 분리, 불변 이미지, 사용자 연결 보호와 백업 검증으로 관리합니다.",
+        "decisionEn": "I combined a browser 3D venue, seats and avatar reactions with role-based playback, room invitations, open signup and multilingual guidance. Deployment separates Web and Realtime with immutable images, connection safeguards and verified backup.",
+        "evidenceKo": "2026년 10월 17일 최신 Web을 운영에 배포했습니다. 8개 합성 클라이언트의 재생 상태·권한·재접속 테스트, 실제 WebKit 로그인 가독성 검사, CI와 분산 HTTPS 확인을 수행했습니다. 이 증거는 실제 8명이 함께 영상을 본 검증과 구분됩니다.",
+        "evidenceEn": "The current Web was deployed on October 17, 2026, with isolated eight-synthetic-peer media-state and reconnect checks, real WebKit-engine sign-in contrast QA, CI and distributed HTTPS reachability probes. These tests do not imply eight humans verified audiovisual sync.",
+        "resultKo": "실제 공개 도메인에서 무료 얼리 액세스를 사용할 수 있고, 새 사용자의 입장·영상 시작·피드백을 중심으로 개선을 이어가는 단계입니다.",
+        "resultEn": "Free early access is live on the public domain. The next product cycle focuses on real users' entry, first playback and feedback rather than treating synthetic QA as human adoption."
+      }
+    },
+    {
       "name": "Soursea",
       "slug": "soursea",
       "descriptionKo": "한국→미국 셀러용 Electron 소싱 데스크톱 도구. 내장 브라우저에서 공급처 페이지를 구조화된 로컬 상품 데이터로 추출하고, 운영 보드와 MCP를 통해 Claude Code 분석까지 연결합니다.",

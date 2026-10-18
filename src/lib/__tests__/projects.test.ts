@@ -224,22 +224,33 @@ describe('portfolio selection and truthful stats', () => {
     expect(getPortfolioStats(sample)).toEqual({ builds: 4, public: 3, playStore: 2, featured: 2 })
   })
 
-  it('keeps selected work to five complementary projects in editorial order', () => {
-    expect(SELECTED_WORK).toEqual(['devdeck', 'studios', 'rentrights', 'citefirst', 'juicebar'])
-    expect(new Set(SELECTED_WORK).size).toBe(5)
+  it('keeps selected work to six complementary projects in editorial order', () => {
+    expect(SELECTED_WORK).toEqual(['minglestage', 'devdeck', 'studios', 'rentrights', 'citefirst', 'juicebar'])
+    expect(new Set(SELECTED_WORK).size).toBe(6)
   })
 })
 
-describe('JuiceBar ledger refresh', () => {
+describe('portfolio ledger and featured product integrity', () => {
   const ledger = projectsData.projects as Project[]
 
   it('keeps JuiceBar in the expanded portfolio ledger', () => {
-    expect(ledger).toHaveLength(43)
+    expect(ledger).toHaveLength(44)
     const juicebar = ledger.find((project) => project.slug === 'juicebar')
     expect(juicebar).toBeDefined()
     expect(juicebar?.github).toBe('https://github.com/writingdeveloper/JuiceBar')
     expect(juicebar?.screenshot).toBe('/images/projects/juicebar.webp')
     expect(juicebar?.caseStudy?.evidenceEn).toBeTruthy()
+  })
+
+  it('shows the actually launched MingleStage product with a direct public destination', () => {
+    const minglestage = ledger.find((project) => project.slug === 'minglestage')
+    expect(minglestage?.name).toBe('MingleStage')
+    expect(minglestage?.status).toBe('launched')
+    expect(minglestage?.website).toBe('https://minglestage.app')
+    expect(minglestage?.private).toBe(true)
+    expect(minglestage?.featured).toBe(true)
+    expect(minglestage?.screenshot).toBe('/images/projects/minglestage.webp')
+    expect(minglestage?.caseStudy?.evidenceEn).toMatch(/synthetic/)
   })
 
   it('uses the selected-work list as the only featured set', () => {
