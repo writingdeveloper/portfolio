@@ -38,6 +38,9 @@ jobs:
       - name: Unit tests
         run: npm test
 
+      - name: Verify résumé PDF payloads and Hire links
+        run: node scripts/check-resume-assets.mjs
+
       - name: Translation parity
         run: npm run untranslated
 
