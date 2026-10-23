@@ -46,11 +46,14 @@ npm run format:check
 npm test
 npm run untranslated
 npm run verify:hero -- public/images/posts/*.webp
-npm audit --audit-level=high
+npm audit --omit=dev --audit-level=high
+npm run audit:deps
 npm run build
 ```
 
 `npm run format` applies the repository's Prettier rules to TypeScript/TSX source. The formatter accepts either LF or CRLF line endings so the check behaves the same on Windows and Linux.
+
+The production audit takes no exceptions. `npm run audit:deps` audits every dependency at the same high threshold and lets an advisory through only when [`.github/audit-exceptions.json`](.github/audit-exceptions.json) lists it with an expiry and a review record, and every installed copy is a dev dependency.
 
 ## Content model
 
