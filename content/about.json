@@ -98,15 +98,15 @@
     },
     {
       "name": "Google Gemini",
-      "category": "tools"
+      "category": "ai"
     },
     {
       "name": "Claude API",
-      "category": "tools"
+      "category": "ai"
     },
     {
       "name": "Model Context Protocol",
-      "category": "tools"
+      "category": "ai"
     },
     {
       "name": "Turborepo",
@@ -135,6 +135,66 @@
     {
       "name": "Ollama",
       "category": "infra"
+    },
+    {
+      "name": "Claude Code",
+      "category": "ai"
+    },
+    {
+      "name": "OpenAI / Codex",
+      "category": "ai"
+    },
+    {
+      "name": "Agent orchestration",
+      "category": "ai"
+    },
+    {
+      "name": "Tool calling",
+      "category": "ai"
+    },
+    {
+      "name": "LLM eval harnesses",
+      "category": "ai"
+    },
+    {
+      "name": "RAG",
+      "category": "ai"
+    },
+    {
+      "name": "MongoDB",
+      "category": "backend"
+    },
+    {
+      "name": "TypeORM",
+      "category": "backend"
+    },
+    {
+      "name": "SQLite",
+      "category": "backend"
+    },
+    {
+      "name": "Celery",
+      "category": "backend"
+    },
+    {
+      "name": "PostGIS",
+      "category": "backend"
+    },
+    {
+      "name": "AWS",
+      "category": "infra"
+    },
+    {
+      "name": "GitHub Actions",
+      "category": "tools"
+    },
+    {
+      "name": "pytest",
+      "category": "tools"
+    },
+    {
+      "name": "PowerShell",
+      "category": "tools"
     }
   ],
   "timeline": [

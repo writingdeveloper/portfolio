@@ -46,3 +46,6 @@ next-env.d.ts
 
 # local agent permissions/state
 .claude/settings.local.json
+
+# Local verification artifacts; never public content or automatic claims
+/.qa/

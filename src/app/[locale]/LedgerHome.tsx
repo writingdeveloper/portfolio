@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/navigation'
 import { PRIMARY_NAV_ITEMS } from '@/components/layout/navigation'
+import { EvidenceSnapshotStrip } from '@/components/projects/EvidenceSnapshotStrip'
 import type { Project, Tombstone } from '@/types/content'
 import type { PostMeta } from '@/lib/mdx'
 import { predecessorOf } from '@/lib/lineage'
@@ -22,7 +23,7 @@ const CARD = 'var(--l-card)'
 const ELEV = 'var(--l-elev)'
 const BORDER = 'var(--l-border)'
 
-const STACK = ['TypeScript', 'Next.js', 'React', 'Three.js', 'NestJS', 'Electron', 'Python']
+const STACK = ['MCP', 'Agent Evals', 'Claude Code', 'Codex', 'TypeScript', 'Python', 'Next.js', 'PostgreSQL']
 
 // YAML frontmatter dates (`publishedAt: 2026-06-10`) parse to a Date at runtime
 // even though PostMeta types it as string — normalize to a YYYY-MM-DD string so
@@ -153,6 +154,13 @@ function FeaturedCard({ project, locale }: { project: Project; locale: string })
         </Link>
       )}
       <div className="mt-auto flex flex-wrap items-center gap-4 pt-1">
+        <Link
+          href={`/projects/${project.slug}`}
+          className="ledger-mono text-sm underline underline-offset-4"
+          style={{ color: ACCENT }}
+        >
+          {locale === 'ko' ? '사례와 검증 보기' : 'Case study & evidence'} →
+        </Link>
         {project.website && (
           <a
             href={project.website}
@@ -197,6 +205,7 @@ export function LedgerHome({
     Boolean(project)
   )
   const tNav = useTranslations('nav')
+  const tHome = useTranslations('home')
   const portfolioStats = getPortfolioStats(projects)
 
   const groups = (Object.keys(HOME_GROUPS) as Array<keyof typeof HOME_GROUPS>).map((key) => {
@@ -206,7 +215,7 @@ export function LedgerHome({
 
   const stats = [
     { n: String(portfolioStats.builds).padStart(2, '0'), label: 'BUILDS', hot: true },
-    { n: String(portfolioStats.public).padStart(2, '0'), label: 'LIVE', hot: false },
+    { n: String(portfolioStats.public).padStart(2, '0'), label: 'PUBLIC LINKS', hot: false },
     { n: String(portfolioStats.playStore).padStart(2, '0'), label: 'ON PLAY', hot: false },
     { n: String(portfolioStats.featured).padStart(2, '0'), label: 'FEATURED', hot: false },
   ]
@@ -248,7 +257,7 @@ export function LedgerHome({
             <Link
               key={n.href}
               href={n.href}
-              className="ledger-mono flex min-w-0 flex-col items-center gap-0.5 px-1 py-2.5 text-[9px] tracking-[0.08em] uppercase transition-colors hover:opacity-80"
+              className="ledger-mono flex min-h-12 min-w-0 flex-col items-center gap-0.5 px-1 py-2.5 text-[10px] tracking-[0.04em] uppercase transition-colors hover:opacity-80"
               style={{ color: MUTED }}
             >
               <span className="text-[8px]" style={{ color: ACCENT }}>
@@ -262,7 +271,7 @@ export function LedgerHome({
 
       <main className="mx-auto max-w-[1400px] px-6 sm:px-10">
         {/* Hero */}
-        <section className="pt-16 pb-14 sm:pt-24 sm:pb-20">
+        <section className="relative pt-10 pb-12 sm:pt-20 sm:pb-16">
           <div
             className="mb-10 flex flex-col gap-2 border-b pb-6 sm:flex-row sm:items-center sm:justify-between"
             style={{ borderColor: BORDER }}
@@ -271,7 +280,7 @@ export function LedgerHome({
               이시형 · SI HYEONG LEE
             </span>
             <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>
-              AI-NATIVE PRODUCT ENGINEER
+              AI-NATIVE PRODUCT · AGENT SYSTEMS ENGINEER
             </span>
             <span className="ledger-mono text-[11px] tracking-[0.2em]" style={{ color: MUTED }}>
               LEDGER NO. <span style={{ color: ACCENT }}>001</span>
@@ -293,10 +302,31 @@ export function LedgerHome({
             </span>
           </h1>
           <p className="mt-8 max-w-2xl text-lg leading-relaxed" style={{ color: MUTED }}>
-            {locale === 'ko'
-              ? `AI 네이티브 제품과 개발 인프라를 설계·배포·운영합니다. 에이전트 도구, RAG 평가, 로컬 GPU 생성 파이프라인, 프로덕션 풀스택 시스템까지 직접 책임집니다.`
-              : `I design, ship, and operate AI-native products and developer infrastructure — from agent tooling and RAG evaluation to local GPU generation pipelines and production full-stack systems.`}
+            {tHome('hero.description')}
           </p>
+          <div className="mt-7 flex flex-wrap gap-3 xl:absolute xl:right-0 xl:top-40 xl:mt-0 xl:w-72 xl:flex-col">
+            <Link
+              href="/hire"
+              className="ledger-mono rounded-lg px-4 py-3 text-sm font-bold"
+              style={{ background: ACCENT, color: '#0a0a0b' }}
+            >
+              {locale === 'ko' ? '경력 · 이력서 보기' : 'Experience & résumé'} →
+            </Link>
+            <Link
+              href="/studio"
+              className="ledger-mono rounded-lg border px-4 py-3 text-sm"
+              style={{ borderColor: BORDER, color: INK }}
+            >
+              {locale === 'ko' ? 'AI 파이프라인 사례' : 'Inside the AI pipeline'} →
+            </Link>
+            <Link
+              href="/projects"
+              className="ledger-mono rounded-lg border px-4 py-3 text-sm"
+              style={{ borderColor: BORDER, color: INK }}
+            >
+              {locale === 'ko' ? '검증된 작업 사례 보기' : 'Explore selected work'} →
+            </Link>
+          </div>
         </section>
 
         {/* Stats ribbon */}
@@ -316,10 +346,19 @@ export function LedgerHome({
           ))}
         </section>
 
+        <p className="ledger-mono mb-10 max-w-3xl text-[11px] leading-relaxed" style={{ color: MUTED }}>
+          {locale === 'ko'
+            ? '전체 제작 수에는 개발 중인 시제품도 포함됩니다. 공개 링크 수는 상용 출시·실사용자·매출을 의미하지 않습니다.'
+            : 'Builds include unfinished prototypes. Public destinations do not establish a commercial launch, active users, or revenue.'}
+        </p>
+
+        {/* Evidence is pinned to reviewed commits; project counts also include prototypes. */}
+        <EvidenceSnapshotStrip locale={locale} />
+
         {/* Featured */}
         <section className="py-16 sm:py-20">
           <SectionLabel
-            index="§01"
+            index="§02"
             title="FEATURED WORK"
             aside={
               <Link
@@ -340,7 +379,7 @@ export function LedgerHome({
 
         {/* All work */}
         <section className="py-16 sm:py-20">
-          <SectionLabel index="§02" title="ALL WORK" />
+          <SectionLabel index="§03" title="ALL WORK" />
           <div className="grid gap-10 sm:grid-cols-3">
             {groups.map(({ key, items }) => (
               <div key={key} className="flex flex-col gap-4">
@@ -355,7 +394,9 @@ export function LedgerHome({
                 <ul className="flex flex-col gap-2">
                   {items.slice(0, 6).map((p) => (
                     <li key={p.slug} className="text-sm" style={{ color: MUTED }}>
-                      {p.name}
+                      <Link href={`/projects/${p.slug}`} className="hover:underline">
+                        {p.name}
+                      </Link>
                     </li>
                   ))}
                   {items.length > 6 && (
@@ -372,7 +413,7 @@ export function LedgerHome({
         {/* Graveyard teaser */}
         <section className="py-16 sm:py-20">
           <SectionLabel
-            index="§03"
+            index="§04"
             title="THE GRAVEYARD"
             aside={
               <Link
@@ -461,8 +502,8 @@ export function LedgerHome({
           <SectionLabel index="§05" title="ABOUT" />
           <p className="max-w-2xl text-lg leading-relaxed" style={{ color: INK }}>
             {locale === 'ko'
-              ? '기술로 문제를 해결하는 개발자이자 창업가입니다. 빠르게 만들고, 배우고, 다시 만듭니다.'
-              : 'A developer and entrepreneur who solves problems with technology. I build fast, learn, and rebuild.'}
+              ? '코딩 에이전트를 실행 레버리지로 사용하되 아키텍처, 검증, 디버깅, 릴리스 결정은 직접 책임지는 제품 엔지니어이자 전 CTO입니다.'
+              : 'A product engineer and former CTO who uses coding agents as execution leverage while keeping architecture, verification, debugging, and release decisions human-owned.'}
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {STACK.map((s) => (

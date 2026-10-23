@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "demos": [
+    {
+      "project": "brain-vat-siege",
+      "verifiedAt": "2026-10-13",
+      "sourceCommit": "854213620980fe9c62ea72c12c8d58ec93c9c2e9",
+      "deploymentStatus": "public",
+      "demoUrl": "https://brain-vat-siege.vercel.app/npc",
+      "image": "/images/projects/brain-vat-npc-production.webp",
+      "titleEn": "NPC Living World — witnessed actions change the guard",
+      "titleKo": "NPC Living World — 목격한 행동에 따라 달라지는 경비",
+      "descriptionEn": "Playable Three.js example: a deterministic, rule-based guard receives filtered observations, warns after the first witnessed theft, and pursues after the second. The local-browser game engine remains authoritative for movement, events, collision, and allowed NPC intents.",
+      "descriptionKo": "직접 조작할 수 있는 Three.js 데모입니다. 규칙 기반 경비 NPC는 제한된 관측만 사용하며 첫 목격 절도에는 경고, 두 번째에는 추격합니다. 이동·이벤트·충돌·NPC 행동 허용 여부는 브라우저의 게임 엔진이 결정합니다.",
+      "testLineEn": "200/200 source tests; October 13 desktop/mobile production Chrome QA passed with no recorded JS errors.",
+      "testLineKo": "소스 테스트 200/200, 10월 13일 실제 운영 데스크톱·모바일 Chrome QA 통과 및 JS 오류 기록 없음.",
+      "caveatEn": "This is one deterministic NPC in a browser sandbox. It has no trained policy, LLM, generative dialogue, persistent social memory, real multiplayer authority, or human-validated play quality.",
+      "caveatKo": "브라우저 샌드박스의 규칙 기반 NPC 1명입니다. 학습된 정책·LLM·생성형 대화·영구 사회적 기억·실제 멀티플레이 권한·사람의 게임 재미 검증을 갖춘 것은 아닙니다.",
+      "captureNoteEn": "Cropped and resized from the actual 2026-10-13 public-production Chrome screenshot; source retained in the MAIN PC's BVAT-37 QA record. No private test data was used.",
+      "captureNoteKo": "2026-10-13 실제 공개 운영 Chrome 캡처를 위쪽 화면 중심으로 잘라 최적화했습니다. 원본은 MAIN PC BVAT-37 QA 기록에 보존되어 있으며 비공개 테스트 데이터는 사용하지 않았습니다."
+    }
+  ]
+}

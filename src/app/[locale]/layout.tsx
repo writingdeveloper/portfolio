@@ -14,6 +14,7 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 import { GoogleAdSense } from '@/components/analytics/GoogleAdSense'
 import { GoogleAnalytics } from '@/components/analytics/GoogleAnalytics'
 import { OutboundTracker } from '@/components/analytics/OutboundTracker'
+import { telemetryPolicy } from '@/lib/telemetry-policy'
 import '../globals.css'
 
 // Noto Sans KR is gone. It was added (FOLIO-22) as *the* Korean face, before
@@ -112,6 +113,10 @@ export default async function LocaleLayout({
   const messages = await getMessages()
   const headersList = await headers()
   const nonce = headersList.get('x-nonce') ?? undefined
+  const telemetry = telemetryPolicy(
+    { VERCEL_ENV: process.env.VERCEL_ENV, PORTFOLIO_ENABLE_TELEMETRY: process.env.PORTFOLIO_ENABLE_TELEMETRY },
+    headersList.get('host')
+  )
 
   return (
     <html lang={locale} className="dark" data-scroll-behavior="smooth" suppressHydrationWarning>
@@ -136,13 +141,13 @@ export default async function LocaleLayout({
         </NextIntlClientProvider>
         {/* Third-party analytics/ads load after hydration (next/script
             afterInteractive) so they stay off the critical render path. */}
-        <GoogleAnalytics nonce={nonce} />
+        {telemetry.thirdParty && <GoogleAnalytics nonce={nonce} />}
         {/* One delegated listener turns departures (demo, code, store, mail)
             into named GA4 events, without making any card a client component. */}
-        <OutboundTracker />
-        <GoogleAdSense nonce={nonce} />
-        <Analytics />
-        <SpeedInsights />
+        {telemetry.thirdParty && <OutboundTracker />}
+        {telemetry.thirdParty && <GoogleAdSense nonce={nonce} />}
+        {telemetry.vercel && <Analytics />}
+        {telemetry.vercel && <SpeedInsights />}
       </body>
     </html>
   )

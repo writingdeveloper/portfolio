@@ -2,13 +2,15 @@
 
 import type { Skill } from '@/types/content'
 import { skillCategories } from '@/types/content'
+import { groupSkills } from '@/lib/skill-groups'
 import { GlowOrb } from '../components/GlowOrb'
 import { SectionLabel } from '../components/SectionLabel'
 import { SectionDivider } from '../components/SectionDivider'
 import { SECTION_SPACING } from '../scene/CameraRig'
 import { categoryX } from '@/lib/skills-layout'
 
-const CATEGORY_COLORS: Record<string, string> = {
+const CATEGORY_COLORS: Record<Skill['category'], string> = {
+  ai: '#c6f24e',
   frontend: '#7b6f99',
   backend: '#8b7355',
   tools: '#6b6891',
@@ -24,12 +26,7 @@ interface SkillsSectionProps {
 export function SkillsSection({ skills, locale, sectionLabel }: SkillsSectionProps) {
   const sectionY = -SECTION_SPACING * 2
 
-  const grouped = {
-    frontend: skills.filter((s) => s.category === 'frontend'),
-    backend: skills.filter((s) => s.category === 'backend'),
-    tools: skills.filter((s) => s.category === 'tools'),
-    infra: skills.filter((s) => s.category === 'infra'),
-  }
+  const grouped = groupSkills(skills)
 
   const categoryLabel = (cat: string) =>
     skillCategories[cat as keyof typeof skillCategories]?.[locale as 'ko' | 'en'] ?? cat
@@ -54,7 +51,7 @@ export function SkillsSection({ skills, locale, sectionLabel }: SkillsSectionPro
                   key={skill.name}
                   position={[x, y, z]}
                   label={skill.name}
-                  color={CATEGORY_COLORS[category] ?? '#7c6cf0'}
+                  color={CATEGORY_COLORS[category as Skill['category']]}
                 />
               )
             })}

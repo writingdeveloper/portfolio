@@ -84,3 +84,18 @@ scripts/               content/media verification and capture utilities
 ```
 
 The project ledger is intentionally broader than "shipped" work. UI counts distinguish total builds from public destinations and store listings rather than presenting every row as a release.
+
+## Evidence and release QA
+
+See [the evidence workflow](docs/operations/evidence-workflow.md) for reviewed source snapshots, read-only collection, résumé integrity and production-preview QA. The collector never automatically publishes a new number.
+
+```bash
+npm run evidence:check
+npm run evidence:collect
+# After npm run build, start a preview in another terminal:
+npm start -- -p 3100 -H localhost
+# Then run the persisted browser matrix:
+npm run qa:portfolio
+```
+
+The [AI positioning review](docs/research/ai-positioning-2026-09-22.md) separates source-backed engineering themes from unverified market claims. The [MingleStage selection decision](docs/reviews/minglestage-case-study-2026-09-22.md) keeps staged work distinct from public releases. Execution is tracked in Plane Portfolio (FOLIO); screenshots and machine reports are evidence, not automatic human approval.

@@ -12,6 +12,8 @@ import { predecessorOf } from '@/lib/lineage'
 import { getAllPosts } from '@/lib/mdx'
 import { buildProjectPostMap } from '@/lib/post-project-links'
 import { PageTransition } from '@/components/ui/PageTransition'
+import { FailureInvestigation } from '@/components/projects/FailureInvestigation'
+import { VerifiedProjectDemo } from '@/components/projects/VerifiedProjectDemo'
 import { generateBreadcrumbJsonLd, generateProjectJsonLd, safeJsonLd, toAbsoluteUrl } from '@/lib/seo'
 
 const PROJECTS = projectsData.projects as Project[]
@@ -222,6 +224,10 @@ export default async function ProjectDetailPage({ params }: { params: Promise<{ 
             </div>
           </section>
         )}
+
+        <VerifiedProjectDemo projectSlug={project.slug} locale={locale} />
+
+        <FailureInvestigation projectSlug={project.slug} locale={locale} />
 
         <div className="flex flex-wrap items-center gap-4 mb-8">
           {/* Sits first: for a private project with no website this is the

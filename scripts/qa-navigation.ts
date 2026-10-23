@@ -2,7 +2,7 @@ import { chromium, type Page } from 'playwright'
 import enMessages from '../messages/en.json'
 import koMessages from '../messages/ko.json'
 
-const BASE_URL = (process.env.QA_BASE_URL ?? 'http://127.0.0.1:3100').replace(/\/$/, '')
+const BASE_URL = (process.env.QA_BASE_URL ?? 'http://localhost:3100').replace(/\/$/, '')
 const LOCALE = process.env.QA_LOCALE ?? 'en'
 const prefix = LOCALE === 'ko' ? '' : `/${LOCALE}`
 const navMessages = LOCALE === 'ko' ? koMessages.nav : enMessages.nav

@@ -1,6 +1,16 @@
 import type { Project } from '@/types/content'
 
-export const SELECTED_WORK = ['devdeck', 'studios', 'rentrights', 'citefirst', 'juicebar'] as const
+/** Concise catalogue copy; full detail remains on project-specific pages. */
+export function projectExcerpt(description: string, maxLength = 220): string {
+  const text = description.trim().replace(/\s+/g, ' ')
+  if (text.length <= maxLength) return text
+  const limit = text.slice(0, maxLength)
+  const boundary = limit.lastIndexOf(' ')
+  const cut = boundary >= maxLength * 0.6 ? boundary : maxLength
+  return limit.slice(0, cut).trimEnd() + '…'
+}
+
+export const SELECTED_WORK = ['devdeck', 'studios', 'citefirst', 'brain-vat-siege', 'healframe'] as const
 
 export type ProjectCaseStudyKey = 'problem' | 'decision' | 'evidence' | 'result'
 
@@ -192,6 +202,9 @@ export const HOME_GROUPS: Record<'products' | 'games' | 'tools', string[]> = {
     'observer-of-lines',
   ],
   games: [
+    'brain-vat-siege',
+    'railforge',
+    'project-strata',
     'coinrace',
     'wishing-stones',
     'hoverslam',
@@ -204,10 +217,12 @@ export const HOME_GROUPS: Record<'products' | 'games' | 'tools', string[]> = {
     'studio-apartment',
   ],
   tools: [
-    'citefirst',
-    'juicebar',
     'devdeck',
     'studios',
+    'music-mv-studio',
+    'creator-learning-os',
+    'citefirst',
+    'juicebar',
     'til-shorts',
     'mv-analyzer',
     'sitedeck',

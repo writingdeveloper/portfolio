@@ -3,6 +3,7 @@ import {
   getHireStats,
   getPortfolioStats,
   getProjectCaseStudySections,
+  projectExcerpt,
   hasIndexablePage,
   HIRE_CASE_STUDIES,
   HOME_GROUPS,
@@ -23,6 +24,18 @@ const p = (name: string, featured: boolean): Project => ({
   techStack: [],
   status: 'active',
   featured,
+})
+
+describe('projectExcerpt', () => {
+  it('preserves concise text unchanged and trims whitespace', () => {
+    expect(projectExcerpt('  hello world  ')).toBe('hello world')
+  })
+  it('shortens long descriptions without removing the detail page copy', () => {
+    const text = 'Accessible evidence for a shipped product. '.repeat(20)
+    const excerpt = projectExcerpt(text, 110)
+    expect(excerpt.length).toBeLessThanOrEqual(111)
+    expect(excerpt.endsWith('…')).toBe(true)
+  })
 })
 
 describe('sortProjectsFeaturedFirst', () => {
@@ -225,16 +238,53 @@ describe('portfolio selection and truthful stats', () => {
   })
 
   it('keeps selected work to five complementary projects in editorial order', () => {
-    expect(SELECTED_WORK).toEqual(['devdeck', 'studios', 'rentrights', 'citefirst', 'juicebar'])
+    expect(SELECTED_WORK).toEqual(['devdeck', 'studios', 'citefirst', 'brain-vat-siege', 'healframe'])
     expect(new Set(SELECTED_WORK).size).toBe(5)
   })
 })
 
-describe('JuiceBar ledger refresh', () => {
+describe('2026-10 verified source-backed research entries', () => {
+  const ledger = projectsData.projects as Project[]
+  it('does not conflate unfinished private prototypes with public releases', () => {
+    for (const slug of ['railforge', 'project-strata', 'music-mv-studio']) {
+      const project = ledger.find((item) => item.slug === slug)
+      expect(project).toBeDefined()
+      expect(project?.status).toBe('building')
+      expect(project?.private).toBe(true)
+      expect(project?.website).toBeUndefined()
+      expect(project?.github).toBeUndefined()
+      expect(project?.featured).toBe(false)
+      expect(project?.caseStudy?.resultEn).toBeTruthy()
+    }
+  })
+})
+
+describe('2026-09 ledger refresh', () => {
   const ledger = projectsData.projects as Project[]
 
+  it('shows Creator OS as a restricted external pilot with a public read-only demo, not a paid launch', () => {
+    expect(ledger).toHaveLength(48)
+    const creator = ledger.find((project) => project.slug === 'creator-learning-os')
+    expect(creator).toBeDefined()
+    expect(creator?.status).toBe('building')
+    expect(creator?.private).toBe(true)
+    expect(creator?.website).toBe('https://creator.writingdeveloper.blog/demo')
+    expect(creator?.descriptionEn).toContain('Testing-only')
+    expect(creator?.caseStudy?.evidenceEn).toContain('without a provider model call')
+  })
+
+  it('adds BRAIN//VAT as a public demo without exposing a private repo', () => {
+    const bvat = ledger.find((project) => project.slug === 'brain-vat-siege')
+    expect(bvat).toBeDefined()
+    expect(bvat?.website).toBe('https://brain-vat-siege.vercel.app')
+    expect(bvat?.private).toBe(true)
+    expect(bvat?.github).toBeUndefined()
+    expect(bvat?.screenshot).toBe('/images/projects/brain-vat-siege.webp')
+    expect(bvat?.caseStudy?.evidenceEn).toContain('66/90')
+  })
+
   it('keeps JuiceBar in the expanded portfolio ledger', () => {
-    expect(ledger).toHaveLength(43)
+    expect(ledger).toHaveLength(48)
     const juicebar = ledger.find((project) => project.slug === 'juicebar')
     expect(juicebar).toBeDefined()
     expect(juicebar?.github).toBe('https://github.com/writingdeveloper/JuiceBar')
