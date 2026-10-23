@@ -15,6 +15,7 @@
     "type-check": "tsc --noEmit",
     "untranslated": "npx tsx scripts/untranslated.ts",
     "verify:hero": "tsx scripts/verify-hero.ts",
+    "audit:deps": "tsx scripts/audit-deps.ts",
     "capture:screenshots": "tsx scripts/capture-screenshots.ts",
     "fetch:fonts": "tsx scripts/fetch-pretendard-subset.ts",
     "qa:navigation": "tsx scripts/qa-navigation.ts"
@@ -30,7 +31,7 @@
     "fuse.js": "^7.1.0",
     "js-yaml": "^4.3.1",
     "lucide-react": "^0.562.0",
-    "next": "^16.2.6",
+    "next": "^16.4.2",
     "next-intl": "^4.9.2",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.8",
@@ -44,6 +45,9 @@
     "js-yaml": "^4.3.1",
     "@toeverything/y-indexeddb": {
       "nanoid": "^5.1.16"
+    },
+    "@keystatic/next": {
+      "chokidar": "^4.0.3"
     }
   },
   "devDependencies": {
@@ -54,7 +58,7 @@
     "@types/react-dom": "^19",
     "@types/three": "^0.183.1",
     "eslint": "^9",
-    "eslint-config-next": "^16.2.6",
+    "eslint-config-next": "^16.4.2",
     "playwright": "^1.62.0",
     "prettier": "^3.8.1",
     "sharp": "^0.35.3",
