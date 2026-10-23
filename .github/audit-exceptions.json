@@ -1,0 +1,12 @@
+{
+  "exceptions": [
+    {
+      "id": "GHSA-vfj7-8cjw-p6xm",
+      "package": "braces",
+      "approvedBy": "writingdeveloper",
+      "approvedOn": "2026-10-22",
+      "expires": "2026-12-31",
+      "review": "docs/reviews/2026-10-22-braces-dev-audit-exception.md"
+    }
+  ]
+}

@@ -52,7 +52,8 @@ jobs:
       - name: Audit production dependencies
         run: npm audit --omit=dev --audit-level=high
 
-      # Keep the original strict all-dependencies gate. No exceptions are
-      # authorized by this change, so known dev-only advisories still fail.
+      # Same threshold over every dependency. An advisory passes only when
+      # .github/audit-exceptions.json lists it with an expiry and a review, and
+      # every installed copy is dev-only; each pass is annotated on the run.
       - name: Audit dependencies
-        run: npm audit --audit-level=high
+        run: npm run audit:deps
